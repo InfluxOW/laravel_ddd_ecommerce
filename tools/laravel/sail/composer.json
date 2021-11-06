@@ -1,0 +1,5 @@
+{
+    "require": {
+        "laravel/sail": "^1.0.1"
+    }
+}
