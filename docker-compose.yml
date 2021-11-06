@@ -3,11 +3,11 @@ version: '3'
 services:
     laravel.test:
         build:
-            context: ./docker/8.1
+            context: ./docker/8.0 # Switch to 8.1 when Larastan and PHPCS will be fixed
             dockerfile: Dockerfile
             args:
                 WWWGROUP: '${WWWGROUP}'
-        image: sail-8.1/app
+        image: sail-8.0/app # Switch to 8.1 when Larastan and PHPCS will be fixed
         extra_hosts:
             - 'host.docker.internal:host-gateway'
         ports:
