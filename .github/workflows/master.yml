@@ -54,11 +54,15 @@ jobs:
           DB_PORT: ${{ job.services.postgres.ports[5432] }}
 
       - name: Run linter
-        # Run Linter
+        # Run PHPCS
         run: make lint
+
+      - name: Run static code analyzer
+        # Run PHPStan
+        run: make analyse
+
         # Publish code coverage on Code Climate
         # https://github.com/paambaati/codeclimate-action
-
       - name: Run test & publish code coverage
         uses: paambaati/codeclimate-action@v2.6.0
         # Add Code Climate secret key

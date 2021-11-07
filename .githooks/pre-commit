@@ -1,0 +1,74 @@
+#!/bin/sh
+
+#########################
+#                       #
+#     Initializing      #
+#                       #
+#########################
+
+PHPCS_BIN=./vendor/bin/phpcs
+PHPCBF_BIN=./vendor/bin/phpcbf
+PHPSTAN_BIN=./vendor/bin/phpstan
+
+# Check for Laravel Sail, PHPCS, PHPCBF and PHPStan
+if [ ! -x $PHPCS_BIN ] || [ ! -x $PHPCBF_BIN ] || [ ! -x $PHPSTAN_BIN ]; then
+	echo "[PRE-COMMIT] Please, run 'make setup' to install necessary packages."
+	exit 1
+fi
+
+sail () {
+	docker-compose exec -T laravel.test $@ >/dev/null 2>&1
+}
+
+#########################
+#                       #
+#       Starting        #
+#                       #
+#########################
+
+# All files in staging area (no deletions)
+PROJECT=$(git rev-parse --show-toplevel)
+FILES=$(git diff --name-only --diff-filter=ACMR HEAD | grep \\.php)
+
+if [ "$FILES" != "" ]; then
+	# Code Style
+
+	echo "[PRE-COMMIT] Checking PHPCS..."
+
+	sail composer exec phpcs -n $FILES
+
+	if [ $? != 0 ]; then
+		echo "[PRE-COMMIT] Coding standards errors have been detected."
+		echo "[PRE-COMMIT] Running PHP Code Beautifier and Fixer..."
+
+		sail composer exec phpcbf -- -n $FILES
+
+		echo "[PRE-COMMIT] Checking PHPCS again..."
+
+		sail composer exec phpcs -- -n $FILES
+
+		if [ $? != 0 ]; then
+			echo "[PRE-COMMIT] PHP Code Beautifier and Fixer wasn't able to solve all problems."
+			echo "[PRE-COMMIT] Run PHPCS manually and fix existing errors."
+			exit 1
+		fi
+
+		echo "[PRE-COMMIT] All errors are fixed automatically."
+		git add $FILES
+	fi
+
+	# Code Quality
+
+	echo "[PRE-COMMIT] Checking PHPStan..."
+	sail composer exec phpstan analyse -- $FILES
+
+	if [ $? != 0 ]; then
+		echo "[PRE-COMMIT] PHPStan found problems."
+		echo "[PRE-COMMIT] Run PHPStan manually and fix existing errors."
+		exit 1
+	fi
+
+	echo "[PRE-COMMIT] No errors found."
+fi
+
+exit $?

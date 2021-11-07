@@ -12,10 +12,11 @@ test-coverage:
 	php artisan test -vvv --coverage-clover build/logs/clover.xml
 
 lint:
-	composer exec phpcs -v
-	composer exec phpstan -v -- --memory-limit=-1
+	composer exec phpcs -v 2>/dev/null
 lint-fix:
-	composer exec phpcbf -v
+	composer exec phpcbf -v 2>/dev/null
+analyse:
+	composer exec phpstan analyse -v -- --memory-limit=-1 2>/dev/null
 
 seed:
 	php artisan db:seed

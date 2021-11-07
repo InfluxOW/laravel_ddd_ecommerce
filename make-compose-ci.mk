@@ -1,6 +1,7 @@
 # Works only for project root
 
-sail_dir := $(shell pwd)/tools/laravel/sail
+project=$(shell git rev-parse --show-toplevel)
+sail_dir := $(project)/tools/laravel/sail
 sail := $(sail_dir)/vendor/bin/sail
 
 setup:
