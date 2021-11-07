@@ -11,7 +11,7 @@ parameters:
         - tests
 
     # The level 9 is the highest level
-    level: 9
+    level: 8
 
     excludePaths:
         - app/Http/Controllers/Auth/*

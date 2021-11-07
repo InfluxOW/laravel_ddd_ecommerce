@@ -60,7 +60,7 @@ if [ "$FILES" != "" ]; then
 	# Code Quality
 
 	echo "[PRE-COMMIT] Checking PHPStan..."
-	sail composer exec phpstan analyse -- $FILES
+	sail composer exec phpstan analyse --no-cache -- $FILES
 
 	if [ $? != 0 ]; then
 		echo "[PRE-COMMIT] PHPStan found problems."
