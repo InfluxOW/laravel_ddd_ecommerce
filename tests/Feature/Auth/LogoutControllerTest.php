@@ -30,7 +30,6 @@ class LogoutControllerTest extends TestCase
     }
 
     /** @test
-     * @doesNotPerformAssertions
      */
     public function an_authorized_user_can_logout(): void
     {

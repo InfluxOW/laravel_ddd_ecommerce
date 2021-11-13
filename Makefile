@@ -2,21 +2,21 @@ include make-compose-ci.mk
 
 install:
 	composer install
-	cp -n .env.example .env || true
+	cp --no-clobber .env.example .env || true
 	php artisan key:generate
 	php artisan migrate:fresh --seed
 
 test:
-	php artisan test
+	php artisan test --parallel -vvv
 test-coverage:
-	php artisan test -vvv --coverage-clover build/logs/clover.xml
+	php artisan test --parallel -vvv --coverage-clover build/logs/clover.xml
 
 lint:
-	composer exec phpcs -v 2>/dev/null
+	composer exec phpcs --verbose 2>/dev/null
 lint-fix:
-	composer exec phpcbf -v 2>/dev/null
+	composer exec phpcbf --verbose 2>/dev/null
 analyse:
-	composer exec phpstan analyse -v --no-cache -- --memory-limit=-1 2>/dev/null
+	composer exec phpstan analyse --verbose --no-cache -- --memory-limit=-1 2>/dev/null
 
 seed:
 	php artisan db:seed
@@ -25,7 +25,7 @@ docs:
 	php artisan ide-helper:eloquent
 	php artisan ide-helper:generate
 	php artisan ide-helper:meta
-	php artisan ide-helper:models -n -W
+	php artisan ide-helper:models --no-interaction --write --smart-reset
 
 clear:
 	php artisan route:clear
