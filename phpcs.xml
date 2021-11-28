@@ -13,13 +13,15 @@
     <file>config</file>
     <file>database</file>
     <file>resources</file>
-    <file>routes</file>
     <file>tests</file>
 
     <rule ref="PSR12" />
 
+    <!-- Temporarily disable enums check while PHPCS is not compatible with PHP 8.1 -->
+    <exclude-pattern>*/Enums</exclude-pattern>
+
     <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
-        <exclude-pattern>database/</exclude-pattern>
+        <exclude-pattern>*/migrations/*</exclude-pattern>
     </rule>
     <rule ref="PSR1.Methods.CamelCapsMethodName.NotCamelCaps">
         <exclude-pattern>tests/</exclude-pattern>
@@ -57,7 +59,7 @@
     <rule ref="SlevomatCodingStandard.Classes.ModernClassNameReference"/>
     <rule ref="SlevomatCodingStandard.Functions.ArrowFunctionDeclaration">
         <properties>
-            <property name="spacesCountAfterKeyword" type="integer" value="0"/>
+            <property name="spacesCountAfterKeyword" type="integer" value="1"/>
         </properties>
     </rule>
     <rule ref="SlevomatCodingStandard.Functions.DisallowEmptyFunction"/>

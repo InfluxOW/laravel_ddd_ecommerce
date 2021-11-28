@@ -7,15 +7,16 @@ parameters:
         - app
         - database
         - resources
-        - routes
         - tests
 
     # The level 9 is the highest level
     level: 8
 
     excludePaths:
-        - app/Http/Controllers/Auth/*
-        - app/Providers
-        - database/factories
+        - app/Domain/*/Enums
+        - app/Domain/Products/Casts/KopecksCast.php
+
+    ignoreErrors:
+        - '#App\\Domain\\[a-zA-Z]+\\Enums#'
 
     checkMissingIterableValueType: false

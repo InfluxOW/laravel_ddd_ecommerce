@@ -1,4 +1,4 @@
-include make-compose-ci.mk
+include Makefile.compose.mk
 
 install:
 	composer install
