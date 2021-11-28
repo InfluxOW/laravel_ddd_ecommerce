@@ -4,7 +4,7 @@ namespace App\Domain\Products\Tests\Feature;
 
 use App\Domain\Products\Database\Seeders\ProductCategorySeeder;
 use App\Domain\Products\Database\Seeders\ProductSeeder;
-use Tests\TestCase;
+use App\Application\Tests\TestCase;
 
 class ProductCategoryControllerTest extends TestCase
 {

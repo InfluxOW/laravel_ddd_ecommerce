@@ -3,7 +3,7 @@
 namespace App\Domain\Users\Tests\Feature;
 
 use App\Domain\Users\Models\User;
-use Tests\TestCase;
+use App\Application\Tests\TestCase;
 
 class LogoutControllerTest extends TestCase
 {

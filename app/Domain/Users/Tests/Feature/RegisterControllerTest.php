@@ -4,7 +4,7 @@ namespace App\Domain\Users\Tests\Feature;
 
 use App\Domain\Users\Models\User;
 use Illuminate\Support\Arr;
-use Tests\TestCase;
+use App\Application\Tests\TestCase;
 
 class RegisterControllerTest extends TestCase
 {

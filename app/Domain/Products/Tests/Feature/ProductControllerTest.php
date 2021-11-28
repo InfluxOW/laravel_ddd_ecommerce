@@ -6,7 +6,7 @@ use App\Domain\Products\Database\Seeders\ProductAttributeSeeder;
 use App\Domain\Products\Database\Seeders\ProductAttributeValueSeeder;
 use App\Domain\Products\Database\Seeders\ProductCategorySeeder;
 use App\Domain\Products\Database\Seeders\ProductSeeder;
-use Tests\TestCase;
+use App\Application\Tests\TestCase;
 
 class ProductControllerTest extends TestCase
 {
