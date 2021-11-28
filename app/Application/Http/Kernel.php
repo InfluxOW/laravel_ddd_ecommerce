@@ -2,6 +2,7 @@
 
 namespace App\Application\Http;
 
+use App\Application\Http\Middleware\AddTimestamp;
 use App\Application\Http\Middleware\ForceJsonResponse;
 use App\Application\Http\Middleware\TrimStrings;
 use App\Application\Http\Middleware\TrustProxies;
@@ -52,6 +53,7 @@ class Kernel extends HttpKernel
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             'throttle:api',
             ForceJsonResponse::class,
+            AddTimestamp::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
     ];

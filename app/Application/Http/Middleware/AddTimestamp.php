@@ -1,0 +1,26 @@
+<?php
+
+namespace App\Application\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+
+class AddTimestamp
+{
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @return mixed
+     */
+    public function handle(Request $request, Closure $next)
+    {
+        /** @var JsonResponse $response */
+        $response = $next($request);
+        $response->setData(array_merge_recursive($response->getData(true), ['meta' => ['timestamp' => intdiv((int) now()->format('Uu'), 1000)]]));
+
+        return $response;
+    }
+}
