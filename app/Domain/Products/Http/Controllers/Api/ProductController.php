@@ -22,7 +22,7 @@ class ProductController extends Controller
 
     public function index(ProductIndexRequest $request, ProductFilterService $filterService): AnonymousResourceCollection
     {
-        $defaultSort = '-' . ProductAllowedSort::CREATED_AT->value;
+        $defaultSort = ProductAllowedSort::CREATED_AT->descendingValue();
 
         $productsQuery = QueryBuilder::for(Product::query()->with(['category', 'attributeValues.attribute']))
             ->allowedFilters([

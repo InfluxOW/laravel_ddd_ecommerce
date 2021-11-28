@@ -12,6 +12,7 @@ use App\Domain\Products\Models\Product;
 use App\Domain\Products\Models\ProductAttribute;
 use App\Domain\Products\Models\ProductAttributeValue;
 use App\Domain\Products\Models\ProductCategory;
+use App\Utils\LangUtils;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -110,34 +111,38 @@ class ProductFilterService
 
     private function getAllowedSorts(): Collection
     {
-        return collect(array_merge(
+        return collect([
             $this->buildBaseSort(ProductAllowedSort::TITLE),
+            $this->buildBaseDescSort(ProductAllowedSort::TITLE),
             $this->buildBaseSort(ProductAllowedSort::PRICE),
+            $this->buildBaseDescSort(ProductAllowedSort::PRICE),
             $this->buildBaseSort(ProductAllowedSort::CREATED_AT),
-        ));
+            $this->buildBaseDescSort(ProductAllowedSort::CREATED_AT),
+        ]);
     }
 
     private function buildBaseFilter(ProductAllowedFilter $filter): array
     {
         return [
             'query' => $filter->value,
-            'title' => __(sprintf('enums.%s.%s', $filter::class, $filter->value)),
+            'title' => LangUtils::translateEnum($filter),
             'type' => $filter->frontendType()->value,
         ];
     }
 
-    private function buildBaseSort(ProductAllowedSort $sort): array
+    private function buildBaseSort(ProductAllowedSort $sort, bool $descending = false): array
     {
+        $value = $descending ? $sort->descendingValue() : $sort->value;
+
         return [
-            [
-                'query' => $sort->value,
-                'title' => __(sprintf('enums.%s.%s', $sort::class, $sort->value)),
-            ],
-            [
-                'query' => '-' . $sort->value,
-                'title' => __(sprintf('enums.%s.%s', $sort::class, '-' . $sort->value)),
-            ],
+            'query' => $value,
+            'title' => LangUtils::translateEnum($sort, $value),
         ];
+    }
+
+    private function buildBaseDescSort(ProductAllowedSort $sort): array
+    {
+        return $this->buildBaseSort($sort, true);
     }
 
     private function buildPriceBetweenFilter(SpatieQueryBuilder $productsQuery): array

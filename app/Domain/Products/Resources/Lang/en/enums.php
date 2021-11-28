@@ -15,8 +15,8 @@ return [
         ProductAllowedSort::TITLE->value => 'Title A-Z',
         ProductAllowedSort::PRICE->value => 'Cheap First',
         ProductAllowedSort::CREATED_AT->value => 'Oldest First',
-        '-' . ProductAllowedSort::TITLE->value => 'Title Z-A',
-        '-' . ProductAllowedSort::PRICE->value => 'Expensive First',
-        '-' . ProductAllowedSort::CREATED_AT->value => 'Newest First',
+        ProductAllowedSort::TITLE->descendingValue() => 'Title Z-A',
+        ProductAllowedSort::PRICE->descendingValue() => 'Expensive First',
+        ProductAllowedSort::CREATED_AT->descendingValue() => 'Newest First',
     ],
 ];

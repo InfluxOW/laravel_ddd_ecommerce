@@ -8,10 +8,10 @@ use ReflectionClass;
 
 abstract class ServiceProviderBase extends LaravelServiceProvider
 {
-    /**
-     * @var string Alias for loading translations and views
-     */
-    protected string $alias;
+    /*
+     * Alias for loading translations and views
+     * */
+    public const ALIAS = null;
 
     /**
      * @var bool Set true if provider will load commands
@@ -101,7 +101,7 @@ abstract class ServiceProviderBase extends LaravelServiceProvider
         $path = $reflection->getFileName();
         $realPath = dirname($path, 2) . '/';
 
-        return $append ? $realPath . '/' . $append : $realPath;
+        return ($append === null) ? $realPath : "{$realPath}{$append}";
     }
 
     /**
@@ -110,7 +110,7 @@ abstract class ServiceProviderBase extends LaravelServiceProvider
     protected function registerTranslations(): void
     {
         if ($this->hasTranslations) {
-            $this->loadTranslationsFrom($this->domainPath('Resources/Lang'), strtolower(config('app.name')));
+            $this->loadTranslationsFrom($this->domainPath('Resources/Lang'), static::ALIAS);
         }
     }
 

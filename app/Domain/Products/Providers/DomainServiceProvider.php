@@ -6,7 +6,7 @@ use App\Infrastructure\Abstracts\ServiceProviderBase;
 
 class DomainServiceProvider extends ServiceProviderBase
 {
-    protected string $alias = 'products';
+    public const ALIAS = 'products';
 
     protected bool $hasMigrations = true;
 
