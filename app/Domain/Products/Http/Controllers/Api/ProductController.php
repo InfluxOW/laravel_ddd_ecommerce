@@ -6,6 +6,7 @@ use App\Domain\Products\Enums\Filters\ProductAllowedFilter;
 use App\Domain\Products\Enums\Sorts\ProductAllowedSort;
 use App\Domain\Products\Http\Requests\ProductIndexRequest;
 use App\Domain\Products\Http\Resources\ProductResource;
+use App\Domain\Products\Models\Generic\Sorts\Sort;
 use App\Domain\Products\Models\Product;
 use App\Domain\Products\Services\Filters\ProductFilterService;
 use App\Domain\Products\Services\Sorts\ProductSortService;
@@ -26,10 +27,9 @@ class ProductController extends Controller
         $validated = $request->validated();
 
         $allowedSorts = $sortService->getAllowedSorts();
-        $appliedSort = $sortService->getAppliedSort($request);
-        if ($appliedSort === null) {
-            $appliedSort = $allowedSorts->first();
-        }
+        /** @var Sort $defaultSort */
+        $defaultSort = $allowedSorts->first();
+        $appliedSort = $sortService->getAppliedSort($request) ?? $defaultSort;
 
         $productsQuery = QueryBuilder::for(Product::query()->with(['category', 'attributeValues.attribute']))
             ->allowedFilters([
@@ -45,8 +45,7 @@ class ProductController extends Controller
                 /* @phpstan-ignore-next-line */
                 AllowedSort::callback(ProductAllowedSort::PRICE->value, static fn (Builder|Product $query): Builder => $query->orderByCurrentPrice(AllowedSort::parseSortDirection($validated['sort']))),
             ])
-            ->defaultSort($appliedSort->query);
-
+            ->defaultSort($defaultSort->query);
 
         $allowedFilters = $filterService->getAllowedFilters($productsQuery->clone());
         $appliedFilters = $filterService->getAppliedFilters($request);

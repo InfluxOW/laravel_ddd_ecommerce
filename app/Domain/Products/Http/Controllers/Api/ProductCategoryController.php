@@ -26,7 +26,7 @@ class ProductCategoryController extends Controller
      *     collectionFormat="multi",
      *     @OA\Items(
      *       type="object",
-     *       ref="#/components/schemas/ProductCategory",
+     *       ref="#/components/schemas/HeavyProductCategory",
      *     ),
      *    ),
      *   ),

@@ -42,7 +42,14 @@ class LoginController extends Controller
      *    response=422,
      *    description="Login failed",
      *    @OA\JsonContent(
-     *       @OA\Property(property="message", type="string", example="Sorry, wrong email address or password. Please try again!"),
+     *       @OA\Property(property="message", type="string", example="Sorry, wrong email address or password. Please, try again!"),
+     *    )
+     * ),
+     * @OA\Response(
+     *    response=500,
+     *    description="Login failed",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="message", type="string", example="Sorry, something went wrong. Please, try again later!"),
      *    )
      * ),
      * )

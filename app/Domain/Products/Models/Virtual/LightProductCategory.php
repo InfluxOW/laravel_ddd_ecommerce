@@ -4,10 +4,10 @@ namespace App\Domain\Products\Models\Virtual;
 
 /**
  * @OA\Schema(
- *   @OA\Xml(name="ProductCategory")
+ *   @OA\Xml(name="LightProductCategory")
  * )
  */
-class ProductCategory
+class LightProductCategory
 {
     /**
      * @OA\Property()
@@ -22,17 +22,4 @@ class ProductCategory
      * @example electronics
      */
     public $slug;
-
-    /**
-     * @OA\Property()
-     * @var int
-     * @example 555
-     */
-    public $products_count;
-
-    /**
-     * @OA\Property()
-     * @var self[]
-     */
-    public $children;
 }
