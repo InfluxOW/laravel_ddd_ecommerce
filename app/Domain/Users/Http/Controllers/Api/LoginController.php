@@ -6,9 +6,10 @@ use App\Domain\Users\Http\Requests\LoginRequest;
 use App\Domain\Users\Http\Resources\UserResource;
 use App\Domain\Users\Models\User;
 use App\Interfaces\Http\Controllers\Controller;
-use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 class LoginController extends Controller
@@ -46,10 +47,10 @@ class LoginController extends Controller
      * ),
      * )
      */
-    public function __invoke(LoginRequest $request): Response
+    public function __invoke(LoginRequest $request): JsonResponse
     {
         if (! Auth::attempt($request->only('email', 'password'), $request->remember)) {
-            return response(['message' => 'Sorry, wrong email address or password. Please, try again!'], 422);
+            return response()->json(['message' => 'Sorry, wrong email address or password. Please, try again!'], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         /** @var User $user */
@@ -62,12 +63,12 @@ class LoginController extends Controller
                 return $user->createToken('access_token')->plainTextToken;
             });
         } catch (Throwable) {
-            return response(['message' => 'Sorry, something went wrong. Please, try again later!'], 500);
+            return response()->json(['message' => 'Sorry, something went wrong. Please, try again later!'], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
-        return response([
+        return response()->json([
             'user' => new UserResource($user),
             'access_token' => $accessToken,
-        ], 200);
+        ]);
     }
 }

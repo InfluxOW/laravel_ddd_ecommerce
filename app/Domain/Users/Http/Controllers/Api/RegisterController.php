@@ -6,7 +6,7 @@ use App\Domain\Users\Http\Requests\RegisterRequest;
 use App\Domain\Users\Http\Resources\UserResource;
 use App\Domain\Users\Models\User;
 use App\Interfaces\Http\Controllers\Controller;
-use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
 
 class RegisterController extends Controller
 {
@@ -58,7 +58,7 @@ class RegisterController extends Controller
      *  )
      * )
      */
-    public function __invoke(RegisterRequest $request): Response
+    public function __invoke(RegisterRequest $request): JsonResponse
     {
         $user = User::query()->create(
             array_merge(
@@ -68,6 +68,6 @@ class RegisterController extends Controller
         );
         $accessToken = $user->createToken('access_token')->plainTextToken;
 
-        return response(['user' => new UserResource($user), 'access_token' => $accessToken], 200);
+        return response()->json(['user' => new UserResource($user), 'access_token' => $accessToken]);
     }
 }

@@ -40,7 +40,7 @@ class LoginControllerTest extends TestCase
     }
 
     /** @test */
-    public function a_user_considered_authorized_via_using_bearer_token(): void
+    public function a_user_is_considered_authenticated_via_using_bearer_token(): void
     {
         $token = $this->user->createToken('access_token')->plainTextToken;
 

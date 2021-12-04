@@ -23,15 +23,14 @@ class LogoutControllerTest extends TestCase
     }
 
     /** @test */
-    public function an_unauthorized_user_cannot_logout(): void
+    public function an_unauthenticated_user_cannot_logout(): void
     {
-        $this->post(route('logout'))
-            ->assertRedirect(route('login'));
+        $this->post(route('logout'))->assertUnauthorized();
     }
 
     /** @test
      */
-    public function an_authorized_user_can_logout(): void
+    public function an_unauthenticated_user_can_logout(): void
     {
         $this->post(route('login'), ['email' => $this->user->email, 'password' => $this->password]);
 
