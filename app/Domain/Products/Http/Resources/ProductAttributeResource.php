@@ -2,8 +2,8 @@
 
 namespace App\Domain\Products\Http\Resources;
 
-use Illuminate\Http\Resources\Json\JsonResource;
 use App\Domain\Products\Models\ProductAttribute;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProductAttributeResource extends JsonResource
 {

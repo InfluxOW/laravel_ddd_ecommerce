@@ -2,9 +2,9 @@
 
 namespace App\Domain\Users\Tests\Feature;
 
+use App\Application\Tests\TestCase;
 use App\Domain\Users\Models\User;
 use Illuminate\Support\Arr;
-use App\Application\Tests\TestCase;
 
 class RegisterControllerTest extends TestCase
 {

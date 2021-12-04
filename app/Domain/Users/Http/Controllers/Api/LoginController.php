@@ -2,10 +2,10 @@
 
 namespace App\Domain\Users\Http\Controllers\Api;
 
-use App\Interfaces\Http\Controllers\Controller;
 use App\Domain\Users\Http\Requests\LoginRequest;
 use App\Domain\Users\Http\Resources\UserResource;
 use App\Domain\Users\Models\User;
+use App\Interfaces\Http\Controllers\Controller;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
