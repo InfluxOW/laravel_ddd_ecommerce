@@ -1,13 +1,15 @@
 <?php
 
-namespace App\Utils;
+namespace App\Domain\Utils;
 
 use BackedEnum;
 use Illuminate\Support\Str;
 
+use function __;
+
 class LangUtils
 {
-    public static function translateEnum(BackedEnum $enum, string|int|null $value = null): array|string|null
+    public static function translateEnum(BackedEnum $enum, string|int|null $value = null): string
     {
         /**
          * Get domain provider in the enum's domain
@@ -20,6 +22,8 @@ class LangUtils
             ->push('Providers', 'DomainServiceProvider')
             ->implode('\\');
 
-        return __(sprintf('%s::enums.%s.%s', $domainProviderClass::ALIAS, $enum::class, $value ?? $enum->value));
+        $translation = __(sprintf('%s::enums.%s.%s', $domainProviderClass::ALIAS, $enum::class, $value ?? $enum->value));
+
+        return is_string($translation) ? $translation : '';
     }
 }

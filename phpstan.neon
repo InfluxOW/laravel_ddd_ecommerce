@@ -14,8 +14,10 @@ parameters:
     excludePaths:
         - app/Domain/*/Enums
         - app/Domain/Products/Casts/KopecksCast.php
+        - */enums.php
 
     ignoreErrors:
         - '#App\\Domain\\[a-zA-Z]+\\Enums#'
+        - '#Cannot access property \$value on string#'
 
     checkMissingIterableValueType: false

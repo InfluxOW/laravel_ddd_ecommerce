@@ -1,7 +1,7 @@
 <?php
 
-use App\Domain\Products\Enums\ProductAllowedFilter;
-use App\Domain\Products\Enums\ProductAllowedSort;
+use App\Domain\Products\Enums\Filters\ProductAllowedFilter;
+use App\Domain\Products\Enums\Sorts\ProductAllowedSort;
 
 return [
     ProductAllowedFilter::class => [
@@ -9,7 +9,7 @@ return [
         ProductAllowedFilter::DESCRIPTION->value => 'Description',
         ProductAllowedFilter::PRICE_BETWEEN->value => 'Price',
         ProductAllowedFilter::CATEGORY->value => 'Category',
-        ProductAllowedFilter::ATTRIBUTE->value => 'Attribute',
+        ProductAllowedFilter::ATTRIBUTE_VALUE->value => 'Attribute',
     ],
     ProductAllowedSort::class => [
         ProductAllowedSort::TITLE->value => 'Title A-Z',

@@ -21,8 +21,9 @@ class ProductIndexRequest extends FormRequest
             'filter.category' => ['nullable', 'array'],
             'filter.category.*' => ['required', 'string'],
             'filter.price_between' => ['nullable', 'array', 'size:2'],
-            'filter.price_between.*' => ['nullable', 'int', 'min:1'],
+            'filter.price_between.*' => ['nullable', 'numeric', 'min:0.01'],
             'filter.attribute.*' => ['nullable', 'array'],
+            'sort' => ['nullable', 'string'],
         ];
     }
 
@@ -33,9 +34,15 @@ class ProductIndexRequest extends FormRequest
                 'filter' => array_merge(
                     $this->filter,
                     array_key_exists('category', $this->filter) ? ['category' => explode(',', $this->filter['category'])] : [],
-                    array_key_exists('price_between', $this->filter) ? ['price_between' => array_map(static fn (string $value) => ($value === '') ? null : (int) $value * Kopecks::KOPECKS_IN_ROUBLE, explode(',', $this->filter['price_between']))] : [],
+                    array_key_exists('price_between', $this->filter) ? ['price_between' => array_map(static fn (string $value) => ($value === '') ? null : (int)(round($value * Kopecks::KOPECKS_IN_ROUBLE)), explode(',', $this->filter['price_between']))] : [],
                     array_key_exists('attribute', $this->filter) ? ['attribute' => array_map(static fn (string $value) => explode(',', $value), $this->filter['attribute'])] : [],
                 ),
+            ]);
+        }
+
+        if (isset($this->sort)) {
+            $this->merge([
+               'sort' => str_starts_with($this->sort, '-') ? '-' . ltrim($this->sort, '-') : $this->sort,
             ]);
         }
     }

@@ -2,8 +2,8 @@
 
 namespace App\Domain\Users\Tests\Feature;
 
-use App\Domain\Users\Models\User;
 use App\Application\Tests\TestCase;
+use App\Domain\Users\Models\User;
 
 class LoginControllerTest extends TestCase
 {

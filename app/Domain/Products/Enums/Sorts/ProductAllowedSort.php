@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Products\Enums;
+namespace App\Domain\Products\Enums\Sorts;
 
 enum ProductAllowedSort: string
 {
