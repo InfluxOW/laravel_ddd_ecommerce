@@ -47,7 +47,7 @@ class ProductController extends Controller
                 ProductAllowedSort::TITLE->value,
                 ProductAllowedSort::CREATED_AT->value,
                 /* @phpstan-ignore-next-line */
-                AllowedSort::callback(ProductAllowedSort::PRICE->value, static fn (Builder|Product $query): Builder => $query->orderByCurrentPrice(AllowedSort::parseSortDirection($validated['sort']))),
+                AllowedSort::callback(ProductAllowedSort::PRICE->value, static fn (Builder|Product $query, bool $descending): Builder => $query->orderByCurrentPrice($descending)),
             ])
             ->defaultSort($defaultSort->query);
 
@@ -61,8 +61,8 @@ class ProductController extends Controller
 
         return ProductResource::collection($products)->additional([
             'query' => [
-                $sortQueryServiceResource->toArray(),
-                $filterQueryServiceResource->toArray(),
+                QueryKey::SORT->value => $sortQueryServiceResource->toArray(),
+                QueryKey::FILTER->value => $filterQueryServiceResource->toArray(),
             ],
         ]);
     }
