@@ -15,7 +15,7 @@ class ProductAttributeResource extends JsonResource
         return [
             'title' => $attribute->title,
             'slug' => $attribute->slug,
-            'type' => $attribute->type->name,
+            'values_type' => $attribute->values_type->readableType()->value,
         ];
     }
 }

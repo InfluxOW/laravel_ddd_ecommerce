@@ -2,7 +2,7 @@
 
 namespace App\Domain\Products\Http\Requests;
 
-use App\Domain\Products\Models\Generic\Kopecks;
+use App\Domain\Generic\Currency\Models\Kopecks;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ProductIndexRequest extends FormRequest

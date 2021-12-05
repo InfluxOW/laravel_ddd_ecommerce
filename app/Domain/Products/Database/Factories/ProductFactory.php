@@ -2,7 +2,7 @@
 
 namespace App\Domain\Products\Database\Factories;
 
-use App\Domain\Products\Models\Generic\Kopecks;
+use App\Domain\Generic\Currency\Models\Kopecks;
 use App\Domain\Products\Models\Product;
 use App\Domain\Products\Models\ProductCategory;
 use Illuminate\Database\Eloquent\Factories\Factory;

@@ -3,7 +3,7 @@
 namespace App\Domain\Products\Models;
 
 use App\Domain\Products\Database\Factories\ProductAttributeFactory;
-use App\Domain\Products\Enums\ProductAttributeType;
+use App\Domain\Products\Enums\ProductAttributeValuesType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\HasSlug;
@@ -15,7 +15,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $id
  * @property string $title
  * @property string $slug
- * @property ProductAttributeType $type
+ * @property ProductAttributeValuesType $values_type
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \App\Domain\Products\Database\Factories\ProductAttributeFactory factory(...$parameters)
@@ -26,8 +26,8 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|ProductAttribute whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ProductAttribute whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ProductAttribute whereTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ProductAttribute whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ProductAttribute whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ProductAttribute whereValuesType($value)
  * @mixin \Eloquent
  */
 class ProductAttribute extends Model
@@ -36,7 +36,7 @@ class ProductAttribute extends Model
     use HasSlug;
 
     protected $casts = [
-        'type' => ProductAttributeType::class,
+        'values_type' => ProductAttributeValuesType::class,
     ];
 
     /*

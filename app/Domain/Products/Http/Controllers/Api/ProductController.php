@@ -2,14 +2,16 @@
 
 namespace App\Domain\Products\Http\Controllers\Api;
 
-use App\Domain\Products\Enums\Filters\ProductAllowedFilter;
-use App\Domain\Products\Enums\Sorts\ProductAllowedSort;
+use App\Domain\Generic\Query\Enums\QueryKey;
+use App\Domain\Generic\Query\Http\Resources\QueryServiceResource;
+use App\Domain\Generic\Query\Models\Sort\Sort;
+use App\Domain\Products\Enums\Query\Filter\ProductAllowedFilter;
+use App\Domain\Products\Enums\Query\Sort\ProductAllowedSort;
 use App\Domain\Products\Http\Requests\ProductIndexRequest;
 use App\Domain\Products\Http\Resources\ProductResource;
-use App\Domain\Products\Models\Generic\Sorts\Sort;
 use App\Domain\Products\Models\Product;
-use App\Domain\Products\Services\Filters\ProductFilterService;
-use App\Domain\Products\Services\Sorts\ProductSortService;
+use App\Domain\Products\Services\Query\Filter\ProductFilterService;
+use App\Domain\Products\Services\Query\Sort\ProductSortService;
 use App\Interfaces\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -26,12 +28,14 @@ class ProductController extends Controller
     {
         $validated = $request->validated();
 
-        $allowedSorts = $sortService->getAllowedSorts();
+        $allowedSorts = $sortService->getAllowed();
         /** @var Sort $defaultSort */
         $defaultSort = $allowedSorts->first();
-        $appliedSort = $sortService->getAppliedSort($request) ?? $defaultSort;
+        $appliedSort = $sortService->getApplied($request) ?? $defaultSort;
+        $sortQueryServiceResource = new QueryServiceResource(QueryKey::SORT, false, $appliedSort->toArray(), $allowedSorts->map->toArray()->toArray());
 
-        $productsQuery = QueryBuilder::for(Product::query()->with(['category', 'attributeValues.attribute']))
+        $productsQueryBase = QueryBuilder::for(Product::query()->with(['category', 'attributeValues.attribute']));
+        $productsQuery = $productsQueryBase->clone()
             ->allowedFilters([
                 ProductAllowedFilter::TITLE->value,
                 ProductAllowedFilter::DESCRIPTION->value,
@@ -47,21 +51,18 @@ class ProductController extends Controller
             ])
             ->defaultSort($defaultSort->query);
 
-        $allowedFilters = $filterService->getAllowedFilters($productsQuery->clone());
-        $appliedFilters = $filterService->getAppliedFilters($request);
+        $allowedFilters = $filterService->setProductsQuery($productsQuery->clone())->getAllowed();
+        $appliedFilters = $filterService->setProductsQuery($productsQueryBase->clone())->getApplied($request);
+        $filterQueryServiceResource = new QueryServiceResource(QueryKey::FILTER, true, $appliedFilters->map->toArray()->toArray(), $allowedFilters->map->toArray()->toArray());
 
         $products = $productsQuery
             ->paginate($request->per_page ?? self::DEFAULT_ITEMS_PER_PAGE)
             ->appends($request->query() ?? []);
 
         return ProductResource::collection($products)->additional([
-            'sorts' => [
-                'applied' => $appliedSort->toArray(),
-                'allowed' => $allowedSorts->map->toArray()->toArray(),
-            ],
-            'filters' => [
-                'applied' => $appliedFilters->map->toArray()->toArray(),
-                'allowed' => $allowedFilters->map->toArray()->toArray(),
+            'query' => [
+                $sortQueryServiceResource->toArray(),
+                $filterQueryServiceResource->toArray(),
             ],
         ]);
     }

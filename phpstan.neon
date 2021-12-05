@@ -13,11 +13,12 @@ parameters:
 
     excludePaths:
         - app/Domain/*/Enums
-        - app/Domain/Products/Casts/KopecksCast.php
+        - app/Domain/Generic/Currency/Casts/KopecksCast.php
         - */enums.php
 
     ignoreErrors:
-        - '#App\\Domain\\[a-zA-Z]+\\Enums#'
+        - '#\\Enums\\#'
         - '#Cannot access property \$value on string#'
+        - '#expects BackedEnum, string given#'
 
     checkMissingIterableValueType: false

@@ -3,7 +3,7 @@
 namespace App\Domain\Products\Models;
 
 use App\Domain\Products\Database\Factories\ProductAttributeValueFactory;
-use App\Domain\Products\Enums\ProductAttributeType;
+use App\Domain\Products\Enums\ProductAttributeValuesType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -66,25 +66,25 @@ class ProductAttributeValue extends Model
 
     public function getValueAttribute(): mixed
     {
-        return $this->{self::getDatabaseValueColumnByAttributeType($this->attribute->type)};
+        return $this->{self::getDatabaseValueColumnByAttributeType($this->attribute->values_type)};
     }
 
     public function setValueAttribute(mixed $value): void
     {
-        $this->{self::getDatabaseValueColumnByAttributeType($this->attribute->type)} = $value;
+        $this->{self::getDatabaseValueColumnByAttributeType($this->attribute->values_type)} = $value;
     }
 
     /*
      * Helpers
      * */
 
-    public static function getDatabaseValueColumnByAttributeType(ProductAttributeType $attributeType): string
+    public static function getDatabaseValueColumnByAttributeType(ProductAttributeValuesType $attributeValuesType): string
     {
-        return match ($attributeType) {
-            ProductAttributeType::BOOLEAN => 'value_boolean',
-            ProductAttributeType::INTEGER => 'value_integer',
-            ProductAttributeType::FLOAT => 'value_float',
-            ProductAttributeType::STRING => 'value_string',
+        return match ($attributeValuesType) {
+            ProductAttributeValuesType::BOOLEAN => 'value_boolean',
+            ProductAttributeValuesType::INTEGER => 'value_integer',
+            ProductAttributeValuesType::FLOAT => 'value_float',
+            ProductAttributeValuesType::STRING => 'value_string',
         };
     }
 

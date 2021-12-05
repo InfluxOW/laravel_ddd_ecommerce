@@ -2,7 +2,7 @@
 
 namespace App\Domain\Products\Database\Factories;
 
-use App\Domain\Products\Enums\ProductAttributeType;
+use App\Domain\Products\Enums\ProductAttributeValuesType;
 use App\Domain\Products\Models\ProductAttribute;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -14,7 +14,7 @@ class ProductAttributeFactory extends Factory
     {
         return [
             'title' => $this->faker->words(3, true),
-            'type' => $this->faker->randomElement(ProductAttributeType::cases()),
+            'values_type' => $this->faker->randomElement(ProductAttributeValuesType::cases()),
         ];
     }
 }

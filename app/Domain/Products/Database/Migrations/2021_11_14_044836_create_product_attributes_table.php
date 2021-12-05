@@ -1,6 +1,6 @@
 <?php
 
-use App\Domain\Products\Enums\ProductAttributeType;
+use App\Domain\Products\Enums\ProductAttributeValuesType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,9 +19,9 @@ class CreateProductAttributesTable extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             /**
-             * @see ProductAttributeType
+             * @see ProductAttributeValuesType
              * */
-            $table->unsignedTinyInteger('type');
+            $table->unsignedTinyInteger('values_type');
             $table->timestamps();
         });
     }

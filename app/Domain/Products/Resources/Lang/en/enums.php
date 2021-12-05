@@ -1,7 +1,8 @@
 <?php
 
-use App\Domain\Products\Enums\Filters\ProductAllowedFilter;
-use App\Domain\Products\Enums\Sorts\ProductAllowedSort;
+use App\Domain\Generic\Utils\EnumUtils;
+use App\Domain\Products\Enums\Query\Filter\ProductAllowedFilter;
+use App\Domain\Products\Enums\Query\Sort\ProductAllowedSort;
 
 return [
     ProductAllowedFilter::class => [
@@ -15,8 +16,8 @@ return [
         ProductAllowedSort::TITLE->value => 'Title A-Z',
         ProductAllowedSort::PRICE->value => 'Cheap First',
         ProductAllowedSort::CREATED_AT->value => 'Oldest First',
-        ProductAllowedSort::TITLE->descendingValue() => 'Title Z-A',
-        ProductAllowedSort::PRICE->descendingValue() => 'Expensive First',
-        ProductAllowedSort::CREATED_AT->descendingValue() => 'Newest First',
+        EnumUtils::descendingValue(ProductAllowedSort::TITLE) => 'Title Z-A',
+        EnumUtils::descendingValue(ProductAllowedSort::PRICE) => 'Expensive First',
+        EnumUtils::descendingValue(ProductAllowedSort::CREATED_AT) => 'Newest First',
     ],
 ];

@@ -2,7 +2,7 @@
 
 namespace App\Domain\Products\Models;
 
-use App\Domain\Products\Casts\KopecksCast;
+use App\Domain\Generic\Currency\Casts\KopecksCast;
 use App\Domain\Products\Database\Factories\ProductFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -20,8 +20,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $title
  * @property string $slug
  * @property string $description
- * @property \App\Domain\Products\Models\Generic\Kopecks $price
- * @property \App\Domain\Products\Models\Generic\Kopecks|null $price_discounted
+ * @property \App\Domain\Generic\Currency\Models\Kopecks $price
+ * @property \App\Domain\Generic\Currency\Models\Kopecks|null $price_discounted
  * @property int $category_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -126,7 +126,7 @@ class Product extends Model
                     $values = (array) $attributesValuesByAttributeSlug[$attribute->slug];
                     $operation = ($i === 0) ? 'where' : 'orWhere';
 
-                    $query->$operation(static fn (Builder $query): Builder => $query->whereIn(ProductAttributeValue::getDatabaseValueColumnByAttributeType($attribute->type), $values));
+                    $query->$operation(static fn (Builder $query): Builder => $query->whereIn(ProductAttributeValue::getDatabaseValueColumnByAttributeType($attribute->values_type), $values));
                 }
             });
         }
