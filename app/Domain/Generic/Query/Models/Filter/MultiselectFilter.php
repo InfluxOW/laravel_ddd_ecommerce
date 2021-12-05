@@ -52,22 +52,16 @@ class MultiselectFilter extends Filter
     {
         $filter = clone ($this);
 
-        if ($filter->isNested) {
-            $correctValues = $this->values
-                ->filter(function (MultiselectFilterNestedValues $attributeWithValues) use ($values): bool {
-                    return array_key_exists($attributeWithValues->attribute->query, $values);
-                })
-                ->map(function (MultiselectFilterNestedValues $attributeWithValues) use ($values): MultiselectFilterNestedValues {
-                    $correctValues = collect($values[$attributeWithValues->attribute->query])
-                        ->filter(function (string $value) use ($attributeWithValues): bool {
-                            return $attributeWithValues->values->contains($value);
-                        });
-
-                    return new MultiselectFilterNestedValues($attributeWithValues->attribute, $correctValues);
-                });
-        } else {
-            $correctValues = $this->values->filter(fn (string $value) => in_array($value, $values, true));
-        }
+        $correctValues = match ($filter->isNested) {
+            false => $this->values
+                ->filter(fn (string $value) => in_array($value, $values, true)),
+            true => $this->values
+                ->filter(fn (MultiselectFilterNestedValues $attributeWithValues): bool => array_key_exists($attributeWithValues->attribute->query, $values))
+                ->map(fn (MultiselectFilterNestedValues $attributeWithValues): MultiselectFilterNestedValues => new MultiselectFilterNestedValues(
+                    $attributeWithValues->attribute,
+                    collect($values[$attributeWithValues->attribute->query])->filter(fn (string $value): bool => $attributeWithValues->values->contains($value))
+                ))
+        };
 
         $filter->values = $correctValues->values();
 

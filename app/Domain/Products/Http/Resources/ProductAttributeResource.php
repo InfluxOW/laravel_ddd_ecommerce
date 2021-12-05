@@ -13,8 +13,8 @@ class ProductAttributeResource extends JsonResource
         $attribute = $this->resource;
 
         return [
-            'title' => $attribute->title,
             'slug' => $attribute->slug,
+            'title' => $attribute->title,
             'values_type' => $attribute->values_type->readableType()->value,
         ];
     }

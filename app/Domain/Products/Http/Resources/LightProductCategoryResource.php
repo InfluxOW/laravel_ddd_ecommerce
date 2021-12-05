@@ -13,8 +13,8 @@ class LightProductCategoryResource extends JsonResource
         $category = $this->resource;
 
         return [
-            'title' => $category->title,
             'slug' => $category->slug,
+            'title' => $category->title,
         ];
     }
 }

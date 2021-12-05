@@ -119,8 +119,8 @@ abstract class ServiceProviderBase extends LaravelServiceProvider
      */
     public function register(): void
     {
-        collect($this->providers)->each(function ($providerClass) {
-            $this->app->register($providerClass);
-        });
+        foreach ($this->providers as $provider) {
+            $this->app->register($provider);
+        }
     }
 }

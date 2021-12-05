@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Query\Expression;
 use Illuminate\Support\Facades\DB;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
@@ -93,6 +94,11 @@ class Product extends Model
         return ProductFactory::new();
     }
 
+    private function getDatabasePriceExpression(): Expression
+    {
+        return DB::raw('COALESCE(price_discounted, price)');
+    }
+
     /*
      * Scopes
      * */
@@ -134,18 +140,18 @@ class Product extends Model
 
     public function scopeWherePriceAbove(Builder $query, int $minPrice): void
     {
-        $query->where(DB::raw('COALESCE(price_discounted, price)'), '>=', $minPrice);
+        $query->where($this->getDatabasePriceExpression(), '>=', $minPrice);
     }
 
     public function scopeWherePriceBelow(Builder $query, int $maxPrice): void
     {
-        $query->where(DB::raw('COALESCE(price_discounted, price)'), '<=', $maxPrice);
+        $query->where($this->getDatabasePriceExpression(), '<=', $maxPrice);
     }
 
     public function scopeWherePriceBetween(Builder|Product $query, ?int $minPrice, ?int $maxPrice): void
     {
         if (isset($minPrice, $maxPrice)) {
-            $query->whereBetween(DB::raw('COALESCE(price_discounted, price)'), [$minPrice, $maxPrice]);
+            $query->whereBetween($this->getDatabasePriceExpression(), [$minPrice, $maxPrice]);
         } elseif (isset($minPrice)) {
             $query->wherePriceAbove($minPrice);
         } elseif (isset($maxPrice)) {
@@ -155,6 +161,6 @@ class Product extends Model
 
     public function scopeOrderByCurrentPrice(Builder $query, bool $descending): void
     {
-        $query->orderBy(DB::raw('COALESCE(price_discounted, price)'), $descending ? 'DESC' : 'ASC');
+        $query->orderBy($this->getDatabasePriceExpression(), $descending ? 'DESC' : 'ASC');
     }
 }
