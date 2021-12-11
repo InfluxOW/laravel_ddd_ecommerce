@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Domain\Admin\Database\Seeders\AdminSeeder;
 use App\Domain\Products\Database\Seeders\ProductAttributeSeeder;
 use App\Domain\Products\Database\Seeders\ProductAttributeValueSeeder;
 use App\Domain\Products\Database\Seeders\ProductCategorySeeder;
@@ -20,6 +21,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             UserSeeder::class,
+            AdminSeeder::class,
             ProductCategorySeeder::class,
             ProductAttributeSeeder::class,
             ProductSeeder::class,

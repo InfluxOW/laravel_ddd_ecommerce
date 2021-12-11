@@ -176,6 +176,7 @@ return [
          */
         App\Domain\Users\Providers\DomainServiceProvider::class,
         App\Domain\Products\Providers\DomainServiceProvider::class,
+        App\Domain\Admin\Providers\DomainServiceProvider::class,
     ],
 
     /*
