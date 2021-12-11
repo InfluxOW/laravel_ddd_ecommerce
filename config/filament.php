@@ -1,10 +1,10 @@
 <?php
 
+use App\Domain\Users\Admin\Resources\UserResource;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Http\Middleware\MirrorConfigToSubpackages;
 use Filament\Pages;
-use Filament\Resources;
 use Filament\Widgets;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -88,7 +88,9 @@ return [
     'resources' => [
         'namespace' => 'App\\Domain\\Admin\\Panel\\Resources',
         'path' => app_path('Domain/Admin/Panel/Resources'),
-        'register' => [],
+        'register' => [
+            UserResource::class,
+        ],
     ],
 
     /*
@@ -123,7 +125,7 @@ return [
     */
 
     'layout' => [
-        'max_content_width' => null,
+        'max_content_width' => 'full',
     ],
 
     /*
