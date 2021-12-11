@@ -181,6 +181,7 @@ return [
         // List of URIs that should be collected, any other URI will not be collected if not empty
         'only' => [
              '/api/.*',
+             '/admin/.*',
         ],
 
         // Don't collect OPTIONS requests, mostly used in the CSRF pre-flight requests and are rarely of interest

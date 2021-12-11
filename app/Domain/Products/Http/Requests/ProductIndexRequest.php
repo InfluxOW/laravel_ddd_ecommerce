@@ -34,8 +34,8 @@ class ProductIndexRequest extends FormRequest
                 'filter' => array_merge(
                     $this->filter,
                     array_key_exists('category', $this->filter) ? ['category' => explode(',', $this->filter['category'])] : [],
-                    array_key_exists('price_between', $this->filter) ? ['price_between' => array_map(static fn (string $value) => ($value === '') ? null : (int)(round($value * Kopecks::KOPECKS_IN_ROUBLE)), explode(',', $this->filter['price_between']))] : [],
-                    array_key_exists('attribute', $this->filter) ? ['attribute' => array_map(static fn (string $value) => explode(',', $value), $this->filter['attribute'])] : [],
+                    array_key_exists('price_between', $this->filter) ? ['price_between' => array_map(static fn (string $value): ?int => ($value === '') ? null : (int)(round($value * Kopecks::KOPECKS_IN_ROUBLE)), explode(',', $this->filter['price_between']))] : [],
+                    array_key_exists('attribute', $this->filter) ? ['attribute' => array_map(static fn (string $value): array => explode(',', $value), $this->filter['attribute'])] : [],
                 ),
             ]);
         }

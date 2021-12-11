@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Collection;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -25,6 +26,9 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|ProductCategory[] $children
  * @property-read int|null $children_count
+ * @property-read int $overall_products_count
+ * @property-read string|null $path
+ * @property-read string $table_title
  * @property-read \Illuminate\Database\Eloquent\Collection|ProductCategory[] $immediateDescendants
  * @property-read int|null $immediate_descendants_count
  * @property-read ProductCategory|null $parent
@@ -58,6 +62,12 @@ class ProductCategory extends Model
     public const MAX_DEPTH = 3;
 
     protected string $orderColumnName = 'title';
+    protected $fillable = [
+        'title',
+        'slug',
+    ];
+
+    public static Collection $hierarchy;
 
     /*
      * Relations
@@ -86,6 +96,30 @@ class ProductCategory extends Model
         });
     }
 
+    public function getOverallProductsCountAttribute(): int
+    {
+        $category = self::findInHierarchy($this->id);
+
+        return ($category === null) ? 0 : $category->getProductsCount();
+    }
+
+    public function getTableTitleAttribute(): string
+    {
+        return str_repeat('⇒ ', $this->depth ?? 0) . $this->title;
+    }
+
+    public function getPathAttribute(): ?string
+    {
+        $path = [];
+        $category = self::findInHierarchy($this->id)?->parent;
+        while (isset($category)) {
+            $path[] = $category->title;
+            $category = $category->parent;
+        }
+
+        return implode(' — ', $path);
+    }
+
     /*
      * Helpers
      * */
@@ -93,5 +127,24 @@ class ProductCategory extends Model
     protected static function newFactory(): ProductCategoryFactory
     {
         return ProductCategoryFactory::new();
+    }
+
+    public static function loadHierarchy(): void
+    {
+        self::$hierarchy = self::$hierarchy ?? self::query()->with(['parent'])->withCount(['products'])->get()->toHierarchy();
+    }
+
+    public static function findInHierarchy(int $id): ?self
+    {
+        $categories = self::$hierarchy;
+        $category = null;
+        while ($categories->isNotEmpty() && $category === null) {
+            $category = $categories->filter(fn (self $category): bool => $category->id === $id)->first();
+            if ($category === null) {
+                $categories = $categories->map->children->flatten();
+            }
+        }
+
+        return $category;
     }
 }

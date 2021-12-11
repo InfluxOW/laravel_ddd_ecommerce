@@ -1,5 +1,6 @@
 <?php
 
+use App\Domain\Products\Admin\Resources\ProductCategoryResource;
 use App\Domain\Users\Admin\Resources\UserResource;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -90,6 +91,7 @@ return [
         'path' => app_path('Domain/Admin/Panel/Resources'),
         'register' => [
             UserResource::class,
+            ProductCategoryResource::class,
         ],
     ],
 

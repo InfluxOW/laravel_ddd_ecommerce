@@ -54,7 +54,7 @@ class MultiselectFilter extends Filter
 
         $correctValues = match ($filter->isNested) {
             false => $this->values
-                ->filter(fn (string $value) => in_array($value, $values, true)),
+                ->filter(fn (string $value): bool => in_array($value, $values, true)),
             true => $this->values
                 ->filter(fn (MultiselectFilterNestedValues $attributeWithValues): bool => array_key_exists($attributeWithValues->attribute->query, $values))
                 ->map(fn (MultiselectFilterNestedValues $attributeWithValues): MultiselectFilterNestedValues => new MultiselectFilterNestedValues(

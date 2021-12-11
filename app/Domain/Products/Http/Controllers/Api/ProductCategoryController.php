@@ -35,8 +35,8 @@ class ProductCategoryController extends Controller
      */
     public function index(): AnonymousResourceCollection
     {
-        $categories = ProductCategory::query()->withCount(['products'])->get()->toHierarchy();
+        ProductCategory::loadHierarchy();
 
-        return HeavyProductCategoryResource::collection($categories);
+        return HeavyProductCategoryResource::collection(ProductCategory::$hierarchy);
     }
 }

@@ -27,6 +27,6 @@ class ProductSortService implements QueryService
         /** @var string $sortQuery */
         $sortQuery = $request->query('sort');
 
-        return $this->getAllowed()->filter(static fn (Sort $sort) => ($sort->query === $sortQuery))->first();
+        return $this->getAllowed()->filter(static fn (Sort $sort): bool => ($sort->query === $sortQuery))->first();
     }
 }

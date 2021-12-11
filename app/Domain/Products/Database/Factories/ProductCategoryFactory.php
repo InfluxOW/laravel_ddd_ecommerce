@@ -13,6 +13,7 @@ class ProductCategoryFactory extends Factory
     {
         return [
             'title' => $this->faker->unique()->words(3, true),
+            'created_at' => $this->faker->dateTimeBetween('-1 year'),
         ];
     }
 }
