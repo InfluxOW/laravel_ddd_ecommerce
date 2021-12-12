@@ -94,7 +94,7 @@ class Product extends Model
         return ProductFactory::new();
     }
 
-    private function getDatabasePriceExpression(): Expression
+    public static function getDatabasePriceExpression(): Expression
     {
         return DB::raw('COALESCE(price_discounted, price)');
     }
@@ -140,18 +140,18 @@ class Product extends Model
 
     public function scopeWherePriceAbove(Builder $query, int $minPrice): void
     {
-        $query->where($this->getDatabasePriceExpression(), '>=', $minPrice);
+        $query->where(self::getDatabasePriceExpression(), '>=', $minPrice);
     }
 
     public function scopeWherePriceBelow(Builder $query, int $maxPrice): void
     {
-        $query->where($this->getDatabasePriceExpression(), '<=', $maxPrice);
+        $query->where(self::getDatabasePriceExpression(), '<=', $maxPrice);
     }
 
     public function scopeWherePriceBetween(Builder|Product $query, ?int $minPrice, ?int $maxPrice): void
     {
         if (isset($minPrice, $maxPrice)) {
-            $query->whereBetween($this->getDatabasePriceExpression(), [$minPrice, $maxPrice]);
+            $query->whereBetween(self::getDatabasePriceExpression(), [$minPrice, $maxPrice]);
         } elseif (isset($minPrice)) {
             $query->wherePriceAbove($minPrice);
         } elseif (isset($maxPrice)) {
@@ -161,6 +161,6 @@ class Product extends Model
 
     public function scopeOrderByCurrentPrice(Builder $query, bool $descending): void
     {
-        $query->orderBy($this->getDatabasePriceExpression(), $descending ? 'DESC' : 'ASC');
+        $query->orderBy(self::getDatabasePriceExpression(), $descending ? 'DESC' : 'ASC');
     }
 }

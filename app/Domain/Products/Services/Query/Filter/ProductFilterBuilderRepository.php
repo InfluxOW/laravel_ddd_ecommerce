@@ -4,6 +4,7 @@ namespace App\Domain\Products\Services\Query\Filter;
 
 use App\Domain\Generic\Query\Models\Filter\Resources\Multiselect\MultiselectFilterNestedValues;
 use App\Domain\Generic\Query\Models\Filter\Resources\Multiselect\MultiselectFilterNestedValuesAttribute;
+use App\Domain\Products\Models\Product;
 use App\Domain\Products\Models\ProductAttribute;
 use App\Domain\Products\Models\ProductAttributeValue;
 use App\Domain\Products\Models\ProductCategory;
@@ -50,11 +51,11 @@ class ProductFilterBuilderRepository
 
     public function getMinPrice(SpatieQueryBuilder $productsQuery): ?int
     {
-        return $productsQuery->min(DB::raw('COALESCE(price_discounted, price)'));
+        return $productsQuery->min(Product::getDatabasePriceExpression());
     }
 
     public function getMaxPrice(SpatieQueryBuilder $productsQuery): ?int
     {
-        return $productsQuery->max(DB::raw('COALESCE(price_discounted, price)'));
+        return $productsQuery->max(Product::getDatabasePriceExpression());
     }
 }
