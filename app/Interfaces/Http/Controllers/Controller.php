@@ -13,26 +13,27 @@ use Illuminate\Routing\Controller as BaseController;
  *    description="App",
  *    version="1.0.0",
  *    @OA\Contact(
- *      email="krochak_n@mail.ru",
- *      url="https://github.com/InfluxOW"
- *    )
- * )
+ *       email="krochak_n@mail.ru",
+ *       url="https://github.com/InfluxOW"
+ *    ),
+ * ),
  *  @OA\Server(
- *      url=L5_SWAGGER_CONST_HOST,
- *      description="App API Server"
+ *     url=L5_SWAGGER_CONST_HOST,
+ *     description="App API Server"
  * ),
  *  @OA\SecurityScheme(
- *      securityScheme="access_token",
- *      type="http",
- *      scheme="bearer",
- *      in="header",
- *      name="Authorization",
- *      bearerFormat="JWT"
- *  )
+ *     securityScheme="access_token",
+ *     type="http",
+ *     scheme="bearer",
+ *     in="header",
+ *     name="Authorization",
+ *     bearerFormat="JWT"
+ *  ),
  */
-class Controller extends BaseController
+abstract class Controller extends BaseController
 {
     use AuthorizesRequests;
     use DispatchesJobs;
     use ValidatesRequests;
+    use ResponseTrait;
 }

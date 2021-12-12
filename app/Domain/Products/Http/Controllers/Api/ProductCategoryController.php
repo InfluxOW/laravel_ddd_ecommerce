@@ -9,34 +9,12 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class ProductCategoryController extends Controller
 {
-    /**
-     * @OA\Get(
-     * path="/categories",
-     * summary="Categories Index",
-     * description="View categories tree",
-     * operationId="categoriesIndex",
-     * tags={"Categories"},
-     * @OA\Response(
-     *    response=200,
-     *    description="Categories were fetched",
-     *    @OA\JsonContent(
-     *    @OA\Property(
-     *     property="data",
-     *     type="array",
-     *     collectionFormat="multi",
-     *     @OA\Items(
-     *       type="object",
-     *       ref="#/components/schemas/HeavyProductCategory",
-     *     ),
-     *    ),
-     *   ),
-     *  ),
-     * )
-     */
+    protected string $resource = HeavyProductCategoryResource::class;
+
     public function index(): AnonymousResourceCollection
     {
         ProductCategory::loadHierarchy();
 
-        return HeavyProductCategoryResource::collection(ProductCategory::$hierarchy);
+        return $this->respondWithCollection(ProductCategory::$hierarchy);
     }
 }

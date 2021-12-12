@@ -14,6 +14,7 @@ use App\Domain\Products\Services\Query\Filter\ProductFilterService;
 use App\Domain\Products\Services\Query\Sort\ProductSortService;
 use App\Interfaces\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -22,6 +23,8 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class ProductController extends Controller
 {
+    protected string $resource = ProductResource::class;
+
     private const DEFAULT_ITEMS_PER_PAGE = 20;
 
     public function index(ProductIndexRequest $request, ProductFilterService $filterService, ProductSortService $sortService): AnonymousResourceCollection
@@ -59,7 +62,7 @@ class ProductController extends Controller
             ->paginate($request->per_page ?? self::DEFAULT_ITEMS_PER_PAGE)
             ->appends($request->query() ?? []);
 
-        return ProductResource::collection($products)->additional([
+        return $this->respondWithCollection($products, [
             'query' => [
                 QueryKey::SORT->value => $sortQueryServiceResource->toArray(),
                 QueryKey::FILTER->value => $filterQueryServiceResource->toArray(),
@@ -67,8 +70,14 @@ class ProductController extends Controller
         ]);
     }
 
-    public function show(Product $product): JsonResource
+    public function show(string $slug): JsonResource|JsonResponse
     {
-        return ProductResource::make($product);
+        $product = Product::query()->where('slug', $slug)->first();
+
+        if ($product === null) {
+            return $this->respondWithMessage("Product '{$slug}' was not found.");
+        }
+
+        return $this->respondWithItem($product);
     }
 }

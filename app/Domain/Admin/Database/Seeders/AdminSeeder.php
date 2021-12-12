@@ -3,7 +3,6 @@
 namespace App\Domain\Admin\Database\Seeders;
 
 use App\Domain\Admin\Models\Admin;
-use App\Domain\Users\Models\ProductCategory;
 use Illuminate\Database\Seeder;
 
 class AdminSeeder extends Seeder
