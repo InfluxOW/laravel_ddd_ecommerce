@@ -4,7 +4,7 @@ namespace App\Domain\Products\Models\Virtual;
 
 /**
  * @OA\Schema(
- *   @OA\Xml(name="ProductAttribute")
+ *    @OA\Xml(name="ProductAttribute")
  * )
  */
 class ProductAttribute

@@ -4,7 +4,7 @@ namespace App\Domain\Products\Models\Virtual;
 
 /**
  * @OA\Schema(
- *   @OA\Xml(name="Product")
+ *    @OA\Xml(name="Product")
  * )
  */
 class Product
@@ -26,7 +26,7 @@ class Product
     /**
      * @OA\Property()
      * @var string
-     * @example 31 12 2020
+     * @example 20 Oct 2020 22:40:18
      */
     public $created_at;
 

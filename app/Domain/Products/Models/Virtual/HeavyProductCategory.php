@@ -4,7 +4,7 @@ namespace App\Domain\Products\Models\Virtual;
 
 /**
  * @OA\Schema(
- *   @OA\Xml(name="HeavyProductCategory")
+ *    @OA\Xml(name="HeavyProductCategory")
  * )
  */
 class HeavyProductCategory extends LightProductCategory

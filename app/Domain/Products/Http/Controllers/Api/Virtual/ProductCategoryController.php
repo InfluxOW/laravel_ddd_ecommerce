@@ -15,17 +15,17 @@ class ProductCategoryController
      *    response=200,
      *    description="Categories were fetched",
      *    @OA\JsonContent(
-     *    @OA\Property(
-     *     property="data",
-     *     type="array",
-     *     collectionFormat="multi",
-     *     @OA\Items(
-     *       type="object",
-     *       ref="#/components/schemas/HeavyProductCategory",
-     *     ),
+     *       @OA\Property(
+     *          property="data",
+     *          type="array",
+     *          collectionFormat="multi",
+     *          @OA\Items(
+     *             type="object",
+     *             ref="#/components/schemas/HeavyProductCategory",
+     *          ),
+     *       ),
      *    ),
-     *   ),
-     *  ),
+     * ),
      * )
      */
     public function index(): void

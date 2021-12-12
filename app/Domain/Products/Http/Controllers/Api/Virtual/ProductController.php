@@ -116,31 +116,33 @@ class ProductController
 
     /**
      * @OA\Get(
-     * path="/products/{product:slug}",
-     * summary="Products Show",
-     * description="View a specific product",
-     * operationId="productsShow",
-     * tags={"Products"},
-     * @OA\Parameter(
-     *    name="product:slug",
-     *    in="path",
-     *    required=true,
-     *    @OA\Schema(
-     *      type="string"
+     *    path="/products/{product:slug}",
+     *    summary="Products Show",
+     *    description="View a specific product",
+     *    operationId="productsShow",
+     *    tags={"Products"},
+     *    @OA\Parameter(
+     *       name="product:slug",
+     *       in="path",
+     *       required=true,
+     *       @OA\Schema(
+     *          type="string"
+     *       ),
      *    ),
-     * ),
-     * @OA\Response(
-     *    response=200,
-     *    description="Specified product has been found",
-     *    @OA\JsonContent(
-     *      type="object",
-     *      ref="#/components/schemas/Product",
-     *  ),
-     * ),
-     * @OA\Response(
-     *    response=404,
-     *    description="Specified product has not been found",
-     *  ),
+     *    @OA\Response(
+     *       response=200,
+     *       description="Specified product has been found",
+     *       @OA\JsonContent(
+     *          @OA\Property(property="data", type="object", ref="#/components/schemas/Product"),
+     *       ),
+     *    ),
+     *    @OA\Response(
+     *       response=404,
+     *       description="Specified product has not been found",
+     *       @OA\JsonContent(
+     *          @OA\Property(property="message", type="string", example="Product 'test' was not found."),
+     *       ),
+     *    ),
      * )
      */
     public function show(): void

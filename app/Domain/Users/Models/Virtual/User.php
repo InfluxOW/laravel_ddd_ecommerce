@@ -4,7 +4,7 @@ namespace App\Domain\Users\Models\Virtual;
 
 /**
  * @OA\Schema(
- *   @OA\Xml(name="User")
+ *    @OA\Xml(name="User")
  * )
  */
 class User
@@ -22,4 +22,18 @@ class User
      * @example john_doe@gmail.com
      */
     public $email;
+
+    /**
+     * @OA\Property(format="phone")
+     * @var string
+     * @example +12225657785
+     */
+    public $phone;
+
+    /**
+     * @OA\Property()
+     * @var string
+     * @example 20 Oct 2020 22:40:18
+     */
+    public $created_at;
 }
