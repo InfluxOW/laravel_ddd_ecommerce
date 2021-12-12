@@ -2,6 +2,7 @@
 
 namespace App\Domain\Products\Services\Query\Sort;
 
+use App\Domain\Generic\Query\Enums\QueryKey;
 use App\Domain\Generic\Query\Interfaces\QueryService;
 use App\Domain\Generic\Query\Models\Sort\Sort;
 use App\Domain\Products\Enums\Query\Sort\ProductAllowedSort;
@@ -25,7 +26,7 @@ class ProductSortService implements QueryService
     public function getApplied(Request $request): ?Sort
     {
         /** @var string $sortQuery */
-        $sortQuery = $request->query('sort');
+        $sortQuery = $request->query(QueryKey::SORT->value);
 
         return $this->getAllowed()->filter(static fn (Sort $sort): bool => ($sort->query === $sortQuery))->first();
     }

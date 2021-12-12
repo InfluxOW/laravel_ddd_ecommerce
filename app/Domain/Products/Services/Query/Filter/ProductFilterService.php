@@ -2,6 +2,7 @@
 
 namespace App\Domain\Products\Services\Query\Filter;
 
+use App\Domain\Generic\Query\Enums\QueryKey;
 use App\Domain\Generic\Query\Interfaces\QueryService;
 use App\Domain\Generic\Query\Models\Filter\Filter;
 use Illuminate\Http\Request;
@@ -37,7 +38,7 @@ class ProductFilterService implements QueryService
     public function getApplied(Request $request): Collection
     {
         /** @var array $queryFilters */
-        $queryFilters = $request->query('filter', []);
+        $queryFilters = $request->query(QueryKey::FILTER->value, []);
 
         $appliedFilters = collect([]);
         if (count($queryFilters) > 0) {

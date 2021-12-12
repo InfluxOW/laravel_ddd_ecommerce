@@ -42,9 +42,9 @@ class ProductController extends Controller
             ->allowedFilters([
                 ProductAllowedFilter::TITLE->value,
                 ProductAllowedFilter::DESCRIPTION->value,
-                AllowedFilter::callback(ProductAllowedFilter::CATEGORY->value, static fn (Builder|Product $query): Builder => $query->whereInCategory($validated['filter'][ProductAllowedFilter::CATEGORY->value])),
-                AllowedFilter::callback(ProductAllowedFilter::PRICE_BETWEEN->value, static fn (Builder|Product $query): Builder => $query->wherePriceBetween(...$validated['filter'][ProductAllowedFilter::PRICE_BETWEEN->value])),
-                AllowedFilter::callback(ProductAllowedFilter::ATTRIBUTE_VALUE->value, static fn (Builder|Product $query): Builder => $query->whereHasAttributeValue($validated['filter'][ProductAllowedFilter::ATTRIBUTE_VALUE->value])),
+                AllowedFilter::callback(ProductAllowedFilter::CATEGORY->value, static fn (Builder|Product $query): Builder => $query->whereInCategory($validated[QueryKey::FILTER->value][ProductAllowedFilter::CATEGORY->value])),
+                AllowedFilter::callback(ProductAllowedFilter::PRICE_BETWEEN->value, static fn (Builder|Product $query): Builder => $query->wherePriceBetween(...$validated[QueryKey::FILTER->value][ProductAllowedFilter::PRICE_BETWEEN->value])),
+                AllowedFilter::callback(ProductAllowedFilter::ATTRIBUTE_VALUE->value, static fn (Builder|Product $query): Builder => $query->whereHasAttributeValue($validated[QueryKey::FILTER->value][ProductAllowedFilter::ATTRIBUTE_VALUE->value])),
             ])
             ->allowedSorts([
                 ProductAllowedSort::TITLE->value,
