@@ -151,7 +151,7 @@ class Product extends Model
     public function scopeWherePriceBetween(Builder|Product $query, ?int $minPrice, ?int $maxPrice): void
     {
         if (isset($minPrice, $maxPrice)) {
-            $query->whereBetween(self::getDatabasePriceExpression(), [$minPrice, $maxPrice]);
+            $query->whereBetween(self::getDatabasePriceExpression(), $minPrice > $maxPrice ? [$maxPrice, $minPrice] : [$minPrice, $maxPrice]);
         } elseif (isset($minPrice)) {
             $query->wherePriceAbove($minPrice);
         } elseif (isset($maxPrice)) {

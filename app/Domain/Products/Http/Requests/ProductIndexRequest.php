@@ -36,7 +36,7 @@ class ProductIndexRequest extends FormRequest
                     $this->filter,
                     array_key_exists('category', $this->filter) ? ['category' => explode(',', $this->filter['category'])] : [],
                     array_key_exists('price_between', $this->filter) ? ['price_between' => array_map(static fn (string $value): ?int => ($value === '') ? null : (int)(round($value * Kopecks::KOPECKS_IN_ROUBLE)), explode(',', $this->filter['price_between']))] : [],
-                    array_key_exists('attribute', $this->filter) ? ['attribute' => array_map(static fn (string $value): array => explode(',', $value), $this->filter['attribute'])] : [],
+                    array_key_exists('attribute', $this->filter) ? ['attribute' => array_map(static fn (string $value): array => explode(',', $value), (array) $this->filter['attribute'])] : [],
                 ),
             ]);
         }
@@ -46,5 +46,10 @@ class ProductIndexRequest extends FormRequest
                QueryKey::SORT->value => str_starts_with($this->sort, '-') ? '-' . ltrim($this->sort, '-') : $this->sort,
             ]);
         }
+    }
+
+    public function attributes(): array
+    {
+        return array_combine(array_keys($this->rules()), array_keys($this->rules()));
     }
 }

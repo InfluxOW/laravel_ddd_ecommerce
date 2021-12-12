@@ -21,16 +21,4 @@ class ProductControllerTest extends TestCase
             ProductAttributeValueSeeder::class,
         ]);
     }
-
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    public function test_example()
-    {
-//        $response = $this->get(route('products.index', ['filter[category]' => 'test']));
-
-//        dd(json_decode($response->getContent()));
-    }
 }

@@ -35,7 +35,7 @@ class ProductController extends Controller
         /** @var Sort $defaultSort */
         $defaultSort = $allowedSorts->first();
         $appliedSort = $sortService->getApplied($request) ?? $defaultSort;
-        $sortQueryServiceResource = new QueryServiceResource(QueryKey::SORT, false, $appliedSort->toArray(), $allowedSorts->map->toArray()->toArray());
+        $sortQueryServiceResource = new QueryServiceResource(QueryKey::SORT, false, [$appliedSort->toArray()], $allowedSorts->map->toArray()->toArray());
 
         $productsQueryBase = QueryBuilder::for(Product::query()->with(['category', 'attributeValues.attribute']));
         $productsQuery = $productsQueryBase->clone()
