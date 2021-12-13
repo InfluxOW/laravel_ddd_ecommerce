@@ -1102,16 +1102,16 @@
         },
         {
             "name": "filament/filament",
-            "version": "v2.5.19",
+            "version": "v2.5.26",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel-filament/admin.git",
-                "reference": "7d6b67fe23f6969749b69adebd3625dae8078e9e"
+                "reference": "9111fb3c76fb7eee4af8721fb4720c44f71ec53f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel-filament/admin/zipball/7d6b67fe23f6969749b69adebd3625dae8078e9e",
-                "reference": "7d6b67fe23f6969749b69adebd3625dae8078e9e",
+                "url": "https://api.github.com/repos/laravel-filament/admin/zipball/9111fb3c76fb7eee4af8721fb4720c44f71ec53f",
+                "reference": "9111fb3c76fb7eee4af8721fb4720c44f71ec53f",
                 "shasum": ""
             },
             "require": {
@@ -1158,20 +1158,20 @@
                 "issues": "https://github.com/laravel-filament/filament/issues",
                 "source": "https://github.com/laravel-filament/filament"
             },
-            "time": "2021-12-13T11:28:47+00:00"
+            "time": "2021-12-15T00:15:33+00:00"
         },
         {
             "name": "filament/forms",
-            "version": "v2.5.19",
+            "version": "v2.5.26",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel-filament/forms.git",
-                "reference": "338c13bc7542d78c40bf865dc8cd07334e416941"
+                "reference": "2f918c9bea6b7e44e702837283d1599ab6b580d6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel-filament/forms/zipball/338c13bc7542d78c40bf865dc8cd07334e416941",
-                "reference": "338c13bc7542d78c40bf865dc8cd07334e416941",
+                "url": "https://api.github.com/repos/laravel-filament/forms/zipball/2f918c9bea6b7e44e702837283d1599ab6b580d6",
+                "reference": "2f918c9bea6b7e44e702837283d1599ab6b580d6",
                 "shasum": ""
             },
             "require": {
@@ -1211,20 +1211,20 @@
                 "issues": "https://github.com/laravel-filament/filament/issues",
                 "source": "https://github.com/laravel-filament/filament"
             },
-            "time": "2021-12-13T11:28:49+00:00"
+            "time": "2021-12-14T18:59:06+00:00"
         },
         {
             "name": "filament/tables",
-            "version": "v2.5.19",
+            "version": "v2.5.26",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel-filament/tables.git",
-                "reference": "8d5f7be4465e71983df4c2225b3c9e37cacda431"
+                "reference": "5b1d0a4df57debfdb9ee371eea5d44f72986391f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel-filament/tables/zipball/8d5f7be4465e71983df4c2225b3c9e37cacda431",
-                "reference": "8d5f7be4465e71983df4c2225b3c9e37cacda431",
+                "url": "https://api.github.com/repos/laravel-filament/tables/zipball/5b1d0a4df57debfdb9ee371eea5d44f72986391f",
+                "reference": "5b1d0a4df57debfdb9ee371eea5d44f72986391f",
                 "shasum": ""
             },
             "require": {
@@ -1264,7 +1264,7 @@
                 "issues": "https://github.com/laravel-filament/filament/issues",
                 "source": "https://github.com/laravel-filament/filament"
             },
-            "time": "2021-12-12T23:48:31+00:00"
+            "time": "2021-12-15T08:47:07+00:00"
         },
         {
             "name": "fruitcake/laravel-cors",
@@ -1730,16 +1730,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.75.0",
+            "version": "v8.76.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "0bb91d3176357da232da69762a64b0e0a0988637"
+                "reference": "83fe447ae964dc5f1f829d25fa2f6042d9099834"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/0bb91d3176357da232da69762a64b0e0a0988637",
-                "reference": "0bb91d3176357da232da69762a64b0e0a0988637",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/83fe447ae964dc5f1f829d25fa2f6042d9099834",
+                "reference": "83fe447ae964dc5f1f829d25fa2f6042d9099834",
                 "shasum": ""
             },
             "require": {
@@ -1898,20 +1898,20 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2021-12-07T14:55:46+00:00"
+            "time": "2021-12-14T16:21:19+00:00"
         },
         {
             "name": "laravel/sanctum",
-            "version": "v2.12.2",
+            "version": "v2.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/sanctum.git",
-                "reference": "76b2d552c00477d520338889160f80a0cfb5fc55"
+                "reference": "b4c07d0014b78430a3c827064217f811f0708eaa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/sanctum/zipball/76b2d552c00477d520338889160f80a0cfb5fc55",
-                "reference": "76b2d552c00477d520338889160f80a0cfb5fc55",
+                "url": "https://api.github.com/repos/laravel/sanctum/zipball/b4c07d0014b78430a3c827064217f811f0708eaa",
+                "reference": "b4c07d0014b78430a3c827064217f811f0708eaa",
                 "shasum": ""
             },
             "require": {
@@ -1962,7 +1962,7 @@
                 "issues": "https://github.com/laravel/sanctum/issues",
                 "source": "https://github.com/laravel/sanctum"
             },
-            "time": "2021-11-16T16:57:07+00:00"
+            "time": "2021-12-14T17:49:47+00:00"
         },
         {
             "name": "laravel/serializable-closure",
@@ -3869,26 +3869,26 @@
         },
         {
             "name": "spatie/laravel-sluggable",
-            "version": "3.1.0",
+            "version": "3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-sluggable.git",
-                "reference": "03dd6b573efb66f2eb96892b3646a6a8b7722adf"
+                "reference": "6eabac05de0e8fa26b8e21bf6ca4b073ac547ec5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-sluggable/zipball/03dd6b573efb66f2eb96892b3646a6a8b7722adf",
-                "reference": "03dd6b573efb66f2eb96892b3646a6a8b7722adf",
+                "url": "https://api.github.com/repos/spatie/laravel-sluggable/zipball/6eabac05de0e8fa26b8e21bf6ca4b073ac547ec5",
+                "reference": "6eabac05de0e8fa26b8e21bf6ca4b073ac547ec5",
                 "shasum": ""
             },
             "require": {
-                "illuminate/database": "^7.30|^8.0",
-                "illuminate/support": "^7.30|^8.0",
+                "illuminate/database": "^8.76.1",
+                "illuminate/support": "^8.0",
                 "php": "^8.0"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.18",
-                "orchestra/testbench": "^5.16|^6.11",
+                "orchestra/testbench": "^6.23",
                 "phpunit/phpunit": "^9.5.1",
                 "spatie/laravel-translatable": "^4.6"
             },
@@ -3918,7 +3918,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-sluggable/issues",
-                "source": "https://github.com/spatie/laravel-sluggable/tree/3.1.0"
+                "source": "https://github.com/spatie/laravel-sluggable/tree/3.2.0"
             },
             "funding": [
                 {
@@ -3926,7 +3926,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-06-04T13:53:45+00:00"
+            "time": "2021-12-15T07:40:37+00:00"
         },
         {
             "name": "swagger-api/swagger-ui",
@@ -9165,12 +9165,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "e19b4ef37f7b09eafab78140eb834ae57a8ac15a"
+                "reference": "46e84fdfa0a142ccc902f667c662ac2c09d0c564"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/e19b4ef37f7b09eafab78140eb834ae57a8ac15a",
-                "reference": "e19b4ef37f7b09eafab78140eb834ae57a8ac15a",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/46e84fdfa0a142ccc902f667c662ac2c09d0c564",
+                "reference": "46e84fdfa0a142ccc902f667c662ac2c09d0c564",
                 "shasum": ""
             },
             "require": {
@@ -9222,7 +9222,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-12-13T11:53:35+00:00"
+            "time": "2021-12-14T21:02:01+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -9701,12 +9701,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "aaf5d29aa54f39be4945b0ceeb1f3d9fdb7af8ee"
+                "reference": "92e217f7d613827eb7545586b3aafc616e878022"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/aaf5d29aa54f39be4945b0ceeb1f3d9fdb7af8ee",
-                "reference": "aaf5d29aa54f39be4945b0ceeb1f3d9fdb7af8ee",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/92e217f7d613827eb7545586b3aafc616e878022",
+                "reference": "92e217f7d613827eb7545586b3aafc616e878022",
                 "shasum": ""
             },
             "conflict": {
@@ -9830,11 +9830,12 @@
                 "illuminate/cookie": ">=4,<=4.0.11|>=4.1,<=4.1.99999|>=4.2,<=4.2.99999|>=5,<=5.0.99999|>=5.1,<=5.1.99999|>=5.2,<=5.2.99999|>=5.3,<=5.3.99999|>=5.4,<=5.4.99999|>=5.5,<=5.5.49|>=5.6,<=5.6.99999|>=5.7,<=5.7.99999|>=5.8,<=5.8.99999|>=6,<6.18.31|>=7,<7.22.4",
                 "illuminate/database": "<6.20.26|>=7,<7.30.5|>=8,<8.40",
                 "illuminate/encryption": ">=4,<=4.0.11|>=4.1,<=4.1.31|>=4.2,<=4.2.22|>=5,<=5.0.35|>=5.1,<=5.1.46|>=5.2,<=5.2.45|>=5.3,<=5.3.31|>=5.4,<=5.4.36|>=5.5,<5.5.40|>=5.6,<5.6.15",
-                "illuminate/view": ">=7,<7.1.2",
+                "illuminate/view": "<6.20.42|>=7,<7.30.6|>=8,<8.75",
                 "impresscms/impresscms": "<=1.4.2",
                 "in2code/femanager": "<5.5.1|>=6,<6.3.1",
                 "intelliants/subrion": "<=4.2.1",
                 "ivankristianto/phpwhois": "<=4.3",
+                "jackalope/jackalope-doctrine-dbal": "<1.7.4",
                 "james-heinrich/getid3": "<1.9.21",
                 "joomla/archive": "<1.1.10",
                 "joomla/session": "<1.3.1",
@@ -10123,7 +10124,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-12-10T21:12:50+00:00"
+            "time": "2021-12-14T21:11:48+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -11206,19 +11207,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/slevomat/coding-standard.git",
-                "reference": "ec0e91393abbebca72de1e47e27ed98cf48f5fb1"
+                "reference": "a2ee80bc0e26105fcf990090afa79bac2941aaab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/slevomat/coding-standard/zipball/ec0e91393abbebca72de1e47e27ed98cf48f5fb1",
-                "reference": "ec0e91393abbebca72de1e47e27ed98cf48f5fb1",
+                "url": "https://api.github.com/repos/slevomat/coding-standard/zipball/a2ee80bc0e26105fcf990090afa79bac2941aaab",
+                "reference": "a2ee80bc0e26105fcf990090afa79bac2941aaab",
                 "shasum": ""
             },
             "require": {
                 "dealerdirect/phpcodesniffer-composer-installer": "^0.6.2 || ^0.7",
                 "php": "^7.1 || ^8.0",
                 "phpstan/phpdoc-parser": "^1.0.0",
-                "squizlabs/php_codesniffer": "^3.6.1"
+                "squizlabs/php_codesniffer": "^3.6.2"
             },
             "require-dev": {
                 "phing/phing": "2.17.0",
@@ -11260,7 +11261,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-12-07T17:21:58+00:00"
+            "time": "2021-12-15T09:09:22+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",

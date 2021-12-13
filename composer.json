@@ -53,7 +53,7 @@
         ],
         "post-install-cmd": [
             "@php -r \"copy('.githooks/pre-commit', '.git/hooks/pre-commit');\"",
-            "@php -r \"mkdir('./vendor/spatie/laravel-package-tools/database/factories', 0777, true);\""
+            "@php -r \"@mkdir('./vendor/spatie/laravel-package-tools/database/factories', 0777, true);\""
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi",

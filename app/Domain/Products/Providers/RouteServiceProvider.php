@@ -12,6 +12,6 @@ class RouteServiceProvider extends RouteServiceProviderBase
     protected function mapApiRoutes(Router $router): void
     {
         $router->apiResource('categories', ProductCategoryController::class)->only(['index']);
-        $router->apiResource('products', ProductController::class)->only(['index', 'show']);
+        $router->apiResource('products', ProductController::class)->only(['index', 'show'])->parameters(['products' => 'product:slug']);
     }
 }
