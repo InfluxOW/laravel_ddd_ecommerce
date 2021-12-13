@@ -4,6 +4,7 @@ namespace App\Domain\Products\Http\Requests;
 
 use App\Domain\Generic\Currency\Models\Kopecks;
 use App\Domain\Generic\Query\Enums\QueryKey;
+use App\Domain\Products\Enums\Query\Filter\ProductAllowedFilter;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ProductIndexRequest extends FormRequest
@@ -16,14 +17,15 @@ class ProductIndexRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'per_page' => ['nullable', 'int', 'min:1', 'max:100'],
-            QueryKey::FILTER->value . '.title' => ['nullable', 'string'],
-            QueryKey::FILTER->value . '.description' => ['nullable', 'string'],
-            QueryKey::FILTER->value . '.category' => ['nullable', 'array'],
-            QueryKey::FILTER->value . '.category.*' => ['required', 'string'],
-            QueryKey::FILTER->value . '.price_between' => ['nullable', 'array', 'size:2'],
-            QueryKey::FILTER->value . '.price_between.*' => ['nullable', 'numeric', 'min:0.01'],
-            QueryKey::FILTER->value . '.attribute.*' => ['nullable', 'array'],
+            QueryKey::PAGE->value => ['nullable', 'int', 'min:1'],
+            QueryKey::PER_PAGE->value => ['nullable', 'int', 'min:1', 'max:100'],
+            sprintf('%s.%s', QueryKey::FILTER->value, ProductAllowedFilter::TITLE->value) => ['nullable', 'string'],
+            sprintf('%s.%s', QueryKey::FILTER->value, ProductAllowedFilter::DESCRIPTION->value) => ['nullable', 'string'],
+            sprintf('%s.%s', QueryKey::FILTER->value, ProductAllowedFilter::CATEGORY->value) => ['nullable', 'array'],
+            sprintf('%s.%s.*', QueryKey::FILTER->value, ProductAllowedFilter::CATEGORY->value) => ['required', 'string'],
+            sprintf('%s.%s', QueryKey::FILTER->value, ProductAllowedFilter::PRICE_BETWEEN->value) => ['nullable', 'array', 'size:2'],
+            sprintf('%s.%s.*', QueryKey::FILTER->value, ProductAllowedFilter::PRICE_BETWEEN->value) => ['nullable', 'numeric', 'min:0.01'],
+            sprintf('%s.%s.*', QueryKey::FILTER->value, ProductAllowedFilter::ATTRIBUTE_VALUE->value) => ['nullable', 'array'],
             QueryKey::SORT->value => ['nullable', 'string'],
         ];
     }
@@ -34,9 +36,9 @@ class ProductIndexRequest extends FormRequest
             $this->merge([
                 QueryKey::FILTER->value => array_merge(
                     $this->filter,
-                    array_key_exists('category', $this->filter) ? ['category' => explode(',', $this->filter['category'])] : [],
-                    array_key_exists('price_between', $this->filter) ? ['price_between' => array_map(static fn (string $value): ?int => ($value === '') ? null : (int)(round($value * Kopecks::KOPECKS_IN_ROUBLE)), explode(',', $this->filter['price_between']))] : [],
-                    array_key_exists('attribute', $this->filter) ? ['attribute' => array_map(static fn (string $value): array => explode(',', $value), (array) $this->filter['attribute'])] : [],
+                    array_key_exists(ProductAllowedFilter::CATEGORY->value, $this->filter) ? [ProductAllowedFilter::CATEGORY->value => explode(',', $this->filter[ProductAllowedFilter::CATEGORY->value])] : [],
+                    array_key_exists(ProductAllowedFilter::PRICE_BETWEEN->value, $this->filter) ? [ProductAllowedFilter::PRICE_BETWEEN->value => array_map(static fn (string $value): ?int => ($value === '') ? null : (int)(round($value * Kopecks::KOPECKS_IN_ROUBLE)), explode(',', $this->filter[ProductAllowedFilter::PRICE_BETWEEN->value]))] : [],
+                    array_key_exists(ProductAllowedFilter::ATTRIBUTE_VALUE->value, $this->filter) ? [ProductAllowedFilter::ATTRIBUTE_VALUE->value => array_map(static fn (string $value): array => explode(',', $value), (array) $this->filter[ProductAllowedFilter::ATTRIBUTE_VALUE->value])] : [],
                 ),
             ]);
         }

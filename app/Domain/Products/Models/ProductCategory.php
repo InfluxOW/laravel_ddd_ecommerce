@@ -91,9 +91,7 @@ class ProductCategory extends Model
 
     public function getProductsCount(): int
     {
-        return $this->products_count + $this->children->sum(function (ProductCategory $category): int {
-            return $category->getProductsCount();
-        });
+        return $this->products_count + $this->children->sum(fn (ProductCategory $category): int => $category->getProductsCount());
     }
 
     public function getOverallProductsCountAttribute(): int

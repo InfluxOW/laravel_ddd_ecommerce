@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Domain\Generic\Query\Enums;
+namespace App\Domain\Generic\Response\Enums;
 
-enum AttributeValuesType: string
+enum ResponseValueType: string
 {
     case INTEGER = 'integer';
     case FLOAT = 'float';

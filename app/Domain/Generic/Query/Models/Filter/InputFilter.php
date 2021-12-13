@@ -2,14 +2,14 @@
 
 namespace App\Domain\Generic\Query\Models\Filter;
 
-use App\Domain\Generic\Query\Enums\FrontendFilterType;
+use App\Domain\Generic\Query\Enums\QueryFilterType;
 
 class InputFilter extends Filter
 {
-    public static FrontendFilterType $type = FrontendFilterType::INPUT;
+    public static QueryFilterType $type = QueryFilterType::INPUT;
 
     public function ofValues(mixed ...$values): static
     {
-        return clone ($this);
+        return clone($this);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Domain\Products\Http\Controllers\Api;
 use App\Domain\Generic\Query\Enums\QueryKey;
 use App\Domain\Generic\Query\Http\Resources\QueryServiceResource;
 use App\Domain\Generic\Query\Models\Sort\Sort;
+use App\Domain\Generic\Response\Enums\ResponseKey;
 use App\Domain\Products\Enums\Query\Filter\ProductAllowedFilter;
 use App\Domain\Products\Enums\Query\Sort\ProductAllowedSort;
 use App\Domain\Products\Http\Requests\ProductIndexRequest;
@@ -20,6 +21,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
+use Symfony\Component\HttpFoundation\Response;
 
 class ProductController extends Controller
 {
@@ -49,7 +51,6 @@ class ProductController extends Controller
             ->allowedSorts([
                 ProductAllowedSort::TITLE->value,
                 ProductAllowedSort::CREATED_AT->value,
-                /* @phpstan-ignore-next-line */
                 AllowedSort::callback(ProductAllowedSort::PRICE->value, static fn (Builder|Product $query, bool $descending): Builder => $query->orderByCurrentPrice($descending)),
             ])
             ->defaultSort($defaultSort->query);
@@ -59,11 +60,11 @@ class ProductController extends Controller
         $filterQueryServiceResource = new QueryServiceResource(QueryKey::FILTER, true, $appliedFilters->map->toArray()->toArray(), $allowedFilters->map->toArray()->toArray());
 
         $products = $productsQuery
-            ->paginate($request->per_page ?? self::DEFAULT_ITEMS_PER_PAGE)
+            ->paginate($validated[QueryKey::PER_PAGE->value] ?? self::DEFAULT_ITEMS_PER_PAGE, ['*'], QueryKey::PAGE->value, $validated[QueryKey::PAGE->value] ?? 1)
             ->appends($request->query() ?? []);
 
         return $this->respondWithCollection($products, [
-            'query' => [
+            ResponseKey::QUERY->value => [
                 QueryKey::SORT->value => $sortQueryServiceResource->toArray(),
                 QueryKey::FILTER->value => $filterQueryServiceResource->toArray(),
             ],
@@ -75,7 +76,7 @@ class ProductController extends Controller
         $product = Product::query()->where('slug', $slug)->first();
 
         if ($product === null) {
-            return $this->respondWithMessage("Product '{$slug}' was not found.");
+            return $this->respondWithMessage("Product '{$slug}' was not found.", Response::HTTP_NOT_FOUND);
         }
 
         return $this->respondWithItem($product);

@@ -9,7 +9,4 @@ class DomainServiceProvider extends ServiceProviderBase
     public const ALIAS = 'admin';
 
     protected bool $hasMigrations = true;
-
-    protected array $providers = [
-    ];
 }

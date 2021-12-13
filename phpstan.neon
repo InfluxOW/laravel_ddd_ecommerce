@@ -20,5 +20,6 @@ parameters:
         - '#\\Enums\\#'
         - '#Cannot access property \$value on string#'
         - '#expects BackedEnum, string given#'
+        - '#Call to an undefined method App\\Domain\\Products\\Models\\Product|Illuminate\\Database\\Eloquent\\Builder::orderByCurrentPrice\(\)#'
 
     checkMissingIterableValueType: false

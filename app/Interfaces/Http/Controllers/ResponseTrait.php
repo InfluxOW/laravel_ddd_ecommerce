@@ -2,6 +2,7 @@
 
 namespace App\Interfaces\Http\Controllers;
 
+use App\Domain\Generic\Response\Enums\ResponseKey;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
@@ -21,7 +22,7 @@ trait ResponseTrait
 
     protected function respondWithMessage(string $message, int $status = SymfonyResponse::HTTP_OK): JsonResponse
     {
-        return response()->json(['message' => $message], $status);
+        return response()->json([ResponseKey::MESSAGE->value => $message], $status);
     }
 
     protected function respondWithCustomData(array $data, int $status = SymfonyResponse::HTTP_OK): JsonResponse

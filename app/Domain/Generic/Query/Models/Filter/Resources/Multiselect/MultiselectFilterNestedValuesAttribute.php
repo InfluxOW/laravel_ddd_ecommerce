@@ -2,11 +2,11 @@
 
 namespace App\Domain\Generic\Query\Models\Filter\Resources\Multiselect;
 
-use App\Domain\Generic\Query\Enums\AttributeValuesType;
+use App\Domain\Generic\Response\Enums\ResponseValueType;
 
 class MultiselectFilterNestedValuesAttribute
 {
-    public function __construct(public readonly string $title, public readonly string $query, public readonly AttributeValuesType $valuesType)
+    public function __construct(public readonly string $title, public readonly string $query, public readonly ResponseValueType $valuesType)
     {
     }
 

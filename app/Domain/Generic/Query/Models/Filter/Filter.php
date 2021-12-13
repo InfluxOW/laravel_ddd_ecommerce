@@ -3,13 +3,13 @@
 namespace App\Domain\Generic\Query\Models\Filter;
 
 use App\Domain\Generic\Query\Abstracts\Query;
-use App\Domain\Generic\Query\Enums\FrontendFilterType;
+use App\Domain\Generic\Query\Enums\QueryFilterType;
 use App\Domain\Generic\Utils\LangUtils;
 use BackedEnum;
 
 abstract class Filter extends Query
 {
-    public static FrontendFilterType $type;
+    public static QueryFilterType $type;
 
     public function __construct(BackedEnum $filter)
     {

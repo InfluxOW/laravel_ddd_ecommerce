@@ -1102,16 +1102,16 @@
         },
         {
             "name": "filament/filament",
-            "version": "v2.5.12",
+            "version": "v2.5.19",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel-filament/admin.git",
-                "reference": "b69cf28b7455d3eac469e5f3514fc5de2086b6e8"
+                "reference": "7d6b67fe23f6969749b69adebd3625dae8078e9e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel-filament/admin/zipball/b69cf28b7455d3eac469e5f3514fc5de2086b6e8",
-                "reference": "b69cf28b7455d3eac469e5f3514fc5de2086b6e8",
+                "url": "https://api.github.com/repos/laravel-filament/admin/zipball/7d6b67fe23f6969749b69adebd3625dae8078e9e",
+                "reference": "7d6b67fe23f6969749b69adebd3625dae8078e9e",
                 "shasum": ""
             },
             "require": {
@@ -1158,20 +1158,20 @@
                 "issues": "https://github.com/laravel-filament/filament/issues",
                 "source": "https://github.com/laravel-filament/filament"
             },
-            "time": "2021-12-10T13:59:09+00:00"
+            "time": "2021-12-13T11:28:47+00:00"
         },
         {
             "name": "filament/forms",
-            "version": "v2.5.12",
+            "version": "v2.5.19",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel-filament/forms.git",
-                "reference": "6ba7586da33a0e423c710a8a50d18baee5452706"
+                "reference": "338c13bc7542d78c40bf865dc8cd07334e416941"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel-filament/forms/zipball/6ba7586da33a0e423c710a8a50d18baee5452706",
-                "reference": "6ba7586da33a0e423c710a8a50d18baee5452706",
+                "url": "https://api.github.com/repos/laravel-filament/forms/zipball/338c13bc7542d78c40bf865dc8cd07334e416941",
+                "reference": "338c13bc7542d78c40bf865dc8cd07334e416941",
                 "shasum": ""
             },
             "require": {
@@ -1211,20 +1211,20 @@
                 "issues": "https://github.com/laravel-filament/filament/issues",
                 "source": "https://github.com/laravel-filament/filament"
             },
-            "time": "2021-12-10T13:59:19+00:00"
+            "time": "2021-12-13T11:28:49+00:00"
         },
         {
             "name": "filament/tables",
-            "version": "v2.5.12",
+            "version": "v2.5.19",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel-filament/tables.git",
-                "reference": "0cef682fdbf49a855821709063ebc1c5b8b64df3"
+                "reference": "8d5f7be4465e71983df4c2225b3c9e37cacda431"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel-filament/tables/zipball/0cef682fdbf49a855821709063ebc1c5b8b64df3",
-                "reference": "0cef682fdbf49a855821709063ebc1c5b8b64df3",
+                "url": "https://api.github.com/repos/laravel-filament/tables/zipball/8d5f7be4465e71983df4c2225b3c9e37cacda431",
+                "reference": "8d5f7be4465e71983df4c2225b3c9e37cacda431",
                 "shasum": ""
             },
             "require": {
@@ -1264,7 +1264,7 @@
                 "issues": "https://github.com/laravel-filament/filament/issues",
                 "source": "https://github.com/laravel-filament/filament"
             },
-            "time": "2021-12-09T10:37:28+00:00"
+            "time": "2021-12-12T23:48:31+00:00"
         },
         {
             "name": "fruitcake/laravel-cors",
@@ -6379,16 +6379,16 @@
         },
         {
             "name": "vlucas/phpdotenv",
-            "version": "v5.4.0",
+            "version": "v5.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vlucas/phpdotenv.git",
-                "reference": "d4394d044ed69a8f244f3445bcedf8a0d7fe2403"
+                "reference": "264dce589e7ce37a7ba99cb901eed8249fbec92f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/d4394d044ed69a8f244f3445bcedf8a0d7fe2403",
-                "reference": "d4394d044ed69a8f244f3445bcedf8a0d7fe2403",
+                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/264dce589e7ce37a7ba99cb901eed8249fbec92f",
+                "reference": "264dce589e7ce37a7ba99cb901eed8249fbec92f",
                 "shasum": ""
             },
             "require": {
@@ -6426,11 +6426,13 @@
             "authors": [
                 {
                     "name": "Graham Campbell",
-                    "email": "hello@gjcampbell.co.uk"
+                    "email": "hello@gjcampbell.co.uk",
+                    "homepage": "https://github.com/GrahamCampbell"
                 },
                 {
                     "name": "Vance Lucas",
-                    "email": "vance@vancelucas.com"
+                    "email": "vance@vancelucas.com",
+                    "homepage": "https://github.com/vlucas"
                 }
             ],
             "description": "Loads environment variables from `.env` to `getenv()`, `$_ENV` and `$_SERVER` automagically.",
@@ -6441,7 +6443,7 @@
             ],
             "support": {
                 "issues": "https://github.com/vlucas/phpdotenv/issues",
-                "source": "https://github.com/vlucas/phpdotenv/tree/v5.4.0"
+                "source": "https://github.com/vlucas/phpdotenv/tree/v5.4.1"
             },
             "funding": [
                 {
@@ -6453,7 +6455,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-11-10T01:08:39+00:00"
+            "time": "2021-12-12T23:22:04+00:00"
         },
         {
             "name": "voku/portable-ascii",
@@ -9163,12 +9165,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "a5bbf4de919243c4c513c5d78b9dc1e3047ddae0"
+                "reference": "e19b4ef37f7b09eafab78140eb834ae57a8ac15a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/a5bbf4de919243c4c513c5d78b9dc1e3047ddae0",
-                "reference": "a5bbf4de919243c4c513c5d78b9dc1e3047ddae0",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/e19b4ef37f7b09eafab78140eb834ae57a8ac15a",
+                "reference": "e19b4ef37f7b09eafab78140eb834ae57a8ac15a",
                 "shasum": ""
             },
             "require": {
@@ -9220,7 +9222,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-12-10T21:11:19+00:00"
+            "time": "2021-12-13T11:53:35+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -11262,16 +11264,16 @@
         },
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "3.6.1",
+            "version": "3.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "f268ca40d54617c6e06757f83f699775c9b3ff2e"
+                "reference": "5e4e71592f69da17871dba6e80dd51bce74a351a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/f268ca40d54617c6e06757f83f699775c9b3ff2e",
-                "reference": "f268ca40d54617c6e06757f83f699775c9b3ff2e",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/5e4e71592f69da17871dba6e80dd51bce74a351a",
+                "reference": "5e4e71592f69da17871dba6e80dd51bce74a351a",
                 "shasum": ""
             },
             "require": {
@@ -11314,7 +11316,7 @@
                 "source": "https://github.com/squizlabs/PHP_CodeSniffer",
                 "wiki": "https://github.com/squizlabs/PHP_CodeSniffer/wiki"
             },
-            "time": "2021-10-11T04:00:11+00:00"
+            "time": "2021-12-12T21:44:58+00:00"
         },
         {
             "name": "symfony/filesystem",

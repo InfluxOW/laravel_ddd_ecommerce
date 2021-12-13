@@ -2,7 +2,7 @@
 
 namespace App\Domain\Generic\Query\Models\Filter;
 
-use App\Domain\Generic\Query\Enums\FrontendFilterType;
+use App\Domain\Generic\Query\Enums\QueryFilterType;
 use App\Domain\Generic\Query\Models\Filter\Resources\Multiselect\MultiselectFilterNestedValues;
 use BackedEnum;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
@@ -10,7 +10,7 @@ use Illuminate\Support\Collection;
 
 class MultiselectFilter extends Filter
 {
-    public static FrontendFilterType $type = FrontendFilterType::MULTISELECT;
+    public static QueryFilterType $type = QueryFilterType::MULTISELECT;
 
     public function __construct(
         BackedEnum $filter,
@@ -50,7 +50,7 @@ class MultiselectFilter extends Filter
 
     public function ofValues(mixed ...$values): ?static
     {
-        $filter = clone ($this);
+        $filter = clone($this);
 
         $correctValues = match ($filter->isNested) {
             false => $this->values

@@ -2,7 +2,7 @@
 
 namespace App\Domain\Generic\Query\Enums;
 
-enum FrontendFilterType: string
+enum QueryFilterType: string
 {
     case INPUT = 'input';
     case RANGE = 'range';

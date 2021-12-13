@@ -4,7 +4,8 @@ namespace App\Application\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Route;
+use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Route as RouteFacade;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -17,10 +18,6 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->routes(function () {
-            Route::fallback(function (): RedirectResponse {
-                return redirect()->to(config('l5-swagger.documentations.default.routes.api'));
-            });
-        });
+        $this->routes(fn (): Route => RouteFacade::fallback(fn (): RedirectResponse => redirect()->to(config('l5-swagger.documentations.default.routes.api'))));
     }
 }

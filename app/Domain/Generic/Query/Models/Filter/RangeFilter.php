@@ -3,13 +3,13 @@
 namespace App\Domain\Generic\Query\Models\Filter;
 
 use App\Domain\Generic\Currency\Models\Kopecks;
-use App\Domain\Generic\Query\Enums\FrontendFilterType;
+use App\Domain\Generic\Query\Enums\QueryFilterType;
 use App\Domain\Generic\Utils\MathUtils;
 use BackedEnum;
 
 class RangeFilter extends Filter
 {
-    public static FrontendFilterType $type = FrontendFilterType::RANGE;
+    public static QueryFilterType $type = QueryFilterType::RANGE;
 
     public float|int|null $minValue;
     public float|int|null $maxValue;
@@ -40,7 +40,7 @@ class RangeFilter extends Filter
             [$selectedMaxValue, $selectedMinValue] = [$selectedMinValue, $selectedMaxValue];
         }
 
-        $filter = clone ($this);
+        $filter = clone($this);
         $filter->minValue = null;
         $filter->maxValue = null;
 
