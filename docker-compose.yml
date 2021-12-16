@@ -40,9 +40,28 @@ services:
             test: [ "CMD", "pg_isready", "-q", "-d", "${DB_DATABASE}", "-U", "${DB_USERNAME}" ]
             retries: 3
             timeout: 5s
+    pgsql_test:
+        image: 'postgres:latest'
+        ports:
+            - '${FORWARD_TEST_DB_PORT:-5433}:5432'
+        environment:
+            PGPASSWORD: '${DB_PASSWORD:-secret}'
+            POSTGRES_DB: '${DB_DATABASE}'
+            POSTGRES_USER: '${DB_USERNAME}'
+            POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
+        volumes:
+            - 'sailpgsql_test:/var/lib/postgresql/data'
+        networks:
+            - sail
+        healthcheck:
+            test: [ "CMD", "pg_isready", "-q", "-d", "${DB_DATABASE}", "-U", "${DB_USERNAME}" ]
+            retries: 3
+            timeout: 5s
 networks:
     sail:
         driver: bridge
 volumes:
     sailpgsql:
+        driver: local
+    sailpgsql_test:
         driver: local

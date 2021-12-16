@@ -20,17 +20,20 @@ class ProductControllerTest extends TestCase
     {
         parent::setUp();
 
+        /** @var Product $product */
+        $product = Product::first();
+
+        $this->product = $product;
+    }
+
+    protected function afterRefreshingDatabase(): void
+    {
         $this->seed([
             ProductCategorySeeder::class,
             ProductAttributeSeeder::class,
             ProductSeeder::class,
             ProductAttributeValueSeeder::class,
         ]);
-
-        /** @var Product $product */
-        $product = Product::query()->first();
-
-        $this->product = $product;
     }
 
     /** @test */
@@ -42,29 +45,37 @@ class ProductControllerTest extends TestCase
     /** @test */
     public function a_user_can_filter_products_by_title(): void
     {
-        $response = $this->get(route('products.index', [QueryKey::FILTER->value => [ProductAllowedFilter::TITLE->value => $this->product->title]]))->assertOk();
-        $items = collect($response->json(ResponseKey::DATA->value));
-        $appliedFilters = collect($response->json(sprintf('%s.%s.%s', ResponseKey::QUERY->value, QueryKey::FILTER->value, 'applied')));
+        $queries = [$this->product->title, substr($this->product->title, 0, 5)];
 
-        $this->assertNotEmpty($items);
-        $this->assertTrue($items->every(fn (array $item) => str_contains($item['title'], $this->product->title)));
+        foreach ($queries as $query) {
+            $response = $this->get(route('products.index', [QueryKey::FILTER->value => [ProductAllowedFilter::TITLE->value => $query]]))->assertOk();
+            $items = collect($response->json(ResponseKey::DATA->value));
+            $appliedFilters = collect($response->json(sprintf('%s.%s.%s', ResponseKey::QUERY->value, QueryKey::FILTER->value, 'applied')));
 
-        $this->assertCount(1, $appliedFilters);
-        $this->assertTrue($appliedFilters->pluck('query')->contains(ProductAllowedFilter::TITLE->value));
+            $this->assertNotEmpty($items);
+            $this->assertTrue($items->every(fn (array $item) => str_contains(strtolower($item['title']), strtolower($query))));
+
+            $this->assertCount(1, $appliedFilters);
+            $this->assertTrue($appliedFilters->pluck('query')->contains(ProductAllowedFilter::TITLE->value));
+        }
     }
 
     /** @test */
     public function a_user_can_filter_products_by_description(): void
     {
-        $response = $this->get(route('products.index', [QueryKey::FILTER->value => [ProductAllowedFilter::DESCRIPTION->value => $this->product->description]]))->assertOk();
-        $items = collect($response->json(ResponseKey::DATA->value));
-        $appliedFilters = collect($response->json(sprintf('%s.%s.%s', ResponseKey::QUERY->value, QueryKey::FILTER->value, 'applied')));
+        $queries = [$this->product->description, substr($this->product->description, 0, 5)];
 
-        $this->assertNotEmpty($items);
-        $this->assertTrue($items->every(fn (array $item) => str_contains($item['description'], $this->product->description)));
+        foreach ($queries as $query) {
+            $response = $this->get(route('products.index', [QueryKey::FILTER->value => [ProductAllowedFilter::DESCRIPTION->value => $query]]))->assertOk();
+            $items = collect($response->json(ResponseKey::DATA->value));
+            $appliedFilters = collect($response->json(sprintf('%s.%s.%s', ResponseKey::QUERY->value, QueryKey::FILTER->value, 'applied')));
 
-        $this->assertCount(1, $appliedFilters);
-        $this->assertTrue($appliedFilters->pluck('query')->contains(ProductAllowedFilter::DESCRIPTION->value));
+            $this->assertNotEmpty($items);
+            $this->assertTrue($items->every(fn (array $item) => str_contains(strtolower($item['description']), strtolower($query))));
+
+            $this->assertCount(1, $appliedFilters);
+            $this->assertTrue($appliedFilters->pluck('query')->contains(ProductAllowedFilter::DESCRIPTION->value));
+        }
     }
 
     /** @test */
