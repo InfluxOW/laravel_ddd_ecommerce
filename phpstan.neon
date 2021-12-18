@@ -12,14 +12,11 @@ parameters:
     level: 8
 
     excludePaths:
-        - app/Domain/*/Enums
         - app/Domain/Generic/Currency/Casts/KopecksCast.php
-        - */enums.php
+        - app/Domain/Admin/Panel/Components/Cards/TimestampsCard.php
 
     ignoreErrors:
-        - '#\\Enums\\#'
-        - '#Cannot access property \$value on string#'
-        - '#expects BackedEnum, string given#'
+        - '#Match expression does not handle remaining value#'
         - '#Call to an undefined method App\\Domain\\Products\\Models\\Product|Illuminate\\Database\\Eloquent\\Builder::orderByCurrentPrice\(\)#'
 
     checkMissingIterableValueType: false

@@ -127,7 +127,7 @@ return [
     */
 
     'layout' => [
-        'max_content_width' => 'full',
+        'max_content_width' => '7xl',
     ],
 
     /*

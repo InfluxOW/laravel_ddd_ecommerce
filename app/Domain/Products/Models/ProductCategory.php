@@ -27,8 +27,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read \Illuminate\Database\Eloquent\Collection|ProductCategory[] $children
  * @property-read int|null $children_count
  * @property-read int $overall_products_count
- * @property-read string|null $path
- * @property-read string $table_title
+ * @property-read string $path
  * @property-read \Illuminate\Database\Eloquent\Collection|ProductCategory[] $immediateDescendants
  * @property-read int|null $immediate_descendants_count
  * @property-read ProductCategory|null $parent
@@ -101,12 +100,7 @@ class ProductCategory extends Model
         return ($category === null) ? 0 : $category->getProductsCount();
     }
 
-    public function getTableTitleAttribute(): string
-    {
-        return str_repeat('⇒ ', $this->depth ?? 0) . $this->title;
-    }
-
-    public function getPathAttribute(): ?string
+    public function getPathAttribute(): string
     {
         $path = [];
         $category = self::findInHierarchy($this->id)?->parent;
@@ -114,8 +108,9 @@ class ProductCategory extends Model
             $path[] = $category->title;
             $category = $category->parent;
         }
+        $path[] = $this->title;
 
-        return implode(' — ', $path);
+        return implode(' — ', array_reverse($path));
     }
 
     /*
