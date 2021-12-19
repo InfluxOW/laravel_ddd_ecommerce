@@ -28,6 +28,10 @@ class UserResource extends Resource
 
     protected static ?string $navigationLabel = 'Customers';
 
+    protected static ?string $label = 'Customer';
+
+    protected static ?string $pluralLabel = 'Customers';
+
     protected static ?string $navigationGroup = 'Shop';
 
     protected static ?int $navigationSort = 1;
@@ -137,7 +141,6 @@ class UserResource extends Resource
     {
         return [
             'index' => \App\Domain\Users\Admin\Resources\UserResource\Pages\ListUsers::route('/'),
-            'create' => \App\Domain\Users\Admin\Resources\UserResource\Pages\CreateUser::route('/create'),
             'edit' => \App\Domain\Users\Admin\Resources\UserResource\Pages\EditUser::route('/{record}/edit'),
             'view' => \App\Domain\Users\Admin\Resources\UserResource\Pages\ViewUser::route('/{record}'),
         ];
