@@ -15,10 +15,10 @@ class TimestampsCard extends Card
         $this->schema([
             Placeholder::make('created_at')
                 ->label('Created at')
-                ->content(fn (?Model $record): string => ($record === null) ? '-' : $record->created_at->diffForHumans()),
+                ->content(fn (?Model $record): string => isset($record->created_at) ? $record->created_at->diffForHumans() : '-'),
             Placeholder::make('updated_at')
                 ->label('Last Modified At')
-                ->content(fn (?Model $record): string => ($record === null) ? '-' : $record->updated_at->diffForHumans()),
+                ->content(fn (?Model $record): string => isset($record->updated_at) ? $record->updated_at->diffForHumans() : '-'),
         ]);
     }
 }

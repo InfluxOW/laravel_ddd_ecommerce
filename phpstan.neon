@@ -13,7 +13,6 @@ parameters:
 
     excludePaths:
         - app/Domain/Generic/Currency/Casts/KopecksCast.php
-        - app/Domain/Admin/Panel/Components/Cards/TimestampsCard.php
 
     ignoreErrors:
         - '#Match expression does not handle remaining value#'
