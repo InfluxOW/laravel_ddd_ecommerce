@@ -7,6 +7,7 @@ use App\Domain\Users\Http\Resources\UserResource;
 use App\Domain\Users\Models\User;
 use App\Interfaces\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +17,9 @@ class LoginController extends Controller
 {
     public function __invoke(LoginRequest $request): JsonResponse
     {
-        if (! Auth::attempt($request->only('email', 'password'), $request->remember)) {
+        $validated = $request->validated();
+
+        if (! Auth::attempt(Arr::only($validated, ['email', 'password']), $validated['remember'])) {
             return $this->respondWithMessage('Sorry, wrong email address or password. Please, try again!', Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 

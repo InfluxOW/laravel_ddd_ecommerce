@@ -3,10 +3,13 @@
 namespace App\Domain\Products\Http\Resources;
 
 use App\Domain\Products\Models\Product;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
+use JetBrains\PhpStorm\ArrayShape;
 
 class ProductResource extends JsonResource
 {
+    #[ArrayShape(['slug' => 'string', 'title' => "string", 'created_at' => "null|string", 'price' => 'float', 'price_discounted' => "float|null", 'categories' => AnonymousResourceCollection::class, 'attributes' => AnonymousResourceCollection::class, 'description' => "string"])]
     public function toArray($request): array
     {
         /** @var Product $product */

@@ -17,6 +17,7 @@ use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
+use JetBrains\PhpStorm\ArrayShape;
 
 class UserResource extends Resource
 {
@@ -137,6 +138,7 @@ class UserResource extends Resource
         ];
     }
 
+    #[ArrayShape(['index' => "string[]", 'edit' => "string[]", 'view' => "string[]"])]
     public static function getPages(): array
     {
         return [

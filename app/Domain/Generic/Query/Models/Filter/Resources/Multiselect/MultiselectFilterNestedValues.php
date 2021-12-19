@@ -4,6 +4,7 @@ namespace App\Domain\Generic\Query\Models\Filter\Resources\Multiselect;
 
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection;
+use JetBrains\PhpStorm\ArrayShape;
 
 class MultiselectFilterNestedValues
 {
@@ -11,6 +12,7 @@ class MultiselectFilterNestedValues
     {
     }
 
+    #[ArrayShape(['attribute' => "array", 'values' => "array"])]
     public function toArray(): array
     {
         return [

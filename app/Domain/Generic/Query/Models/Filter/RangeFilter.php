@@ -6,6 +6,7 @@ use App\Domain\Generic\Currency\Models\Kopecks;
 use App\Domain\Generic\Query\Enums\QueryFilterType;
 use App\Domain\Generic\Utils\MathUtils;
 use BackedEnum;
+use JetBrains\PhpStorm\ArrayShape;
 
 class RangeFilter extends Filter
 {
@@ -25,6 +26,7 @@ class RangeFilter extends Filter
         $this->maxValue = $this->valuesAreCurrency ? (int) (Kopecks::KOPECKS_IN_ROUBLE * $maxValue) : $maxValue;
     }
 
+    #[ArrayShape(['query' => "string", 'title' => "string", 'type' => "string", 'min_value' => "float", 'max_value' => "float"])]
     public function toArray(): array
     {
         return array_merge(parent::toArray(), [
