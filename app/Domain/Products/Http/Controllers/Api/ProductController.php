@@ -11,6 +11,7 @@ use App\Domain\Products\Enums\Query\Sort\ProductAllowedSort;
 use App\Domain\Products\Http\Requests\ProductIndexRequest;
 use App\Domain\Products\Http\Resources\ProductResource;
 use App\Domain\Products\Models\Product;
+use App\Domain\Products\Models\ProductCategory;
 use App\Domain\Products\Services\Query\Filter\ProductFilterService;
 use App\Domain\Products\Services\Query\Sort\ProductSortService;
 use App\Interfaces\Http\Controllers\Controller;
@@ -39,12 +40,12 @@ class ProductController extends Controller
         $appliedSort = $sortService->getApplied($request) ?? $defaultSort;
         $sortQueryServiceResource = new QueryServiceResource(QueryKey::SORT, false, [$appliedSort->toArray()], $allowedSorts->map->toArray()->toArray());
 
-        $productsQueryBase = QueryBuilder::for(Product::query()->with(['category', 'attributeValues.attribute']));
+        $productsQueryBase = QueryBuilder::for(Product::query()->with(['categories', 'attributeValues.attribute']));
         $productsQuery = $productsQueryBase->clone()
             ->allowedFilters([
                 ProductAllowedFilter::TITLE->value,
                 ProductAllowedFilter::DESCRIPTION->value,
-                AllowedFilter::callback(ProductAllowedFilter::CATEGORY->value, static fn (Builder|Product $query): Builder => $query->whereInCategory($validated[QueryKey::FILTER->value][ProductAllowedFilter::CATEGORY->value])),
+                AllowedFilter::callback(ProductAllowedFilter::CATEGORY->value, static fn (Builder|Product $query): Builder => $query->whereInCategory(ProductCategory::query()->whereIn('slug', $validated[QueryKey::FILTER->value][ProductAllowedFilter::CATEGORY->value])->get())),
                 AllowedFilter::callback(ProductAllowedFilter::PRICE_BETWEEN->value, static fn (Builder|Product $query): Builder => $query->wherePriceBetween(...$validated[QueryKey::FILTER->value][ProductAllowedFilter::PRICE_BETWEEN->value])),
                 AllowedFilter::callback(ProductAllowedFilter::ATTRIBUTE_VALUE->value, static fn (Builder|Product $query): Builder => $query->whereHasAttributeValue($validated[QueryKey::FILTER->value][ProductAllowedFilter::ATTRIBUTE_VALUE->value])),
             ])

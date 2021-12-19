@@ -7,7 +7,7 @@ use Baum\NestedSet\Node;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Collection;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
@@ -72,9 +72,9 @@ class ProductCategory extends Model
      * Relations
      * */
 
-    public function products(): HasMany
+    public function products(): BelongsToMany
     {
-        return $this->hasMany(Product::class, 'category_id');
+        return $this->belongsToMany(Product::class, 'product_categories_products', 'category_id', 'product_id')->withTimestamps();
     }
 
     /*
@@ -88,16 +88,9 @@ class ProductCategory extends Model
             ->saveSlugsTo('slug');
     }
 
-    public function getProductsCount(): int
-    {
-        return $this->products_count + $this->children->sum(fn (ProductCategory $category): int => $category->getProductsCount());
-    }
-
     public function getOverallProductsCountAttribute(): int
     {
-        $category = self::findInHierarchy($this->id);
-
-        return ($category === null) ? 0 : $category->getProductsCount();
+        return Product::query()->whereInCategory(collect([$this]))->count();
     }
 
     public function getPathAttribute(): string
@@ -106,7 +99,7 @@ class ProductCategory extends Model
         $category = self::findInHierarchy($this->id)?->parent;
         while (isset($category)) {
             $path[] = $category->title;
-            $category = $category->parent;
+            $category = ($category->parent_id === null) ? null : self::findInHierarchy($category->parent_id);
         }
         $path[] = $this->title;
 

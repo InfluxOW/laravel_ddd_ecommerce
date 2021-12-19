@@ -7,9 +7,10 @@ use App\Domain\Products\Database\Factories\ProductFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Query\Expression;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
@@ -23,23 +24,22 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $description
  * @property \App\Domain\Generic\Currency\Models\Kopecks $price
  * @property \App\Domain\Generic\Currency\Models\Kopecks|null $price_discounted
- * @property int $category_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Domain\Products\Models\ProductAttributeValue[] $attributeValues
  * @property-read int|null $attribute_values_count
- * @property-read \App\Domain\Products\Models\ProductCategory $category
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Domain\Products\Models\ProductCategory[] $categories
+ * @property-read int|null $categories_count
  * @method static \App\Domain\Products\Database\Factories\ProductFactory factory(...$parameters)
  * @method static Builder|Product newModelQuery()
  * @method static Builder|Product newQuery()
  * @method static Builder|Product orderByCurrentPrice(bool $descending)
  * @method static Builder|Product query()
- * @method static Builder|Product whereCategoryId($value)
  * @method static Builder|Product whereCreatedAt($value)
  * @method static Builder|Product whereDescription($value)
  * @method static Builder|Product whereHasAttributeValue(array $attributesValuesByAttributeSlug)
  * @method static Builder|Product whereId($value)
- * @method static Builder|Product whereInCategory(array $categoriesSlugs)
+ * @method static Builder|Product whereInCategory(\Illuminate\Support\Collection $categories)
  * @method static Builder|Product wherePrice($value)
  * @method static Builder|Product wherePriceAbove(int $minPrice)
  * @method static Builder|Product wherePriceBelow(int $maxPrice)
@@ -64,9 +64,9 @@ class Product extends Model
      * Relations
      * */
 
-    public function category(): BelongsTo
+    public function categories(): BelongsToMany
     {
-        return $this->belongsTo(ProductCategory::class);
+        return $this->belongsToMany(ProductCategory::class, 'product_categories_products', 'product_id', 'category_id')->withTimestamps();
     }
 
     public function attributeValues(): HasMany
@@ -103,12 +103,10 @@ class Product extends Model
      * Scopes
      * */
 
-    public function scopeWhereInCategory(Builder $query, array $categoriesSlugs): void
+    public function scopeWhereInCategory(Builder $query, Collection $categories): void
     {
-        $categories = ProductCategory::query()->whereIn('slug', $categoriesSlugs)->get();
-
         if ($categories->isNotEmpty()) {
-            $query->whereHas('category', function (Builder $query) use ($categories): void {
+            $query->whereHas('categories', function (Builder $query) use ($categories): void {
                 foreach ($categories as $i => $category) {
                     $operation = ($i === 0) ? 'where' : 'orWhere';
 

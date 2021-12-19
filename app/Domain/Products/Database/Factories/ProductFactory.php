@@ -27,14 +27,15 @@ class ProductFactory extends Factory
     public function configure(): self
     {
         return $this
-            ->afterMaking(function (Product $product): void {
-                $category = ProductCategory::query()
+            ->afterCreating(function (Product $product): void {
+                $categories = ProductCategory::query()
                     ->where('depth', '>=', ProductCategory::MAX_DEPTH - 1)
                     ->limitDepth(ProductCategory::MAX_DEPTH)
                     ->inRandomOrder()
-                    ->first();
+                    ->limit(random_int(1, 5))
+                    ->get();
 
-                $product->category()->associate($category);
+                $product->categories()->sync($categories);
             });
     }
 }

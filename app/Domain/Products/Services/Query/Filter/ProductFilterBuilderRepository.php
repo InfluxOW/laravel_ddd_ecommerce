@@ -45,7 +45,7 @@ class ProductFilterBuilderRepository
     {
         return ProductCategory::query()
             ->select(['slug', 'title'])
-            ->whereHas('products', static fn (Builder $query): Builder => $query->whereIn('id', $productsQuery->getQuery()->select(['id'])))
+            ->whereHas('products', static fn (Builder $query): Builder => $query->whereIn('products.id', $productsQuery->getQuery()->select(['id'])))
             ->pluck('slug', 'title');
     }
 

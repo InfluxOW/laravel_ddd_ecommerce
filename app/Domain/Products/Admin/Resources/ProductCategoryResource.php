@@ -111,7 +111,7 @@ class ProductCategoryResource extends Resource
                                         Placeholder::make('overall_products_count')
                                             ->label('Products Count Including Descendants')
                                             ->content(fn (?ProductCategory $record): int => ($record === null) ? 0 : $record->overall_products_count),
-                                        Placeholder::make('overall_products_count')
+                                        Placeholder::make('products_count')
                                             ->label('Products Count')
                                             ->content(fn (?ProductCategory $record): ?int => ($record === null) ? 0 : ProductCategory::findInHierarchy($record->id)?->products_count),
                                     ])

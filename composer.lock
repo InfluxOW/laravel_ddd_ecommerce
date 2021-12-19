@@ -3738,16 +3738,16 @@
         },
         {
             "name": "spatie/laravel-package-tools",
-            "version": "1.9.2",
+            "version": "1.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-package-tools.git",
-                "reference": "f710fe196c126fb9e0aee67eb5af49ad8f13f528"
+                "reference": "97c24d0bc58e04d55e4a6a7b6d6102cb45b75789"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-package-tools/zipball/f710fe196c126fb9e0aee67eb5af49ad8f13f528",
-                "reference": "f710fe196c126fb9e0aee67eb5af49ad8f13f528",
+                "url": "https://api.github.com/repos/spatie/laravel-package-tools/zipball/97c24d0bc58e04d55e4a6a7b6d6102cb45b75789",
+                "reference": "97c24d0bc58e04d55e4a6a7b6d6102cb45b75789",
                 "shasum": ""
             },
             "require": {
@@ -3756,8 +3756,8 @@
             },
             "require-dev": {
                 "mockery/mockery": "^1.4",
-                "orchestra/testbench": "^5.0|^6.0",
-                "phpunit/phpunit": "^9.3",
+                "orchestra/testbench": "^5.0|^6.23",
+                "phpunit/phpunit": "^9.4",
                 "spatie/test-time": "^1.2"
             },
             "type": "library",
@@ -3786,7 +3786,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-package-tools/issues",
-                "source": "https://github.com/spatie/laravel-package-tools/tree/1.9.2"
+                "source": "https://github.com/spatie/laravel-package-tools/tree/1.10.0"
             },
             "funding": [
                 {
@@ -3794,7 +3794,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-09-21T13:06:51+00:00"
+            "time": "2021-12-18T20:33:51+00:00"
         },
         {
             "name": "spatie/laravel-query-builder",
@@ -9165,12 +9165,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "cb07b29856f030f4d84fe839a9db19f0ad7b8370"
+                "reference": "40ac2e24fa490f94d137a5ec8637145776c93590"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/cb07b29856f030f4d84fe839a9db19f0ad7b8370",
-                "reference": "cb07b29856f030f4d84fe839a9db19f0ad7b8370",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/40ac2e24fa490f94d137a5ec8637145776c93590",
+                "reference": "40ac2e24fa490f94d137a5ec8637145776c93590",
                 "shasum": ""
             },
             "require": {
@@ -9222,7 +9222,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-12-17T17:45:05+00:00"
+            "time": "2021-12-18T15:30:00+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -11209,12 +11209,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/slevomat/coding-standard.git",
-                "reference": "a2ee80bc0e26105fcf990090afa79bac2941aaab"
+                "reference": "d906124ca49a6a1adfcd249c0e63840e5113fee4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/slevomat/coding-standard/zipball/a2ee80bc0e26105fcf990090afa79bac2941aaab",
-                "reference": "a2ee80bc0e26105fcf990090afa79bac2941aaab",
+                "url": "https://api.github.com/repos/slevomat/coding-standard/zipball/d906124ca49a6a1adfcd249c0e63840e5113fee4",
+                "reference": "d906124ca49a6a1adfcd249c0e63840e5113fee4",
                 "shasum": ""
             },
             "require": {
@@ -11263,7 +11263,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-12-15T09:09:22+00:00"
+            "time": "2021-12-18T18:39:47+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",

@@ -18,7 +18,7 @@ class ProductResource extends JsonResource
             'created_at' => ($product->created_at === null) ? null : $product->created_at->format('d M Y H:i:s'),
             'price' => $product->price->roubles(),
             'price_discounted' => ($product->price_discounted === null) ? null : $product->price_discounted->roubles(),
-            'category' => LightProductCategoryResource::make($product->category),
+            'categories' => LightProductCategoryResource::collection($product->categories->sortBy('title')),
             'attributes' => ProductAttributeValueResource::collection($product->attributeValues->sortBy('attribute.title')),
             'description' => $product->description,
         ];

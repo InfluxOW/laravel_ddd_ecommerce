@@ -13,7 +13,7 @@ class HeavyProductCategoryResource extends JsonResource
         $category = $this->resource;
 
         return array_merge(LightProductCategoryResource::make($this->resource)->toArray($request), [
-            'products_count' => $category->getProductsCount(),
+            'products_count' => $category->overall_products_count,
             'children' => $this->whenLoaded(
                 'children',
                 $this->when(
