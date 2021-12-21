@@ -2,6 +2,7 @@
 
 namespace App\Domain\Users\Database\Factories;
 
+use App\Domain\Generic\Address\Models\Address;
 use App\Domain\Users\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -22,6 +23,11 @@ class UserFactory extends Factory
             'remember_token' => Str::random(10),
             'created_at' => $this->faker->dateTimeBetween('-1 year'),
         ];
+    }
+
+    public function configure(): self
+    {
+        return $this->afterCreating(fn (User $user) => $user->addresses()->saveMany(Address::factory()->count(random_int(1, 3))->make()));
     }
 
     public function unverified(): self

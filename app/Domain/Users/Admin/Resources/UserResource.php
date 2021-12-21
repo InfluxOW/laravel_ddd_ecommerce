@@ -3,6 +3,7 @@
 namespace App\Domain\Users\Admin\Resources;
 
 use App\Domain\Admin\Panel\Components\Cards\TimestampsCard;
+use App\Domain\Generic\Address\Admin\RelationManagers\AddressesRelationManager;
 use App\Domain\Users\Models\User;
 use Carbon\Carbon;
 use Filament\Forms\Components\Card;
@@ -134,7 +135,7 @@ class UserResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            AddressesRelationManager::class,
         ];
     }
 
