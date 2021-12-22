@@ -3,8 +3,11 @@
 namespace App\Domain\Products\Admin\Resources;
 
 use App\Domain\Admin\Panel\Components\Cards\TimestampsCard;
+use App\Domain\Admin\Traits\Translation\TranslatableResource;
+use App\Domain\Generic\Lang\Enums\TranslationNamespace;
 use App\Domain\Products\Admin\Resources\ProductCategoryResource\RelationManagers\ProductCategoryChildrenRelationManager;
 use App\Domain\Products\Models\ProductCategory;
+use App\Domain\Products\Providers\DomainServiceProvider;
 use Filament\Forms\Components\BelongsToSelect;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Grid;
@@ -24,19 +27,13 @@ use Illuminate\Support\Str;
 
 class ProductCategoryResource extends Resource
 {
-    protected static ?string $model = ProductCategory::class;
+    use TranslatableResource;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $model = ProductCategory::class;
 
     protected static ?string $recordTitleAttribute = 'title';
 
-    protected static ?string $navigationLabel = 'Categories';
-
-    protected static ?string $label = 'Category';
-
-    protected static ?string $pluralLabel = 'Categories';
-
-    protected static ?string $navigationGroup = 'Shop';
+    protected static ?string $navigationIcon = 'heroicon-o-collection';
 
     protected static ?int $navigationSort = 2;
 
@@ -163,5 +160,10 @@ class ProductCategoryResource extends Resource
             'edit' => \App\Domain\Products\Admin\Resources\ProductCategoryResource\Pages\EditProductCategory::route('/{record}/edit'),
             'view' => \App\Domain\Products\Admin\Resources\ProductCategoryResource\Pages\ViewProductCategory::route('/{record}'),
         ];
+    }
+
+    protected static function getTranslationNamespace(): TranslationNamespace
+    {
+        return DomainServiceProvider::TRANSLATION_NAMESPACE;
     }
 }

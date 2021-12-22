@@ -23,6 +23,7 @@ use Squire\Models\Region;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read Model|\Eloquent $addressable
+ * @property-read string $string_representation
  * @method static \App\Domain\Generic\Address\Database\Factories\AddressFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Address newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Address newQuery()
@@ -58,6 +59,15 @@ class Address extends Model
     public function addressable(): MorphTo
     {
         return $this->morphTo();
+    }
+
+    /*
+     * Attributes
+     * */
+
+    public function getStringRepresentationAttribute(): string
+    {
+        return (string) $this;
     }
 
     /*

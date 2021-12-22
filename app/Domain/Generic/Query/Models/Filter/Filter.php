@@ -2,6 +2,7 @@
 
 namespace App\Domain\Generic\Query\Models\Filter;
 
+use App\Domain\Generic\Lang\Enums\TranslationNamespace;
 use App\Domain\Generic\Query\Abstracts\Query;
 use App\Domain\Generic\Query\Enums\QueryFilterType;
 use App\Domain\Generic\Utils\LangUtils;
@@ -12,10 +13,10 @@ abstract class Filter extends Query
 {
     public static QueryFilterType $type;
 
-    public function __construct(BackedEnum $filter)
+    public function __construct(BackedEnum $filter, TranslationNamespace $namespace)
     {
         $this->query = $filter->value;
-        $this->title = LangUtils::translateEnum($filter);
+        $this->title = LangUtils::translateEnum($namespace, $filter);
     }
 
     #[ArrayShape(['query' => "string", 'title' => "string", 'type' => "string"])]

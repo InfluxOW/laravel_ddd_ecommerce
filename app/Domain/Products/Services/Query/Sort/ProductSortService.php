@@ -2,24 +2,33 @@
 
 namespace App\Domain\Products\Services\Query\Sort;
 
+use App\Domain\Generic\Lang\Enums\TranslationNamespace;
 use App\Domain\Generic\Query\Enums\QueryKey;
 use App\Domain\Generic\Query\Interfaces\QueryService;
 use App\Domain\Generic\Query\Models\Sort\Sort;
 use App\Domain\Products\Enums\Query\Sort\ProductAllowedSort;
+use App\Domain\Products\Providers\DomainServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
 class ProductSortService implements QueryService
 {
+    private readonly TranslationNamespace $namespace;
+
+    public function __construct()
+    {
+        $this->namespace = DomainServiceProvider::TRANSLATION_NAMESPACE;
+    }
+
     public function getAllowed(): Collection
     {
         return collect([
-            Sort::createAsc(ProductAllowedSort::TITLE),
-            Sort::createDesc(ProductAllowedSort::TITLE),
-            Sort::createAsc(ProductAllowedSort::PRICE),
-            Sort::createDesc(ProductAllowedSort::PRICE),
-            Sort::createAsc(ProductAllowedSort::CREATED_AT),
-            Sort::createDesc(ProductAllowedSort::CREATED_AT),
+            Sort::createAsc(ProductAllowedSort::TITLE, $this->namespace),
+            Sort::createDesc(ProductAllowedSort::TITLE, $this->namespace),
+            Sort::createAsc(ProductAllowedSort::PRICE, $this->namespace),
+            Sort::createDesc(ProductAllowedSort::PRICE, $this->namespace),
+            Sort::createAsc(ProductAllowedSort::CREATED_AT, $this->namespace),
+            Sort::createDesc(ProductAllowedSort::CREATED_AT, $this->namespace),
         ]);
     }
 

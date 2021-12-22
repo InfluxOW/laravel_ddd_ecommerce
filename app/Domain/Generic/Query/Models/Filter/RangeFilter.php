@@ -3,6 +3,7 @@
 namespace App\Domain\Generic\Query\Models\Filter;
 
 use App\Domain\Generic\Currency\Models\Kopecks;
+use App\Domain\Generic\Lang\Enums\TranslationNamespace;
 use App\Domain\Generic\Query\Enums\QueryFilterType;
 use App\Domain\Generic\Utils\MathUtils;
 use BackedEnum;
@@ -16,9 +17,9 @@ class RangeFilter extends Filter
     public float|int|null $maxValue;
     public readonly bool $valuesAreCurrency;
 
-    public function __construct(BackedEnum $filter, ?float $minValue, ?float $maxValue, bool $valuesAreCurrency)
+    public function __construct(BackedEnum $filter, TranslationNamespace $namespace, ?float $minValue, ?float $maxValue, bool $valuesAreCurrency)
     {
-        parent::__construct($filter);
+        parent::__construct($filter, $namespace);
 
         $this->valuesAreCurrency = $valuesAreCurrency;
 

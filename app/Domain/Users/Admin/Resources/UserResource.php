@@ -3,8 +3,11 @@
 namespace App\Domain\Users\Admin\Resources;
 
 use App\Domain\Admin\Panel\Components\Cards\TimestampsCard;
+use App\Domain\Admin\Traits\Translation\TranslatableResource;
 use App\Domain\Generic\Address\Admin\RelationManagers\AddressesRelationManager;
+use App\Domain\Generic\Lang\Enums\TranslationNamespace;
 use App\Domain\Users\Models\User;
+use App\Domain\Users\Providers\DomainServiceProvider;
 use Carbon\Carbon;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\DateTimePicker;
@@ -22,19 +25,13 @@ use JetBrains\PhpStorm\ArrayShape;
 
 class UserResource extends Resource
 {
+    use TranslatableResource;
+
     protected static ?string $model = User::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
 
     protected static ?string $recordTitleAttribute = 'name';
-
-    protected static ?string $navigationLabel = 'Customers';
-
-    protected static ?string $label = 'Customer';
-
-    protected static ?string $pluralLabel = 'Customers';
-
-    protected static ?string $navigationGroup = 'Shop';
 
     protected static ?int $navigationSort = 1;
 
@@ -147,5 +144,10 @@ class UserResource extends Resource
             'edit' => \App\Domain\Users\Admin\Resources\UserResource\Pages\EditUser::route('/{record}/edit'),
             'view' => \App\Domain\Users\Admin\Resources\UserResource\Pages\ViewUser::route('/{record}'),
         ];
+    }
+
+    protected static function getTranslationNamespace(): TranslationNamespace
+    {
+        return DomainServiceProvider::TRANSLATION_NAMESPACE;
     }
 }

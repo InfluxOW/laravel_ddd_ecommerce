@@ -1102,16 +1102,16 @@
         },
         {
             "name": "filament/filament",
-            "version": "v2.6.3",
+            "version": "v2.6.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel-filament/admin.git",
-                "reference": "9eeaaa8564271915230fde7d0e2eb1a1cd17f0dd"
+                "reference": "77d2f6f370ca06cb547fd255a016606842805206"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel-filament/admin/zipball/9eeaaa8564271915230fde7d0e2eb1a1cd17f0dd",
-                "reference": "9eeaaa8564271915230fde7d0e2eb1a1cd17f0dd",
+                "url": "https://api.github.com/repos/laravel-filament/admin/zipball/77d2f6f370ca06cb547fd255a016606842805206",
+                "reference": "77d2f6f370ca06cb547fd255a016606842805206",
                 "shasum": ""
             },
             "require": {
@@ -1158,20 +1158,20 @@
                 "issues": "https://github.com/laravel-filament/filament/issues",
                 "source": "https://github.com/laravel-filament/filament"
             },
-            "time": "2021-12-20T09:13:07+00:00"
+            "time": "2021-12-21T23:28:50+00:00"
         },
         {
             "name": "filament/forms",
-            "version": "v2.6.3",
+            "version": "v2.6.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel-filament/forms.git",
-                "reference": "4720c8059a629196753d40affa3f6813991a35db"
+                "reference": "5a49318f2c7aea3fd28cf33e26385bba69667bd2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel-filament/forms/zipball/4720c8059a629196753d40affa3f6813991a35db",
-                "reference": "4720c8059a629196753d40affa3f6813991a35db",
+                "url": "https://api.github.com/repos/laravel-filament/forms/zipball/5a49318f2c7aea3fd28cf33e26385bba69667bd2",
+                "reference": "5a49318f2c7aea3fd28cf33e26385bba69667bd2",
                 "shasum": ""
             },
             "require": {
@@ -1211,20 +1211,20 @@
                 "issues": "https://github.com/laravel-filament/filament/issues",
                 "source": "https://github.com/laravel-filament/filament"
             },
-            "time": "2021-12-19T23:13:17+00:00"
+            "time": "2021-12-21T23:28:50+00:00"
         },
         {
             "name": "filament/tables",
-            "version": "v2.6.3",
+            "version": "v2.6.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel-filament/tables.git",
-                "reference": "01bf87ac6be6de102fba581b41f9f1fcf66ea4df"
+                "reference": "c2f572eae53cf9d189136c17c1cdbaaf293f8cec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel-filament/tables/zipball/01bf87ac6be6de102fba581b41f9f1fcf66ea4df",
-                "reference": "01bf87ac6be6de102fba581b41f9f1fcf66ea4df",
+                "url": "https://api.github.com/repos/laravel-filament/tables/zipball/c2f572eae53cf9d189136c17c1cdbaaf293f8cec",
+                "reference": "c2f572eae53cf9d189136c17c1cdbaaf293f8cec",
                 "shasum": ""
             },
             "require": {
@@ -1264,7 +1264,7 @@
                 "issues": "https://github.com/laravel-filament/filament/issues",
                 "source": "https://github.com/laravel-filament/filament"
             },
-            "time": "2021-12-20T01:18:51+00:00"
+            "time": "2021-12-21T23:28:44+00:00"
         },
         {
             "name": "fruitcake/laravel-cors",
@@ -1730,16 +1730,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.76.2",
+            "version": "v8.77.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "c67acfdc968f487b6235435080eef62a7e2ed055"
+                "reference": "994dbac5c6da856c77c81a411cff5b7d31519ca8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/c67acfdc968f487b6235435080eef62a7e2ed055",
-                "reference": "c67acfdc968f487b6235435080eef62a7e2ed055",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/994dbac5c6da856c77c81a411cff5b7d31519ca8",
+                "reference": "994dbac5c6da856c77c81a411cff5b7d31519ca8",
                 "shasum": ""
             },
             "require": {
@@ -1757,7 +1757,7 @@
                 "opis/closure": "^3.6",
                 "php": "^7.3|^8.0",
                 "psr/container": "^1.0",
-                "psr/log": "^1.0 || ^2.0",
+                "psr/log": "^1.0|^2.0",
                 "psr/simple-cache": "^1.0",
                 "ramsey/uuid": "^4.2.2",
                 "swiftmailer/swiftmailer": "^6.3",
@@ -1898,7 +1898,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2021-12-15T14:02:14+00:00"
+            "time": "2021-12-21T20:22:29+00:00"
         },
         {
             "name": "laravel/sanctum",
@@ -7349,21 +7349,22 @@
         },
         {
             "name": "composer/composer",
-            "version": "2.1.14",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "cd28fc05b0c9d3beaf58b57018725c4dc15a6446"
+                "reference": "e174a4c4324f50a6f2de472aa1055c24a2fe2b2a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/cd28fc05b0c9d3beaf58b57018725c4dc15a6446",
-                "reference": "cd28fc05b0c9d3beaf58b57018725c4dc15a6446",
+                "url": "https://api.github.com/repos/composer/composer/zipball/e174a4c4324f50a6f2de472aa1055c24a2fe2b2a",
+                "reference": "e174a4c4324f50a6f2de472aa1055c24a2fe2b2a",
                 "shasum": ""
             },
             "require": {
                 "composer/ca-bundle": "^1.0",
                 "composer/metadata-minifier": "^1.0",
+                "composer/pcre": "^1.0",
                 "composer/semver": "^3.0",
                 "composer/spdx-licenses": "^1.2",
                 "composer/xdebug-handler": "^2.0",
@@ -7393,7 +7394,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "2.1-dev"
+                    "dev-main": "2.2-dev"
                 }
             },
             "autoload": {
@@ -7427,7 +7428,7 @@
             "support": {
                 "irc": "ircs://irc.libera.chat:6697/composer",
                 "issues": "https://github.com/composer/composer/issues",
-                "source": "https://github.com/composer/composer/tree/2.1.14"
+                "source": "https://github.com/composer/composer/tree/2.2.0"
             },
             "funding": [
                 {
@@ -7443,7 +7444,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-11-30T09:51:43+00:00"
+            "time": "2021-12-22T10:03:27+00:00"
         },
         {
             "name": "composer/metadata-minifier",
@@ -8917,9 +8918,6 @@
             "require": {
                 "php": "^7.1 || ^8.0"
             },
-            "replace": {
-                "myclabs/deep-copy": "self.version"
-            },
             "require-dev": {
                 "doctrine/collections": "^1.0",
                 "doctrine/common": "^2.6",
@@ -9537,12 +9535,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "6642371e35a6948f3ee825b1861ec451401c9f7f"
+                "reference": "1a6d196b3746dcb34debbdaf6defd89d4144078f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/6642371e35a6948f3ee825b1861ec451401c9f7f",
-                "reference": "6642371e35a6948f3ee825b1861ec451401c9f7f",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/1a6d196b3746dcb34debbdaf6defd89d4144078f",
+                "reference": "1a6d196b3746dcb34debbdaf6defd89d4144078f",
                 "shasum": ""
             },
             "require": {
@@ -9594,7 +9592,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-12-21T00:24:20+00:00"
+            "time": "2021-12-22T07:13:18+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -11821,5 +11819,5 @@
         "php": "^8.1"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.2.0"
 }

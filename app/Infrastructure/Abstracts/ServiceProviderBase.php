@@ -2,6 +2,7 @@
 
 namespace App\Infrastructure\Abstracts;
 
+use App\Domain\Generic\Lang\Enums\TranslationNamespace;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 use ReflectionClass;
@@ -9,9 +10,9 @@ use ReflectionClass;
 abstract class ServiceProviderBase extends LaravelServiceProvider
 {
     /*
-     * Alias for loading translations and views
+     * Namespace for loading translations
      * */
-    public const ALIAS = null;
+    public const TRANSLATION_NAMESPACE = TranslationNamespace::DEFAULT;
 
     /**
      * @var bool Set true if provider will load commands
@@ -110,7 +111,7 @@ abstract class ServiceProviderBase extends LaravelServiceProvider
     protected function registerTranslations(): void
     {
         if ($this->hasTranslations) {
-            $this->loadTranslationsFrom($this->domainPath('Resources/Lang'), static::ALIAS);
+            $this->loadTranslationsFrom($this->domainPath('Resources/Lang'), static::TRANSLATION_NAMESPACE->value);
         }
     }
 

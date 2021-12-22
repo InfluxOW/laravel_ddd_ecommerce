@@ -2,26 +2,22 @@
 
 namespace App\Domain\Generic\Utils;
 
+use App\Domain\Generic\Lang\Enums\TranslationFilename;
+use App\Domain\Generic\Lang\Enums\TranslationNamespace;
 use BackedEnum;
-use Illuminate\Support\Str;
 
 class LangUtils
 {
-    public static function translateEnum(BackedEnum $enum, string|int|null $value = null): string
+    public static function translateValue(TranslationNamespace $namespace, TranslationFilename $filename, string|int $value, ?string $key = null): string
     {
-        /**
-         * Get domain provider in the enum's domain
-         *
-         * @var class-string $domainProviderClass
-         */
-        $domainProviderClass = Str::of($enum::class)
-            ->explode('\\')
-            ->shift(3)
-            ->push('Providers', 'DomainServiceProvider')
-            ->implode('\\');
-
-        $translation = __(sprintf('%s::enums.%s.%s', $domainProviderClass::ALIAS, $enum::class, $value ?? $enum->value));
+        $value = ($key === null) ? $value : sprintf('%s.%s', $key, $value);
+        $translation = __(sprintf('%s::%s.%s', $namespace->value, $filename->value, $value));
 
         return is_string($translation) ? $translation : '';
+    }
+
+    public static function translateEnum(TranslationNamespace $namespace, BackedEnum $enum, string|int|null $value = null): string
+    {
+        return self::translateValue($namespace, TranslationFilename::ENUMS, $value ?? $enum->value, $enum::class);
     }
 }

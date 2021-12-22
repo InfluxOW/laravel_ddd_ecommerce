@@ -2,6 +2,7 @@
 
 namespace App\Domain\Generic\Query\Models\Filter;
 
+use App\Domain\Generic\Lang\Enums\TranslationNamespace;
 use App\Domain\Generic\Query\Enums\QueryFilterType;
 use App\Domain\Generic\Query\Models\Filter\Resources\Multiselect\MultiselectFilterNestedValues;
 use BackedEnum;
@@ -15,30 +16,33 @@ class MultiselectFilter extends Filter
 
     public function __construct(
         BackedEnum $filter,
+        TranslationNamespace $namespace,
         public readonly bool $isNested,
         public Collection|EloquentCollection $values
     ) {
-        parent::__construct($filter);
+        parent::__construct($filter, $namespace);
     }
 
     /**
      * @param BackedEnum $filter
+     * @param \App\Domain\Generic\Lang\Enums\TranslationNamespace $namespace
      * @param Collection<string>|EloquentCollection<string> $values
      * @return self
      */
-    public static function createWithPlainValues(BackedEnum $filter, Collection|EloquentCollection $values): self
+    public static function createWithPlainValues(BackedEnum $filter, TranslationNamespace $namespace, Collection|EloquentCollection $values): self
     {
-        return new self($filter, false, $values);
+        return new self($filter, $namespace, false, $values);
     }
 
     /**
      * @param BackedEnum $filter
+     * @param \App\Domain\Generic\Lang\Enums\TranslationNamespace $namespace
      * @param Collection<MultiselectFilterNestedValues> $values
      * @return self
      */
-    public static function createWithNestedValues(BackedEnum $filter, Collection $values): self
+    public static function createWithNestedValues(BackedEnum $filter, TranslationNamespace $namespace, Collection $values): self
     {
-        return new self($filter, true, $values);
+        return new self($filter, $namespace, true, $values);
     }
 
     #[ArrayShape(['query' => "string", 'title' => "string", 'type' => "string", 'is_nested' => "boolean", 'values' => "array"])]

@@ -2,7 +2,10 @@
 
 namespace App\Domain\Generic\Address\Admin\RelationManagers;
 
+use App\Domain\Admin\Traits\Translation\TranslatableRelation;
 use App\Domain\Generic\Address\Models\Address;
+use App\Domain\Generic\Address\Providers\DomainServiceProvider;
+use App\Domain\Generic\Lang\Enums\TranslationNamespace;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
@@ -14,10 +17,9 @@ use Squire\Models\Region;
 
 class AddressesRelationManager extends MorphManyRelationManager
 {
-    protected static ?string $label = 'Address';
+    use TranslatableRelation;
 
-    protected static ?string $pluralLabel = 'Addresses';
-
+    protected static ?string $recordTitleAttribute = 'string_representation';
     protected static string $relationship = 'addresses';
 
     public static function form(Form $form): Form
@@ -57,5 +59,10 @@ class AddressesRelationManager extends MorphManyRelationManager
             ->filters([
                 //
             ]);
+    }
+
+    protected static function getTranslationNamespace(): TranslationNamespace
+    {
+        return DomainServiceProvider::TRANSLATION_NAMESPACE;
     }
 }
