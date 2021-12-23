@@ -14,7 +14,7 @@ class ProductSeeder extends Seeder
      */
     public function run()
     {
-        $count = app()->runningUnitTests() ? 100 : 1000;
+        $count = app()->runningUnitTests() ? 50 : 1000;
 
         Product::factory()->count($count)->create();
     }

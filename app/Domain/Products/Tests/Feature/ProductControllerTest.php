@@ -26,7 +26,7 @@ class ProductControllerTest extends TestCase
         $this->product = $product;
     }
 
-    protected function afterRefreshingDatabase(): void
+    protected function setUpOnce(): void
     {
         $this->seed([
             ProductCategorySeeder::class,
@@ -53,7 +53,7 @@ class ProductControllerTest extends TestCase
             $appliedFilters = collect($response->json(sprintf('%s.%s.%s', ResponseKey::QUERY->value, QueryKey::FILTER->value, 'applied')));
 
             $this->assertNotEmpty($items);
-            $this->assertTrue($items->every(fn (array $item) => str_contains(strtolower($item['title']), strtolower($query))));
+            $this->assertTrue($items->every(fn (array $item) => str_contains(mb_strtolower($item['title']), mb_strtolower($query))));
 
             $this->assertCount(1, $appliedFilters);
             $this->assertTrue($appliedFilters->pluck('query')->contains(ProductAllowedFilter::TITLE->value));
@@ -71,7 +71,7 @@ class ProductControllerTest extends TestCase
             $appliedFilters = collect($response->json(sprintf('%s.%s.%s', ResponseKey::QUERY->value, QueryKey::FILTER->value, 'applied')));
 
             $this->assertNotEmpty($items);
-            $this->assertTrue($items->every(fn (array $item) => str_contains(strtolower($item['description']), strtolower($query))));
+            $this->assertTrue($items->every(fn (array $item) => str_contains(mb_strtolower($item['description']), mb_strtolower($query))));
 
             $this->assertCount(1, $appliedFilters);
             $this->assertTrue($appliedFilters->pluck('query')->contains(ProductAllowedFilter::DESCRIPTION->value));

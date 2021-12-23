@@ -32,7 +32,7 @@ class LogoutControllerTest extends TestCase
      */
     public function an_unauthenticated_user_can_logout(): void
     {
-        $this->post(route('login'), ['email' => $this->user->email, 'password' => $this->password]);
+        $this->post(route('login'), ['email' => $this->user->email, 'password' => $this->password, 'remember' => false]);
 
         $this->post(route('logout'))
             ->assertOk();

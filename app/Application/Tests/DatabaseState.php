@@ -9,5 +9,5 @@ class DatabaseState
      *
      * @var bool
      */
-    public static bool $shouldBeMigrated = true;
+    public static bool $shouldRunSetUpOnce = true;
 }

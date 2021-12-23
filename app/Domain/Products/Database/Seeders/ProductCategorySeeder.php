@@ -14,7 +14,8 @@ class ProductCategorySeeder extends Seeder
      */
     public function run()
     {
-        $categoriesCountByCategoryDepth = [3, 9, 27, 81];
+        $baseCategoriesCountMultiplier = app()->runningUnitTests() ? 1 : 3;
+        $categoriesCountByCategoryDepth = [$baseCategoriesCountMultiplier, $baseCategoriesCountMultiplier * 3, $baseCategoriesCountMultiplier * (3 ** 2), $baseCategoriesCountMultiplier * (3 ** 3)];
         [$rootCategoriesCount, $firstLevelCategoriesCount, $secondLevelCategoriesCount, $thirdLevelCategoriesCount] = $categoriesCountByCategoryDepth;
 
         ProductCategory::factory()

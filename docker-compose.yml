@@ -49,8 +49,6 @@ services:
             POSTGRES_DB: '${DB_DATABASE}'
             POSTGRES_USER: '${DB_USERNAME}'
             POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
-        volumes:
-            - 'sailpgsql_test:/var/lib/postgresql/data'
         networks:
             - sail
         healthcheck:
@@ -62,6 +60,4 @@ networks:
         driver: bridge
 volumes:
     sailpgsql:
-        driver: local
-    sailpgsql_test:
         driver: local

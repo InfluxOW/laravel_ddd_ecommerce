@@ -1102,16 +1102,16 @@
         },
         {
             "name": "filament/filament",
-            "version": "v2.6.4",
+            "version": "v2.6.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel-filament/admin.git",
-                "reference": "77d2f6f370ca06cb547fd255a016606842805206"
+                "reference": "a379ac29d716917ccac4d8d02de2b938fab3f4fa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel-filament/admin/zipball/77d2f6f370ca06cb547fd255a016606842805206",
-                "reference": "77d2f6f370ca06cb547fd255a016606842805206",
+                "url": "https://api.github.com/repos/laravel-filament/admin/zipball/a379ac29d716917ccac4d8d02de2b938fab3f4fa",
+                "reference": "a379ac29d716917ccac4d8d02de2b938fab3f4fa",
                 "shasum": ""
             },
             "require": {
@@ -1158,20 +1158,20 @@
                 "issues": "https://github.com/laravel-filament/filament/issues",
                 "source": "https://github.com/laravel-filament/filament"
             },
-            "time": "2021-12-21T23:28:50+00:00"
+            "time": "2021-12-23T00:09:45+00:00"
         },
         {
             "name": "filament/forms",
-            "version": "v2.6.4",
+            "version": "v2.6.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel-filament/forms.git",
-                "reference": "5a49318f2c7aea3fd28cf33e26385bba69667bd2"
+                "reference": "c73f0bf91c691111021e4fd9d42f2d551135be4b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel-filament/forms/zipball/5a49318f2c7aea3fd28cf33e26385bba69667bd2",
-                "reference": "5a49318f2c7aea3fd28cf33e26385bba69667bd2",
+                "url": "https://api.github.com/repos/laravel-filament/forms/zipball/c73f0bf91c691111021e4fd9d42f2d551135be4b",
+                "reference": "c73f0bf91c691111021e4fd9d42f2d551135be4b",
                 "shasum": ""
             },
             "require": {
@@ -1211,20 +1211,20 @@
                 "issues": "https://github.com/laravel-filament/filament/issues",
                 "source": "https://github.com/laravel-filament/filament"
             },
-            "time": "2021-12-21T23:28:50+00:00"
+            "time": "2021-12-23T00:09:38+00:00"
         },
         {
             "name": "filament/tables",
-            "version": "v2.6.4",
+            "version": "v2.6.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel-filament/tables.git",
-                "reference": "c2f572eae53cf9d189136c17c1cdbaaf293f8cec"
+                "reference": "bfd0eeb13831eb3227b37c781603ab1d072615e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel-filament/tables/zipball/c2f572eae53cf9d189136c17c1cdbaaf293f8cec",
-                "reference": "c2f572eae53cf9d189136c17c1cdbaaf293f8cec",
+                "url": "https://api.github.com/repos/laravel-filament/tables/zipball/bfd0eeb13831eb3227b37c781603ab1d072615e3",
+                "reference": "bfd0eeb13831eb3227b37c781603ab1d072615e3",
                 "shasum": ""
             },
             "require": {
@@ -1264,7 +1264,7 @@
                 "issues": "https://github.com/laravel-filament/filament/issues",
                 "source": "https://github.com/laravel-filament/filament"
             },
-            "time": "2021-12-21T23:28:44+00:00"
+            "time": "2021-12-23T00:09:42+00:00"
         },
         {
             "name": "fruitcake/laravel-cors",
@@ -7349,16 +7349,16 @@
         },
         {
             "name": "composer/composer",
-            "version": "2.2.0",
+            "version": "2.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "e174a4c4324f50a6f2de472aa1055c24a2fe2b2a"
+                "reference": "bbc265e16561ab8e0f5e7cac395ea72640251f0c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/e174a4c4324f50a6f2de472aa1055c24a2fe2b2a",
-                "reference": "e174a4c4324f50a6f2de472aa1055c24a2fe2b2a",
+                "url": "https://api.github.com/repos/composer/composer/zipball/bbc265e16561ab8e0f5e7cac395ea72640251f0c",
+                "reference": "bbc265e16561ab8e0f5e7cac395ea72640251f0c",
                 "shasum": ""
             },
             "require": {
@@ -7428,7 +7428,7 @@
             "support": {
                 "irc": "ircs://irc.libera.chat:6697/composer",
                 "issues": "https://github.com/composer/composer/issues",
-                "source": "https://github.com/composer/composer/tree/2.2.0"
+                "source": "https://github.com/composer/composer/tree/2.2.1"
             },
             "funding": [
                 {
@@ -7444,7 +7444,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-12-22T10:03:27+00:00"
+            "time": "2021-12-22T21:21:31+00:00"
         },
         {
             "name": "composer/metadata-minifier",
@@ -9535,12 +9535,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "1a6d196b3746dcb34debbdaf6defd89d4144078f"
+                "reference": "1bdfda0cd219d0a3a67d755164e553707086e459"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/1a6d196b3746dcb34debbdaf6defd89d4144078f",
-                "reference": "1a6d196b3746dcb34debbdaf6defd89d4144078f",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/1bdfda0cd219d0a3a67d755164e553707086e459",
+                "reference": "1bdfda0cd219d0a3a67d755164e553707086e459",
                 "shasum": ""
             },
             "require": {
@@ -9592,7 +9592,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-12-22T07:13:18+00:00"
+            "time": "2021-12-22T18:33:40+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -10071,12 +10071,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "fff53639bf1fa25f311c3e54932ac8c827f9a343"
+                "reference": "31d9d9e2977ae7d796d82271be09e46f4bdf41b3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/fff53639bf1fa25f311c3e54932ac8c827f9a343",
-                "reference": "fff53639bf1fa25f311c3e54932ac8c827f9a343",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/31d9d9e2977ae7d796d82271be09e46f4bdf41b3",
+                "reference": "31d9d9e2977ae7d796d82271be09e46f4bdf41b3",
                 "shasum": ""
             },
             "conflict": {
@@ -10319,7 +10319,7 @@
                 "shopware/production": "<=6.3.5.2",
                 "shopware/shopware": "<5.7.6",
                 "showdoc/showdoc": "<=2.9.13",
-                "silverstripe/admin": "<4.8.1",
+                "silverstripe/admin": ">=1,<1.8.1",
                 "silverstripe/assets": ">=1,<1.4.7|>=1.5,<1.5.2",
                 "silverstripe/cms": "<4.3.6|>=4.4,<4.4.4",
                 "silverstripe/comments": ">=1.3,<1.9.99|>=2,<2.9.99|>=3,<3.1.1",
@@ -10496,7 +10496,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-12-17T20:13:17+00:00"
+            "time": "2021-12-22T21:13:38+00:00"
         },
         {
             "name": "sebastian/cli-parser",

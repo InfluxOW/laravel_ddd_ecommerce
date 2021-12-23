@@ -25,14 +25,14 @@ class LoginControllerTest extends TestCase
     /** @test */
     public function a_user_cannot_login_with_wrong_credentials(): void
     {
-        $this->post(route('login'), ['email' => $this->user->email, 'password' => 'wrong_password'])
+        $this->post(route('login'), ['email' => $this->user->email, 'password' => 'wrong_password', 'remember' => false])
             ->assertUnprocessable();
     }
 
     /** @test */
     public function a_user_can_login_with_correct_credentials(): void
     {
-        $this->post(route('login'), ['email' => $this->user->email, 'password' => $this->password])
+        $this->post(route('login'), ['email' => $this->user->email, 'password' => $this->password, 'remember' => false])
             ->assertOk()
             ->assertJsonStructure(['user', 'access_token']);
 

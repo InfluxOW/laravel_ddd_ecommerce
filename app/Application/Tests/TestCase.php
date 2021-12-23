@@ -20,16 +20,13 @@ abstract class TestCase extends BaseTestCase
     {
         parent::setUp();
 
-        $this->beginDatabaseTransaction();
-    }
+        if (DatabaseState::$shouldRunSetUpOnce) {
+            $this->setUpOnce();
 
-    public function refreshDatabase(): void
-    {
-        if (DatabaseState::$shouldBeMigrated) {
-            $this->baseLazilyRefreshDatabase();
+            DatabaseState::$shouldRunSetUpOnce = false;
         }
 
-        DatabaseState::$shouldBeMigrated = false;
+        $this->beginDatabaseTransaction();
     }
 
     protected function refreshTestDatabase(): void
@@ -40,9 +37,24 @@ abstract class TestCase extends BaseTestCase
 
         $this->artisan('migrate:fresh', $this->migrateFreshUsing());
 
-        /* @phpstan-ignore-next-line  */
+        /* @phpstan-ignore-next-line */
         $this->app[Kernel::class]->setArtisan(null);
 
         RefreshDatabaseState::$migrated = true;
+    }
+
+    /**
+     * Define actions that should be executed once before the whole suit
+     */
+    protected function setUpOnce(): void
+    {
+        //
+    }
+
+    public static function tearDownAfterClass(): void
+    {
+        DatabaseState::$shouldRunSetUpOnce = true;
+
+        parent::tearDownAfterClass();
     }
 }

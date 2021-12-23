@@ -8,10 +8,8 @@ use App\Domain\Products\Database\Seeders\ProductSeeder;
 
 class ProductCategoryControllerTest extends TestCase
 {
-    protected function setUp(): void
+    protected function setUpOnce(): void
     {
-        parent::setUp();
-
         $this->seed([
             ProductCategorySeeder::class,
             ProductSeeder::class,
