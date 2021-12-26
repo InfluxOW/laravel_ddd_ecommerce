@@ -14,8 +14,6 @@ abstract class TestCase extends BaseTestCase
         refreshDatabase as baseLazilyRefreshDatabase;
     }
 
-    protected static array $seeders;
-
     protected function setUp(): void
     {
         parent::setUp();

@@ -24,8 +24,7 @@
         "squirephp/regions-en": "^3.2"
     },
     "require-dev": {
-        "barryvdh/laravel-ide-helper": "^2.10",
-        "brianium/paratest": "^6.3",
+        "barryvdh/laravel-ide-helper": "dev-master",
         "facade/ignition": "^2.5",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^5.10",

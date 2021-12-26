@@ -4,12 +4,12 @@ install:
 	composer install
 	cp --no-clobber .env.example .env || true
 	php artisan key:generate
-	php artisan migrate:fresh --seed
+	php artisan migrate:fresh
 
 test:
-	php artisan test --parallel -vvv
+	php artisan test -vvv
 test-coverage:
-	php artisan test --parallel -vvv --coverage-clover build/logs/clover.xml
+	XDEBUG_MODE=coverage php artisan test --coverage-clover build/logs/clover.xml
 
 lint:
 	composer exec phpcs --verbose 2>/dev/null

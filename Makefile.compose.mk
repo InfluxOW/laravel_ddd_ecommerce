@@ -21,7 +21,7 @@ start:
 	$(sail) up --detach --remove-orphans
 
 dependencies-install:
-	$(sail) bash -c "make install"
+	$(sail) exec application make install
 
 destroy:
 	$(sail) down --rmi all --volumes --remove-orphans
@@ -30,3 +30,8 @@ stop:
 	$(sail) stop
 
 restart: stop start
+
+ci: sail-install
+	$(sail) -f docker-compose.ci.yml build
+	$(sail) -f docker-compose.ci.yml up --abort-on-container-exit
+	$(sail) -f docker-compose.ci.yml down --volumes --remove-orphans

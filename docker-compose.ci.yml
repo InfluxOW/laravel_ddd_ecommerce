@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+    application:
+        build:
+            context: ./docker/8.1
+            dockerfile: Dockerfile
+            args:
+                WWWGROUP: '${WWWGROUP}'
+        image: sail-8.1/app
+        volumes:
+            - '.:/var/www/html'
+        environment:
+            WWWUSER: '${WWWUSER}'
+            DB_CONNECTION: pgsql
+            DB_DATABASE: postgres
+            DB_USERNAME: postgres
+            DB_HOST: database
+            TEST_DB_HOST: database
+        depends_on:
+            - database
+        command: [ "make", "install", "lint", "analyse", "test-coverage" ]
+
+    database:
+        image: 'postgres:14.1-alpine'
+        environment:
+            POSTGRES_HOST_AUTH_METHOD: trust
+        healthcheck:
+            test: [ "CMD", "pg_isready", "-q", "-d", "${DB_DATABASE}", "-U", "${DB_USERNAME}" ]
+            retries: 3
+            timeout: 5s

@@ -45,7 +45,7 @@ class ProductControllerTest extends TestCase
     /** @test */
     public function a_user_can_filter_products_by_title(): void
     {
-        $queries = [$this->product->title, substr($this->product->title, 0, 5)];
+        $queries = [$this->product->title, trim(substr($this->product->title, 0, 5))];
 
         foreach ($queries as $query) {
             $response = $this->get(route('products.index', [QueryKey::FILTER->value => [ProductAllowedFilter::TITLE->value => $query]]))->assertOk();
@@ -53,7 +53,7 @@ class ProductControllerTest extends TestCase
             $appliedFilters = collect($response->json(sprintf('%s.%s.%s', ResponseKey::QUERY->value, QueryKey::FILTER->value, 'applied')));
 
             $this->assertNotEmpty($items);
-            $this->assertTrue($items->every(fn (array $item) => str_contains(mb_strtolower($item['title']), mb_strtolower($query))));
+            $this->assertTrue($items->every(fn (array $item): bool => str_contains($item['title'], $query)));
 
             $this->assertCount(1, $appliedFilters);
             $this->assertTrue($appliedFilters->pluck('query')->contains(ProductAllowedFilter::TITLE->value));
@@ -63,7 +63,7 @@ class ProductControllerTest extends TestCase
     /** @test */
     public function a_user_can_filter_products_by_description(): void
     {
-        $queries = [$this->product->description, substr($this->product->description, 0, 5)];
+        $queries = [$this->product->description, trim(substr($this->product->description, 0, 5))];
 
         foreach ($queries as $query) {
             $response = $this->get(route('products.index', [QueryKey::FILTER->value => [ProductAllowedFilter::DESCRIPTION->value => $query]]))->assertOk();
@@ -71,7 +71,7 @@ class ProductControllerTest extends TestCase
             $appliedFilters = collect($response->json(sprintf('%s.%s.%s', ResponseKey::QUERY->value, QueryKey::FILTER->value, 'applied')));
 
             $this->assertNotEmpty($items);
-            $this->assertTrue($items->every(fn (array $item) => str_contains(mb_strtolower($item['description']), mb_strtolower($query))));
+            $this->assertTrue($items->every(fn (array $item): bool => str_contains($item['description'], $query)));
 
             $this->assertCount(1, $appliedFilters);
             $this->assertTrue($appliedFilters->pluck('query')->contains(ProductAllowedFilter::DESCRIPTION->value));
@@ -85,7 +85,7 @@ class ProductControllerTest extends TestCase
     }
 
     /** @test */
-    public function a_user_cannon_view_nonexistent_product(): void
+    public function a_user_cannot_view_nonexistent_product(): void
     {
         $this->get(route('products.show', 'wrong_product'))->assertNotFound();
     }

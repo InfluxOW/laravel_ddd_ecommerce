@@ -3,73 +3,21 @@ name: PHP CI
 
 # Trigger the workflow on push or pull request
 on:
-  - push
-  - pull_request
+    - push
+    - pull_request
 
 jobs:
-  build:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            -   uses: actions/checkout@master
 
-    # The type of machine to run the job on
-    runs-on: ubuntu-latest
-    env:
-      DB_CONNECTION: pgsql_test
-      DB_HOST: localhost
-      DB_PASSWORD: postgres
-      DB_USERNAME: postgres
-      DB_DATABASE: postgres
+            -   name: Run CI
+                run: make ci
 
-    services:
-      postgres:
-        image: postgres:13-alpine
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: postgres
-        ports:
-          - 5432/tcp
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
-    steps:
-      # Check-out repository under GitHub workspace
-      # https://github.com/actions/checkout
-      - uses: actions/checkout@v2
-
-        # Step's name
-      - name: Setup PHP
-        # Action gives to setup the PHP environment to test application
-        # https://github.com/shivammathur/setup-php
-        uses: shivammathur/setup-php@v2
-        with:
-          # Specify the PHP version
-          php-version: '8.1'
-
-      - name: Install
-        # Install project
-        run: make install
-        env:
-          DB_PORT: ${{ job.services.postgres.ports[5432] }}
-
-      - name: Run linter
-        # Run PHPCS
-        run: make lint
-
-      - name: Run static code analyzer
-        # Run PHPStan
-        run: make analyse
-
-        # Publish code coverage on Code Climate
-        # https://github.com/paambaati/codeclimate-action
-      - name: Run test & publish code coverage
-        uses: paambaati/codeclimate-action@v2.6.0
-        # Add Code Climate secret key
-        env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-          DB_PORT: ${{ job.services.postgres.ports[5432] }}
-        with:
-          coverageCommand: make test-coverage
-          coverageLocations: ${{github.workplace}}/build/logs/clover.xml:clover
-          debug: true
+            -   name: Upload Coverage to CodeCov.io
+                uses: codecov/codecov-action@master
+                with:
+                    token: ${{ secrets.CODECOV_TOKEN }}
+                    file: build/logs/clover.xml
+                    fail_ci_if_error: true

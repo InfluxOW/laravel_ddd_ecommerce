@@ -1,7 +1,8 @@
 # For more information: https://laravel.com/docs/sail
-version: '3'
+version: '3.8'
+
 services:
-    laravel.test:
+    application:
         build:
             context: ./docker/8.1
             dockerfile: Dockerfile
@@ -22,9 +23,9 @@ services:
         networks:
             - sail
         depends_on:
-            - pgsql
-    pgsql:
-        image: 'postgres:latest'
+            - database
+    database:
+        image: 'postgres:14.1'
         ports:
             - '${FORWARD_DB_PORT:-5432}:5432'
         environment:
@@ -33,15 +34,15 @@ services:
             POSTGRES_USER: '${DB_USERNAME}'
             POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
         volumes:
-            - 'sailpgsql:/var/lib/postgresql/data'
+            - 'database:/var/lib/postgresql/data'
         networks:
             - sail
         healthcheck:
             test: [ "CMD", "pg_isready", "-q", "-d", "${DB_DATABASE}", "-U", "${DB_USERNAME}" ]
             retries: 3
             timeout: 5s
-    pgsql_test:
-        image: 'postgres:latest'
+    database_test:
+        image: 'postgres:14.1'
         ports:
             - '${FORWARD_TEST_DB_PORT:-5433}:5432'
         environment:
@@ -55,9 +56,11 @@ services:
             test: [ "CMD", "pg_isready", "-q", "-d", "${DB_DATABASE}", "-U", "${DB_USERNAME}" ]
             retries: 3
             timeout: 5s
+
 networks:
     sail:
         driver: bridge
+
 volumes:
-    sailpgsql:
+    database:
         driver: local

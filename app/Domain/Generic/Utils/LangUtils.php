@@ -11,7 +11,11 @@ class LangUtils
     public static function translateValue(TranslationNamespace $namespace, TranslationFilename $filename, string|int $value, ?string $key = null): string
     {
         $value = ($key === null) ? $value : sprintf('%s.%s', $key, $value);
-        $translation = __(sprintf('%s::%s.%s', $namespace->value, $filename->value, $value));
+        /*
+         * Workaround for a wierd bug that breaks running tests in coverage mode
+         * with error "Target class [translator] does not exist" despite successfully passed tests
+         * */
+        $translation = app()->bound('translator') ? __(sprintf('%s::%s.%s', $namespace->value, $filename->value, $value)) : (string) $value;
 
         return is_string($translation) ? $translation : '';
     }
