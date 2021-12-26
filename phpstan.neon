@@ -22,3 +22,5 @@ parameters:
         - '#Access to an undefined property Illuminate\\Database\\Eloquent\\Model::\$id#'
 
     checkMissingIterableValueType: false
+
+    tmpDir: build/phpstan
