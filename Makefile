@@ -16,7 +16,7 @@ lint:
 lint-fix:
 	composer exec phpcbf --verbose 2>/dev/null
 analyse:
-	composer exec phpstan analyse --verbose --no-cache -- --memory-limit=-1 2>/dev/null
+	composer exec phpstan analyse --verbose -- --memory-limit=-1 2>/dev/null
 
 seed:
 	php artisan db:seed

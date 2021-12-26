@@ -13,6 +13,11 @@
         </testsuite>
     </testsuites>
     <coverage processUncoveredFiles="true">
+        <exclude>
+            <directory>./app/Domain/*/Database/*</directory>
+            <directory>./app/Domain/*/Resources/Lang/*</directory>
+            <directory>./app/Domain/*/Tests/*</directory>
+        </exclude>
         <include>
             <directory suffix=".php">./app</directory>
         </include>

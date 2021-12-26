@@ -1,0 +1,46 @@
+version: "2"
+checks:
+    argument-count:
+        config:
+            threshold: 5
+    complex-logic:
+        config:
+            threshold: 4
+    file-lines:
+        config:
+            threshold: 400
+    method-complexity:
+        config:
+            threshold: 5
+    method-count:
+        config:
+            threshold: 20
+    method-lines:
+        enabled: false
+    nested-control-flow:
+        config:
+            threshold: 4
+    return-statements:
+        config:
+            threshold: 4
+    similar-code:
+        config:
+            threshold: # language-specific defaults. an override will affect all languages.
+    identical-code:
+        config:
+            threshold: # language-specific defaults. an override will affect all languages.
+plugins:
+    phpcodesniffer:
+        enabled: true
+        config:
+            file_extensions: "php"
+            ignore_warnings: true
+            standard: "./phpcs.xml"
+exclude_patterns:
+    - "config/"
+    - "database/"
+    - "**/vendor/"
+    - "**/Providers/"
+    - "**/Database/"
+    - "**/Tests/"
+    - "**/Resources/Lang"
