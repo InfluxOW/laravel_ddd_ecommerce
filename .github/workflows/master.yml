@@ -10,7 +10,14 @@ jobs:
     build:
         runs-on: ubuntu-latest
         steps:
-            -   uses: actions/checkout@master
+            -   uses: actions/checkout@main
+
+            # In this step, this action saves a list of existing images,
+            # the cache is created without them in the post run.
+            # It also restores the cache if it exists.
+            -   uses: satackey/action-docker-layer-caching@main-release
+                # Ignore the failure of a step and avoid terminating the job.
+                continue-on-error: true
 
             -   name: Run CI
                 run: make ci
