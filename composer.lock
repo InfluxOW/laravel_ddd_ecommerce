@@ -1102,16 +1102,16 @@
         },
         {
             "name": "filament/filament",
-            "version": "v2.7.0",
+            "version": "v2.7.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel-filament/admin.git",
-                "reference": "ff33631709591b22bb3c109585ae3c4920b37bb6"
+                "reference": "6dcca83d02df7e0ba2d957934046fdc1cf8c1cc0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel-filament/admin/zipball/ff33631709591b22bb3c109585ae3c4920b37bb6",
-                "reference": "ff33631709591b22bb3c109585ae3c4920b37bb6",
+                "url": "https://api.github.com/repos/laravel-filament/admin/zipball/6dcca83d02df7e0ba2d957934046fdc1cf8c1cc0",
+                "reference": "6dcca83d02df7e0ba2d957934046fdc1cf8c1cc0",
                 "shasum": ""
             },
             "require": {
@@ -1158,20 +1158,20 @@
                 "issues": "https://github.com/laravel-filament/filament/issues",
                 "source": "https://github.com/laravel-filament/filament"
             },
-            "time": "2021-12-23T22:26:02+00:00"
+            "time": "2021-12-27T10:38:25+00:00"
         },
         {
             "name": "filament/forms",
-            "version": "v2.7.0",
+            "version": "v2.7.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel-filament/forms.git",
-                "reference": "85e942302de9763511e8163184f8332d9f9720be"
+                "reference": "a5910d9554be21d20938a34e84278b4132a8c80e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel-filament/forms/zipball/85e942302de9763511e8163184f8332d9f9720be",
-                "reference": "85e942302de9763511e8163184f8332d9f9720be",
+                "url": "https://api.github.com/repos/laravel-filament/forms/zipball/a5910d9554be21d20938a34e84278b4132a8c80e",
+                "reference": "a5910d9554be21d20938a34e84278b4132a8c80e",
                 "shasum": ""
             },
             "require": {
@@ -1214,20 +1214,20 @@
                 "issues": "https://github.com/laravel-filament/filament/issues",
                 "source": "https://github.com/laravel-filament/filament"
             },
-            "time": "2021-12-23T22:26:00+00:00"
+            "time": "2021-12-27T10:38:23+00:00"
         },
         {
             "name": "filament/tables",
-            "version": "v2.7.0",
+            "version": "v2.7.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel-filament/tables.git",
-                "reference": "5ba221ed0cf162b3d60e812d5f69496c1ef452c3"
+                "reference": "cbb3fedc8155677d9f8da6a4ad79ae62f92cee25"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel-filament/tables/zipball/5ba221ed0cf162b3d60e812d5f69496c1ef452c3",
-                "reference": "5ba221ed0cf162b3d60e812d5f69496c1ef452c3",
+                "url": "https://api.github.com/repos/laravel-filament/tables/zipball/cbb3fedc8155677d9f8da6a4ad79ae62f92cee25",
+                "reference": "cbb3fedc8155677d9f8da6a4ad79ae62f92cee25",
                 "shasum": ""
             },
             "require": {
@@ -1267,7 +1267,7 @@
                 "issues": "https://github.com/laravel-filament/filament/issues",
                 "source": "https://github.com/laravel-filament/filament"
             },
-            "time": "2021-12-23T22:26:00+00:00"
+            "time": "2021-12-27T08:56:09+00:00"
         },
         {
             "name": "fruitcake/laravel-cors",
@@ -3801,16 +3801,16 @@
         },
         {
             "name": "spatie/laravel-query-builder",
-            "version": "4.0.1",
+            "version": "4.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-query-builder.git",
-                "reference": "712b3fab3b5835c90f35052ba4bfa93f66d3d4bb"
+                "reference": "64669564e4339b7f7f6afa0304e60d483552847b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-query-builder/zipball/712b3fab3b5835c90f35052ba4bfa93f66d3d4bb",
-                "reference": "712b3fab3b5835c90f35052ba4bfa93f66d3d4bb",
+                "url": "https://api.github.com/repos/spatie/laravel-query-builder/zipball/64669564e4339b7f7f6afa0304e60d483552847b",
+                "reference": "64669564e4339b7f7f6afa0304e60d483552847b",
                 "shasum": ""
             },
             "require": {
@@ -3868,7 +3868,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2021-10-27T14:48:58+00:00"
+            "time": "2021-12-26T19:17:02+00:00"
         },
         {
             "name": "spatie/laravel-sluggable",
@@ -9450,12 +9450,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "a2639ddcc8462004e5061633adabe49d6fa2de55"
+                "reference": "0127c2a38735e0cc90b066fd7c7465cbf3659b55"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/a2639ddcc8462004e5061633adabe49d6fa2de55",
-                "reference": "a2639ddcc8462004e5061633adabe49d6fa2de55",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/0127c2a38735e0cc90b066fd7c7465cbf3659b55",
+                "reference": "0127c2a38735e0cc90b066fd7c7465cbf3659b55",
                 "shasum": ""
             },
             "require": {
@@ -9507,7 +9507,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-12-24T00:33:32+00:00"
+            "time": "2021-12-26T13:18:31+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",

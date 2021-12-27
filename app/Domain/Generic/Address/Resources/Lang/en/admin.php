@@ -1,12 +1,12 @@
 <?php
 
-use App\Domain\Admin\Enums\AdminTranslationKey;
+use App\Domain\Admin\Enums\Translation\AdminRelationPropertyTranslationKey;
 use App\Domain\Generic\Address\Admin\RelationManagers\AddressesRelationManager;
 
 return [
     AddressesRelationManager::class => [
-        AdminTranslationKey::TITLE->value => 'Addresses',
-        AdminTranslationKey::LABEL->value => 'address',
-        AdminTranslationKey::PLURAL_LABEL->value => 'addresses',
+        AdminRelationPropertyTranslationKey::TITLE->value => 'Addresses',
+        AdminRelationPropertyTranslationKey::LABEL->value => 'address',
+        AdminRelationPropertyTranslationKey::PLURAL_LABEL->value => 'addresses',
     ],
 ];

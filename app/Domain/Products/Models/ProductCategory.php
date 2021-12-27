@@ -27,6 +27,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read \Illuminate\Database\Eloquent\Collection|ProductCategory[] $children
  * @property-read int|null $children_count
  * @property-read int $overall_products_count
+ * @property-read string|null $parent_title
  * @property-read string $path
  * @property-read \Illuminate\Database\Eloquent\Collection|ProductCategory[] $immediateDescendants
  * @property-read int|null $immediate_descendants_count
@@ -86,6 +87,11 @@ class ProductCategory extends Model
         return SlugOptions::create()
             ->generateSlugsFrom('title')
             ->saveSlugsTo('slug');
+    }
+
+    public function getParentTitleAttribute(): ?string
+    {
+        return $this->parent?->title;
     }
 
     public function getOverallProductsCountAttribute(): int

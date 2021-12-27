@@ -13,7 +13,7 @@ class CreateProductCategory extends CreateRecord
     protected function getResourceForm(): Form
     {
         if ($this->resourceForm === null) {
-            $this->resourceForm = ProductCategoryResource::form(Form::make()->columns(2))->schema(ProductCategoryResource::creationFormSchema());
+            $this->resourceForm = ProductCategoryResource::form(Form::make()->columns(2))->schema(ProductCategoryResource::getCreationFormSchema());
         }
 
         return $this->resourceForm;

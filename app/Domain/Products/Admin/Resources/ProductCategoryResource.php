@@ -2,10 +2,11 @@
 
 namespace App\Domain\Products\Admin\Resources;
 
-use App\Domain\Admin\Panel\Components\Cards\TimestampsCard;
-use App\Domain\Admin\Traits\Translation\TranslatableResource;
+use App\Domain\Admin\Admin\Components\Cards\TimestampsCard;
+use App\Domain\Admin\Traits\Translation\TranslatableAdminResource;
 use App\Domain\Generic\Lang\Enums\TranslationNamespace;
 use App\Domain\Products\Admin\Resources\ProductCategoryResource\RelationManagers\ProductCategoryChildrenRelationManager;
+use App\Domain\Products\Enums\Translation\ProductCategoryResourceTranslationKey;
 use App\Domain\Products\Models\ProductCategory;
 use App\Domain\Products\Providers\DomainServiceProvider;
 use Filament\Forms\Components\BelongsToSelect;
@@ -27,7 +28,7 @@ use Illuminate\Support\Str;
 
 class ProductCategoryResource extends Resource
 {
-    use TranslatableResource;
+    use TranslatableAdminResource;
 
     protected static ?string $model = ProductCategory::class;
 
@@ -65,52 +66,51 @@ class ProductCategoryResource extends Resource
                     ->columns(3)
                     ->columnSpan(2)
                     ->tabs([
-                        Tabs\Tab::make('Main')
+                        Tabs\Tab::make(self::translateEnum(ProductCategoryResourceTranslationKey::MAIN))
                             ->columns(3)
-                            ->schema([
+                            ->schema(self::setTranslatableLabels([
                                 Card::make()
-                                    ->schema(self::creationFormSchema())
+                                    ->schema(self::getCreationFormSchema())
                                     ->columnSpan(2),
                                 TimestampsCard::make()
                                     ->columnSpan(1),
-                                Placeholder::make('path')
-                                    ->label('Breadcrumbs')
+                                Placeholder::make(ProductCategoryResourceTranslationKey::PATH->value)
                                     ->content(fn (?ProductCategory $record): string => ($record === null || $record->path === '') ? '-' : $record->path)
                                     ->columnSpan(2),
-                            ]),
-                        Tabs\Tab::make('Statistics')
+                            ])),
+                        Tabs\Tab::make(self::translateEnum(ProductCategoryResourceTranslationKey::STATISTICS))
                             ->schema([
                                 Grid::make()
-                                    ->schema([
+                                    ->schema(self::setTranslatableLabels([
                                         Placeholder::make('overall_products_count')
                                             ->label('Products Count Including Descendants')
                                             ->content(fn (?ProductCategory $record): int => ($record === null) ? 0 : $record->overall_products_count),
                                         Placeholder::make('products_count')
                                             ->label('Products Count')
                                             ->content(fn (?ProductCategory $record): ?int => ($record === null) ? 0 : ProductCategory::findInHierarchy($record->id)?->products_count),
-                                    ])
+                                    ]))
                                     ->columns(4),
                             ]),
                     ]),
             ]);
     }
 
-    public static function creationFormSchema(): array
+    public static function getCreationFormSchema(): array
     {
-        return [
-            TextInput::make('title')
+        return self::setTranslatableLabels([
+            TextInput::make(ProductCategoryResourceTranslationKey::TITLE->value)
                 ->required()
                 ->reactive()
-                ->afterStateUpdated(fn (callable $set, $state): mixed => $set('slug', Str::slug($state)))
+                ->afterStateUpdated(fn (callable $set, $state): mixed => $set(ProductCategoryResourceTranslationKey::SLUG->value, Str::slug($state)))
                 ->minValue(2)
                 ->maxLength(255)
                 ->placeholder('Electronics'),
-            TextInput::make('slug')
+            TextInput::make(ProductCategoryResourceTranslationKey::SLUG->value)
                 ->required()
                 ->minValue(2)
                 ->maxLength(255)
                 ->placeholder('electronics'),
-            BelongsToSelect::make('parent_id')
+            BelongsToSelect::make(ProductCategoryResourceTranslationKey::PARENT_ID->value)
                 ->relationship('parent', 'title')
                 ->options(function (?Model $record, Page|RelationManager $livewire): array {
                     if ($livewire instanceof CreateRecord) {
@@ -127,22 +127,27 @@ class ProductCategoryResource extends Resource
                 ->default(fn (Page|RelationManager $livewire): ?int => ($livewire instanceof RelationManager && isset($livewire->ownerRecord->id)) ? $livewire->ownerRecord->id : null)
                 ->searchable(fn (Page|RelationManager $livewire) => $livewire instanceof Page)
                 ->columnSpan(2),
-        ];
+        ]);
+    }
+
+    public static function getTableColumns(): array
+    {
+        return self::setTranslatableLabels([
+            TextColumn::make(ProductCategoryResourceTranslationKey::LEFT->value)->sortable(),
+            TextColumn::make(ProductCategoryResourceTranslationKey::TITLE->value)->sortable()->searchable(),
+            TextColumn::make(ProductCategoryResourceTranslationKey::SLUG->value)->searchable(),
+            TextColumn::make(ProductCategoryResourceTranslationKey::PARENT_TITLE->value)->sortable(),
+        ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
-            ->columns([
-                TextColumn::make('left')->sortable()->label('Position'),
-                TextColumn::make('title')->sortable()->searchable(),
-                TextColumn::make('slug')->searchable(),
-                TextColumn::make('parent.title')->sortable(),
-            ])
-            ->filters([
-                SelectFilter::make('depth')->options(ProductCategory::query()->orderBy('depth')->distinct('depth')->pluck('depth', 'depth')),
-            ])
-            ->defaultSort('left', 'ASC');
+            ->columns(self::getTableColumns())
+            ->filters(self::setTranslatableLabels([
+                SelectFilter::make(ProductCategoryResourceTranslationKey::DEPTH->value)->options(ProductCategory::query()->orderBy('depth')->distinct('depth')->pluck('depth', 'depth')),
+            ]))
+            ->defaultSort(ProductCategoryResourceTranslationKey::LEFT->value, 'ASC');
     }
 
     public static function getRelations(): array
@@ -162,8 +167,17 @@ class ProductCategoryResource extends Resource
         ];
     }
 
+    /*
+     * Translation
+     * */
+
     protected static function getTranslationNamespace(): TranslationNamespace
     {
         return DomainServiceProvider::TRANSLATION_NAMESPACE;
+    }
+
+    protected static function getTranslationKeyClass(): string
+    {
+        return ProductCategoryResourceTranslationKey::class;
     }
 }

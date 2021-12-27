@@ -1,16 +1,22 @@
 <?php
 
-use App\Domain\Admin\Enums\AdminTranslationKey;
-use App\Domain\Admin\Enums\NavigationGroup;
+use App\Domain\Admin\Enums\Translation\AdminNavigationGroupTranslationKey;
+use App\Domain\Admin\Enums\Translation\AdminRelationPropertyTranslationKey;
+use App\Domain\Admin\Enums\Translation\AdminResourcePropertyTranslationKey;
 use App\Domain\Admin\Providers\DomainServiceProvider;
 use App\Domain\Generic\Utils\LangUtils;
 use App\Domain\Products\Admin\Resources\ProductCategoryResource;
 
 return [
     ProductCategoryResource::class => [
-        AdminTranslationKey::LABEL->value => 'Category',
-        AdminTranslationKey::PLURAL_LABEL->value => 'Categories',
-        AdminTranslationKey::NAVIGATION_LABEL->value => 'Categories',
-        AdminTranslationKey::NAVIGATION_GROUP->value => LangUtils::translateEnum(DomainServiceProvider::TRANSLATION_NAMESPACE, NavigationGroup::SHOP),
+        AdminResourcePropertyTranslationKey::LABEL->value => 'Category',
+        AdminResourcePropertyTranslationKey::PLURAL_LABEL->value => 'Categories',
+        AdminResourcePropertyTranslationKey::NAVIGATION_LABEL->value => 'Categories',
+        AdminResourcePropertyTranslationKey::NAVIGATION_GROUP->value => LangUtils::translateEnum(DomainServiceProvider::TRANSLATION_NAMESPACE, AdminNavigationGroupTranslationKey::SHOP),
+    ],
+    ProductCategoryResource\RelationManagers\ProductCategoryChildrenRelationManager::class => [
+        AdminRelationPropertyTranslationKey::TITLE->value => 'Children',
+        AdminRelationPropertyTranslationKey::LABEL->value => 'child',
+        AdminRelationPropertyTranslationKey::PLURAL_LABEL->value => 'children',
     ],
 ];

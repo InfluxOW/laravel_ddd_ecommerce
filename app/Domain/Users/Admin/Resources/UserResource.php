@@ -2,10 +2,11 @@
 
 namespace App\Domain\Users\Admin\Resources;
 
-use App\Domain\Admin\Panel\Components\Cards\TimestampsCard;
-use App\Domain\Admin\Traits\Translation\TranslatableResource;
+use App\Domain\Admin\Admin\Components\Cards\TimestampsCard;
+use App\Domain\Admin\Traits\Translation\TranslatableAdminResource;
 use App\Domain\Generic\Address\Admin\RelationManagers\AddressesRelationManager;
 use App\Domain\Generic\Lang\Enums\TranslationNamespace;
+use App\Domain\Users\Enums\Translation\UserResourceTranslationKey;
 use App\Domain\Users\Models\User;
 use App\Domain\Users\Providers\DomainServiceProvider;
 use Carbon\Carbon;
@@ -21,11 +22,10 @@ use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
-use JetBrains\PhpStorm\ArrayShape;
 
 class UserResource extends Resource
 {
-    use TranslatableResource;
+    use TranslatableAdminResource;
 
     protected static ?string $model = User::class;
 
@@ -72,27 +72,27 @@ class UserResource extends Resource
         return $form
             ->schema([
                 Card::make()
-                    ->schema([
+                    ->schema(self::setTranslatableLabels([
                         Grid::make()
-                            ->schema([
-                                TextInput::make('name')
+                            ->schema(self::setTranslatableLabels([
+                                TextInput::make(UserResourceTranslationKey::NAME->value)
                                     ->required()
                                     ->minValue(2)
                                     ->maxLength(255)
                                     ->placeholder('John Doe'),
-                                TextInput::make('email')
+                                TextInput::make(UserResourceTranslationKey::EMAIL->value)
                                     ->required()
                                     ->email()
                                     ->maxLength(255)
                                     ->placeholder('john_doe@gmail.com'),
-                                TextInput::make('phone')
+                                TextInput::make(UserResourceTranslationKey::PHONE->value)
                                     ->nullable()
                                     ->maxLength(18)
                                     ->mask(fn (TextInput\Mask $mask): TextInput\Mask => $mask->pattern('+0 (000) 000-00-00'))
                                     ->tel(),
-                            ])
+                            ]))
                             ->columns(3),
-                        TextInput::make('password')
+                        TextInput::make(UserResourceTranslationKey::PASSWORD->value)
                             ->required(fn (Page $livewire): bool => $livewire instanceof CreateRecord)
                             ->password()
                             ->hidden(fn (Page $livewire): bool => $livewire instanceof ViewRecord)
@@ -102,12 +102,11 @@ class UserResource extends Resource
                             ->maxLength(255)
                             ->placeholder('Password')
                             ->columnSpan(2),
-                        DateTimePicker::make('email_verified_at')
+                        DateTimePicker::make(UserResourceTranslationKey::EMAIL_VERIFIED_AT->value)
                             ->nullable()
-                            ->label('Email Verified At')
                             ->placeholder(Carbon::now())
                             ->columnSpan(2),
-                    ])
+                    ]))
                     ->columnSpan(2),
                 TimestampsCard::make()
                     ->columnSpan(1),
@@ -118,15 +117,14 @@ class UserResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->columns([
-                TextColumn::make('name')->sortable()->searchable(),
-                TextColumn::make('email')->sortable()->searchable(),
-                TextColumn::make('phone')->sortable()->searchable(),
-            ])
+            ->columns(self::setTranslatableLabels([
+                TextColumn::make(UserResourceTranslationKey::NAME->value)->sortable()->searchable(),
+                TextColumn::make(UserResourceTranslationKey::EMAIL->value)->sortable()->searchable(),
+                TextColumn::make(UserResourceTranslationKey::PHONE->value)->sortable()->searchable(),
+            ]))
             ->filters([
                 //
-            ])
-            ->defaultSort('created_at', 'DESC');
+            ]);
     }
 
     public static function getRelations(): array
@@ -136,7 +134,6 @@ class UserResource extends Resource
         ];
     }
 
-    #[ArrayShape(['index' => "string[]", 'edit' => "string[]", 'view' => "string[]"])]
     public static function getPages(): array
     {
         return [
@@ -146,8 +143,17 @@ class UserResource extends Resource
         ];
     }
 
+    /*
+     * Translation
+     * */
+
     protected static function getTranslationNamespace(): TranslationNamespace
     {
         return DomainServiceProvider::TRANSLATION_NAMESPACE;
+    }
+
+    protected static function getTranslationKeyClass(): string
+    {
+        return UserResourceTranslationKey::class;
     }
 }

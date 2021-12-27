@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Domain\Admin\Enums;
+namespace App\Domain\Admin\Enums\Translation;
 
-enum AdminTranslationKey: string
+enum AdminResourcePropertyTranslationKey: string
 {
-    case TITLE = 'title';
     case LABEL = 'label';
     case PLURAL_LABEL = 'plural_label';
     case NAVIGATION_LABEL = 'navigation_label';
