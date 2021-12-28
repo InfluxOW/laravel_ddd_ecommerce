@@ -2,7 +2,7 @@
 
 namespace App\Domain\Admin\Enums\Translation;
 
-enum AdminNavigationGroupTranslationKey: string
+enum AdminNavigationGroupTranslationKey
 {
-    case SHOP = 'shop';
+    case SHOP;
 }

@@ -15,6 +15,7 @@ use Filament\Resources\RelationManagers\HasManyRelationManager;
 use Filament\Resources\Table;
 use Filament\Tables\Actions\ButtonAction;
 use Filament\Tables\Actions\LinkAction;
+use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 
 class ProductCategoryChildrenRelationManager extends HasManyRelationManager
@@ -28,8 +29,7 @@ class ProductCategoryChildrenRelationManager extends HasManyRelationManager
     {
         ProductCategory::loadHierarchy();
 
-        return $form
-            ->schema(ProductCategoryResource::getCreationFormSchema());
+        return $form->schema(ProductCategoryResource::getCreationFormSchema());
     }
 
     public static function table(Table $table): Table
@@ -43,7 +43,11 @@ class ProductCategoryChildrenRelationManager extends HasManyRelationManager
                 ButtonAction::make('↑')->action(fn (ProductCategory $record): ProductCategory|Node => ($record->left === $record->parent?->children->min('left')) ? $record : $record->moveLeft()),
                 ButtonAction::make('↓')->action(fn (ProductCategory $record): ProductCategory|Node => ($record->left === $record->parent?->children->max('left')) ? $record : $record->moveRight()),
             ])
-            ->columns(ProductCategoryResource::getTableColumns())
+            ->columns(self::setTranslatableLabels([
+                TextColumn::make(ProductCategoryResourceTranslationKey::LEFT->value),
+                TextColumn::make(ProductCategoryResourceTranslationKey::TITLE->value)->searchable(),
+                TextColumn::make(ProductCategoryResourceTranslationKey::SLUG->value)->searchable(),
+            ]))
             ->filters([
                 //
             ]);

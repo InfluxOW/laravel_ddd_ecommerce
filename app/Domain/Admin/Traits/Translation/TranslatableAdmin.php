@@ -7,7 +7,7 @@ use App\Domain\Admin\Enums\Translation\AdminResourcePropertyTranslationKey;
 use App\Domain\Generic\Lang\Enums\TranslationFilename;
 use App\Domain\Generic\Lang\Enums\TranslationNamespace;
 use App\Domain\Generic\Utils\LangUtils;
-use BackedEnum;
+use UnitEnum;
 
 trait TranslatableAdmin
 {
@@ -33,10 +33,10 @@ trait TranslatableAdmin
 
     protected static function translateComponentProperty(AdminResourcePropertyTranslationKey|AdminRelationPropertyTranslationKey $enum): string
     {
-        return LangUtils::translateValue(static::getTranslationNamespace(), TranslationFilename::ADMIN, $enum->value, static::class);
+        return LangUtils::translateValue(static::getTranslationNamespace(), TranslationFilename::ADMIN, $enum->name, static::class);
     }
 
-    protected static function translateEnum(BackedEnum $enum): string
+    protected static function translateEnum(UnitEnum $enum): string
     {
         return LangUtils::translateEnum(static::getTranslationNamespace(), $enum);
     }
@@ -44,7 +44,7 @@ trait TranslatableAdmin
     abstract protected static function getTranslationNamespace(): TranslationNamespace;
 
     /**
-     * @return string<BackedEnum>
+     * @return string<UnitEnum>
      */
     abstract protected static function getTranslationKeyClass(): string;
 }

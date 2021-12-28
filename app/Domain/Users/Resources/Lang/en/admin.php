@@ -8,9 +8,9 @@ use App\Domain\Users\Admin\Resources\UserResource;
 
 return [
     UserResource::class => [
-        AdminResourcePropertyTranslationKey::LABEL->value => 'Customer',
-        AdminResourcePropertyTranslationKey::PLURAL_LABEL->value => 'Customers',
-        AdminResourcePropertyTranslationKey::NAVIGATION_LABEL->value => 'Customers',
-        AdminResourcePropertyTranslationKey::NAVIGATION_GROUP->value => LangUtils::translateEnum(DomainServiceProvider::TRANSLATION_NAMESPACE, AdminNavigationGroupTranslationKey::SHOP),
+        AdminResourcePropertyTranslationKey::LABEL->name => 'Customer',
+        AdminResourcePropertyTranslationKey::PLURAL_LABEL->name => 'Customers',
+        AdminResourcePropertyTranslationKey::NAVIGATION_LABEL->name => 'Customers',
+        AdminResourcePropertyTranslationKey::NAVIGATION_GROUP->name => LangUtils::translateEnum(DomainServiceProvider::TRANSLATION_NAMESPACE, AdminNavigationGroupTranslationKey::SHOP),
     ],
 ];

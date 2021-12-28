@@ -4,10 +4,10 @@ use App\Domain\Generic\Address\Enums\Translation\AddressesRelationManagerTransla
 
 return [
     AddressesRelationManagerTranslationKey::class => [
-        AddressesRelationManagerTranslationKey::ZIP->value => 'Zip / Postal Code',
-        AddressesRelationManagerTranslationKey::REGION->value => 'Country',
-        AddressesRelationManagerTranslationKey::COUNTRY->value => 'Region',
-        AddressesRelationManagerTranslationKey::CITY->value => 'City',
-        AddressesRelationManagerTranslationKey::STREET->value => 'Street Address',
+        AddressesRelationManagerTranslationKey::ZIP->name => 'Zip / Postal Code',
+        AddressesRelationManagerTranslationKey::REGION->name => 'Country',
+        AddressesRelationManagerTranslationKey::COUNTRY->name => 'Region',
+        AddressesRelationManagerTranslationKey::CITY->name => 'City',
+        AddressesRelationManagerTranslationKey::STREET->name => 'Street Address',
     ],
 ];

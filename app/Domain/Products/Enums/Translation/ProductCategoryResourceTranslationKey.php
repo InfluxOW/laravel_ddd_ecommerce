@@ -11,7 +11,7 @@ enum ProductCategoryResourceTranslationKey: string
     case TITLE = 'title';
     case SLUG = 'slug';
     case PARENT_ID = 'parent_id';
-    case PARENT_TITLE = 'parent_title';
+    case PARENT_TITLE = 'parent.title';
     case LEFT = 'left';
 
     case DEPTH = 'depth';

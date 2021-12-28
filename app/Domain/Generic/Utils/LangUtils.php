@@ -4,7 +4,7 @@ namespace App\Domain\Generic\Utils;
 
 use App\Domain\Generic\Lang\Enums\TranslationFilename;
 use App\Domain\Generic\Lang\Enums\TranslationNamespace;
-use BackedEnum;
+use UnitEnum;
 
 class LangUtils
 {
@@ -20,8 +20,8 @@ class LangUtils
         return is_string($translation) ? $translation : '';
     }
 
-    public static function translateEnum(TranslationNamespace $namespace, BackedEnum $enum, string|int|null $value = null): string
+    public static function translateEnum(TranslationNamespace $namespace, UnitEnum $enum, string|int|null $value = null): string
     {
-        return self::translateValue($namespace, TranslationFilename::ENUMS, $value ?? $enum->value, $enum::class);
+        return self::translateValue($namespace, TranslationFilename::ENUMS, $value ?? $enum->name, $enum::class);
     }
 }

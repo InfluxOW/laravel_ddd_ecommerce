@@ -6,13 +6,13 @@ use App\Domain\Admin\Enums\Translation\Components\Cards\AdminTimestampsCardTrans
 
 return [
     AdminNavigationGroupTranslationKey::class => [
-        AdminNavigationGroupTranslationKey::SHOP->value => 'Shop',
+        AdminNavigationGroupTranslationKey::SHOP->name => 'Shop',
     ],
     AdminTimestampsCardTranslationKey::class => [
-        AdminTimestampsCardTranslationKey::UPDATED_AT->value => 'Created At',
-        AdminTimestampsCardTranslationKey::CREATED_AT->value => 'Last Modified At',
+        AdminTimestampsCardTranslationKey::UPDATED_AT->name => 'Last Modified At',
+        AdminTimestampsCardTranslationKey::CREATED_AT->name => 'Created At',
     ],
     AdminActionTranslationKey::class => [
-        AdminActionTranslationKey::VIEW->value => 'View',
+        AdminActionTranslationKey::VIEW->name => 'View',
     ]
 ];

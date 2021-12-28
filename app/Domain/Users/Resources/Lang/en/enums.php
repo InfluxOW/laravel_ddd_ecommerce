@@ -4,10 +4,10 @@ use App\Domain\Users\Enums\Translation\UserResourceTranslationKey;
 
 return [
     UserResourceTranslationKey::class => [
-        UserResourceTranslationKey::NAME->value => 'Name',
-        UserResourceTranslationKey::EMAIL->value => 'Email',
-        UserResourceTranslationKey::PHONE->value => 'Phone',
-        UserResourceTranslationKey::PASSWORD->value => 'Password',
-        UserResourceTranslationKey::EMAIL_VERIFIED_AT->value => 'Email Verified At',
+        UserResourceTranslationKey::NAME->name => 'Name',
+        UserResourceTranslationKey::EMAIL->name => 'Email',
+        UserResourceTranslationKey::PHONE->name => 'Phone',
+        UserResourceTranslationKey::PASSWORD->name => 'Password',
+        UserResourceTranslationKey::EMAIL_VERIFIED_AT->name => 'Email Verified At',
     ],
 ];

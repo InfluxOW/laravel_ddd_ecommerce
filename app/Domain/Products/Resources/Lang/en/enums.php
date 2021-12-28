@@ -7,31 +7,31 @@ use App\Domain\Products\Enums\Translation\ProductCategoryResourceTranslationKey;
 
 return [
     ProductAllowedFilter::class => [
-        ProductAllowedFilter::TITLE->value => 'Title',
-        ProductAllowedFilter::DESCRIPTION->value => 'Description',
-        ProductAllowedFilter::PRICE_BETWEEN->value => 'Price',
-        ProductAllowedFilter::CATEGORY->value => 'Category',
-        ProductAllowedFilter::ATTRIBUTE_VALUE->value => 'Attribute',
+        ProductAllowedFilter::TITLE->name => 'Title',
+        ProductAllowedFilter::DESCRIPTION->name => 'Description',
+        ProductAllowedFilter::PRICE_BETWEEN->name => 'Price',
+        ProductAllowedFilter::CATEGORY->name => 'Category',
+        ProductAllowedFilter::ATTRIBUTE_VALUE->name => 'Attribute',
     ],
     ProductAllowedSort::class => [
-        ProductAllowedSort::TITLE->value => 'Title A-Z',
-        ProductAllowedSort::PRICE->value => 'Cheap First',
-        ProductAllowedSort::CREATED_AT->value => 'Oldest First',
+        ProductAllowedSort::TITLE->name => 'Title A-Z',
+        ProductAllowedSort::PRICE->name => 'Cheap First',
+        ProductAllowedSort::CREATED_AT->name => 'Oldest First',
         EnumUtils::descendingValue(ProductAllowedSort::TITLE) => 'Title Z-A',
         EnumUtils::descendingValue(ProductAllowedSort::PRICE) => 'Expensive First',
         EnumUtils::descendingValue(ProductAllowedSort::CREATED_AT) => 'Newest First',
     ],
     ProductCategoryResourceTranslationKey::class => [
-        ProductCategoryResourceTranslationKey::MAIN->value => 'Main',
-        ProductCategoryResourceTranslationKey::STATISTICS->value => 'Statistics',
+        ProductCategoryResourceTranslationKey::MAIN->name => 'Main',
+        ProductCategoryResourceTranslationKey::STATISTICS->name => 'Statistics',
 
-        ProductCategoryResourceTranslationKey::PATH->value => 'Breadcrumbs',
-        ProductCategoryResourceTranslationKey::TITLE->value => 'Title',
-        ProductCategoryResourceTranslationKey::SLUG->value => 'Slug',
-        ProductCategoryResourceTranslationKey::PARENT_ID->value => 'Parent',
-        ProductCategoryResourceTranslationKey::PARENT_TITLE->value => 'Parent',
-        ProductCategoryResourceTranslationKey::LEFT->value => 'Position',
+        ProductCategoryResourceTranslationKey::PATH->name => 'Breadcrumbs',
+        ProductCategoryResourceTranslationKey::TITLE->name => 'Title',
+        ProductCategoryResourceTranslationKey::SLUG->name => 'Slug',
+        ProductCategoryResourceTranslationKey::PARENT_ID->name => 'Parent',
+        ProductCategoryResourceTranslationKey::PARENT_TITLE->name => 'Parent',
+        ProductCategoryResourceTranslationKey::LEFT->name => 'Position',
 
-        ProductCategoryResourceTranslationKey::DEPTH->value => 'Depth',
+        ProductCategoryResourceTranslationKey::DEPTH->name => 'Depth',
     ],
 ];

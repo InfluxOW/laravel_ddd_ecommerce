@@ -5,8 +5,8 @@ use App\Domain\Generic\Address\Admin\RelationManagers\AddressesRelationManager;
 
 return [
     AddressesRelationManager::class => [
-        AdminRelationPropertyTranslationKey::TITLE->value => 'Addresses',
-        AdminRelationPropertyTranslationKey::LABEL->value => 'address',
-        AdminRelationPropertyTranslationKey::PLURAL_LABEL->value => 'addresses',
+        AdminRelationPropertyTranslationKey::TITLE->name => 'Addresses',
+        AdminRelationPropertyTranslationKey::LABEL->name => 'address',
+        AdminRelationPropertyTranslationKey::PLURAL_LABEL->name => 'addresses',
     ],
 ];

@@ -130,20 +130,15 @@ class ProductCategoryResource extends Resource
         ]);
     }
 
-    public static function getTableColumns(): array
-    {
-        return self::setTranslatableLabels([
-            TextColumn::make(ProductCategoryResourceTranslationKey::LEFT->value)->sortable(),
-            TextColumn::make(ProductCategoryResourceTranslationKey::TITLE->value)->sortable()->searchable(),
-            TextColumn::make(ProductCategoryResourceTranslationKey::SLUG->value)->searchable(),
-            TextColumn::make(ProductCategoryResourceTranslationKey::PARENT_TITLE->value)->sortable(),
-        ]);
-    }
-
     public static function table(Table $table): Table
     {
         return $table
-            ->columns(self::getTableColumns())
+            ->columns(self::setTranslatableLabels([
+                TextColumn::make(ProductCategoryResourceTranslationKey::LEFT->value)->sortable(),
+                TextColumn::make(ProductCategoryResourceTranslationKey::TITLE->value)->sortable()->searchable(),
+                TextColumn::make(ProductCategoryResourceTranslationKey::SLUG->value)->searchable(),
+                TextColumn::make(ProductCategoryResourceTranslationKey::PARENT_TITLE->value)->sortable(),
+            ]))
             ->filters(self::setTranslatableLabels([
                 SelectFilter::make(ProductCategoryResourceTranslationKey::DEPTH->value)->options(ProductCategory::query()->orderBy('depth')->distinct('depth')->pluck('depth', 'depth')),
             ]))

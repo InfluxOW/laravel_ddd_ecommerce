@@ -2,9 +2,9 @@
 
 namespace App\Domain\Admin\Enums\Translation;
 
-enum AdminRelationPropertyTranslationKey: string
+enum AdminRelationPropertyTranslationKey
 {
-    case TITLE = 'title';
-    case LABEL = 'label';
-    case PLURAL_LABEL = 'plural_label';
+    case TITLE;
+    case LABEL;
+    case PLURAL_LABEL;
 }
