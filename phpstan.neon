@@ -15,7 +15,6 @@ parameters:
         - app/Domain/Generic/Currency/Casts/KopecksCast.php
 
     ignoreErrors:
-        - '#Match expression does not handle remaining value#'
         - '#Call to an undefined method App\\Domain\\Products\\Models\\Product|Illuminate\\Database\\Eloquent\\Builder::orderByCurrentPrice\(\)#'
         - '#Attribute class JetBrains\\PhpStorm\\ArrayShape does not exist#'
         - '#Access to an undefined property Squire\\Models#'

@@ -8,6 +8,7 @@
     <arg name="parallel" value="100"/>
     <arg value="np"/>
     <arg name="extensions" value="php"/>
+    <arg name="cache" value="build/phpcs"/>
 
     <file>app</file>
     <file>config</file>

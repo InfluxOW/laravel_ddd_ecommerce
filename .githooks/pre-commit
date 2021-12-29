@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 #########################
 #                       #
@@ -6,18 +6,58 @@
 #                       #
 #########################
 
+# Source the ".env" file so Laravel's environment variables are available
+if [ -f ./.env ]; then
+    source ./.env
+fi
+
 PHPCS_BIN=./vendor/bin/phpcs
 PHPCBF_BIN=./vendor/bin/phpcbf
 PHPSTAN_BIN=./vendor/bin/phpstan
+SAIL_BIN=./tools/laravel/sail/vendor/bin/sail
 
 # Check for Laravel Sail, PHPCS, PHPCBF and PHPStan
-if [ ! -x $PHPCS_BIN ] || [ ! -x $PHPCBF_BIN ] || [ ! -x $PHPSTAN_BIN ]; then
-	echo "[PRE-COMMIT] Please, run 'make setup' to install necessary packages."
-	exit 1
+if [ ! -x $PHPCS_BIN ] || [ ! -x $PHPCBF_BIN ] || [ ! -x $PHPSTAN_BIN ] || [ ! -x $SAIL_BIN ]; then
+    echo "[PRE-COMMIT] Please, run 'make setup' to install necessary packages."
+    exit 1
 fi
 
-sail () {
-	docker-compose exec -T laravel.test $@ >/dev/null 2>&1
+WHITE='\033[1;37m'
+NC='\033[0m'
+
+# Ensure that Docker is running
+if ! docker info >/dev/null 2>&1; then
+    echo -e "${WHITE}Docker is not running.${NC}" >&2
+
+    exit 1
+fi
+
+# Determine if Sail is currently up
+PSRESULT="$(docker-compose ps -q)"
+APP_SERVICE=${APP_SERVICE:-"laravel.test"}
+
+if docker-compose ps | grep $APP_SERVICE | grep 'Exit'; then
+    echo -e "${WHITE}Shutting down old Sail processes...${NC}" >&2
+
+    docker-compose down >/dev/null 2>&1
+
+    EXEC="no"
+elif [ -n "$PSRESULT" ]; then
+    EXEC="yes"
+else
+    EXEC="no"
+fi
+
+if [ "$EXEC" == "no" ]; then
+    echo -e "${WHITE}Sail is not running.${NC}" >&2
+    echo "" >&2
+    echo -e "${WHITE}You may Sail using the following commands:${NC} './vendor/bin/sail up' or './vendor/bin/sail up -d'" >&2
+
+    exit 1
+fi
+
+function sail() {
+    docker-compose exec -u sail -T "$APP_SERVICE" "$@" >/dev/null 2>&1
 }
 
 #########################
@@ -27,48 +67,47 @@ sail () {
 #########################
 
 # All files in staging area (no deletions)
-PROJECT=$(git rev-parse --show-toplevel)
 FILES=$(git diff --name-only --diff-filter=ACMR HEAD | grep \\.php)
 
 if [ "$FILES" != "" ]; then
-	# Code Style
+    # Code Style
 
-	echo "[PRE-COMMIT] Checking PHPCS..."
+    echo "[PRE-COMMIT] Checking PHPCS..."
 
-	sail composer exec phpcs -n $FILES
+    sail composer exec phpcs -n $FILES
 
-	if [ $? != 0 ]; then
-		echo "[PRE-COMMIT] Coding standards errors have been detected."
-		echo "[PRE-COMMIT] Running PHP Code Beautifier and Fixer..."
+    if [ $? != 0 ]; then
+        echo "[PRE-COMMIT] Coding standards errors have been detected."
+        echo "[PRE-COMMIT] Running PHP Code Beautifier and Fixer..."
 
-		sail composer exec phpcbf -- -n $FILES
+        sail composer exec phpcbf -- -n $FILES
 
-		echo "[PRE-COMMIT] Checking PHPCS again..."
+        echo "[PRE-COMMIT] Checking PHPCS again..."
 
-		sail composer exec phpcs -- -n $FILES
+        sail composer exec phpcs -- -n $FILES
 
-		if [ $? != 0 ]; then
-			echo "[PRE-COMMIT] PHP Code Beautifier and Fixer wasn't able to solve all problems."
-			echo "[PRE-COMMIT] Run PHPCS manually and fix existing errors."
-			exit 1
-		fi
+        if [ $? != 0 ]; then
+            echo "[PRE-COMMIT] PHP Code Beautifier and Fixer wasn't able to solve all problems."
+            echo "[PRE-COMMIT] Run PHPCS manually and fix existing errors."
+            exit 1
+        fi
 
-		echo "[PRE-COMMIT] All errors are fixed automatically."
-		git add $FILES
-	fi
+        echo "[PRE-COMMIT] All errors are fixed automatically."
+        git add $FILES
+    fi
 
-	# Code Quality
+    # Code Quality
 
-	echo "[PRE-COMMIT] Checking PHPStan..."
-	sail composer exec phpstan analyse --no-cache -- $FILES
+    echo "[PRE-COMMIT] Checking PHPStan..."
+    sail composer exec phpstan analyse
 
-	if [ $? != 0 ]; then
-		echo "[PRE-COMMIT] PHPStan found problems."
-		echo "[PRE-COMMIT] Run PHPStan manually and fix existing errors."
-		exit 1
-	fi
+    if [ $? != 0 ]; then
+        echo "[PRE-COMMIT] PHPStan found problems."
+        echo "[PRE-COMMIT] Run PHPStan manually and fix existing errors."
+        exit 1
+    fi
 
-	echo "[PRE-COMMIT] No errors found."
+    echo "[PRE-COMMIT] No errors found."
 fi
 
 exit $?

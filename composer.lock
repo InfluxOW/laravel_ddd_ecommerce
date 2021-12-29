@@ -1102,16 +1102,16 @@
         },
         {
             "name": "filament/filament",
-            "version": "v2.7.3",
+            "version": "v2.7.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel-filament/admin.git",
-                "reference": "6dcca83d02df7e0ba2d957934046fdc1cf8c1cc0"
+                "reference": "cef78e0b0ac59200e1c8778f453750c1f3fc232c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel-filament/admin/zipball/6dcca83d02df7e0ba2d957934046fdc1cf8c1cc0",
-                "reference": "6dcca83d02df7e0ba2d957934046fdc1cf8c1cc0",
+                "url": "https://api.github.com/repos/laravel-filament/admin/zipball/cef78e0b0ac59200e1c8778f453750c1f3fc232c",
+                "reference": "cef78e0b0ac59200e1c8778f453750c1f3fc232c",
                 "shasum": ""
             },
             "require": {
@@ -1158,20 +1158,20 @@
                 "issues": "https://github.com/laravel-filament/filament/issues",
                 "source": "https://github.com/laravel-filament/filament"
             },
-            "time": "2021-12-27T10:38:25+00:00"
+            "time": "2021-12-28T22:33:27+00:00"
         },
         {
             "name": "filament/forms",
-            "version": "v2.7.3",
+            "version": "v2.7.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel-filament/forms.git",
-                "reference": "a5910d9554be21d20938a34e84278b4132a8c80e"
+                "reference": "d118d0f528b374f33d8e1ab4c87e615093917e21"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel-filament/forms/zipball/a5910d9554be21d20938a34e84278b4132a8c80e",
-                "reference": "a5910d9554be21d20938a34e84278b4132a8c80e",
+                "url": "https://api.github.com/repos/laravel-filament/forms/zipball/d118d0f528b374f33d8e1ab4c87e615093917e21",
+                "reference": "d118d0f528b374f33d8e1ab4c87e615093917e21",
                 "shasum": ""
             },
             "require": {
@@ -1214,20 +1214,20 @@
                 "issues": "https://github.com/laravel-filament/filament/issues",
                 "source": "https://github.com/laravel-filament/filament"
             },
-            "time": "2021-12-27T10:38:23+00:00"
+            "time": "2021-12-28T22:33:30+00:00"
         },
         {
             "name": "filament/tables",
-            "version": "v2.7.3",
+            "version": "v2.7.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel-filament/tables.git",
-                "reference": "cbb3fedc8155677d9f8da6a4ad79ae62f92cee25"
+                "reference": "c6b528e548e25793cbc315203d72e72dfca4f216"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel-filament/tables/zipball/cbb3fedc8155677d9f8da6a4ad79ae62f92cee25",
-                "reference": "cbb3fedc8155677d9f8da6a4ad79ae62f92cee25",
+                "url": "https://api.github.com/repos/laravel-filament/tables/zipball/c6b528e548e25793cbc315203d72e72dfca4f216",
+                "reference": "c6b528e548e25793cbc315203d72e72dfca4f216",
                 "shasum": ""
             },
             "require": {
@@ -1267,7 +1267,7 @@
                 "issues": "https://github.com/laravel-filament/filament/issues",
                 "source": "https://github.com/laravel-filament/filament"
             },
-            "time": "2021-12-27T08:56:09+00:00"
+            "time": "2021-12-28T22:33:40+00:00"
         },
         {
             "name": "fruitcake/laravel-cors",
@@ -9450,12 +9450,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "b6e96b4969a6251bc2383284e789b26a2610b2dd"
+                "reference": "984615bd9addd922e7c24e314e37a13491581786"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/b6e96b4969a6251bc2383284e789b26a2610b2dd",
-                "reference": "b6e96b4969a6251bc2383284e789b26a2610b2dd",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/984615bd9addd922e7c24e314e37a13491581786",
+                "reference": "984615bd9addd922e7c24e314e37a13491581786",
                 "shasum": ""
             },
             "require": {
@@ -9507,7 +9507,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-12-28T12:34:56+00:00"
+            "time": "2021-12-29T11:01:15+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
