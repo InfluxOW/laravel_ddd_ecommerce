@@ -19,6 +19,7 @@ parameters:
         - '#Attribute class JetBrains\\PhpStorm\\ArrayShape does not exist#'
         - '#Access to an undefined property Squire\\Models#'
         - '#Access to an undefined property Illuminate\\Database\\Eloquent\\Model::\$id#'
+        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder|Illuminate\\Database\\Eloquent\\Model::limitDepth\(\).#'
 
     checkMissingIterableValueType: false
 

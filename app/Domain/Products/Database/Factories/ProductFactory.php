@@ -30,7 +30,7 @@ class ProductFactory extends Factory
             ->afterCreating(function (Product $product): void {
                 $categories = ProductCategory::query()
                     ->where('depth', '>=', ProductCategory::MAX_DEPTH - 1)
-                    ->limitDepth(ProductCategory::MAX_DEPTH)
+                    ->hasLimitedDepth()
                     ->inRandomOrder()
                     ->limit(random_int(1, 5))
                     ->get();

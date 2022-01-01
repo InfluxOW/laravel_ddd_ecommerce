@@ -82,7 +82,7 @@ class ProductControllerTest extends TestCase
     /** @test */
     public function a_user_can_filter_products_by_category(): void
     {
-        $deepestCategory = ProductCategory::query()->where('depth', ProductCategory::MAX_DEPTH)->first();
+        $deepestCategory = ProductCategory::query()->hasLimitedDepth()->whereHas('products')->where('depth', ProductCategory::MAX_DEPTH)->first();
         $this->assertNotNull($deepestCategory);
 
         $product = $deepestCategory?->products->first();

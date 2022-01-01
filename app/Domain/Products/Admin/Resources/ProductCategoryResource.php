@@ -114,11 +114,11 @@ class ProductCategoryResource extends Resource
                 ->relationship('parent', 'title')
                 ->options(function (?Model $record, Page|RelationManager $livewire): array {
                     if ($livewire instanceof CreateRecord) {
-                        $categories = ProductCategory::query()->orderBy('left')->get();
+                        $categories = ProductCategory::query()->hasLimitedDepth()->orderBy('left')->get();
                     } elseif ($livewire instanceof RelationManager) {
                         $categories = collect([$livewire->ownerRecord]);
                     } else {
-                        $categories = ProductCategory::query()->orderBy('left')->withoutNode($record)->get()->filter(fn (ProductCategory $parent) => ! $parent->insideSubtree($record));
+                        $categories = ProductCategory::query()->hasLimitedDepth()->orderBy('left')->withoutNode($record)->get()->filter(fn (ProductCategory $parent) => ! $parent->insideSubtree($record));
                     }
 
                     return $categories->pluck('title', 'id')->toArray();
@@ -126,7 +126,20 @@ class ProductCategoryResource extends Resource
                 ->disabled(fn (Page|RelationManager $livewire): bool => $livewire instanceof RelationManager)
                 ->default(fn (Page|RelationManager $livewire): ?int => ($livewire instanceof RelationManager && isset($livewire->ownerRecord->id)) ? $livewire->ownerRecord->id : null)
                 ->searchable(fn (Page|RelationManager $livewire) => $livewire instanceof Page)
+                ->reactive()
+                ->afterStateUpdated(function (callable $set, callable $get): void {
+                    $parentId = $get(ProductCategoryResourceTranslationKey::PARENT_ID->value);
+                    $parent = ($parentId === null) ? null : ProductCategory::query()->hasLimitedDepth()->find($parentId);
+
+                    if (isset($parent->depth)) {
+                        $set(ProductCategoryResourceTranslationKey::DEPTH->value, $parent->depth + 1);
+                    }
+                })
                 ->columnSpan(2),
+            TextInput::make(ProductCategoryResourceTranslationKey::DEPTH->value)
+                ->disabled()
+                ->default(fn (Page|RelationManager $livewire): ?int => ($livewire instanceof RelationManager && isset($livewire->ownerRecord->depth)) ? (int) ($livewire->ownerRecord->depth + 1) : null)
+                ->lte((string) ProductCategory::MAX_DEPTH, true),
         ]);
     }
 
@@ -140,7 +153,7 @@ class ProductCategoryResource extends Resource
                 TextColumn::make(ProductCategoryResourceTranslationKey::PARENT_TITLE->value)->sortable(),
             ]))
             ->filters(self::setTranslatableLabels([
-                SelectFilter::make(ProductCategoryResourceTranslationKey::DEPTH->value)->options(ProductCategory::query()->orderBy('depth')->distinct('depth')->pluck('depth', 'depth')),
+                SelectFilter::make(ProductCategoryResourceTranslationKey::DEPTH->value)->options(ProductCategory::query()->hasLimitedDepth()->orderBy('depth')->distinct('depth')->pluck('depth', 'depth')),
             ]))
             ->defaultSort(ProductCategoryResourceTranslationKey::LEFT->value, 'ASC');
     }

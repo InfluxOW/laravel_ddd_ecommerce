@@ -34,6 +34,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Domain\Products\Models\Product[] $products
  * @property-read int|null $products_count
  * @method static \App\Domain\Products\Database\Factories\ProductCategoryFactory factory(...$parameters)
+ * @method static Builder|ProductCategory hasLimitedDepth()
  * @method static Builder|ProductCategory limitDepth($limit)
  * @method static Builder|ProductCategory newModelQuery()
  * @method static Builder|ProductCategory newQuery()
@@ -117,12 +118,12 @@ class ProductCategory extends Model
 
     public static function loadLightHierarchy(): void
     {
-        self::$hierarchy = self::$hierarchy ?? self::query()->select(['id', 'parent_id', 'title', 'slug'])->get()->toHierarchy();
+        self::$hierarchy = self::$hierarchy ?? self::query()->hasLimitedDepth()->select(['id', 'parent_id', 'title', 'slug'])->get()->toHierarchy();
     }
 
     public static function loadHeavyHierarchy(): void
     {
-        self::$hierarchy = self::$hierarchy ?? self::query()->with(['parent'])->withCount(['products'])->get()->toHierarchy();
+        self::$hierarchy = self::$hierarchy ?? self::query()->hasLimitedDepth()->with(['parent'])->withCount(['products'])->get()->toHierarchy();
     }
 
     public static function findInHierarchy(int $id): ?self
@@ -137,5 +138,14 @@ class ProductCategory extends Model
         }
 
         return $category;
+    }
+
+    /*
+     * Scopes
+     * */
+
+    public function scopeHasLimitedDepth(Builder|Model $query): void
+    {
+        $query->limitDepth(self::MAX_DEPTH);
     }
 }

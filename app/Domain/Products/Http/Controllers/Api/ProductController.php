@@ -45,7 +45,7 @@ class ProductController extends Controller
             ->allowedFilters([
                 ProductAllowedFilter::TITLE->value,
                 ProductAllowedFilter::DESCRIPTION->value,
-                AllowedFilter::callback(ProductAllowedFilter::CATEGORY->value, static fn (Builder|Product $query): Builder => $query->whereInCategory(ProductCategory::query()->whereIn('slug', $validated[QueryKey::FILTER->value][ProductAllowedFilter::CATEGORY->value])->get())),
+                AllowedFilter::callback(ProductAllowedFilter::CATEGORY->value, static fn (Builder|Product $query): Builder => $query->whereInCategory(ProductCategory::query()->hasLimitedDepth()->whereIn('slug', $validated[QueryKey::FILTER->value][ProductAllowedFilter::CATEGORY->value])->get())),
                 AllowedFilter::callback(ProductAllowedFilter::PRICE_BETWEEN->value, static fn (Builder|Product $query): Builder => $query->wherePriceBetween(...$validated[QueryKey::FILTER->value][ProductAllowedFilter::PRICE_BETWEEN->value])),
                 AllowedFilter::callback(ProductAllowedFilter::ATTRIBUTE_VALUE->value, static fn (Builder|Product $query): Builder => $query->whereHasAttributeValue($validated[QueryKey::FILTER->value][ProductAllowedFilter::ATTRIBUTE_VALUE->value])),
             ])

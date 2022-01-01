@@ -46,6 +46,7 @@ class ProductFilterBuilderRepository
         ProductCategory::loadLightHierarchy();
 
         $childCategories = ProductCategory::query()
+            ->hasLimitedDepth()
             ->select(['slug', 'title', 'parent_id', 'id'])
             ->whereHas('products', static fn (Builder $query): Builder => $query->whereIn('products.id', $productsQuery->getQuery()->select(['id'])))
             ->get();
