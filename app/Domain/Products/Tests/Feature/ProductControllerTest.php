@@ -3,6 +3,7 @@
 namespace App\Domain\Products\Tests\Feature;
 
 use App\Application\Tests\TestCase;
+use App\Domain\Generic\Currency\Models\Kopecks;
 use App\Domain\Generic\Query\Enums\QueryKey;
 use App\Domain\Generic\Response\Enums\ResponseKey;
 use App\Domain\Products\Database\Seeders\ProductAttributeSeeder;
@@ -100,8 +101,54 @@ class ProductControllerTest extends TestCase
 
             $this->assertCount(1, $appliedFilters);
             $this->assertTrue($appliedFilters->pluck('query')->contains(ProductAllowedFilter::CATEGORY->value));
+            $this->assertTrue(collect($appliedFilters->filter(fn (array $filter): bool => $filter['query'] === ProductAllowedFilter::CATEGORY->value)->first()['values'])->contains($category->slug));
 
             $category = $category->parent;
+        }
+    }
+
+    /** @test */
+    public function a_user_can_filter_products_by_current_price(): void
+    {
+        $basePrice = ($this->product->price_discounted === null) ? $this->product->price->roubles() : $this->product->price_discounted->roubles();
+
+        $queries = [
+            [$basePrice - 100, $basePrice + 100],
+            [$basePrice + 100, $basePrice - 100],
+            [null, $basePrice + 100],
+            [$basePrice - 100, null],
+            [null, null],
+        ];
+
+        foreach ($queries as [$minPrice, $maxPrice]) {
+            $response = $this->get(route('products.index', [QueryKey::FILTER->value => [ProductAllowedFilter::PRICE_BETWEEN->value => "{$minPrice},{$maxPrice}"]]))->assertOk();
+            $items = collect($response->json(ResponseKey::DATA->value));
+            $appliedFilters = collect($response->json(sprintf('%s.%s.%s', ResponseKey::QUERY->value, QueryKey::FILTER->value, 'applied')));
+
+            if (isset($minPrice, $maxPrice) && $maxPrice < $minPrice) {
+                [$minPrice, $maxPrice] = [$maxPrice, $minPrice];
+            }
+
+            $this->assertNotEmpty($items);
+            $this->assertTrue($items->every(function (array $item) use ($minPrice, $maxPrice): bool {
+                $actualPrice = $item['price_discounted'] ?? $item['price'];
+
+                $result = true;
+                if (isset($minPrice)) {
+                    $result = $actualPrice >= $minPrice;
+                }
+                if (isset($maxPrice)) {
+                    $result = $result && $actualPrice <= $maxPrice;
+                }
+
+                return $result;
+            }));
+
+            $this->assertCount(1, $appliedFilters);
+            $this->assertTrue($appliedFilters->pluck('query')->contains(ProductAllowedFilter::PRICE_BETWEEN->value));
+            $priceBetweenFilter = $appliedFilters->filter(fn (array $filter): bool => $filter['query'] === ProductAllowedFilter::PRICE_BETWEEN->value)->first();
+            $this->assertEquals($minPrice ?? Product::query()->min(Product::getDatabasePriceExpression()) / Kopecks::KOPECKS_IN_ROUBLE, $priceBetweenFilter['min_value']);
+            $this->assertEquals($maxPrice ?? Product::query()->max(Product::getDatabasePriceExpression()) / Kopecks::KOPECKS_IN_ROUBLE, $priceBetweenFilter['max_value']);
         }
     }
 

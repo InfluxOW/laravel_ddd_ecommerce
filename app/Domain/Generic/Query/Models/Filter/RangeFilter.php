@@ -39,7 +39,7 @@ class RangeFilter extends Filter
     public function ofValues(mixed ...$values): static
     {
         [$selectedMinValue, $selectedMaxValue] = $values;
-        if ($selectedMinValue > $selectedMaxValue) {
+        if (isset($selectedMinValue, $selectedMaxValue) && $selectedMinValue > $selectedMaxValue) {
             [$selectedMaxValue, $selectedMinValue] = [$selectedMinValue, $selectedMaxValue];
         }
 
@@ -48,13 +48,8 @@ class RangeFilter extends Filter
         $filter->maxValue = null;
 
         if (isset($this->minValue, $this->maxValue)) {
-            if (isset($selectedMinValue)) {
-                $filter->minValue = MathUtils::clamp($selectedMinValue, $this->minValue, $this->maxValue);
-            }
-
-            if (isset($selectedMaxValue)) {
-                $filter->maxValue = MathUtils::clamp($selectedMaxValue, $this->minValue, $this->maxValue);
-            }
+            $filter->minValue = isset($selectedMinValue) ? MathUtils::clamp($selectedMinValue, $this->minValue, $this->maxValue) : $this->minValue;
+            $filter->maxValue = isset($selectedMaxValue) ? MathUtils::clamp($selectedMaxValue, $this->minValue, $this->maxValue) : $this->maxValue;
         }
 
         return $filter;
