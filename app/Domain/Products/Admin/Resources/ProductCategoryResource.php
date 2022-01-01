@@ -58,7 +58,7 @@ class ProductCategoryResource extends Resource
 
     public static function form(Form $form): Form
     {
-        ProductCategory::loadHierarchy();
+        ProductCategory::loadHeavyHierarchy();
 
         return $form
             ->schema([

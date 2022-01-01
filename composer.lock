@@ -1102,16 +1102,16 @@
         },
         {
             "name": "filament/filament",
-            "version": "v2.7.12",
+            "version": "v2.7.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel-filament/admin.git",
-                "reference": "ab89cc6f90d64413bd2208d295098d312f13c2e0"
+                "reference": "06a34e2069b9876bb1cdfd64f8dd7270858e1a69"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel-filament/admin/zipball/ab89cc6f90d64413bd2208d295098d312f13c2e0",
-                "reference": "ab89cc6f90d64413bd2208d295098d312f13c2e0",
+                "url": "https://api.github.com/repos/laravel-filament/admin/zipball/06a34e2069b9876bb1cdfd64f8dd7270858e1a69",
+                "reference": "06a34e2069b9876bb1cdfd64f8dd7270858e1a69",
                 "shasum": ""
             },
             "require": {
@@ -1158,11 +1158,11 @@
                 "issues": "https://github.com/laravel-filament/filament/issues",
                 "source": "https://github.com/laravel-filament/filament"
             },
-            "time": "2021-12-30T22:44:58+00:00"
+            "time": "2021-12-31T12:25:39+00:00"
         },
         {
             "name": "filament/forms",
-            "version": "v2.7.12",
+            "version": "v2.7.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel-filament/forms.git",
@@ -1218,16 +1218,16 @@
         },
         {
             "name": "filament/tables",
-            "version": "v2.7.12",
+            "version": "v2.7.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel-filament/tables.git",
-                "reference": "2f0f424332226d101d60c407d999ce73fddbf27c"
+                "reference": "2e5a121f64b68d3b20dc900e136d4b0d90ecc484"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel-filament/tables/zipball/2f0f424332226d101d60c407d999ce73fddbf27c",
-                "reference": "2f0f424332226d101d60c407d999ce73fddbf27c",
+                "url": "https://api.github.com/repos/laravel-filament/tables/zipball/2e5a121f64b68d3b20dc900e136d4b0d90ecc484",
+                "reference": "2e5a121f64b68d3b20dc900e136d4b0d90ecc484",
                 "shasum": ""
             },
             "require": {
@@ -1267,7 +1267,7 @@
                 "issues": "https://github.com/laravel-filament/filament/issues",
                 "source": "https://github.com/laravel-filament/filament"
             },
-            "time": "2021-12-30T22:43:47+00:00"
+            "time": "2021-12-31T12:25:37+00:00"
         },
         {
             "name": "fruitcake/laravel-cors",
@@ -3933,7 +3933,7 @@
         },
         {
             "name": "squirephp/countries",
-            "version": "v3.2.0",
+            "version": "v3.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/squirephp/countries.git",
@@ -3987,16 +3987,16 @@
         },
         {
             "name": "squirephp/countries-en",
-            "version": "v3.2.0",
+            "version": "v3.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/squirephp/countries-en.git",
-                "reference": "eac75ceac49c82bff3d36a31d156ed860be97ae0"
+                "reference": "96f4775b47590190fee3ef3a192ae70bdfb7b7b2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squirephp/countries-en/zipball/eac75ceac49c82bff3d36a31d156ed860be97ae0",
-                "reference": "eac75ceac49c82bff3d36a31d156ed860be97ae0",
+                "url": "https://api.github.com/repos/squirephp/countries-en/zipball/96f4775b47590190fee3ef3a192ae70bdfb7b7b2",
+                "reference": "96f4775b47590190fee3ef3a192ae70bdfb7b7b2",
                 "shasum": ""
             },
             "require": {
@@ -4037,11 +4037,11 @@
                 "issues": "https://github.com/squirephp/squire/issues",
                 "source": "https://github.com/squirephp/squire"
             },
-            "time": "2021-10-16T09:49:36+00:00"
+            "time": "2021-12-31T15:41:25+00:00"
         },
         {
             "name": "squirephp/model",
-            "version": "v3.2.0",
+            "version": "v3.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/squirephp/model.git",
@@ -4095,7 +4095,7 @@
         },
         {
             "name": "squirephp/regions",
-            "version": "v3.2.0",
+            "version": "v3.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/squirephp/regions.git",
@@ -4149,7 +4149,7 @@
         },
         {
             "name": "squirephp/regions-en",
-            "version": "v3.2.0",
+            "version": "v3.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/squirephp/regions-en.git",
@@ -4203,7 +4203,7 @@
         },
         {
             "name": "squirephp/repository",
-            "version": "v3.2.0",
+            "version": "v3.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/squirephp/repository.git",
@@ -4258,7 +4258,7 @@
         },
         {
             "name": "squirephp/rule",
-            "version": "v3.2.0",
+            "version": "v3.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/squirephp/rule.git",
@@ -7264,16 +7264,16 @@
         },
         {
             "name": "composer/composer",
-            "version": "2.2.2",
+            "version": "2.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "2c1887d4f296d027e383bd2b39e2bff0210bc14f"
+                "reference": "3c92ba5cdc7d48b7db2dcd197e6fa0e8fa6d9f4a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/2c1887d4f296d027e383bd2b39e2bff0210bc14f",
-                "reference": "2c1887d4f296d027e383bd2b39e2bff0210bc14f",
+                "url": "https://api.github.com/repos/composer/composer/zipball/3c92ba5cdc7d48b7db2dcd197e6fa0e8fa6d9f4a",
+                "reference": "3c92ba5cdc7d48b7db2dcd197e6fa0e8fa6d9f4a",
                 "shasum": ""
             },
             "require": {
@@ -7343,7 +7343,7 @@
             "support": {
                 "irc": "ircs://irc.libera.chat:6697/composer",
                 "issues": "https://github.com/composer/composer/issues",
-                "source": "https://github.com/composer/composer/tree/2.2.2"
+                "source": "https://github.com/composer/composer/tree/2.2.3"
             },
             "funding": [
                 {
@@ -7359,7 +7359,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-12-29T13:15:27+00:00"
+            "time": "2021-12-31T11:18:53+00:00"
         },
         {
             "name": "composer/metadata-minifier",
@@ -11494,12 +11494,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/slevomat/coding-standard.git",
-                "reference": "1ace9db4f34d34692f5342f6e51fe7145472cb7b"
+                "reference": "ebe92fe0e976cd4d7ce4b554bce773c54d4685a4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/slevomat/coding-standard/zipball/1ace9db4f34d34692f5342f6e51fe7145472cb7b",
-                "reference": "1ace9db4f34d34692f5342f6e51fe7145472cb7b",
+                "url": "https://api.github.com/repos/slevomat/coding-standard/zipball/ebe92fe0e976cd4d7ce4b554bce773c54d4685a4",
+                "reference": "ebe92fe0e976cd4d7ce4b554bce773c54d4685a4",
                 "shasum": ""
             },
             "require": {
@@ -11511,11 +11511,11 @@
             "require-dev": {
                 "phing/phing": "2.17.0",
                 "php-parallel-lint/php-parallel-lint": "1.3.1",
-                "phpstan/phpstan": "1.2.0",
+                "phpstan/phpstan": "1.3.0",
                 "phpstan/phpstan-deprecation-rules": "1.0.0",
                 "phpstan/phpstan-phpunit": "1.0.0",
                 "phpstan/phpstan-strict-rules": "1.1.0",
-                "phpunit/phpunit": "7.5.20|8.5.21|9.5.10"
+                "phpunit/phpunit": "7.5.20|8.5.21|9.5.11"
             },
             "default-branch": true,
             "type": "phpcodesniffer-standard",
@@ -11548,7 +11548,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-12-19T10:09:06+00:00"
+            "time": "2021-12-31T13:42:45+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",

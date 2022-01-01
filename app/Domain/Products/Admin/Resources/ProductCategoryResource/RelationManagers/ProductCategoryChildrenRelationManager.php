@@ -27,7 +27,7 @@ class ProductCategoryChildrenRelationManager extends HasManyRelationManager
 
     public static function form(Form $form): Form
     {
-        ProductCategory::loadHierarchy();
+        ProductCategory::loadHeavyHierarchy();
 
         return $form->schema(ProductCategoryResource::getCreationFormSchema());
     }

@@ -43,10 +43,31 @@ class ProductFilterBuilderRepository
 
     public function getCategories(SpatieQueryBuilder $productsQuery): Collection
     {
-        return ProductCategory::query()
-            ->select(['slug', 'title'])
+        ProductCategory::loadLightHierarchy();
+
+        $childCategories = ProductCategory::query()
+            ->select(['slug', 'title', 'parent_id', 'id'])
             ->whereHas('products', static fn (Builder $query): Builder => $query->whereIn('products.id', $productsQuery->getQuery()->select(['id'])))
-            ->pluck('slug', 'title');
+            ->get();
+
+        $categories = $childCategories->pluck('slug', 'title');
+
+        $checkedParentCategoryIds = collect([]);
+        $parentCategoryIds = $childCategories->pluck('parent_id')->unique()->diff($childCategories->pluck('id'));
+        while ($parentCategoryIds->isNotEmpty()) {
+            $parentCategoryId = $parentCategoryIds->pop();
+            if (isset($parentCategoryId) && $checkedParentCategoryIds->doesntContain($parentCategoryId)) {
+                $category = ProductCategory::findInHierarchy($parentCategoryId);
+
+                if (isset($category)) {
+                    $categories->offsetSet($category->title, $category->slug);
+                    $parentCategoryIds->push($category->parent_id);
+                    $checkedParentCategoryIds->push($category->id);
+                }
+            }
+        }
+
+        return $categories->sort();
     }
 
     public function getMinPrice(SpatieQueryBuilder $productsQuery): ?int

@@ -115,7 +115,12 @@ class ProductCategory extends Model
         return ProductCategoryFactory::new();
     }
 
-    public static function loadHierarchy(): void
+    public static function loadLightHierarchy(): void
+    {
+        self::$hierarchy = self::$hierarchy ?? self::query()->select(['id', 'parent_id', 'title', 'slug'])->get()->toHierarchy();
+    }
+
+    public static function loadHeavyHierarchy(): void
     {
         self::$hierarchy = self::$hierarchy ?? self::query()->with(['parent'])->withCount(['products'])->get()->toHierarchy();
     }

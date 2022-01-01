@@ -11,6 +11,7 @@ use App\Domain\Products\Database\Seeders\ProductCategorySeeder;
 use App\Domain\Products\Database\Seeders\ProductSeeder;
 use App\Domain\Products\Enums\Query\Filter\ProductAllowedFilter;
 use App\Domain\Products\Models\Product;
+use App\Domain\Products\Models\ProductCategory;
 
 class ProductControllerTest extends TestCase
 {
@@ -75,6 +76,32 @@ class ProductControllerTest extends TestCase
 
             $this->assertCount(1, $appliedFilters);
             $this->assertTrue($appliedFilters->pluck('query')->contains(ProductAllowedFilter::DESCRIPTION->value));
+        }
+    }
+
+    /** @test */
+    public function a_user_can_filter_products_by_category(): void
+    {
+        $deepestCategory = ProductCategory::query()->where('depth', ProductCategory::MAX_DEPTH)->first();
+        $this->assertNotNull($deepestCategory);
+
+        $product = $deepestCategory?->products->first();
+        $this->assertNotNull($product);
+
+        $productsCount = Product::query()->count();
+        $category = $deepestCategory;
+        while (isset($category)) {
+            $response = $this->get(route('products.index', [QueryKey::FILTER->value => [ProductAllowedFilter::CATEGORY->value => $category->slug], QueryKey::PER_PAGE->value => $productsCount]))->assertOk();
+            $items = collect($response->json(ResponseKey::DATA->value));
+            $appliedFilters = collect($response->json(sprintf('%s.%s.%s', ResponseKey::QUERY->value, QueryKey::FILTER->value, 'applied')));
+
+            $this->assertNotEmpty($items);
+            $this->assertTrue($items->pluck('slug')->contains($product?->slug));
+
+            $this->assertCount(1, $appliedFilters);
+            $this->assertTrue($appliedFilters->pluck('query')->contains(ProductAllowedFilter::CATEGORY->value));
+
+            $category = $category->parent;
         }
     }
 

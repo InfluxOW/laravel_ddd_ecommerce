@@ -13,7 +13,7 @@ class ProductCategoryController extends Controller
 
     public function index(): AnonymousResourceCollection
     {
-        ProductCategory::loadHierarchy();
+        ProductCategory::loadHeavyHierarchy();
 
         return $this->respondWithCollection(ProductCategory::$hierarchy);
     }
