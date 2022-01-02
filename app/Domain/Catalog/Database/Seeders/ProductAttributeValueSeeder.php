@@ -18,8 +18,10 @@ class ProductAttributeValueSeeder extends Seeder
      */
     public function run()
     {
+        $attributes = ProductAttribute::query()->inRandomOrder()->get();
+
         foreach (Product::query()->whereDoesntHave('attributeValues')->get() as $product) {
-            foreach (ProductAttribute::query()->inRandomOrder()->take(random_int(3, 8))->get() as $attribute) {
+            foreach ($attributes->take(app()->runningUnitTests() ? 3 : random_int(3, 8)) as $attribute) {
                 ProductAttributeValue::factory()->for($product, 'product')->for($attribute, 'attribute')->create();
             }
         }

@@ -80,7 +80,9 @@ class ProductController extends Controller
 
     public function show(ProductShowRequest $request, string $slug): JsonResource|JsonResponse
     {
-        $product = Product::query()->where('slug', $slug)->first();
+        $validated = $request->validated();
+
+        $product = Product::query()->with(['categories', 'attributeValues.attribute', 'prices' => fn (HasMany $query): HasMany => $query->where('currency', $validated[QueryKey::FILTER->value][ProductAllowedFilter::CURRENCY->value])])->where('slug', $slug)->first();
 
         if ($product === null) {
             return $this->respondWithMessage("Product '{$slug}' was not found.", Response::HTTP_NOT_FOUND);

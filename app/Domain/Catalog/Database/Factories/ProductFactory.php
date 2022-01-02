@@ -27,7 +27,7 @@ class ProductFactory extends Factory
                     ->where('depth', '>=', ProductCategory::MAX_DEPTH - 1)
                     ->hasLimitedDepth()
                     ->inRandomOrder()
-                    ->limit(random_int(1, 5))
+                    ->limit(app()->runningUnitTests() ? 1 : random_int(1, 5))
                     ->get();
 
                 $product->categories()->sync($categories);
