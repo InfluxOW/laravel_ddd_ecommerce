@@ -33,13 +33,13 @@ class ProductFilterBuilder
 
     public function buildCurrencyFilter(SpatieQueryBuilder $productsQuery): Filter
     {
-        return new SelectFilter(ProductAllowedFilter::CURRENCY, $this->namespace, $this->repository->getAvailableCurrencies($productsQuery));
+        return new SelectFilter(ProductAllowedFilter::CURRENCY, $this->namespace, $this->repository->getAvailableCurrencies($productsQuery->clone()));
     }
 
     public function buildPriceBetweenFilter(SpatieQueryBuilder $productsQuery, string $currency): Filter
     {
-        $minPrice = $this->repository->getMinPrice($productsQuery, $currency);
-        $maxPrice = $this->repository->getMaxPrice($productsQuery, $currency);
+        $minPrice = $this->repository->getMinPrice($productsQuery->clone(), $currency);
+        $maxPrice = $this->repository->getMaxPrice($productsQuery->clone(), $currency);
 
         return new RangeFilter(
             ProductAllowedFilter::PRICE_BETWEEN,
@@ -52,11 +52,11 @@ class ProductFilterBuilder
 
     public function buildCategoryFilter(SpatieQueryBuilder $productsQuery): Filter
     {
-        return MultiselectFilter::createWithPlainValues(ProductAllowedFilter::CATEGORY, $this->namespace, $this->repository->getCategories($productsQuery));
+        return MultiselectFilter::createWithPlainValues(ProductAllowedFilter::CATEGORY, $this->namespace, $this->repository->getCategories($productsQuery->clone()));
     }
 
     public function buildAttributeValuesFilter(SpatieQueryBuilder $productsQuery): Filter
     {
-        return MultiselectFilter::createWithNestedValues(ProductAllowedFilter::ATTRIBUTE_VALUE, $this->namespace, $this->repository->getAttributeValues($productsQuery));
+        return MultiselectFilter::createWithNestedValues(ProductAllowedFilter::ATTRIBUTE_VALUE, $this->namespace, $this->repository->getAttributeValues($productsQuery->clone()));
     }
 }

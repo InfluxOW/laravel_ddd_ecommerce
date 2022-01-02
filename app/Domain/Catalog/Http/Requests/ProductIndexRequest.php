@@ -30,13 +30,14 @@ class ProductIndexRequest extends FormRequest
 
     protected function prepareForValidation()
     {
-        if (isset($this->filter)) {
+        $filter = $this->filter;
+        if (isset($filter)) {
             $this->merge([
                 QueryKey::FILTER->value => array_merge(
-                    $this->filter,
-                    array_key_exists(ProductAllowedFilter::CATEGORY->value, $this->filter) ? [ProductAllowedFilter::CATEGORY->value => explode(',', $this->filter[ProductAllowedFilter::CATEGORY->value])] : [],
-                    array_key_exists(ProductAllowedFilter::PRICE_BETWEEN->value, $this->filter) ? [ProductAllowedFilter::PRICE_BETWEEN->value => array_map(static fn (string $value): ?int => ($value === '') ? null : (int) money($value, array_key_exists(ProductAllowedFilter::CURRENCY->value, $this->filter) ? $this->filter[ProductAllowedFilter::CURRENCY->value] : app(CatalogSettings::class)->default_currency)->getAmount(true), explode(',', $this->filter[ProductAllowedFilter::PRICE_BETWEEN->value]))] : [],
-                    array_key_exists(ProductAllowedFilter::ATTRIBUTE_VALUE->value, $this->filter) ? [ProductAllowedFilter::ATTRIBUTE_VALUE->value => array_map(static fn (string $value): array => explode(',', $value), (array) $this->filter[ProductAllowedFilter::ATTRIBUTE_VALUE->value])] : [],
+                    $filter,
+                    array_key_exists(ProductAllowedFilter::CATEGORY->value, $filter) ? [ProductAllowedFilter::CATEGORY->value => explode(',', $filter[ProductAllowedFilter::CATEGORY->value])] : [],
+                    array_key_exists(ProductAllowedFilter::PRICE_BETWEEN->value, $filter) ? [ProductAllowedFilter::PRICE_BETWEEN->value => array_map(static fn (string $value): ?int => ($value === '') ? null : (int) money($value, array_key_exists(ProductAllowedFilter::CURRENCY->value, $filter) ? $filter[ProductAllowedFilter::CURRENCY->value] : app(CatalogSettings::class)->default_currency, true)->getAmount(), explode(',', $filter[ProductAllowedFilter::PRICE_BETWEEN->value]))] : [],
+                    array_key_exists(ProductAllowedFilter::ATTRIBUTE_VALUE->value, $filter) ? [ProductAllowedFilter::ATTRIBUTE_VALUE->value => array_map(static fn (string $value): array => explode(',', $value), (array) $filter[ProductAllowedFilter::ATTRIBUTE_VALUE->value])] : [],
                 ),
             ]);
         }

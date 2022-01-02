@@ -2,6 +2,7 @@
 
 namespace App\Domain\Generic\Query\Models\Filter;
 
+use Akaunting\Money\Currency;
 use Akaunting\Money\Money;
 use App\Domain\Generic\Lang\Enums\TranslationNamespace;
 use App\Domain\Generic\Query\Enums\QueryFilterType;
@@ -15,16 +16,16 @@ class RangeFilter extends Filter
 
     public Money|int|float|null $minValue;
     public Money|int|float|null $maxValue;
-    public readonly ?string $currency;
+    public readonly ?Currency $currency;
 
     public function __construct(BackedEnum $filter, TranslationNamespace $namespace, ?float $minValue, ?float $maxValue, ?string $currency)
     {
         parent::__construct($filter, $namespace);
 
-        $this->currency = $currency;
+        $this->currency = ($currency === null) ? null : currency($currency);
 
-        $this->minValue = isset($this->currency) ? money($minValue, $currency) : $minValue;
-        $this->maxValue = isset($this->currency) ? money($maxValue, $currency) : $maxValue;
+        $this->minValue = isset($this->currency) ? money($minValue, $this->currency->getCurrency()) : $minValue;
+        $this->maxValue = isset($this->currency) ? money($maxValue, $this->currency->getCurrency()) : $maxValue;
     }
 
     #[ArrayShape(['query' => "string", 'title' => "string", 'type' => "string", 'min_value' => "float", 'max_value' => "float"])]
@@ -42,6 +43,9 @@ class RangeFilter extends Filter
         if (isset($selectedMinValue, $selectedMaxValue) && $selectedMinValue > $selectedMaxValue) {
             [$selectedMaxValue, $selectedMinValue] = [$selectedMinValue, $selectedMaxValue];
         }
+
+        $selectedMinValue = isset($this->currency, $selectedMinValue) ? money($selectedMinValue, $this->currency->getCurrency())->getValue() : $selectedMinValue;
+        $selectedMaxValue = isset($this->currency, $selectedMaxValue) ? money($selectedMaxValue, $this->currency->getCurrency())->getValue() : $selectedMaxValue;
 
         $minValue = ($this->minValue instanceof Money) ? $this->minValue->getValue() : $this->minValue;
         $maxValue = ($this->maxValue instanceof Money) ? $this->maxValue->getValue() : $this->maxValue;

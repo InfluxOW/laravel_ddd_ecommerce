@@ -99,7 +99,7 @@ if [ "$FILES" != "" ]; then
     # Code Quality
 
     echo "[PRE-COMMIT] Checking PHPStan..."
-    sail composer exec phpstan analyse
+    sail composer exec phpstan analyse -- --memory-limit=-1
 
     if [ $? != 0 ]; then
         echo "[PRE-COMMIT] PHPStan found problems."

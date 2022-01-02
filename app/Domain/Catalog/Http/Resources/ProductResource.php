@@ -12,21 +12,25 @@ use JetBrains\PhpStorm\ArrayShape;
 
 class ProductResource extends JsonResource
 {
-    #[ArrayShape(['slug' => 'string', 'title' => "string", 'created_at' => "null|string", 'price' => 'string|optional', 'price_discounted' => "string|null|optional", 'categories' => AnonymousResourceCollection::class, 'attributes' => AnonymousResourceCollection::class, 'description' => "string"])]
+    #[ArrayShape(['slug' => 'string', 'title' => "string", 'created_at' => "null|string", 'price' => 'string|optional', 'price_discounted' => "string|null|optional", 'currency' => "string", 'categories' => AnonymousResourceCollection::class, 'attributes' => AnonymousResourceCollection::class, 'description' => "string"])]
     public function toArray($request): array
     {
         /** @var Product $product */
         $product = $this->resource;
 
-        /** @var ProductPrice $priceModel */
-        $priceModel = $product->prices->where('currency', $request->get(QueryKey::FILTER->value)[ProductAllowedFilter::CURRENCY->value])->first();
+        $currency = $request->get(QueryKey::FILTER->value)[ProductAllowedFilter::CURRENCY->value];
+        /** @var ProductPrice|null $priceModel */
+        $priceModel = $product->prices->where('currency', $currency)->first();
 
         return [
             'slug' => $product->slug,
             'title' => $product->title,
             'created_at' => ($product->created_at === null) ? null : $product->created_at->format('d M Y H:i:s'),
-            'price' => $this->when(isset($priceModel), $priceModel->price->render()),
-            'price_discounted' => $this->when(isset($priceModel), ($priceModel->price_discounted === null) ? null : $priceModel->price_discounted->render()),
+            /* @phpstan-ignore-next-line  */
+            'price' => $this->when(isset($priceModel), fn (): string => $priceModel->price->render()),
+            /* @phpstan-ignore-next-line  */
+            'price_discounted' => $this->when(isset($priceModel), fn (): ?string => $priceModel->price_discounted?->render()),
+            'currency' => currency($currency)->getSymbol(),
             'categories' => LightProductCategoryResource::collection($product->categories->sortBy('title')),
             'attributes' => ProductAttributeValueResource::collection($product->attributeValues->sortBy('attribute.title')),
             'description' => $product->description,
