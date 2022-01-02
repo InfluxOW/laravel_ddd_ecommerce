@@ -2,7 +2,6 @@
 
 namespace App\Domain\Products\Services\Query\Filter;
 
-use App\Domain\Generic\Currency\Models\Kopecks;
 use App\Domain\Generic\Lang\Enums\TranslationNamespace;
 use App\Domain\Generic\Query\Models\Filter\Filter;
 use App\Domain\Generic\Query\Models\Filter\InputFilter;
@@ -31,17 +30,17 @@ class ProductFilterBuilder
         return new InputFilter(ProductAllowedFilter::DESCRIPTION, $this->namespace);
     }
 
-    public function buildPriceBetweenFilter(SpatieQueryBuilder $productsQuery): Filter
+    public function buildPriceBetweenFilter(SpatieQueryBuilder $productsQuery, string $currency): Filter
     {
-        $minPrice = $this->repository->getMinPrice($productsQuery);
-        $maxPrice = $this->repository->getMaxPrice($productsQuery);
+        $minPrice = $this->repository->getMinPrice($productsQuery, $currency);
+        $maxPrice = $this->repository->getMaxPrice($productsQuery, $currency);
 
         return new RangeFilter(
             ProductAllowedFilter::PRICE_BETWEEN,
             $this->namespace,
-            ($minPrice === null) ? null : (new Kopecks($minPrice))->roubles(),
-            ($maxPrice === null) ? null : (new Kopecks($maxPrice))->roubles(),
-            true
+            $minPrice,
+            $maxPrice,
+            $currency
         );
     }
 

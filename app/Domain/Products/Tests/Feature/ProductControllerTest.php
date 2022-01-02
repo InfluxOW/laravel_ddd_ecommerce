@@ -3,7 +3,6 @@
 namespace App\Domain\Products\Tests\Feature;
 
 use App\Application\Tests\TestCase;
-use App\Domain\Generic\Currency\Models\Kopecks;
 use App\Domain\Generic\Query\Enums\QueryKey;
 use App\Domain\Generic\Response\Enums\ResponseKey;
 use App\Domain\Products\Database\Seeders\ProductAttributeSeeder;

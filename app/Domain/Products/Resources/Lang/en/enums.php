@@ -4,6 +4,7 @@ use App\Domain\Generic\Utils\EnumUtils;
 use App\Domain\Products\Enums\Query\Filter\ProductAllowedFilter;
 use App\Domain\Products\Enums\Query\Sort\ProductAllowedSort;
 use App\Domain\Products\Enums\Translation\ProductCategoryResourceTranslationKey;
+use App\Domain\Products\Enums\Translation\ProductSettingsTranslationKey;
 
 return [
     ProductAllowedFilter::class => [
@@ -33,5 +34,9 @@ return [
         ProductCategoryResourceTranslationKey::LEFT->name => 'Position',
 
         ProductCategoryResourceTranslationKey::DEPTH->name => 'Depth',
+    ],
+    ProductSettingsTranslationKey::class => [
+        ProductSettingsTranslationKey::AVAILABLE_CURRENCIES->name => 'Available Currencies',
+        ProductSettingsTranslationKey::DEFAULT_CURRENCY->name => 'Default Currency',
     ],
 ];

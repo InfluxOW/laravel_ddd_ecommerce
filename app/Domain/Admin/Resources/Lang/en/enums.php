@@ -7,6 +7,7 @@ use App\Domain\Admin\Enums\Translation\Components\Cards\AdminTimestampsCardTrans
 return [
     AdminNavigationGroupTranslationKey::class => [
         AdminNavigationGroupTranslationKey::SHOP->name => 'Shop',
+        AdminNavigationGroupTranslationKey::SETTINGS->name => 'Settings',
     ],
     AdminTimestampsCardTranslationKey::class => [
         AdminTimestampsCardTranslationKey::UPDATED_AT->name => 'Last Modified At',

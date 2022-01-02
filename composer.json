@@ -9,10 +9,12 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "akaunting/laravel-money": "^1.2",
         "baum/baum": "*",
         "darkaonline/l5-swagger": "^8.0",
         "fakerphp/faker": "^1.9.1",
         "filament/filament": "^2.5",
+        "filament/spatie-laravel-settings-plugin": "^2.7",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.65",

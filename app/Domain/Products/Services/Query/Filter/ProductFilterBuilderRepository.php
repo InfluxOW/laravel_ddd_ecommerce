@@ -4,10 +4,10 @@ namespace App\Domain\Products\Services\Query\Filter;
 
 use App\Domain\Generic\Query\Models\Filter\Resources\Multiselect\MultiselectFilterNestedValues;
 use App\Domain\Generic\Query\Models\Filter\Resources\Multiselect\MultiselectFilterNestedValuesAttribute;
-use App\Domain\Products\Models\Product;
 use App\Domain\Products\Models\ProductAttribute;
 use App\Domain\Products\Models\ProductAttributeValue;
 use App\Domain\Products\Models\ProductCategory;
+use App\Domain\Products\Models\ProductPrice;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -71,13 +71,19 @@ class ProductFilterBuilderRepository
         return $categories->sort();
     }
 
-    public function getMinPrice(SpatieQueryBuilder $productsQuery): ?int
+    public function getMinPrice(SpatieQueryBuilder $productsQuery, string $currency): ?int
     {
-        return $productsQuery->min(Product::getDatabasePriceExpression());
+        return DB::table('product_prices')
+            ->whereIn('product_id', $productsQuery->getQuery()->select(['id']))
+            ->where('currency', $currency)
+            ->min(ProductPrice::getDatabasePriceExpression());
     }
 
-    public function getMaxPrice(SpatieQueryBuilder $productsQuery): ?int
+    public function getMaxPrice(SpatieQueryBuilder $productsQuery, string $currency): ?int
     {
-        return $productsQuery->max(Product::getDatabasePriceExpression());
+        return DB::table('product_prices')
+            ->whereIn('product_id', $productsQuery->getQuery()->select(['id']))
+            ->where('currency', $currency)
+            ->max(ProductPrice::getDatabasePriceExpression());
     }
 }

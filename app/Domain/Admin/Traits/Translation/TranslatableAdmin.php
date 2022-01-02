@@ -2,6 +2,7 @@
 
 namespace App\Domain\Admin\Traits\Translation;
 
+use App\Domain\Admin\Enums\Translation\AdminPagePropertyTranslationKey;
 use App\Domain\Admin\Enums\Translation\AdminRelationPropertyTranslationKey;
 use App\Domain\Admin\Enums\Translation\AdminResourcePropertyTranslationKey;
 use App\Domain\Generic\Lang\Enums\TranslationFilename;
@@ -31,7 +32,7 @@ trait TranslatableAdmin
             ->toArray();
     }
 
-    protected static function translateComponentProperty(AdminResourcePropertyTranslationKey|AdminRelationPropertyTranslationKey $enum): string
+    protected static function translateComponentProperty(AdminResourcePropertyTranslationKey|AdminRelationPropertyTranslationKey|AdminPagePropertyTranslationKey $enum): string
     {
         return LangUtils::translateValue(static::getTranslationNamespace(), TranslationFilename::ADMIN, $enum->name, static::class);
     }

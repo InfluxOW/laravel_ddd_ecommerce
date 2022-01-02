@@ -2,16 +2,13 @@
 
 namespace App\Domain\Products\Models;
 
-use App\Domain\Generic\Currency\Casts\KopecksCast;
 use App\Domain\Products\Database\Factories\ProductFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Query\Expression;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -22,14 +19,14 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $title
  * @property string $slug
  * @property string $description
- * @property \App\Domain\Generic\Currency\Models\Kopecks $price
- * @property \App\Domain\Generic\Currency\Models\Kopecks|null $price_discounted
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Domain\Products\Models\ProductAttributeValue[] $attributeValues
  * @property-read int|null $attribute_values_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Domain\Products\Models\ProductCategory[] $categories
  * @property-read int|null $categories_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Domain\Products\Models\ProductPrice[] $prices
+ * @property-read int|null $prices_count
  * @method static \App\Domain\Products\Database\Factories\ProductFactory factory(...$parameters)
  * @method static Builder|Product newModelQuery()
  * @method static Builder|Product newQuery()
@@ -40,11 +37,9 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Product whereHasAttributeValue(array $attributesValuesByAttributeSlug)
  * @method static Builder|Product whereId($value)
  * @method static Builder|Product whereInCategory(\Illuminate\Support\Collection $categories)
- * @method static Builder|Product wherePrice($value)
  * @method static Builder|Product wherePriceAbove(int $minPrice)
  * @method static Builder|Product wherePriceBelow(int $maxPrice)
  * @method static Builder|Product wherePriceBetween(?int $minPrice, ?int $maxPrice)
- * @method static Builder|Product wherePriceDiscounted($value)
  * @method static Builder|Product whereSlug($value)
  * @method static Builder|Product whereTitle($value)
  * @method static Builder|Product whereUpdatedAt($value)
@@ -54,11 +49,6 @@ class Product extends Model
 {
     use HasFactory;
     use HasSlug;
-
-    protected $casts = [
-        'price' => KopecksCast::class,
-        'price_discounted' => KopecksCast::class,
-    ];
 
     /*
      * Relations
@@ -72,6 +62,11 @@ class Product extends Model
     public function attributeValues(): HasMany
     {
         return $this->hasMany(ProductAttributeValue::class);
+    }
+
+    public function prices(): HasMany
+    {
+        return $this->hasMany(ProductPrice::class);
     }
 
     /*
@@ -92,11 +87,6 @@ class Product extends Model
     protected static function newFactory(): ProductFactory
     {
         return ProductFactory::new();
-    }
-
-    public static function getDatabasePriceExpression(): Expression
-    {
-        return DB::raw('COALESCE(price_discounted, price)');
     }
 
     /*

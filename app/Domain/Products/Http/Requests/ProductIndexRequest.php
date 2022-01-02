@@ -2,7 +2,6 @@
 
 namespace App\Domain\Products\Http\Requests;
 
-use App\Domain\Generic\Currency\Models\Kopecks;
 use App\Domain\Generic\Query\Enums\QueryKey;
 use App\Domain\Products\Enums\Query\Filter\ProductAllowedFilter;
 use Illuminate\Foundation\Http\FormRequest;
@@ -37,7 +36,7 @@ class ProductIndexRequest extends FormRequest
                 QueryKey::FILTER->value => array_merge(
                     $this->filter,
                     array_key_exists(ProductAllowedFilter::CATEGORY->value, $this->filter) ? [ProductAllowedFilter::CATEGORY->value => explode(',', $this->filter[ProductAllowedFilter::CATEGORY->value])] : [],
-                    array_key_exists(ProductAllowedFilter::PRICE_BETWEEN->value, $this->filter) ? [ProductAllowedFilter::PRICE_BETWEEN->value => array_map(static fn (string $value): ?int => ($value === '') ? null : (int)(round($value * Kopecks::KOPECKS_IN_ROUBLE)), explode(',', $this->filter[ProductAllowedFilter::PRICE_BETWEEN->value]))] : [],
+                    array_key_exists(ProductAllowedFilter::PRICE_BETWEEN->value, $this->filter) ? [ProductAllowedFilter::PRICE_BETWEEN->value => array_map(static fn (string $value): ?int => ($value === '') ? null : money($value, 'SET CURRENCY', true)->getAmount(), explode(',', $this->filter[ProductAllowedFilter::PRICE_BETWEEN->value]))] : [],
                     array_key_exists(ProductAllowedFilter::ATTRIBUTE_VALUE->value, $this->filter) ? [ProductAllowedFilter::ATTRIBUTE_VALUE->value => array_map(static fn (string $value): array => explode(',', $value), (array) $this->filter[ProductAllowedFilter::ATTRIBUTE_VALUE->value])] : [],
                 ),
             ]);

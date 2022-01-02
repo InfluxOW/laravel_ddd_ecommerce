@@ -12,7 +12,7 @@ parameters:
     level: 8
 
     excludePaths:
-        - app/Domain/Generic/Currency/Casts/KopecksCast.php
+        - app/Domain/Generic/Currency/Casts/MoneyCast.php
 
     ignoreErrors:
         - '#Call to an undefined method App\\Domain\\Products\\Models\\Product|Illuminate\\Database\\Eloquent\\Builder::orderByCurrentPrice\(\)#'

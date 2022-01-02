@@ -18,8 +18,6 @@ class CreateProductsTable extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->string('description', 3000);
-            $table->unsignedInteger('price');
-            $table->unsignedInteger('price_discounted')->nullable();
             $table->timestamps();
         });
     }

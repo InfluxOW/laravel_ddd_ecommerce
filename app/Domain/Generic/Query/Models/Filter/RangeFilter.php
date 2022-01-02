@@ -2,7 +2,7 @@
 
 namespace App\Domain\Generic\Query\Models\Filter;
 
-use App\Domain\Generic\Currency\Models\Kopecks;
+use Akaunting\Money\Money;
 use App\Domain\Generic\Lang\Enums\TranslationNamespace;
 use App\Domain\Generic\Query\Enums\QueryFilterType;
 use App\Domain\Generic\Utils\MathUtils;
@@ -13,26 +13,26 @@ class RangeFilter extends Filter
 {
     public static QueryFilterType $type = QueryFilterType::RANGE;
 
-    public float|int|null $minValue;
-    public float|int|null $maxValue;
-    public readonly bool $valuesAreCurrency;
+    public Money|int|float|null $minValue;
+    public Money|int|float|null $maxValue;
+    public readonly ?string $currency;
 
-    public function __construct(BackedEnum $filter, TranslationNamespace $namespace, ?float $minValue, ?float $maxValue, bool $valuesAreCurrency)
+    public function __construct(BackedEnum $filter, TranslationNamespace $namespace, ?float $minValue, ?float $maxValue, ?string $currency)
     {
         parent::__construct($filter, $namespace);
 
-        $this->valuesAreCurrency = $valuesAreCurrency;
+        $this->currency = $currency;
 
-        $this->minValue = $this->valuesAreCurrency ? (int) (Kopecks::KOPECKS_IN_ROUBLE * $minValue) : $minValue;
-        $this->maxValue = $this->valuesAreCurrency ? (int) (Kopecks::KOPECKS_IN_ROUBLE * $maxValue) : $maxValue;
+        $this->minValue = isset($this->currency) ? money($minValue, $currency) : $minValue;
+        $this->maxValue = isset($this->currency) ? money($maxValue, $currency) : $maxValue;
     }
 
     #[ArrayShape(['query' => "string", 'title' => "string", 'type' => "string", 'min_value' => "float", 'max_value' => "float"])]
     public function toArray(): array
     {
         return array_merge(parent::toArray(), [
-            'min_value' => $this->valuesAreCurrency ? $this->minValue / Kopecks::KOPECKS_IN_ROUBLE : $this->minValue,
-            'max_value' => $this->valuesAreCurrency ? $this->maxValue / Kopecks::KOPECKS_IN_ROUBLE : $this->maxValue,
+            'min_value' => ($this->minValue instanceof Money) ? $this->minValue->getValue() : $this->minValue,
+            'max_value' => ($this->maxValue instanceof Money) ? $this->maxValue->getValue() : $this->maxValue,
         ]);
     }
 

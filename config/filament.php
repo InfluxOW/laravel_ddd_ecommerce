@@ -1,5 +1,6 @@
 <?php
 
+use App\Domain\Products\Admin\Pages\ManageProductsSettings;
 use App\Domain\Products\Admin\Resources\ProductCategoryResource;
 use App\Domain\Users\Admin\Resources\UserResource;
 use Filament\Http\Middleware\Authenticate;
@@ -73,6 +74,7 @@ return [
         'path' => app_path('Domain/Admin/Panel/Pages'),
         'register' => [
             Pages\Dashboard::class,
+            ManageProductsSettings::class,
         ],
     ],
 
