@@ -24,8 +24,8 @@ class RangeFilter extends Filter
 
         $this->currency = ($currency === null) ? null : currency($currency);
 
-        $this->minValue = isset($this->currency) ? money($minValue, $this->currency->getCurrency()) : $minValue;
-        $this->maxValue = isset($this->currency) ? money($maxValue, $this->currency->getCurrency()) : $maxValue;
+        $this->minValue = isset($this->currency, $minValue) ? money($minValue, $this->currency->getCurrency()) : $minValue;
+        $this->maxValue = isset($this->currency, $maxValue) ? money($maxValue, $this->currency->getCurrency()) : $maxValue;
     }
 
     #[ArrayShape(['query' => "string", 'title' => "string", 'type' => "string", 'min_value' => "float", 'max_value' => "float"])]

@@ -25,7 +25,7 @@ class ProductResource extends JsonResource
         return [
             'slug' => $product->slug,
             'title' => $product->title,
-            'created_at' => ($product->created_at === null) ? null : $product->created_at->format('d M Y H:i:s'),
+            'created_at' => $product->created_at?->format('d M Y H:i:s'),
             /* @phpstan-ignore-next-line  */
             'price' => $this->when(isset($priceModel), fn (): string => $priceModel->price->render()),
             /* @phpstan-ignore-next-line  */

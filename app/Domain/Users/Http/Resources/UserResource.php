@@ -18,7 +18,7 @@ class UserResource extends JsonResource
             'name' => $user->name,
             'email' => $user->email,
             'phone' => $user->phone,
-            'created_at' => ($user->created_at === null) ? null : $user->created_at->format('d M Y H:i:s'),
+            'created_at' => $user->created_at?->format('d M Y H:i:s'),
         ];
     }
 }
