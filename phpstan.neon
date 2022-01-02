@@ -23,4 +23,4 @@ parameters:
 
     checkMissingIterableValueType: false
 
-    tmpDir: build/phpstan
+    tmpDir: storage/phpstan

@@ -31,7 +31,7 @@ jobs:
             -   name: Cache PHPStan analysis
                 uses: actions/cache@main
                 with:
-                    path: build/phpstan
+                    path: storage/phpstan
                     key: php-8.1-phpstan-${{ github.sha }}
                     restore-keys: php-8.1-phpstan-
 
