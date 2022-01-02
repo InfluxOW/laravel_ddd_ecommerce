@@ -63,6 +63,6 @@ class ProductPrice extends Model
 
     public static function getDatabasePriceExpression(): Expression
     {
-        return DB::raw('COALESCE(price_discounted, price)');
+        return DB::raw('COALESCE(product_prices.price_discounted, product_prices.price)');
     }
 }

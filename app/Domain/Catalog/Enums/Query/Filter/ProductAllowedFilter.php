@@ -9,4 +9,5 @@ enum ProductAllowedFilter: string
     case CATEGORY = 'category';
     case PRICE_BETWEEN = 'price_between';
     case ATTRIBUTE_VALUE = 'attribute';
+    case CURRENCY = 'currency';
 }

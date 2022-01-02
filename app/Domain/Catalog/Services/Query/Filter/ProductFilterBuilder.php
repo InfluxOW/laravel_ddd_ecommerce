@@ -9,6 +9,7 @@ use App\Domain\Generic\Query\Models\Filter\Filter;
 use App\Domain\Generic\Query\Models\Filter\InputFilter;
 use App\Domain\Generic\Query\Models\Filter\MultiselectFilter;
 use App\Domain\Generic\Query\Models\Filter\RangeFilter;
+use App\Domain\Generic\Query\Models\Filter\SelectFilter;
 use Spatie\QueryBuilder\QueryBuilder as SpatieQueryBuilder;
 
 class ProductFilterBuilder
@@ -28,6 +29,11 @@ class ProductFilterBuilder
     public function buildDescriptionFilter(): Filter
     {
         return new InputFilter(ProductAllowedFilter::DESCRIPTION, $this->namespace);
+    }
+
+    public function buildCurrencyFilter(SpatieQueryBuilder $productsQuery): Filter
+    {
+        return new SelectFilter(ProductAllowedFilter::CURRENCY, $this->namespace, $this->repository->getAvailableCurrencies($productsQuery));
     }
 
     public function buildPriceBetweenFilter(SpatieQueryBuilder $productsQuery, string $currency): Filter

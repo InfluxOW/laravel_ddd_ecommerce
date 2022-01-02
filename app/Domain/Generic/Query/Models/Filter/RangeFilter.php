@@ -43,13 +43,16 @@ class RangeFilter extends Filter
             [$selectedMaxValue, $selectedMinValue] = [$selectedMinValue, $selectedMaxValue];
         }
 
+        $minValue = ($this->minValue instanceof Money) ? $this->minValue->getValue() : $this->minValue;
+        $maxValue = ($this->maxValue instanceof Money) ? $this->maxValue->getValue() : $this->maxValue;
+
         $filter = clone($this);
         $filter->minValue = null;
         $filter->maxValue = null;
 
-        if (isset($this->minValue, $this->maxValue)) {
-            $filter->minValue = isset($selectedMinValue) ? MathUtils::clamp($selectedMinValue, $this->minValue, $this->maxValue) : $this->minValue;
-            $filter->maxValue = isset($selectedMaxValue) ? MathUtils::clamp($selectedMaxValue, $this->minValue, $this->maxValue) : $this->maxValue;
+        if (isset($minValue, $maxValue)) {
+            $filter->minValue = isset($selectedMinValue) ? MathUtils::clamp($selectedMinValue, $minValue, $maxValue) : $minValue;
+            $filter->maxValue = isset($selectedMaxValue) ? MathUtils::clamp($selectedMaxValue, $minValue, $maxValue) : $maxValue;
         }
 
         return $filter;

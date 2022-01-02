@@ -5,7 +5,7 @@ namespace App\Domain\Catalog\Models\Generic;
 use App\Domain\Catalog\Providers\DomainServiceProvider;
 use Spatie\LaravelSettings\Settings;
 
-class ProductsSettings extends Settings
+class CatalogSettings extends Settings
 {
     public string $default_currency;
     public array $available_currencies;

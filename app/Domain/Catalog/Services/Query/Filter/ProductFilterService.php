@@ -11,13 +11,21 @@ use Spatie\QueryBuilder\QueryBuilder as SpatieQueryBuilder;
 
 class ProductFilterService implements QueryService
 {
-    private SpatieQueryBuilder $productsQuery;
+    protected SpatieQueryBuilder $productsQuery;
+    protected string $currency;
 
     public function __construct(private ProductFilterBuilder $filterBuilder)
     {
     }
 
-    public function setProductsQuery(SpatieQueryBuilder $productsQuery): self
+    public function setCurrency(string $currency): static
+    {
+        $this->currency = $currency;
+
+        return $this;
+    }
+
+    public function setProductsQuery(SpatieQueryBuilder $productsQuery): static
     {
         $this->productsQuery = $productsQuery;
 
@@ -29,7 +37,8 @@ class ProductFilterService implements QueryService
         return collect([
             $this->filterBuilder->buildTitleFilter(),
             $this->filterBuilder->buildDescriptionFilter(),
-            $this->filterBuilder->buildPriceBetweenFilter($this->productsQuery),
+            $this->filterBuilder->buildCurrencyFilter($this->productsQuery),
+            $this->filterBuilder->buildPriceBetweenFilter($this->productsQuery, $this->currency),
             $this->filterBuilder->buildCategoryFilter($this->productsQuery),
             $this->filterBuilder->buildAttributeValuesFilter($this->productsQuery),
         ]);

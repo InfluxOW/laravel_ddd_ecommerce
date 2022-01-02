@@ -1,6 +1,6 @@
 <?php
 
-use App\Domain\Catalog\Models\Generic\ProductsSettings;
+use App\Domain\Catalog\Models\Generic\CatalogSettings;
 
 return [
 
@@ -9,7 +9,7 @@ return [
      * put them (manually) here.
      */
     'settings' => [
-        ProductsSettings::class,
+        CatalogSettings::class,
     ],
 
     /*
@@ -18,7 +18,7 @@ return [
      * a custom defined path when running the command.
      */
     'migrations_paths' => [
-        app()->path('Domain/Products/Database/Settings'),
+        app()->path('Domain/Catalog/Database/Settings'),
     ],
 
     /*

@@ -30,16 +30,17 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \App\Domain\Catalog\Database\Factories\ProductFactory factory(...$parameters)
  * @method static Builder|Product newModelQuery()
  * @method static Builder|Product newQuery()
- * @method static Builder|Product orderByCurrentPrice(bool $descending)
+ * @method static Builder|Product orderByCurrentPrice(string $currency, bool $descending)
  * @method static Builder|Product query()
  * @method static Builder|Product whereCreatedAt($value)
  * @method static Builder|Product whereDescription($value)
  * @method static Builder|Product whereHasAttributeValue(array $attributesValuesByAttributeSlug)
+ * @method static Builder|Product whereHasPriceCurrency(string $currency)
  * @method static Builder|Product whereId($value)
  * @method static Builder|Product whereInCategory(\Illuminate\Support\Collection $categories)
- * @method static Builder|Product wherePriceAbove(int $minPrice)
- * @method static Builder|Product wherePriceBelow(int $maxPrice)
- * @method static Builder|Product wherePriceBetween(?int $minPrice, ?int $maxPrice)
+ * @method static Builder|Product wherePriceAbove(string $currency, int $minPrice)
+ * @method static Builder|Product wherePriceBelow(string $currency, int $maxPrice)
+ * @method static Builder|Product wherePriceBetween(string $currency, ?int $minPrice, ?int $maxPrice)
  * @method static Builder|Product whereSlug($value)
  * @method static Builder|Product whereTitle($value)
  * @method static Builder|Product whereUpdatedAt($value)
@@ -126,29 +127,37 @@ class Product extends Model
         }
     }
 
-    public function scopeWherePriceAbove(Builder $query, int $minPrice): void
+    public function scopeWhereHasPriceCurrency(Builder $query, string $currency): void
     {
-        $query->where(self::getDatabasePriceExpression(), '>=', $minPrice);
+        $query->whereHas('prices', fn (Builder $query): Builder => $query->where('currency', $currency));
     }
 
-    public function scopeWherePriceBelow(Builder $query, int $maxPrice): void
+    public function scopeWherePriceAbove(Builder $query, string $currency, int $minPrice): void
     {
-        $query->where(self::getDatabasePriceExpression(), '<=', $maxPrice);
+        $query->whereHas('prices', fn (Builder $query): Builder => $query->where('currency', $currency)->where(ProductPrice::getDatabasePriceExpression(), '>=', $minPrice));
     }
 
-    public function scopeWherePriceBetween(Builder|Product $query, ?int $minPrice, ?int $maxPrice): void
+    public function scopeWherePriceBelow(Builder $query, string $currency, int $maxPrice): void
+    {
+        $query->whereHas('prices', fn (Builder $query): Builder => $query->where('currency', $currency)->where(ProductPrice::getDatabasePriceExpression(), '<=', $maxPrice));
+    }
+
+    public function scopeWherePriceBetween(Builder|Product $query, string $currency, ?int $minPrice, ?int $maxPrice): void
     {
         if (isset($minPrice, $maxPrice)) {
-            $query->whereBetween(self::getDatabasePriceExpression(), $minPrice > $maxPrice ? [$maxPrice, $minPrice] : [$minPrice, $maxPrice]);
+            $query->whereHas('prices', fn (Builder $query): Builder => $query->where('currency', $currency)->whereBetween(ProductPrice::getDatabasePriceExpression(), $minPrice > $maxPrice ? [$maxPrice, $minPrice] : [$minPrice, $maxPrice]));
         } elseif (isset($minPrice)) {
-            $query->wherePriceAbove($minPrice);
+            $query->wherePriceAbove($currency, $minPrice);
         } elseif (isset($maxPrice)) {
-            $query->wherePriceBelow($maxPrice);
+            $query->wherePriceBelow($currency, $maxPrice);
         }
     }
 
-    public function scopeOrderByCurrentPrice(Builder $query, bool $descending): void
+    public function scopeOrderByCurrentPrice(Builder $query, string $currency, bool $descending): void
     {
-        $query->orderBy(self::getDatabasePriceExpression(), $descending ? 'DESC' : 'ASC');
+        $query
+            ->join('product_prices', 'product_prices.product_id', '=', 'products.id')
+            ->where('product_prices.currency', $currency)
+            ->orderBy(ProductPrice::getDatabasePriceExpression(), $descending ? 'DESC' : 'ASC');
     }
 }

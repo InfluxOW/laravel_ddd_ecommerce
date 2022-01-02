@@ -6,6 +6,7 @@ use App\Application\Tests\TestCase;
 use App\Domain\Catalog\Database\Seeders\ProductAttributeSeeder;
 use App\Domain\Catalog\Database\Seeders\ProductAttributeValueSeeder;
 use App\Domain\Catalog\Database\Seeders\ProductCategorySeeder;
+use App\Domain\Catalog\Database\Seeders\ProductPriceSeeder;
 use App\Domain\Catalog\Database\Seeders\ProductSeeder;
 use App\Domain\Catalog\Enums\Query\Filter\ProductAllowedFilter;
 use App\Domain\Catalog\Models\Product;
@@ -34,6 +35,7 @@ class ProductControllerTest extends TestCase
             ProductAttributeSeeder::class,
             ProductSeeder::class,
             ProductAttributeValueSeeder::class,
+            ProductPriceSeeder::class,
         ]);
     }
 

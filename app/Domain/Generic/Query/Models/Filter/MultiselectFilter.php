@@ -14,7 +14,7 @@ class MultiselectFilter extends Filter
 {
     public static QueryFilterType $type = QueryFilterType::MULTISELECT;
 
-    public function __construct(
+    protected function __construct(
         BackedEnum $filter,
         TranslationNamespace $namespace,
         public readonly bool $isNested,

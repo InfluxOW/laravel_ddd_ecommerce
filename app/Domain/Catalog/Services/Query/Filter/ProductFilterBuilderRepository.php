@@ -2,6 +2,7 @@
 
 namespace App\Domain\Catalog\Services\Query\Filter;
 
+use App\Domain\Catalog\Models\Generic\CatalogSettings;
 use App\Domain\Catalog\Models\ProductAttribute;
 use App\Domain\Catalog\Models\ProductAttributeValue;
 use App\Domain\Catalog\Models\ProductCategory;
@@ -15,10 +16,14 @@ use Spatie\QueryBuilder\QueryBuilder as SpatieQueryBuilder;
 
 class ProductFilterBuilderRepository
 {
+    public function __construct(private readonly CatalogSettings $settings)
+    {
+    }
+
     public function getAttributeValues(SpatieQueryBuilder $productsQuery): Collection
     {
         $attributeValuesQuery = DB::table('product_attribute_values')
-            ->whereIn('product_id', $productsQuery->getQuery()->select(['id']))
+            ->whereIn('product_id', $productsQuery->getQuery()->select(['products.id']))
             ->join('product_attributes', 'product_attributes.id', 'product_attribute_values.attribute_id')
             ->select(['product_attribute_values.attribute_id', 'product_attribute_values.value_boolean', 'product_attribute_values.value_float', 'product_attribute_values.value_integer', 'product_attribute_values.value_string'])
             ->distinct(['product_attribute_values.attribute_id', 'product_attribute_values.value_boolean', 'product_attribute_values.value_float', 'product_attribute_values.value_integer', 'product_attribute_values.value_string']);
@@ -48,7 +53,7 @@ class ProductFilterBuilderRepository
         $childCategories = ProductCategory::query()
             ->hasLimitedDepth()
             ->select(['slug', 'title', 'parent_id', 'id'])
-            ->whereHas('products', static fn (Builder $query): Builder => $query->whereIn('products.id', $productsQuery->getQuery()->select(['id'])))
+            ->whereHas('products', static fn (Builder $query): Builder => $query->whereIn('products.id', $productsQuery->getQuery()->select(['products.id'])))
             ->get();
 
         $categories = $childCategories->pluck('slug', 'title');
@@ -74,7 +79,7 @@ class ProductFilterBuilderRepository
     public function getMinPrice(SpatieQueryBuilder $productsQuery, string $currency): ?int
     {
         return DB::table('product_prices')
-            ->whereIn('product_id', $productsQuery->getQuery()->select(['id']))
+            ->whereIn('product_id', $productsQuery->getQuery()->select(['products.id']))
             ->where('currency', $currency)
             ->min(ProductPrice::getDatabasePriceExpression());
     }
@@ -82,8 +87,20 @@ class ProductFilterBuilderRepository
     public function getMaxPrice(SpatieQueryBuilder $productsQuery, string $currency): ?int
     {
         return DB::table('product_prices')
-            ->whereIn('product_id', $productsQuery->getQuery()->select(['id']))
+            ->whereIn('product_id', $productsQuery->getQuery()->select(['products.id']))
             ->where('currency', $currency)
             ->max(ProductPrice::getDatabasePriceExpression());
+    }
+
+    public function getAvailableCurrencies(SpatieQueryBuilder $productsQuery): Collection
+    {
+        return DB::table('product_prices')
+            ->select(['currency'])
+            ->whereIn('product_id', $productsQuery->getQuery()->select(['products.id']))
+            ->whereIn('currency', $this->settings->available_currencies)
+            ->distinct('currency')
+            ->pluck('currency')
+            ->reduce(fn (Collection $acc, string $currency): Collection => tap($acc, static fn () => $acc->offsetSet(currency($currency)->getName(), $currency)), collect([]))
+            ->sort();
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Domain\Catalog\Database\Seeders;
 
-use App\Domain\Catalog\Models\Generic\ProductsSettings;
+use App\Domain\Catalog\Models\Generic\CatalogSettings;
 use App\Domain\Catalog\Models\Product;
 use App\Domain\Catalog\Models\ProductPrice;
 use Illuminate\Database\Seeder;
@@ -14,7 +14,7 @@ class ProductPriceSeeder extends Seeder
      *
      * @return void
      */
-    public function run(ProductsSettings $settings)
+    public function run(CatalogSettings $settings)
     {
         $settings->available_currencies = app()->runningUnitTests() ? ['USD', 'RUB'] : ['USD', 'RUB', 'EUR', 'GBP'];
         $settings->save();
