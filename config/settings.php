@@ -1,6 +1,6 @@
 <?php
 
-use App\Domain\Products\Models\Generic\ProductsSettings;
+use App\Domain\Catalog\Models\Generic\ProductsSettings;
 
 return [
 

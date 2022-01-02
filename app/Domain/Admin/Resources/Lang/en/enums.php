@@ -6,7 +6,8 @@ use App\Domain\Admin\Enums\Translation\Components\Cards\AdminTimestampsCardTrans
 
 return [
     AdminNavigationGroupTranslationKey::class => [
-        AdminNavigationGroupTranslationKey::SHOP->name => 'Shop',
+        AdminNavigationGroupTranslationKey::GENERIC->name => 'Generic',
+        AdminNavigationGroupTranslationKey::CATALOG->name => 'Catalog',
         AdminNavigationGroupTranslationKey::SETTINGS->name => 'Settings',
     ],
     AdminTimestampsCardTranslationKey::class => [

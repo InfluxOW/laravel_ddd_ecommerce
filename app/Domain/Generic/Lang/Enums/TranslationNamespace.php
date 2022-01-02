@@ -6,7 +6,7 @@ enum TranslationNamespace: string
 {
     case DEFAULT = 'app';
     case ADMIN = 'admin';
-    case PRODUCTS = 'products';
+    case CATALOG = 'products';
     case USERS = 'users';
     case ADDRESS = 'address';
 }
