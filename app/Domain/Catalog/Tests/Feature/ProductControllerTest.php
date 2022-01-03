@@ -125,6 +125,8 @@ class ProductControllerTest extends TestCase
         $this->assertNotNull($priceModel);
 
         $basePrice = ($priceModel->price_discounted === null) ? $priceModel->price->getValue() : $priceModel->price_discounted->getValue();
+        $lowestAvailablePrice = money(ProductPrice::query()->where('currency', $currency)->min(ProductPrice::getDatabasePriceExpression()), $currency)->getValue();
+        $highestAvailablePrice = money(ProductPrice::query()->where('currency', $currency)->max(ProductPrice::getDatabasePriceExpression()), $currency)->getValue();
 
         $queries = [
             [max($basePrice - 10, 0.01), $basePrice + 10],
@@ -163,8 +165,8 @@ class ProductControllerTest extends TestCase
             $this->assertTrue($appliedFilters->pluck('query')->contains(ProductAllowedFilter::PRICE_BETWEEN->value));
 
             $priceBetweenFilter = $appliedFilters->filter(fn (array $filter): bool => $filter['query'] === ProductAllowedFilter::PRICE_BETWEEN->value)->first();
-            $this->assertEquals($minPrice ?? money(ProductPrice::query()->where('currency', $currency)->min(ProductPrice::getDatabasePriceExpression()), $currency)->getValue(), $priceBetweenFilter['min_value']);
-            $this->assertEquals($maxPrice ?? money(ProductPrice::query()->where('currency', $currency)->max(ProductPrice::getDatabasePriceExpression()), $currency)->getValue(), $priceBetweenFilter['max_value']);
+            $this->assertEquals(isset($minPrice) ? max($minPrice, $lowestAvailablePrice) : $lowestAvailablePrice, $priceBetweenFilter['min_value']);
+            $this->assertEquals(isset($maxPrice) ? min($maxPrice, $highestAvailablePrice) : $highestAvailablePrice, $priceBetweenFilter['max_value']);
         }
     }
 
