@@ -17,6 +17,7 @@ class LightProductCategoryResource extends JsonResource
         return [
             'slug' => $category->slug,
             'title' => $category->title,
+            'description' => $category->description,
         ];
     }
 }

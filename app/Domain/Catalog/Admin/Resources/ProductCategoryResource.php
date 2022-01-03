@@ -12,6 +12,7 @@ use App\Domain\Generic\Lang\Enums\TranslationNamespace;
 use Filament\Forms\Components\BelongsToSelect;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Tabs;
 use Filament\Forms\Components\TextInput;
@@ -51,7 +52,7 @@ class ProductCategoryResource extends Resource
 
     public static function getGlobalSearchResultUrl(Model $record): string
     {
-        return route('filament.resources.product-categories.view', ['record' => $record]);
+        return route(sprintf('filament.resources.%s.view', static::$slug), ['record' => $record]);
     }
 
     /*
@@ -112,6 +113,11 @@ class ProductCategoryResource extends Resource
                 ->minValue(2)
                 ->maxLength(255)
                 ->placeholder('electronics'),
+            MarkdownEditor::make(ProductCategoryResourceTranslationKey::DESCRIPTION->value)
+                ->disableToolbarButtons([
+                    'attachFiles',
+                ])
+                ->columnSpan(2),
             BelongsToSelect::make(ProductCategoryResourceTranslationKey::PARENT_ID->value)
                 ->relationship('parent', 'title')
                 ->options(function (?Model $record, Page|RelationManager $livewire): array {

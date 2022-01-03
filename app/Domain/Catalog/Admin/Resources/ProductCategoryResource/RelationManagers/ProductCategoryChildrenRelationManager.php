@@ -36,7 +36,7 @@ class ProductCategoryChildrenRelationManager extends HasManyRelationManager
     {
         return $table
             ->prependActions([
-                ViewAction::create()->url(fn (ProductCategory $record): string => route('filament.resources.product-categories.view', $record)),
+                ViewAction::create()->url(fn (ProductCategory $record): string => route('filament.resources.catalog/categories.view', $record)),
             ])
             ->pushActions([
                 LinkAction::make(' | '),

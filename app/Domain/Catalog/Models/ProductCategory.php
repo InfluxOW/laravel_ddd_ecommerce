@@ -18,6 +18,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $id
  * @property string $title
  * @property string $slug
+ * @property string|null $description
  * @property int|null $parent_id
  * @property int $left
  * @property int $right
@@ -41,6 +42,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|ProductCategory query()
  * @method static Builder|ProductCategory whereCreatedAt($value)
  * @method static Builder|ProductCategory whereDepth($value)
+ * @method static Builder|ProductCategory whereDescription($value)
  * @method static Builder|ProductCategory whereId($value)
  * @method static Builder|ProductCategory whereLeft($value)
  * @method static Builder|ProductCategory whereParentId($value)

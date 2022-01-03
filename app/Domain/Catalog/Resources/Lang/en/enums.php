@@ -29,6 +29,7 @@ return [
         ProductCategoryResourceTranslationKey::PATH->name => 'Breadcrumbs',
         ProductCategoryResourceTranslationKey::TITLE->name => 'Title',
         ProductCategoryResourceTranslationKey::SLUG->name => 'Slug',
+        ProductCategoryResourceTranslationKey::DESCRIPTION->name => 'Description',
         ProductCategoryResourceTranslationKey::PARENT_ID->name => 'Parent',
         ProductCategoryResourceTranslationKey::PARENT_TITLE->name => 'Parent',
         ProductCategoryResourceTranslationKey::LEFT->name => 'Position',
