@@ -91,7 +91,8 @@ class ProductControllerTest extends TestCase
     /** @test */
     public function a_user_can_filter_products_by_category(): void
     {
-        $deepestCategory = ProductCategory::query()->hasLimitedDepth()->whereHas('products')->where('depth', ProductCategory::MAX_DEPTH)->first();
+        ProductCategory::query()->update(['is_visible' => true]);
+        $deepestCategory = ProductCategory::query()->visible()->hasLimitedDepth()->whereHas('products')->where('depth', ProductCategory::MAX_DEPTH)->first();
         $this->assertNotNull($deepestCategory);
 
         $product = $deepestCategory?->products->first();
@@ -171,8 +172,9 @@ class ProductControllerTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_view_specific_product(): void
+    public function a_user_can_view_specific_product_if_it_has_at_least_one_visible_category(): void
     {
+        ProductCategory::query()->update(['is_visible' => true]);
         $this->get(route('products.show', [$this->product, QueryKey::FILTER->value => [ProductAllowedFilter::CURRENCY->value => Arr::first($this->settings->available_currencies)]]))->assertOk();
     }
 
@@ -180,5 +182,44 @@ class ProductControllerTest extends TestCase
     public function a_user_cannot_view_nonexistent_product(): void
     {
         $this->get(route('products.show', ['wrong_product', QueryKey::FILTER->value => [ProductAllowedFilter::CURRENCY->value => Arr::first($this->settings->available_currencies)]]))->assertNotFound();
+    }
+
+    /** @test */
+    public function a_user_cannot_view_specific_product_if_it_doesnt_have_at_least_one_visible_category(): void
+    {
+        $setVisibility = static function (ProductCategory $category, bool $isVisible): void {
+            $category->is_visible = $isVisible;
+            $category->save();
+        };
+
+        $setProductCategory = static function (Product $product, ProductCategory $category): void {
+            $product->categories()->sync([$category->id]);
+        };
+
+        /** @var ProductCategory $rootCategory */
+        $rootCategory = ProductCategory::query()->where('depth', 0)->first();
+        $this->assertNotNull($rootCategory);
+
+        /** @var ProductCategory $firstLevelCategory */
+        $firstLevelCategory = ProductCategory::query()->where('depth', 1)->first();
+        $this->assertNotNull($firstLevelCategory);
+
+        $firstLevelCategory->parent()->associate($rootCategory);
+        $firstLevelCategory->save();
+
+        $setVisibility($rootCategory, false);
+        $setVisibility($firstLevelCategory, false);
+
+        $setProductCategory($this->product, $firstLevelCategory);
+
+        $this->get(route('products.show', [$this->product, QueryKey::FILTER->value => [ProductAllowedFilter::CURRENCY->value => Arr::first($this->settings->available_currencies)]]))->assertNotFound();
+
+        $setVisibility($firstLevelCategory, true);
+
+        $this->get(route('products.show', [$this->product, QueryKey::FILTER->value => [ProductAllowedFilter::CURRENCY->value => Arr::first($this->settings->available_currencies)]]))->assertNotFound();
+
+        $setVisibility($rootCategory, true);
+
+        $this->get(route('products.show', [$this->product, QueryKey::FILTER->value => [ProductAllowedFilter::CURRENCY->value => Arr::first($this->settings->available_currencies)]]))->assertOk();
     }
 }

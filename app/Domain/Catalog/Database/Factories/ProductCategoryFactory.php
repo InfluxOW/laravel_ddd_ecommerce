@@ -14,6 +14,7 @@ class ProductCategoryFactory extends Factory
         return [
             'title' => $this->faker->unique()->words(3, true),
             'description' => $this->faker->realText(300),
+            'is_visible' => $this->faker->boolean(75),
             'created_at' => $this->faker->dateTimeBetween('-1 year'),
         ];
     }

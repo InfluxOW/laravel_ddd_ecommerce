@@ -35,4 +35,15 @@ class ProductCategoryTest extends TestCase
         $newCategory = $category->children()->create(['title' => 'test']);
         $this->assertFalse($newCategory->exists);
     }
+
+    /** @test */
+    public function product_categories_hierarchy_can_be_filtered_and_mapped(): void
+    {
+        ProductCategory::loadLightHierarchy();
+
+        $hierarchy = ProductCategory::filterHierarchy(static fn (ProductCategory $category): bool => $category->is_visible, ProductCategory::$hierarchy);
+        $hierarchy = ProductCategory::mapHierarchy(static fn (ProductCategory $category): bool => $category->is_visible, $hierarchy);
+
+        $this->assertTrue($hierarchy->every(fn (bool $isVisible): bool => $isVisible));
+    }
 }

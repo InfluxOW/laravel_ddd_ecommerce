@@ -17,6 +17,7 @@ use App\Domain\Generic\Query\Models\Sort\Sort;
 use App\Domain\Generic\Response\Enums\ResponseKey;
 use App\Interfaces\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -45,13 +46,13 @@ class ProductController extends Controller
         $appliedSort = $sortService->getApplied($request) ?? $defaultSort;
         $sortQueryServiceResource = new QueryServiceResource(QueryKey::SORT, false, [$appliedSort->toArray()], $allowedSorts->map->toArray()->toArray());
 
-        $productsQueryBase = QueryBuilder::for(Product::query()->select(['products.*'])->with(['categories', 'attributeValues.attribute', 'prices' => fn (HasMany $query): HasMany => $query->where('currency', $currency)]));
+        $productsQueryBase = QueryBuilder::for(Product::query()->whereHas('categories', fn (Builder|ProductCategory $query): Builder => $query->visible())->select(['products.*'])->with(['categories' => fn (BelongsToMany|ProductCategory $query): BelongsToMany => $query->visible(), 'attributeValues.attribute', 'prices' => fn (HasMany $query): HasMany => $query->where('currency', $currency)]));
         $productsQuery = $productsQueryBase->clone()
             ->allowedFilters([
                 ProductAllowedFilter::TITLE->value,
                 ProductAllowedFilter::DESCRIPTION->value,
                 AllowedFilter::callback(ProductAllowedFilter::CURRENCY->value, static fn (Builder|Product $query): Builder => $query->whereHasPriceCurrency($currency)),
-                AllowedFilter::callback(ProductAllowedFilter::CATEGORY->value, static fn (Builder|Product $query): Builder => $query->whereInCategory(ProductCategory::query()->hasLimitedDepth()->whereIn('slug', $validated[QueryKey::FILTER->value][ProductAllowedFilter::CATEGORY->value])->get())),
+                AllowedFilter::callback(ProductAllowedFilter::CATEGORY->value, static fn (Builder|Product $query): Builder => $query->whereInCategory(ProductCategory::query()->visible()->hasLimitedDepth()->whereIn('slug', $validated[QueryKey::FILTER->value][ProductAllowedFilter::CATEGORY->value])->get())),
                 AllowedFilter::callback(ProductAllowedFilter::PRICE_BETWEEN->value, static fn (Builder|Product $query): Builder => $query->wherePriceBetween($currency, ...$validated[QueryKey::FILTER->value][ProductAllowedFilter::PRICE_BETWEEN->value])),
                 AllowedFilter::callback(ProductAllowedFilter::ATTRIBUTE_VALUE->value, static fn (Builder|Product $query): Builder => $query->whereHasAttributeValue($validated[QueryKey::FILTER->value][ProductAllowedFilter::ATTRIBUTE_VALUE->value])),
             ])
@@ -82,7 +83,7 @@ class ProductController extends Controller
     {
         $validated = $request->validated();
 
-        $product = Product::query()->with(['categories', 'attributeValues.attribute', 'prices' => fn (HasMany $query): HasMany => $query->where('currency', $validated[QueryKey::FILTER->value][ProductAllowedFilter::CURRENCY->value])])->where('slug', $slug)->first();
+        $product = Product::query()->whereHas('categories', fn (Builder|ProductCategory $query): Builder => $query->visible())->with(['categories' => fn (BelongsToMany|ProductCategory $query): BelongsToMany => $query->visible(), 'attributeValues.attribute', 'prices' => fn (HasMany $query): HasMany => $query->where('currency', $validated[QueryKey::FILTER->value][ProductAllowedFilter::CURRENCY->value])])->where('slug', $slug)->first();
 
         if ($product === null) {
             return $this->respondWithMessage("Product '{$slug}' was not found.", Response::HTTP_NOT_FOUND);

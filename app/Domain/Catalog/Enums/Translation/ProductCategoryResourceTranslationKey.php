@@ -14,6 +14,7 @@ enum ProductCategoryResourceTranslationKey: string
     case PARENT_ID = 'parent_id';
     case PARENT_TITLE = 'parent.title';
     case LEFT = 'left';
+    case IS_VISIBLE = 'is_visible';
 
     case DEPTH = 'depth';
 }

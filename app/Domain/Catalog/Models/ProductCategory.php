@@ -4,6 +4,7 @@ namespace App\Domain\Catalog\Models;
 
 use App\Domain\Catalog\Database\Factories\ProductCategoryFactory;
 use Baum\NestedSet\Node;
+use Closure;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -19,6 +20,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $title
  * @property string $slug
  * @property string|null $description
+ * @property bool $is_visible
  * @property int|null $parent_id
  * @property int $left
  * @property int $right
@@ -40,10 +42,12 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|ProductCategory newModelQuery()
  * @method static Builder|ProductCategory newQuery()
  * @method static Builder|ProductCategory query()
+ * @method static Builder|ProductCategory visible()
  * @method static Builder|ProductCategory whereCreatedAt($value)
  * @method static Builder|ProductCategory whereDepth($value)
  * @method static Builder|ProductCategory whereDescription($value)
  * @method static Builder|ProductCategory whereId($value)
+ * @method static Builder|ProductCategory whereIsVisible($value)
  * @method static Builder|ProductCategory whereLeft($value)
  * @method static Builder|ProductCategory whereParentId($value)
  * @method static Builder|ProductCategory whereRight($value)
@@ -65,8 +69,10 @@ class ProductCategory extends Model
 
     protected string $orderColumnName = 'title';
     protected $fillable = [
-        'title',
         'slug',
+        'title',
+        'description',
+        'is_visible',
     ];
 
     public static Collection $hierarchy;
@@ -93,7 +99,7 @@ class ProductCategory extends Model
 
     public function getOverallProductsCountAttribute(): int
     {
-        return Product::query()->whereInCategory(collect([$this]))->count();
+        return self::mapHierarchy(static fn (ProductCategory $category): ?int => $category->products_count, collect([self::findInHierarchy($this->id)]))->sum();
     }
 
     public function getPathAttribute(): string
@@ -120,7 +126,7 @@ class ProductCategory extends Model
 
     public static function loadLightHierarchy(): void
     {
-        self::$hierarchy = self::$hierarchy ?? self::query()->hasLimitedDepth()->select(['id', 'parent_id', 'title', 'slug'])->get()->toHierarchy();
+        self::$hierarchy = self::$hierarchy ?? self::query()->hasLimitedDepth()->select(['id', 'parent_id', 'title', 'slug', 'is_visible'])->get()->toHierarchy();
     }
 
     public static function loadHeavyHierarchy(): void
@@ -142,6 +148,26 @@ class ProductCategory extends Model
         return $category;
     }
 
+    public static function filterHierarchy(Closure $filter, Collection $hierarchy): Collection
+    {
+        return $hierarchy->filter(function (self $item) use ($filter): bool {
+            if ($filter($item)) {
+                $item->setRelation('children', self::filterHierarchy($filter, $item->children));
+
+                return true;
+            }
+
+            return false;
+        });
+    }
+
+    public static function mapHierarchy(Closure $map, Collection $hierarchy): Collection
+    {
+        return $hierarchy
+            ->map(fn (self $item): Collection => collect($map($item))->merge(self::mapHierarchy($map, $item->children)))
+            ->flatten();
+    }
+
     /*
      * Scopes
      * */
@@ -149,5 +175,10 @@ class ProductCategory extends Model
     public function scopeHasLimitedDepth(Builder|Model $query): void
     {
         $query->limitDepth(self::MAX_DEPTH);
+    }
+
+    public function scopeVisible(Builder $query): void
+    {
+        $query->where('is_visible', true);
     }
 }

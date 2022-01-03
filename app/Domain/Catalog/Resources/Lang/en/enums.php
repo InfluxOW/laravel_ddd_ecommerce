@@ -33,6 +33,7 @@ return [
         ProductCategoryResourceTranslationKey::PARENT_ID->name => 'Parent',
         ProductCategoryResourceTranslationKey::PARENT_TITLE->name => 'Parent',
         ProductCategoryResourceTranslationKey::LEFT->name => 'Position',
+        ProductCategoryResourceTranslationKey::IS_VISIBLE->name => 'Is Visible',
 
         ProductCategoryResourceTranslationKey::DEPTH->name => 'Depth',
     ],

@@ -19,6 +19,7 @@ class CreateProductCategoriesTable extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->string('description', 3000)->nullable();
+            $table->boolean('is_visible');
             $table->foreignIdFor(ProductCategory::class, 'parent_id')->nullable()->constrained($table->getTable());
             $table->unsignedInteger('left');
             $table->unsignedInteger('right');

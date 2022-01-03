@@ -16,6 +16,7 @@ use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Tabs;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Pages\Page;
 use Filament\Resources\Form;
 use Filament\Resources\Pages\CreateRecord;
@@ -101,6 +102,8 @@ class ProductCategoryResource extends Resource
     public static function getCreationFormSchema(): array
     {
         return self::setTranslatableLabels([
+            Toggle::make(ProductCategoryResourceTranslationKey::IS_VISIBLE->value)
+                ->columnSpan(2),
             TextInput::make(ProductCategoryResourceTranslationKey::TITLE->value)
                 ->required()
                 ->reactive()
