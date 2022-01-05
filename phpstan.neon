@@ -15,11 +15,9 @@ parameters:
         - app/Domain/Generic/Currency/Casts/MoneyCast.php
 
     ignoreErrors:
-        - '#Call to an undefined method App\\Domain\\Products\\Models\\Product|Illuminate\\Database\\Eloquent\\Builder::orderByCurrentPrice\(\)#'
         - '#Attribute class JetBrains\\PhpStorm\\ArrayShape does not exist#'
         - '#Access to an undefined property Squire\\Models#'
         - '#Access to an undefined property Illuminate\\Database\\Eloquent\\Model::\$id#'
-        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder|Illuminate\\Database\\Eloquent\\Model::limitDepth\(\).#'
 
     checkMissingIterableValueType: false
 

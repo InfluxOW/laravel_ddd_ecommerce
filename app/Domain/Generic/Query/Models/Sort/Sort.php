@@ -16,7 +16,7 @@ class Sort extends Query
 
     public static function createAsc(BackedEnum $sort, TranslationNamespace $namespace): self
     {
-        return new self($sort->value, LangUtils::translateEnum($namespace, $sort));
+        return new self((string) $sort->value, LangUtils::translateEnum($namespace, $sort));
     }
 
     public static function createDesc(BackedEnum $sort, TranslationNamespace $namespace): self

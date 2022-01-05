@@ -15,7 +15,7 @@ abstract class Filter extends Query
 
     public function __construct(BackedEnum $filter, TranslationNamespace $namespace)
     {
-        $this->query = $filter->value;
+        $this->query = (string) $filter->value;
         $this->title = LangUtils::translateEnum($namespace, $filter);
     }
 

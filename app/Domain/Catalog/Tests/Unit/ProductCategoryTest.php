@@ -28,7 +28,7 @@ class ProductCategoryTest extends TestCase
         $category->save();
         $this->assertNotEquals($category->refresh()->depth, $depth);
 
-        $newCategory = ProductCategory::create(['title' => 'test']);
+        $newCategory = ProductCategory::create(['title' => 'test', 'is_visible' => true]);
         $newCategory->parent()->associate($category);
         $this->assertNull($newCategory->refresh()->parent_id);
 

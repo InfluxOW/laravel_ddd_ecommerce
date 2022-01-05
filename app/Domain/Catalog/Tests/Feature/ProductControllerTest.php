@@ -42,6 +42,8 @@ class ProductControllerTest extends TestCase
             ProductAttributeValueSeeder::class,
             ProductPriceSeeder::class,
         ]);
+
+        ProductCategory::query()->update(['is_visible' => true]);
     }
 
     /** @test */
@@ -91,7 +93,6 @@ class ProductControllerTest extends TestCase
     /** @test */
     public function a_user_can_filter_products_by_category(): void
     {
-        ProductCategory::query()->update(['is_visible' => true]);
         $deepestCategory = ProductCategory::query()->visible()->hasLimitedDepth()->whereHas('products')->where('depth', ProductCategory::MAX_DEPTH)->first();
         $this->assertNotNull($deepestCategory);
 
@@ -174,7 +175,6 @@ class ProductControllerTest extends TestCase
     /** @test */
     public function a_user_can_view_specific_product_if_it_has_at_least_one_visible_category(): void
     {
-        ProductCategory::query()->update(['is_visible' => true]);
         $this->get(route('products.show', [$this->product, QueryKey::FILTER->value => [ProductAllowedFilter::CURRENCY->value => Arr::first($this->settings->available_currencies)]]))->assertOk();
     }
 
@@ -213,13 +213,16 @@ class ProductControllerTest extends TestCase
         $setProductCategory($this->product, $firstLevelCategory);
 
         $this->get(route('products.show', [$this->product, QueryKey::FILTER->value => [ProductAllowedFilter::CURRENCY->value => Arr::first($this->settings->available_currencies)]]))->assertNotFound();
+        $this->assertFalse(ProductCategory::query()->where('product_categories.id', $firstLevelCategory->id)->visible()->exists());
 
         $setVisibility($firstLevelCategory, true);
 
         $this->get(route('products.show', [$this->product, QueryKey::FILTER->value => [ProductAllowedFilter::CURRENCY->value => Arr::first($this->settings->available_currencies)]]))->assertNotFound();
+        $this->assertFalse(ProductCategory::query()->where('product_categories.id', $firstLevelCategory->id)->visible()->exists());
 
         $setVisibility($rootCategory, true);
 
         $this->get(route('products.show', [$this->product, QueryKey::FILTER->value => [ProductAllowedFilter::CURRENCY->value => Arr::first($this->settings->available_currencies)]]))->assertOk();
+        $this->assertTrue(ProductCategory::query()->where('product_categories.id', $firstLevelCategory->id)->visible()->exists());
     }
 }

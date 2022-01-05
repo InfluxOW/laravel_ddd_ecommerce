@@ -35,6 +35,8 @@ class ProductController extends Controller
 
     public function index(ProductIndexRequest $request, ProductFilterService $filterService, ProductSortService $sortService): AnonymousResourceCollection
     {
+        ProductCategory::loadLightHierarchy();
+
         $validated = $request->validated();
 
         $currency = $validated[QueryKey::FILTER->value][ProductAllowedFilter::CURRENCY->value];
@@ -46,7 +48,7 @@ class ProductController extends Controller
         $appliedSort = $sortService->getApplied($request) ?? $defaultSort;
         $sortQueryServiceResource = new QueryServiceResource(QueryKey::SORT, false, [$appliedSort->toArray()], $allowedSorts->map->toArray()->toArray());
 
-        $productsQueryBase = QueryBuilder::for(Product::query()->whereHas('categories', fn (Builder|ProductCategory $query): Builder => $query->visible())->select(['products.*'])->with(['categories' => fn (BelongsToMany|ProductCategory $query): BelongsToMany => $query->visible(), 'attributeValues.attribute', 'prices' => fn (HasMany $query): HasMany => $query->where('currency', $currency)]));
+        $productsQueryBase = QueryBuilder::for($this->getBaseProductQuery($currency));
         $productsQuery = $productsQueryBase->clone()
             ->allowedFilters([
                 ProductAllowedFilter::TITLE->value,
@@ -59,6 +61,7 @@ class ProductController extends Controller
             ->allowedSorts([
                 ProductAllowedSort::TITLE->value,
                 ProductAllowedSort::CREATED_AT->value,
+                /** @phpstan-ignore-next-line */
                 AllowedSort::callback(ProductAllowedSort::PRICE->value, static fn (Builder|Product $query, bool $descending): Builder => $query->orderByCurrentPrice($currency, $descending)),
             ])
             ->defaultSort($defaultSort->query);
@@ -81,14 +84,27 @@ class ProductController extends Controller
 
     public function show(ProductShowRequest $request, string $slug): JsonResource|JsonResponse
     {
-        $validated = $request->validated();
+        ProductCategory::loadLightHierarchy();
 
-        $product = Product::query()->whereHas('categories', fn (Builder|ProductCategory $query): Builder => $query->visible())->with(['categories' => fn (BelongsToMany|ProductCategory $query): BelongsToMany => $query->visible(), 'attributeValues.attribute', 'prices' => fn (HasMany $query): HasMany => $query->where('currency', $validated[QueryKey::FILTER->value][ProductAllowedFilter::CURRENCY->value])])->where('slug', $slug)->first();
+        $product = $this->getBaseProductQuery($request->validated()[QueryKey::FILTER->value][ProductAllowedFilter::CURRENCY->value])->where('slug', $slug)->first();
 
         if ($product === null) {
             return $this->respondWithMessage("Product '{$slug}' was not found.", Response::HTTP_NOT_FOUND);
         }
 
         return $this->respondWithItem($product);
+    }
+
+    private function getBaseProductQuery(string $currency): Builder
+    {
+        return Product::query()
+            /** @phpstan-ignore-next-line */
+            ->whereHas('categories', fn (Builder|ProductCategory $query): Builder => $query->visible())
+            ->with([
+                /** @phpstan-ignore-next-line */
+                'categories' => fn (BelongsToMany|ProductCategory $query): BelongsToMany => $query->visible(),
+                'attributeValues.attribute',
+                'prices' => fn (HasMany $query): HasMany => $query->where('currency', $currency),
+            ]);
     }
 }

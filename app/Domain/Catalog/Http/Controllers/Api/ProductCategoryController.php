@@ -14,8 +14,7 @@ class ProductCategoryController extends Controller
     public function index(): AnonymousResourceCollection
     {
         ProductCategory::loadHeavyHierarchy();
-        $hierarchy = ProductCategory::filterHierarchy(static fn (ProductCategory $category): bool => $category->is_visible, ProductCategory::$hierarchy);
 
-        return $this->respondWithCollection($hierarchy);
+        return $this->respondWithCollection(ProductCategory::getVisibleHierarchy());
     }
 }

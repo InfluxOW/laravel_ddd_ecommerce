@@ -126,12 +126,12 @@ class ProductCategory extends Model
 
     public static function loadLightHierarchy(): void
     {
-        self::$hierarchy = self::$hierarchy ?? self::query()->hasLimitedDepth()->select(['id', 'parent_id', 'title', 'slug', 'is_visible'])->get()->toHierarchy();
+        self::$hierarchy = self::query()->hasLimitedDepth()->select(['id', 'parent_id', 'title', 'slug', 'is_visible'])->get()->toHierarchy();
     }
 
     public static function loadHeavyHierarchy(): void
     {
-        self::$hierarchy = self::$hierarchy ?? self::query()->hasLimitedDepth()->with(['parent'])->withCount(['products'])->get()->toHierarchy();
+        self::$hierarchy = self::query()->hasLimitedDepth()->with(['parent'])->withCount(['products'])->get()->toHierarchy();
     }
 
     public static function findInHierarchy(int $id): ?self
@@ -168,17 +168,23 @@ class ProductCategory extends Model
             ->flatten();
     }
 
+    public static function getVisibleHierarchy(): Collection
+    {
+        return self::filterHierarchy(static fn (self $category): bool => $category->is_visible, self::$hierarchy);
+    }
+
     /*
      * Scopes
      * */
 
     public function scopeHasLimitedDepth(Builder|Model $query): void
     {
+        /** @phpstan-ignore-next-line  */
         $query->limitDepth(self::MAX_DEPTH);
     }
 
     public function scopeVisible(Builder $query): void
     {
-        $query->where('is_visible', true);
+        $query->whereIntegerInRaw('product_categories.id', self::mapHierarchy(static fn (self $category) => $category->id, self::getVisibleHierarchy()));
     }
 }
