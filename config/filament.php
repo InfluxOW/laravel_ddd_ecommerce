@@ -1,8 +1,8 @@
 <?php
 
-use App\Domain\Catalog\Admin\Pages\ManageCatalogSettings;
-use App\Domain\Catalog\Admin\Resources\ProductCategoryResource;
-use App\Domain\Users\Admin\Resources\UserResource;
+use App\Domains\Catalog\Admin\Pages\ManageCatalogSettings;
+use App\Domains\Catalog\Admin\Resources\ProductCategoryResource;
+use App\Domains\Users\Admin\Resources\UserResource;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Http\Middleware\MirrorConfigToSubpackages;
@@ -70,8 +70,8 @@ return [
     */
 
     'pages' => [
-        'namespace' => 'App\\Domain\\Admin\\Panel\\Pages',
-        'path' => app_path('Domain/Admin/Panel/Pages'),
+        'namespace' => 'App\\Domains\\Admin\\Panel\\Pages',
+        'path' => app_path('Domains/Admin/Panel/Pages'),
         'register' => [
             Pages\Dashboard::class,
             ManageCatalogSettings::class,
@@ -89,8 +89,8 @@ return [
     */
 
     'resources' => [
-        'namespace' => 'App\\Domain\\Admin\\Panel\\Resources',
-        'path' => app_path('Domain/Admin/Panel/Resources'),
+        'namespace' => 'App\\Domains\\Admin\\Panel\\Resources',
+        'path' => app_path('Domains/Admin/Panel/Resources'),
         'register' => [
             UserResource::class,
             ProductCategoryResource::class,
@@ -108,8 +108,8 @@ return [
     */
 
     'widgets' => [
-        'namespace' => 'App\\Domain\\Admin\\Panel\\Widgets',
-        'path' => app_path('Domain/Admin/Panel/Widgets'),
+        'namespace' => 'App\\Domains\\Admin\\Panel\\Widgets',
+        'path' => app_path('Domains/Admin/Panel/Widgets'),
         'register' => [
             Widgets\AccountWidget::class,
             Widgets\FilamentInfoWidget::class,

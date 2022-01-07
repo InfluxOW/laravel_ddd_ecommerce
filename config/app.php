@@ -174,10 +174,10 @@ return [
         /*
          * Domain Service Providers
          */
-        App\Domain\Users\Providers\DomainServiceProvider::class,
-        App\Domain\Catalog\Providers\DomainServiceProvider::class,
-        App\Domain\Admin\Providers\DomainServiceProvider::class,
-        \App\Domain\Generic\Address\Providers\DomainServiceProvider::class,
+        App\Domains\Users\Providers\DomainServiceProvider::class,
+        App\Domains\Catalog\Providers\DomainServiceProvider::class,
+        App\Domains\Admin\Providers\DomainServiceProvider::class,
+        \App\Domains\Components\Addressable\Providers\DomainServiceProvider::class,
     ],
 
     /*

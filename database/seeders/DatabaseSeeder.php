@@ -2,13 +2,13 @@
 
 namespace Database\Seeders;
 
-use App\Domain\Admin\Database\Seeders\AdminSeeder;
-use App\Domain\Catalog\Database\Seeders\ProductAttributeSeeder;
-use App\Domain\Catalog\Database\Seeders\ProductAttributeValueSeeder;
-use App\Domain\Catalog\Database\Seeders\ProductCategorySeeder;
-use App\Domain\Catalog\Database\Seeders\ProductPriceSeeder;
-use App\Domain\Catalog\Database\Seeders\ProductSeeder;
-use App\Domain\Users\Database\Seeders\UserSeeder;
+use App\Domains\Admin\Database\Seeders\AdminSeeder;
+use App\Domains\Catalog\Database\Seeders\ProductAttributeSeeder;
+use App\Domains\Catalog\Database\Seeders\ProductAttributeValueSeeder;
+use App\Domains\Catalog\Database\Seeders\ProductCategorySeeder;
+use App\Domains\Catalog\Database\Seeders\ProductPriceSeeder;
+use App\Domains\Catalog\Database\Seeders\ProductSeeder;
+use App\Domains\Users\Database\Seeders\UserSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder

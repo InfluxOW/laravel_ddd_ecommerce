@@ -66,11 +66,11 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Domain\Users\Models\User::class,
+            'model' => App\Domains\Users\Models\User::class,
         ],
         'admins' => [
             'driver' => 'eloquent',
-            'model' => App\Domain\Admin\Models\Admin::class,
+            'model' => App\Domains\Admin\Models\Admin::class,
         ],
     ],
 

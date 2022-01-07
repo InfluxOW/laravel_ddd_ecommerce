@@ -4,7 +4,7 @@
  * @see https://github.com/spatie/laravel-query-builder
  */
 
-use App\Domain\Generic\Query\Enums\QueryKey;
+use App\Domains\Components\Queryable\Enums\QueryKey;
 
 return [
 

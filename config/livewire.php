@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'class_namespace' => 'App\\Domain',
+    'class_namespace' => 'App\\Domains',
 
     /*
     |--------------------------------------------------------------------------

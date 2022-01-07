@@ -1,6 +1,6 @@
 <?php
 
-use App\Domain\Catalog\Models\Generic\CatalogSettings;
+use App\Domains\Catalog\Models\Settings\CatalogSettings;
 
 return [
 
@@ -18,7 +18,7 @@ return [
      * a custom defined path when running the command.
      */
     'migrations_paths' => [
-        app()->path('Domain/Catalog/Database/Settings'),
+        app()->path('Domains/Catalog/Database/Settings'),
     ],
 
     /*
