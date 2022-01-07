@@ -5,8 +5,8 @@ namespace App\Domain\Admin\Traits\Translation;
 use App\Domain\Admin\Enums\Translation\AdminPagePropertyTranslationKey;
 use App\Domain\Admin\Enums\Translation\AdminRelationPropertyTranslationKey;
 use App\Domain\Admin\Enums\Translation\AdminResourcePropertyTranslationKey;
-use App\Domain\Generic\Lang\Enums\TranslationFilename;
-use App\Domain\Generic\Lang\Enums\TranslationNamespace;
+use App\Domain\Generic\Enums\Lang\TranslationFilename;
+use App\Domain\Generic\Enums\Lang\TranslationNamespace;
 use App\Domain\Generic\Utils\LangUtils;
 use UnitEnum;
 

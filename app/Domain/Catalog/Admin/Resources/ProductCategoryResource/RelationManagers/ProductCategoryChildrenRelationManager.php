@@ -8,7 +8,7 @@ use App\Domain\Catalog\Admin\Resources\ProductCategoryResource;
 use App\Domain\Catalog\Enums\Translation\ProductCategoryResourceTranslationKey;
 use App\Domain\Catalog\Models\ProductCategory;
 use App\Domain\Catalog\Providers\DomainServiceProvider;
-use App\Domain\Generic\Lang\Enums\TranslationNamespace;
+use App\Domain\Generic\Enums\Lang\TranslationNamespace;
 use Baum\Node;
 use Filament\Resources\Form;
 use Filament\Resources\RelationManagers\HasManyRelationManager;

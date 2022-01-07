@@ -2,7 +2,7 @@
 
 namespace App\Domain\Catalog\Enums;
 
-use App\Domain\Generic\Response\Enums\ResponseValueType;
+use App\Domain\Generic\Enums\Response\ResponseValueType;
 
 enum ProductAttributeValuesType: int
 {

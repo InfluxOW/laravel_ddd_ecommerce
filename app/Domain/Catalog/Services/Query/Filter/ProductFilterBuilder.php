@@ -4,7 +4,7 @@ namespace App\Domain\Catalog\Services\Query\Filter;
 
 use App\Domain\Catalog\Enums\Query\Filter\ProductAllowedFilter;
 use App\Domain\Catalog\Providers\DomainServiceProvider;
-use App\Domain\Generic\Lang\Enums\TranslationNamespace;
+use App\Domain\Generic\Enums\Lang\TranslationNamespace;
 use App\Domain\Generic\Query\Models\Filter\Filter;
 use App\Domain\Generic\Query\Models\Filter\InputFilter;
 use App\Domain\Generic\Query\Models\Filter\MultiselectFilter;

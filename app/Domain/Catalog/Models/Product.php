@@ -3,6 +3,8 @@
 namespace App\Domain\Catalog\Models;
 
 use App\Domain\Catalog\Database\Factories\ProductFactory;
+use App\Domain\Catalog\Enums\ProductAttributeValuesType;
+use App\Domain\Generic\Enums\BooleanString;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -116,14 +118,16 @@ class Product extends Model
         $attributes = ProductAttribute::query()->whereIn('slug', array_keys($attributesValuesByAttributeSlug))->get();
 
         if ($attributes->isNotEmpty()) {
-            $query->whereHas('attributeValues', function (Builder $query) use ($attributes, $attributesValuesByAttributeSlug): void {
-                foreach ($attributes as $i => $attribute) {
-                    $values = (array) $attributesValuesByAttributeSlug[$attribute->slug];
-                    $operation = ($i === 0) ? 'where' : 'orWhere';
-
-                    $query->$operation(static fn (Builder $query): Builder => $query->whereIn(ProductAttributeValue::getDatabaseValueColumnByAttributeType($attribute->values_type), $values));
+            foreach ($attributes as $attribute) {
+                $values = (array) $attributesValuesByAttributeSlug[$attribute->slug];
+                if ($attribute->values_type === ProductAttributeValuesType::BOOLEAN) {
+                    $values = array_map(static fn (mixed $value): bool => strtolower($value) === BooleanString::TRUE->value, $values);
                 }
-            });
+
+                $query->whereHas('attributeValues', function (Builder $query) use ($attribute, $values): void {
+                    $query->where('attribute_id', $attribute->id)->whereIn(ProductAttributeValue::getDatabaseValueColumnByAttributeType($attribute->values_type), $values);
+                });
+            }
         }
     }
 

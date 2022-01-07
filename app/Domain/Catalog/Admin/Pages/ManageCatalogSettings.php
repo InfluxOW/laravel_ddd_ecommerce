@@ -7,7 +7,7 @@ use App\Domain\Admin\Traits\Translation\TranslatableAdminPage;
 use App\Domain\Catalog\Enums\Translation\CatalogSettingsTranslationKey;
 use App\Domain\Catalog\Models\Generic\CatalogSettings;
 use App\Domain\Catalog\Providers\DomainServiceProvider;
-use App\Domain\Generic\Lang\Enums\TranslationNamespace;
+use App\Domain\Generic\Enums\Lang\TranslationNamespace;
 use Filament\Forms\Components\MultiSelect;
 use Filament\Forms\Components\Select;
 use Filament\Pages\SettingsPage;

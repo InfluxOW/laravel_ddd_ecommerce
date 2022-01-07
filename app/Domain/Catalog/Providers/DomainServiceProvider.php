@@ -4,7 +4,7 @@ namespace App\Domain\Catalog\Providers;
 
 use App\Domain\Catalog\Models\ProductCategory;
 use App\Domain\Catalog\Observers\ProductCategoryObserver;
-use App\Domain\Generic\Lang\Enums\TranslationNamespace;
+use App\Domain\Generic\Enums\Lang\TranslationNamespace;
 use App\Infrastructure\Abstracts\ServiceProviderBase;
 
 class DomainServiceProvider extends ServiceProviderBase

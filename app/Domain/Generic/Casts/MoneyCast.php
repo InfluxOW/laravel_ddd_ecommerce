@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Domain\Generic\Currency\Casts;
+namespace App\Domain\Generic\Casts;
 
 use Akaunting\Money\Money;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
+
+use function money;
 
 class MoneyCast implements CastsAttributes
 {

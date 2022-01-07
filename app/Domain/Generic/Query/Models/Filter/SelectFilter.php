@@ -2,7 +2,7 @@
 
 namespace App\Domain\Generic\Query\Models\Filter;
 
-use App\Domain\Generic\Lang\Enums\TranslationNamespace;
+use App\Domain\Generic\Enums\Lang\TranslationNamespace;
 use App\Domain\Generic\Query\Enums\QueryFilterType;
 use BackedEnum;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;

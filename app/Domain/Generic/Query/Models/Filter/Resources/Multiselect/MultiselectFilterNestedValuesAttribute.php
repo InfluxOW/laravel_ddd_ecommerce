@@ -2,7 +2,7 @@
 
 namespace App\Domain\Generic\Query\Models\Filter\Resources\Multiselect;
 
-use App\Domain\Generic\Response\Enums\ResponseValueType;
+use App\Domain\Generic\Enums\Response\ResponseValueType;
 use JetBrains\PhpStorm\ArrayShape;
 
 class MultiselectFilterNestedValuesAttribute

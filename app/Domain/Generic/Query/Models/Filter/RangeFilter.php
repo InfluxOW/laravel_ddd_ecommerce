@@ -4,7 +4,7 @@ namespace App\Domain\Generic\Query\Models\Filter;
 
 use Akaunting\Money\Currency;
 use Akaunting\Money\Money;
-use App\Domain\Generic\Lang\Enums\TranslationNamespace;
+use App\Domain\Generic\Enums\Lang\TranslationNamespace;
 use App\Domain\Generic\Query\Enums\QueryFilterType;
 use App\Domain\Generic\Utils\MathUtils;
 use BackedEnum;

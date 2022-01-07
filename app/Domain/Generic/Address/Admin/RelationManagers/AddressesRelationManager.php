@@ -6,7 +6,7 @@ use App\Domain\Admin\Traits\Translation\TranslatableAdminRelation;
 use App\Domain\Generic\Address\Enums\Translation\AddressesRelationManagerTranslationKey;
 use App\Domain\Generic\Address\Models\Address;
 use App\Domain\Generic\Address\Providers\DomainServiceProvider;
-use App\Domain\Generic\Lang\Enums\TranslationNamespace;
+use App\Domain\Generic\Enums\Lang\TranslationNamespace;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;

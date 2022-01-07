@@ -5,7 +5,7 @@ namespace App\Domain\Users\Admin\Resources;
 use App\Domain\Admin\Admin\Components\Cards\TimestampsCard;
 use App\Domain\Admin\Traits\Translation\TranslatableAdminResource;
 use App\Domain\Generic\Address\Admin\RelationManagers\AddressesRelationManager;
-use App\Domain\Generic\Lang\Enums\TranslationNamespace;
+use App\Domain\Generic\Enums\Lang\TranslationNamespace;
 use App\Domain\Users\Enums\Translation\UserResourceTranslationKey;
 use App\Domain\Users\Models\User;
 use App\Domain\Users\Providers\DomainServiceProvider;

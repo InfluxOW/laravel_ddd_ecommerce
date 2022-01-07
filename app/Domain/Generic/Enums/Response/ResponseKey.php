@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Generic\Response\Enums;
+namespace App\Domain\Generic\Enums\Response;
 
 enum ResponseKey: string
 {

@@ -2,8 +2,8 @@
 
 namespace App\Domain\Generic\Utils;
 
-use App\Domain\Generic\Lang\Enums\TranslationFilename;
-use App\Domain\Generic\Lang\Enums\TranslationNamespace;
+use App\Domain\Generic\Enums\Lang\TranslationFilename;
+use App\Domain\Generic\Enums\Lang\TranslationNamespace;
 use UnitEnum;
 
 class LangUtils

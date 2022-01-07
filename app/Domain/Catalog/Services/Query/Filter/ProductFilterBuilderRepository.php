@@ -40,7 +40,7 @@ class ProductFilterBuilderRepository
                 $values = $attributeValues->get($attribute->id);
 
                 return new MultiselectFilterNestedValues(
-                    new MultiselectFilterNestedValuesAttribute($attribute->slug, $attribute->title, $attribute->values_type->readableType()),
+                    new MultiselectFilterNestedValuesAttribute($attribute->title, $attribute->slug, $attribute->values_type->readableType()),
                     $values->pluck(ProductAttributeValue::getDatabaseValueColumnByAttributeType($attribute->values_type))->sort()->values()
                 );
             });

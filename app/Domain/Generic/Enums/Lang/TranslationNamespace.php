@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Generic\Lang\Enums;
+namespace App\Domain\Generic\Enums\Lang;
 
 enum TranslationNamespace: string
 {

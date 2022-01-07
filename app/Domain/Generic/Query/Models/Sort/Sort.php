@@ -2,7 +2,7 @@
 
 namespace App\Domain\Generic\Query\Models\Sort;
 
-use App\Domain\Generic\Lang\Enums\TranslationNamespace;
+use App\Domain\Generic\Enums\Lang\TranslationNamespace;
 use App\Domain\Generic\Query\Abstracts\Query;
 use App\Domain\Generic\Utils\EnumUtils;
 use App\Domain\Generic\Utils\LangUtils;

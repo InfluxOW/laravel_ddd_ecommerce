@@ -13,6 +13,7 @@ return [
         ProductAllowedFilter::PRICE_BETWEEN->name => 'Price',
         ProductAllowedFilter::CATEGORY->name => 'Category',
         ProductAllowedFilter::ATTRIBUTE_VALUE->name => 'Attribute',
+        ProductAllowedFilter::CURRENCY->name => 'Currency',
     ],
     ProductAllowedSort::class => [
         ProductAllowedSort::TITLE->name => 'Title A-Z',

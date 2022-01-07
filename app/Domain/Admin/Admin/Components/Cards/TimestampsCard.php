@@ -5,7 +5,7 @@ namespace App\Domain\Admin\Admin\Components\Cards;
 use App\Domain\Admin\Enums\Translation\Components\Cards\AdminTimestampsCardTranslationKey;
 use App\Domain\Admin\Providers\DomainServiceProvider;
 use App\Domain\Admin\Traits\Translation\TranslatableAdmin;
-use App\Domain\Generic\Lang\Enums\TranslationNamespace;
+use App\Domain\Generic\Enums\Lang\TranslationNamespace;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Placeholder;
 use Illuminate\Database\Eloquent\Model;

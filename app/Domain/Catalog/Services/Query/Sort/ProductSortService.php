@@ -4,7 +4,7 @@ namespace App\Domain\Catalog\Services\Query\Sort;
 
 use App\Domain\Catalog\Enums\Query\Sort\ProductAllowedSort;
 use App\Domain\Catalog\Providers\DomainServiceProvider;
-use App\Domain\Generic\Lang\Enums\TranslationNamespace;
+use App\Domain\Generic\Enums\Lang\TranslationNamespace;
 use App\Domain\Generic\Query\Enums\QueryKey;
 use App\Domain\Generic\Query\Interfaces\QueryService;
 use App\Domain\Generic\Query\Models\Sort\Sort;
