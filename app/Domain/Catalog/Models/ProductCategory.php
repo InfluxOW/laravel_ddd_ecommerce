@@ -99,16 +99,16 @@ class ProductCategory extends Model
 
     public function getOverallProductsCountAttribute(): int
     {
-        return self::mapHierarchy(static fn (ProductCategory $category): ?int => $category->products_count, collect([self::findInHierarchy($this->id)]))->sum();
+        return self::mapHierarchy(static fn (ProductCategory $category): ?int => $category->products_count, collect([self::findInHierarchy($this->id, self::$hierarchy)]))->sum();
     }
 
     public function getPathAttribute(): string
     {
         $path = [];
-        $category = self::findInHierarchy($this->id)?->parent;
+        $category = self::findInHierarchy($this->id, self::$hierarchy)?->parent;
         while (isset($category)) {
             $path[] = $category->title;
-            $category = ($category->parent_id === null) ? null : self::findInHierarchy($category->parent_id);
+            $category = ($category->parent_id === null) ? null : self::findInHierarchy($category->parent_id, self::$hierarchy);
         }
         $path[] = $this->title;
 
@@ -134,14 +134,13 @@ class ProductCategory extends Model
         self::$hierarchy = self::query()->hasLimitedDepth()->with(['parent'])->withCount(['products'])->get()->toHierarchy();
     }
 
-    public static function findInHierarchy(int $id): ?self
+    public static function findInHierarchy(int $id, Collection $hierarchy): ?self
     {
-        $categories = self::$hierarchy;
         $category = null;
-        while ($categories->isNotEmpty() && $category === null) {
-            $category = $categories->filter(fn (self $category): bool => $category->id === $id)->first();
+        while ($hierarchy->isNotEmpty() && $category === null) {
+            $category = $hierarchy->filter(fn (self $category): bool => $category->id === $id)->first();
             if ($category === null) {
-                $categories = $categories->map->children->flatten();
+                $hierarchy = $hierarchy->map->children->flatten();
             }
         }
 

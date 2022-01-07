@@ -14,8 +14,20 @@ abstract class TestCase extends BaseTestCase
         refreshDatabase as baseLazilyRefreshDatabase;
     }
 
+    /**
+     * Set to `true` if you don't want to recreate existing database.
+     * Could be useful if you found an unstable test and want to rerun it
+     * with data that caused that failure.
+     */
+    protected static bool $doNotRecreateDatabase = false;
+
     protected function setUp(): void
     {
+        if (static::$doNotRecreateDatabase) {
+            DatabaseState::$shouldRunSetUpOnce = false;
+            RefreshDatabaseState::$migrated = true;
+        }
+
         parent::setUp();
 
         if (DatabaseState::$shouldRunSetUpOnce) {

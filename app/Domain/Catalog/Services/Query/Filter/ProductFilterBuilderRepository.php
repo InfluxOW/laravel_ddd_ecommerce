@@ -63,7 +63,7 @@ class ProductFilterBuilderRepository
         while ($parentCategoryIds->isNotEmpty()) {
             $parentCategoryId = $parentCategoryIds->pop();
             if (isset($parentCategoryId) && $checkedParentCategoryIds->doesntContain($parentCategoryId)) {
-                $category = ProductCategory::findInHierarchy($parentCategoryId);
+                $category = ProductCategory::findInHierarchy($parentCategoryId, ProductCategory::$hierarchy);
 
                 if (isset($category)) {
                     $categories->offsetSet($category->title, $category->slug);
