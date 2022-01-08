@@ -4,7 +4,7 @@ namespace App\Domains\Admin\Admin\Components\Cards;
 
 use App\Domains\Admin\Enums\Translation\Components\Cards\AdminTimestampsCardTranslationKey;
 use App\Domains\Admin\Providers\DomainServiceProvider;
-use App\Domains\Admin\Traits\Translation\TranslatableAdmin;
+use App\Domains\Admin\Traits\Translation\HasTranslatableAdminLabels;
 use App\Domains\Components\Generic\Enums\Lang\TranslationNamespace;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Placeholder;
@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class TimestampsCard extends Card
 {
-    use TranslatableAdmin;
+    use HasTranslatableAdminLabels;
 
     protected function setUp(): void
     {

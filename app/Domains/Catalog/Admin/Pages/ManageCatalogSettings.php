@@ -3,6 +3,7 @@
 namespace App\Domains\Catalog\Admin\Pages;
 
 use Akaunting\Money\Currency;
+use App\Domains\Admin\Traits\Translation\HasTranslatableAdminLabels;
 use App\Domains\Admin\Traits\Translation\TranslatableAdminPage;
 use App\Domains\Catalog\Enums\Translation\CatalogSettingsTranslationKey;
 use App\Domains\Catalog\Models\Settings\CatalogSettings;
@@ -16,6 +17,7 @@ use Illuminate\Support\Collection;
 class ManageCatalogSettings extends SettingsPage
 {
     use TranslatableAdminPage;
+    use HasTranslatableAdminLabels;
 
     protected static ?string $navigationIcon = 'heroicon-o-cog';
 

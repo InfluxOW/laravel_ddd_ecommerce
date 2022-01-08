@@ -3,6 +3,7 @@
 namespace App\Domains\Users\Admin\Resources;
 
 use App\Domains\Admin\Admin\Components\Cards\TimestampsCard;
+use App\Domains\Admin\Traits\Translation\HasTranslatableAdminLabels;
 use App\Domains\Admin\Traits\Translation\TranslatableAdminResource;
 use App\Domains\Components\Addressable\Admin\RelationManagers\AddressesRelationManager;
 use App\Domains\Components\Generic\Enums\Lang\TranslationNamespace;
@@ -26,6 +27,7 @@ use Illuminate\Database\Eloquent\Model;
 class UserResource extends Resource
 {
     use TranslatableAdminResource;
+    use HasTranslatableAdminLabels;
 
     protected static ?string $model = User::class;
 

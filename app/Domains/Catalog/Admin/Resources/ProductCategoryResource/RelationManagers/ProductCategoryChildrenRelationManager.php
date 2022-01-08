@@ -3,6 +3,7 @@
 namespace App\Domains\Catalog\Admin\Resources\ProductCategoryResource\RelationManagers;
 
 use App\Domains\Admin\Admin\Components\Actions\ViewAction;
+use App\Domains\Admin\Traits\Translation\HasTranslatableAdminLabels;
 use App\Domains\Admin\Traits\Translation\TranslatableAdminRelation;
 use App\Domains\Catalog\Admin\Resources\ProductCategoryResource;
 use App\Domains\Catalog\Enums\Translation\ProductCategoryResourceTranslationKey;
@@ -21,6 +22,7 @@ use Illuminate\Database\Eloquent\Builder;
 class ProductCategoryChildrenRelationManager extends HasManyRelationManager
 {
     use TranslatableAdminRelation;
+    use HasTranslatableAdminLabels;
 
     protected static string $relationship = 'children';
     protected static ?string $recordTitleAttribute = 'title';

@@ -44,6 +44,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Homepage URL
+    |--------------------------------------------------------------------------
+    |
+    | This is the URL that Filament will redirect the user to when they click
+    | on the sidebar's header.
+    |
+    */
+
+    'home_url' => '/',
+
+    /*
+    |--------------------------------------------------------------------------
     | Auth
     |--------------------------------------------------------------------------
     |
@@ -70,8 +82,8 @@ return [
     */
 
     'pages' => [
-        'namespace' => 'App\\Domains\\Admin\\Panel\\Pages',
-        'path' => app_path('Domains/Admin/Panel/Pages'),
+        'namespace' => 'App\\Domains\\Admin\\Admin\\Components\\Pages',
+        'path' => app_path('Domains/Admin/Admin/Components/Pages'),
         'register' => [
             Pages\Dashboard::class,
             ManageCatalogSettings::class,
@@ -89,8 +101,8 @@ return [
     */
 
     'resources' => [
-        'namespace' => 'App\\Domains\\Admin\\Panel\\Resources',
-        'path' => app_path('Domains/Admin/Panel/Resources'),
+        'namespace' => 'App\\Domains\\Admin\\Admin\\Components\\Resources',
+        'path' => app_path('Domains/Admin/Admin/Components/Resources'),
         'register' => [
             UserResource::class,
             ProductCategoryResource::class,
@@ -108,12 +120,27 @@ return [
     */
 
     'widgets' => [
-        'namespace' => 'App\\Domains\\Admin\\Panel\\Widgets',
-        'path' => app_path('Domains/Admin/Panel/Widgets'),
+        'namespace' => 'App\\Domains\\Admin\\Admin\\Components\\Widgets',
+        'path' => app_path('Domains/Admin/Admin/Components/Widgets'),
         'register' => [
             Widgets\AccountWidget::class,
             Widgets\FilamentInfoWidget::class,
         ],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Livewire
+    |--------------------------------------------------------------------------
+    |
+    | This is the namespace and directory that Filament will automatically
+    | register Livewire components inside.
+    |
+    */
+
+    'livewire' => [
+        'namespace' => 'App\\Domains\\Admin\\Admin\\Components\\Widgets',
+        'path' => app_path('Domains/Admin/Admin/Components/Widgets'),
     ],
 
     /*
@@ -129,7 +156,20 @@ return [
     */
 
     'layout' => [
+        'forms' => [
+            'actions' => [
+                'alignment' => 'left',
+            ],
+        ],
+        'footer' => [
+            'should_show_logo' => true,
+        ],
         'max_content_width' => '7xl',
+        'tables' => [
+            'actions' => [
+                'type' => \Filament\Tables\Actions\LinkAction::class,
+            ],
+        ],
     ],
 
     /*

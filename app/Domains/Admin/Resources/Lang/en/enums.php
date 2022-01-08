@@ -2,6 +2,7 @@
 
 use App\Domains\Admin\Enums\Translation\AdminNavigationGroupTranslationKey;
 use App\Domains\Admin\Enums\Translation\Components\AdminActionTranslationKey;
+use App\Domains\Admin\Enums\Translation\Components\AdminDatasetTranslationKey;
 use App\Domains\Admin\Enums\Translation\Components\Cards\AdminTimestampsCardTranslationKey;
 
 return [
@@ -16,5 +17,8 @@ return [
     ],
     AdminActionTranslationKey::class => [
         AdminActionTranslationKey::VIEW->name => 'View',
-    ]
+    ],
+    AdminDatasetTranslationKey::class => [
+        AdminDatasetTranslationKey::CUSTOMERS->name => 'Customers',
+    ],
 ];

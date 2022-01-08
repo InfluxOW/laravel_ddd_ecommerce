@@ -3,6 +3,7 @@
 namespace App\Domains\Catalog\Admin\Resources;
 
 use App\Domains\Admin\Admin\Components\Cards\TimestampsCard;
+use App\Domains\Admin\Traits\Translation\HasTranslatableAdminLabels;
 use App\Domains\Admin\Traits\Translation\TranslatableAdminResource;
 use App\Domains\Catalog\Admin\Resources\ProductCategoryResource\RelationManagers\ProductCategoryChildrenRelationManager;
 use App\Domains\Catalog\Enums\Translation\ProductCategoryResourceTranslationKey;
@@ -31,6 +32,7 @@ use Illuminate\Support\Str;
 class ProductCategoryResource extends Resource
 {
     use TranslatableAdminResource;
+    use HasTranslatableAdminLabels;
 
     protected static ?string $model = ProductCategory::class;
 
