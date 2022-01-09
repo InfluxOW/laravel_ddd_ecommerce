@@ -1,8 +1,10 @@
 <?php
 
+use App\Domains\Catalog\Enums\ProductAttributeValuesType;
 use App\Domains\Catalog\Enums\Query\Filter\ProductAllowedFilter;
 use App\Domains\Catalog\Enums\Query\Sort\ProductAllowedSort;
 use App\Domains\Catalog\Enums\Translation\CatalogSettingsTranslationKey;
+use App\Domains\Catalog\Enums\Translation\ProductAttributeResourceTranslationKey;
 use App\Domains\Catalog\Enums\Translation\ProductCategoryResourceTranslationKey;
 use App\Domains\Components\Generic\Utils\EnumUtils;
 
@@ -38,8 +40,19 @@ return [
 
         ProductCategoryResourceTranslationKey::DEPTH->name => 'Depth',
     ],
+    ProductAttributeResourceTranslationKey::class => [
+        ProductAttributeResourceTranslationKey::TITLE->name => 'Title',
+        ProductAttributeResourceTranslationKey::SLUG->name => 'Slug',
+        ProductAttributeResourceTranslationKey::VALUES_TYPE->name => 'Type Of Values',
+    ],
     CatalogSettingsTranslationKey::class => [
         CatalogSettingsTranslationKey::AVAILABLE_CURRENCIES->name => 'Available Currencies',
         CatalogSettingsTranslationKey::DEFAULT_CURRENCY->name => 'Default Currency',
+    ],
+    ProductAttributeValuesType::class => [
+        ProductAttributeValuesType::STRING->name => 'String',
+        ProductAttributeValuesType::BOOLEAN->name => 'Boolean',
+        ProductAttributeValuesType::FLOAT->name => 'Float',
+        ProductAttributeValuesType::INTEGER->name => 'Integer',
     ],
 ];

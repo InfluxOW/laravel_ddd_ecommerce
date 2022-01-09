@@ -1,6 +1,7 @@
 <?php
 
 use App\Domains\Catalog\Admin\Pages\ManageCatalogSettings;
+use App\Domains\Catalog\Admin\Resources\ProductAttributeResource;
 use App\Domains\Catalog\Admin\Resources\ProductCategoryResource;
 use App\Domains\Users\Admin\Resources\UserResource;
 use Filament\Http\Middleware\Authenticate;
@@ -106,6 +107,7 @@ return [
         'register' => [
             UserResource::class,
             ProductCategoryResource::class,
+            ProductAttributeResource::class,
         ],
     ],
 

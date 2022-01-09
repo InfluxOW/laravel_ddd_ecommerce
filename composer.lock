@@ -584,16 +584,16 @@
         },
         {
             "name": "darkaonline/l5-swagger",
-            "version": "8.0.9",
+            "version": "8.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/DarkaOnLine/L5-Swagger.git",
-                "reference": "c882f984236ffeaebe4bed76b223ce9c3ec032fb"
+                "reference": "aab46bf494ba52dcdd7d259ce178ad33d0327d04"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DarkaOnLine/L5-Swagger/zipball/c882f984236ffeaebe4bed76b223ce9c3ec032fb",
-                "reference": "c882f984236ffeaebe4bed76b223ce9c3ec032fb",
+                "url": "https://api.github.com/repos/DarkaOnLine/L5-Swagger/zipball/aab46bf494ba52dcdd7d259ce178ad33d0327d04",
+                "reference": "aab46bf494ba52dcdd7d259ce178ad33d0327d04",
                 "shasum": ""
             },
             "require": {
@@ -608,7 +608,7 @@
                 "mockery/mockery": "1.*",
                 "orchestra/testbench": "6.* || 5.*",
                 "php-coveralls/php-coveralls": "^2.0",
-                "phpunit/phpunit": "8.*"
+                "phpunit/phpunit": "9.*"
             },
             "type": "library",
             "extra": {
@@ -651,7 +651,7 @@
             ],
             "support": {
                 "issues": "https://github.com/DarkaOnLine/L5-Swagger/issues",
-                "source": "https://github.com/DarkaOnLine/L5-Swagger/tree/8.0.9"
+                "source": "https://github.com/DarkaOnLine/L5-Swagger/tree/8.1.0"
             },
             "funding": [
                 {
@@ -659,7 +659,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-10-18T06:28:30+00:00"
+            "time": "2022-01-07T09:08:44+00:00"
         },
         {
             "name": "dflydev/dot-access-data",
@@ -7980,7 +7980,7 @@
             ],
             "support": {
                 "issues": "https://github.com/barryvdh/laravel-ide-helper/issues",
-                "source": "https://github.com/barryvdh/laravel-ide-helper/tree/master"
+                "source": "https://github.com/barryvdh/laravel-ide-helper/tree/v2.11.0"
             },
             "funding": [
                 {
@@ -8124,16 +8124,16 @@
         },
         {
             "name": "composer/composer",
-            "version": "2.2.3",
+            "version": "2.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "3c92ba5cdc7d48b7db2dcd197e6fa0e8fa6d9f4a"
+                "reference": "8a5ad75194f901e3b39ece4bbd22cbdabc79ae8f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/3c92ba5cdc7d48b7db2dcd197e6fa0e8fa6d9f4a",
-                "reference": "3c92ba5cdc7d48b7db2dcd197e6fa0e8fa6d9f4a",
+                "url": "https://api.github.com/repos/composer/composer/zipball/8a5ad75194f901e3b39ece4bbd22cbdabc79ae8f",
+                "reference": "8a5ad75194f901e3b39ece4bbd22cbdabc79ae8f",
                 "shasum": ""
             },
             "require": {
@@ -8203,7 +8203,7 @@
             "support": {
                 "irc": "ircs://irc.libera.chat:6697/composer",
                 "issues": "https://github.com/composer/composer/issues",
-                "source": "https://github.com/composer/composer/tree/2.2.3"
+                "source": "https://github.com/composer/composer/tree/2.2.4"
             },
             "funding": [
                 {
@@ -8219,7 +8219,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-12-31T11:18:53+00:00"
+            "time": "2022-01-08T11:30:42+00:00"
         },
         {
             "name": "composer/metadata-minifier",
@@ -9787,12 +9787,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "2bcf500130f3d5f5473d7f26c933a677f542625e"
+                "reference": "8418527b49d10f987f8e69f87f91b71b5cc7fdb8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/2bcf500130f3d5f5473d7f26c933a677f542625e",
-                "reference": "2bcf500130f3d5f5473d7f26c933a677f542625e",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/8418527b49d10f987f8e69f87f91b71b5cc7fdb8",
+                "reference": "8418527b49d10f987f8e69f87f91b71b5cc7fdb8",
                 "shasum": ""
             },
             "require": {
@@ -9809,7 +9809,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.3-dev"
+                    "dev-master": "1.4-dev"
                 }
             },
             "autoload": {
@@ -9844,7 +9844,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-01-06T22:15:32+00:00"
+            "time": "2022-01-08T21:10:04+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -10323,12 +10323,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "5d1ae7d4b053281a29a24e6e21ede5f9ef245b05"
+                "reference": "11696ae4d8970456cbd1919c17e6bb2ddb63553a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/5d1ae7d4b053281a29a24e6e21ede5f9ef245b05",
-                "reference": "5d1ae7d4b053281a29a24e6e21ede5f9ef245b05",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/11696ae4d8970456cbd1919c17e6bb2ddb63553a",
+                "reference": "11696ae4d8970456cbd1919c17e6bb2ddb63553a",
                 "shasum": ""
             },
             "conflict": {
@@ -10353,6 +10353,7 @@
                 "bk2k/bootstrap-package": ">=7.1,<7.1.2|>=8,<8.0.8|>=9,<9.0.4|>=9.1,<9.1.3|>=10,<10.0.10|>=11,<11.0.3",
                 "bolt/bolt": "<3.7.2",
                 "bolt/core": "<4.1.13",
+                "bottelet/flarepoint": "<2.2.1",
                 "brightlocal/phpwhois": "<=4.2.5",
                 "buddypress/buddypress": "<7.2.1",
                 "bugsnag/bugsnag-laravel": ">=2,<2.0.2",
@@ -10601,7 +10602,7 @@
                 "socialiteproviders/steam": "<1.1",
                 "spoonity/tcpdf": "<6.2.22",
                 "squizlabs/php_codesniffer": ">=1,<2.8.1|>=3,<3.0.1",
-                "ssddanbrown/bookstack": "<21.11.3",
+                "ssddanbrown/bookstack": "<21.12.1",
                 "stormpath/sdk": ">=0,<9.9.99",
                 "studio-42/elfinder": "<2.1.59",
                 "subrion/cms": "<=4.2.1",
@@ -10756,7 +10757,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-01-07T00:58:09+00:00"
+            "time": "2022-01-08T00:53:14+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -11839,12 +11840,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/slevomat/coding-standard.git",
-                "reference": "8b7dfa7d4d4b9fa9e35237a9834cc9b157007e12"
+                "reference": "e5499859eaff8f30629e5fbefe5f92d3cedf81ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/slevomat/coding-standard/zipball/8b7dfa7d4d4b9fa9e35237a9834cc9b157007e12",
-                "reference": "8b7dfa7d4d4b9fa9e35237a9834cc9b157007e12",
+                "url": "https://api.github.com/repos/slevomat/coding-standard/zipball/e5499859eaff8f30629e5fbefe5f92d3cedf81ba",
+                "reference": "e5499859eaff8f30629e5fbefe5f92d3cedf81ba",
                 "shasum": ""
             },
             "require": {
@@ -11893,7 +11894,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-01-07T07:08:54+00:00"
+            "time": "2022-01-07T07:43:15+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",

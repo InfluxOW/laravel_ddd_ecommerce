@@ -38,6 +38,11 @@ class ProductAttribute extends Model
     protected $casts = [
         'values_type' => ProductAttributeValuesType::class,
     ];
+    protected $fillable = [
+        'title',
+        'slug',
+        'values_type',
+    ];
 
     /*
      * Attributes

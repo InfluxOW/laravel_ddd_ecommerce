@@ -6,6 +6,7 @@ use App\Domains\Admin\Enums\Translation\AdminRelationPropertyTranslationKey;
 use App\Domains\Admin\Enums\Translation\AdminResourcePropertyTranslationKey;
 use App\Domains\Admin\Providers\DomainServiceProvider;
 use App\Domains\Catalog\Admin\Pages\ManageCatalogSettings;
+use App\Domains\Catalog\Admin\Resources\ProductAttributeResource;
 use App\Domains\Catalog\Admin\Resources\ProductCategoryResource;
 use App\Domains\Catalog\Admin\Resources\ProductCategoryResource\RelationManagers\ProductCategoryChildrenRelationManager;
 use App\Domains\Components\Generic\Utils\LangUtils;
@@ -15,6 +16,12 @@ return [
         AdminResourcePropertyTranslationKey::LABEL->name => 'Category',
         AdminResourcePropertyTranslationKey::PLURAL_LABEL->name => 'Categories',
         AdminResourcePropertyTranslationKey::NAVIGATION_LABEL->name => 'Categories',
+        AdminResourcePropertyTranslationKey::NAVIGATION_GROUP->name => LangUtils::translateEnum(DomainServiceProvider::TRANSLATION_NAMESPACE, AdminNavigationGroupTranslationKey::CATALOG),
+    ],
+    ProductAttributeResource::class => [
+        AdminResourcePropertyTranslationKey::LABEL->name => 'Attribute',
+        AdminResourcePropertyTranslationKey::PLURAL_LABEL->name => 'Attributes',
+        AdminResourcePropertyTranslationKey::NAVIGATION_LABEL->name => 'Attributes',
         AdminResourcePropertyTranslationKey::NAVIGATION_GROUP->name => LangUtils::translateEnum(DomainServiceProvider::TRANSLATION_NAMESPACE, AdminNavigationGroupTranslationKey::CATALOG),
     ],
     ProductCategoryChildrenRelationManager::class => [
