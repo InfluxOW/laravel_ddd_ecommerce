@@ -31,11 +31,11 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read int|null $children_count
  * @property-read int $overall_products_count
  * @property-read string $path
+ * @property-read int|null $products_count
  * @property-read \Illuminate\Database\Eloquent\Collection|ProductCategory[] $immediateDescendants
  * @property-read int|null $immediate_descendants_count
  * @property-read ProductCategory|null $parent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Domains\Catalog\Models\Product[] $products
- * @property-read int|null $products_count
  * @method static \App\Domains\Catalog\Database\Factories\ProductCategoryFactory factory(...$parameters)
  * @method static Builder|ProductCategory hasLimitedDepth()
  * @method static Builder|ProductCategory limitDepth($limit)

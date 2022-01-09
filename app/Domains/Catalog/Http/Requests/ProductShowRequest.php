@@ -13,7 +13,7 @@ class ProductShowRequest extends FormRequest
     public function rules(): array
     {
         return [
-            sprintf('%s.%s', QueryKey::FILTER->value, ProductAllowedFilter::CURRENCY->value) => ['required', 'string', Rule::in(array_keys(Currency::getCurrencies()))],
+            sprintf('%s.%s', QueryKey::FILTER->value, ProductAllowedFilter::CURRENCY->value) => ['nullable', 'string', Rule::in(array_keys(Currency::getCurrencies()))],
         ];
     }
 }

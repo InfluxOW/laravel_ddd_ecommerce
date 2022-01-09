@@ -2,6 +2,9 @@
 
 namespace App\Domains\Catalog\Models\Virtual;
 
+use App\Domains\Components\Priceable\Models\Virtual\Currency;
+use App\Domains\Components\Priceable\Models\Virtual\Money;
+
 /**
  * @OA\Schema(
  *    @OA\Xml(name="Product")
@@ -32,23 +35,27 @@ class Product
 
     /**
      * @OA\Property()
-     * @var float
-     * @example 39.99
+     * @var Money
      */
     public $price;
 
     /**
      * @OA\Property()
-     * @var float|null
-     * @example 19.99
+     * @var Money|null
      */
     public $price_discounted;
 
     /**
      * @OA\Property()
-     * @var LightProductCategory
+     * @var Currency
      */
-    public $category;
+    public $currency;
+
+    /**
+     * @OA\Property()
+     * @var LightProductCategory[]
+     */
+    public $categories;
 
     /**
      * @OA\Property()

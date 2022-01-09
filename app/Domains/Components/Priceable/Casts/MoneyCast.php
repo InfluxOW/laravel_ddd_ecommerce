@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Components\Generic\Casts;
+namespace App\Domains\Components\Priceable\Casts;
 
 use Akaunting\Money\Money;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;

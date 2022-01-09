@@ -40,6 +40,16 @@ class ProductController
      *        ),
      *     ),
      *     @OA\Parameter(
+     *        name="filter[currency]",
+     *        in="query",
+     *        description="Filter products by currency.",
+     *        required=false,
+     *        example="USD",
+     *        @OA\Schema(
+     *           type="string"
+     *        ),
+     *     ),
+     *     @OA\Parameter(
      *        name="filter[price_between]",
      *        in="query",
      *        description="Filter products by price range. Requires two comma separated values.",

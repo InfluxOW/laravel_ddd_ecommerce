@@ -5,6 +5,8 @@ namespace App\Domains\Catalog\Http\Resources;
 use App\Domains\Catalog\Enums\Query\Filter\ProductAllowedFilter;
 use App\Domains\Catalog\Models\Product;
 use App\Domains\Catalog\Models\ProductPrice;
+use App\Domains\Components\Priceable\Http\Resources\CurrencyResource;
+use App\Domains\Components\Priceable\Http\Resources\MoneyResource;
 use App\Domains\Components\Queryable\Enums\QueryKey;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -27,10 +29,10 @@ class ProductResource extends JsonResource
             'title' => $product->title,
             'created_at' => $product->created_at?->format('d M Y H:i:s'),
             /* @phpstan-ignore-next-line */
-            'price' => $this->when(isset($priceModel), fn (): string => $priceModel->price->render()),
+            'price' => $this->when(isset($priceModel), fn (): MoneyResource => MoneyResource::make($priceModel->price)),
             /* @phpstan-ignore-next-line */
-            'price_discounted' => $this->when(isset($priceModel), fn (): ?string => $priceModel->price_discounted?->render()),
-            'currency' => currency($currency)->getSymbol(),
+            'price_discounted' => $this->when(isset($priceModel, $priceModel->price_discounted), fn (): MoneyResource => MoneyResource::make($priceModel->price_discounted)),
+            'currency' => CurrencyResource::make(currency($currency)),
             'categories' => LightProductCategoryResource::collection($product->categories->sortBy('title')),
             'attributes' => ProductAttributeValueResource::collection($product->attributeValues->sortBy('attribute.title')),
             'description' => $product->description,
