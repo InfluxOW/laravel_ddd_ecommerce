@@ -99,7 +99,14 @@ class ProductCategory extends Model
 
     public function getOverallProductsCountAttribute(): int
     {
-        return self::mapHierarchy(static fn (ProductCategory $category): ?int => $category->products_count, collect([self::findInHierarchy($this->id, self::$hierarchy)]))->sum();
+        return self::mapHierarchy(static fn (ProductCategory $category): Collection => $category->products->pluck('id'), collect([self::findInHierarchy($this->id, self::$hierarchy)]))->unique()->count();
+    }
+
+    public function getProductsCountAttribute(): int
+    {
+        $category = self::findInHierarchy($this->id, self::$hierarchy);
+
+        return ($category === null) ? 0 : $category->products->count();
     }
 
     public function getPathAttribute(): string
@@ -131,7 +138,7 @@ class ProductCategory extends Model
 
     public static function loadHeavyHierarchy(): void
     {
-        self::$hierarchy = self::query()->hasLimitedDepth()->with(['parent'])->withCount(['products'])->get()->toHierarchy();
+        self::$hierarchy = self::query()->hasLimitedDepth()->with(['parent', 'products' => fn (BelongsToMany $query): BelongsToMany => $query->select(['products.id'])])->get()->toHierarchy();
     }
 
     public static function findInHierarchy(int $id, Collection $hierarchy): ?self
