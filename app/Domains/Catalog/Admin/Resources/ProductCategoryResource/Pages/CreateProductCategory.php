@@ -18,4 +18,9 @@ class CreateProductCategory extends CreateRecord
 
         return $this->resourceForm;
     }
+
+    protected function getRedirectUrl(): ?string
+    {
+        return static::$resource::getUrl('view', ['record' => $this->record]);
+    }
 }

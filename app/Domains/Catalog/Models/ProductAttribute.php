@@ -6,6 +6,7 @@ use App\Domains\Catalog\Database\Factories\ProductAttributeFactory;
 use App\Domains\Catalog\Enums\ProductAttributeValuesType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -18,6 +19,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property ProductAttributeValuesType $values_type
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Domains\Catalog\Models\ProductAttributeValue[] $values
+ * @property-read int|null $values_count
  * @method static \App\Domains\Catalog\Database\Factories\ProductAttributeFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|ProductAttribute newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|ProductAttribute newQuery()
@@ -53,6 +56,15 @@ class ProductAttribute extends Model
         return SlugOptions::create()
             ->generateSlugsFrom('title')
             ->saveSlugsTo('slug');
+    }
+
+    /*
+     * Relations
+     * */
+
+    public function values(): HasMany
+    {
+        return $this->hasMany(ProductAttributeValue::class, 'attribute_id');
     }
 
     /*

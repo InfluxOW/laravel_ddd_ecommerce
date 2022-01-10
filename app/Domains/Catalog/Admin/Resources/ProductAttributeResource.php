@@ -17,6 +17,7 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables\Columns\TextColumn;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
@@ -110,6 +111,29 @@ class ProductAttributeResource extends Resource
             'edit' => \App\Domains\Catalog\Admin\Resources\ProductAttributeResource\Pages\EditProductAttribute::route('/{record}/edit'),
             'view' => \App\Domains\Catalog\Admin\Resources\ProductAttributeResource\Pages\ViewProductAttribute::route('/{record}'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->with(['values']);
+    }
+
+    /*
+     * Policies
+     * */
+
+    /**
+     * @param ProductAttribute $record
+     * @return bool
+     */
+    public static function canDelete(Model $record): bool
+    {
+        return $record->values->isEmpty();
+    }
+
+    public static function canDeleteAny(): bool
+    {
+        return false;
     }
 
     /*

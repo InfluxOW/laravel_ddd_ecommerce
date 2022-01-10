@@ -189,6 +189,24 @@ class ProductCategoryResource extends Resource
     }
 
     /*
+     * Policies
+     * */
+
+    /**
+     * @param ProductCategory $record
+     * @return bool
+     */
+    public static function canDelete(Model $record): bool
+    {
+        return $record->overall_products_count === 0;
+    }
+
+    public static function canDeleteAny(): bool
+    {
+        return false;
+    }
+
+    /*
      * Translation
      * */
 
