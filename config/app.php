@@ -177,7 +177,8 @@ return [
         App\Domains\Users\Providers\DomainServiceProvider::class,
         App\Domains\Catalog\Providers\DomainServiceProvider::class,
         App\Domains\Admin\Providers\DomainServiceProvider::class,
-        \App\Domains\Components\Addressable\Providers\DomainServiceProvider::class,
+        App\Domains\Components\Addressable\Providers\DomainServiceProvider::class,
+        App\Domains\Cart\Providers\DomainServiceProvider::class,
     ],
 
     /*

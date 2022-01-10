@@ -9,4 +9,5 @@ enum TranslationNamespace: string
     case CATALOG = 'catalog';
     case USERS = 'users';
     case ADDRESS = 'address';
+    case CART = 'cart';
 }
