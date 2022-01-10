@@ -56,6 +56,18 @@ services:
             test: [ "CMD", "pg_isready", "-q", "-d", "${DB_DATABASE}", "-U", "${DB_USERNAME}" ]
             retries: 3
             timeout: 5s
+    redis:
+        image: 'redis:6.2.6-alpine'
+        ports:
+            - '${FORWARD_REDIS_PORT:-6379}:6379'
+        volumes:
+            - 'sailredis:/data'
+        networks:
+            - sail
+        healthcheck:
+            test: [ "CMD", "redis-cli", "ping" ]
+            retries: 3
+            timeout: 5s
 
 networks:
     sail:
@@ -63,4 +75,6 @@ networks:
 
 volumes:
     database:
+        driver: local
+    sailredis:
         driver: local

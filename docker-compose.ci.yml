@@ -20,12 +20,17 @@ services:
         depends_on:
             - database
         command: [ "make", "install", "lint", "analyse", "test-coverage" ]
-
     database:
         image: 'postgres:14.1-alpine'
         environment:
             POSTGRES_HOST_AUTH_METHOD: trust
         healthcheck:
             test: [ "CMD", "pg_isready", "-q", "-d", "${DB_DATABASE}", "-U", "${DB_USERNAME}" ]
+            retries: 3
+            timeout: 5s
+    redis:
+        image: 'redis:6.2.6-alpine'
+        healthcheck:
+            test: [ "CMD", "redis-cli", "ping" ]
             retries: 3
             timeout: 5s

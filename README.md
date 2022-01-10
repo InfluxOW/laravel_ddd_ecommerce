@@ -13,5 +13,6 @@
         <a href="https://docker.com"><img src="https://img.shields.io/badge/Docker-20.10.x-0db7ed?style=for-the-badge&logo=docker" alt="Docker 19.03.0"></a>
         <a href="https://postgresql.org"><img src="https://img.shields.io/badge/Postgresql-14.X-0064a5?style=for-the-badge&logo=postgresql" alt="PostgreSQL 14.X"></a>
         <a href="https://swagger.io"><img src="https://img.shields.io/badge/Swagger-3.0-a9f06b?style=for-the-badge&logo=swagger" alt="Swagger 3.0"></a>
+        <a href="https://redis.io/"><img src="https://img.shields.io/badge/Redis-6.2.x-D82C20?style=for-the-badge&logo=redis" alt="Redis 6.2.x"></a>
     </p>
 </div>
