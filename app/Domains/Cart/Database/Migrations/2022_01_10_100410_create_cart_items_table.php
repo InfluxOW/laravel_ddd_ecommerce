@@ -1,7 +1,6 @@
 <?php
 
 use App\Domains\Cart\Models\Cart;
-use App\Domains\Catalog\Models\Product;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -25,9 +24,8 @@ class CreateCartItemsTable extends Migration
             $table->unsignedInteger('price_total');
             $table->unsignedInteger('price_total_discounted');
 
-            $table->foreignIdFor(Product::class, 'product_id')->constrained('products');
-            $table->string('product_title');
-            $table->string('product_description', 3000);
+            $table->morphs('purchasable');
+            $table->text('purchasable_data');
 
             $table->timestamps();
         });

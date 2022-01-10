@@ -2,7 +2,6 @@
 
 namespace App\Domains\Cart\Models;
 
-use App\Domains\Catalog\Models\Product;
 use App\Domains\Components\Priceable\Casts\MoneyCast;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -14,16 +13,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $cart_id
  * @property int $quantity
  * @property \Akaunting\Money\Money $price_item
- * @property \Akaunting\Money\Money $price_total
  * @property \Akaunting\Money\Money $price_item_discounted
+ * @property \Akaunting\Money\Money $price_total
  * @property \Akaunting\Money\Money $price_total_discounted
- * @property int $product_id
- * @property string $product_title
- * @property string $product_description
+ * @property string $purchasable_type
+ * @property int $purchasable_id
+ * @property array $purchasable_data
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Domains\Cart\Models\Cart $cart
- * @property-read Product $product
+ * @property-read Model|\Eloquent $purchasable
  * @method static \Illuminate\Database\Eloquent\Builder|CartItem newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CartItem newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CartItem query()
@@ -34,9 +33,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|CartItem wherePriceItemDiscounted($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CartItem wherePriceTotal($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CartItem wherePriceTotalDiscounted($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CartItem whereProductDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CartItem whereProductId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CartItem whereProductTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CartItem wherePurchasableData($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CartItem wherePurchasableId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CartItem wherePurchasableType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CartItem whereQuantity($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CartItem whereUpdatedAt($value)
  * @mixin \Eloquent
@@ -48,6 +47,7 @@ class CartItem extends Model
         'price_item_discounted' => MoneyCast::class,
         'price_total' => MoneyCast::class,
         'price_total_discounted' => MoneyCast::class,
+        'purchasable_data' => 'array',
     ];
 
     /*
@@ -59,8 +59,8 @@ class CartItem extends Model
         return $this->belongsTo(Cart::class);
     }
 
-    public function product(): BelongsTo
+    public function purchasable(): BelongsTo
     {
-        return $this->belongsTo(Product::class);
+        return $this->morphTo();
     }
 }

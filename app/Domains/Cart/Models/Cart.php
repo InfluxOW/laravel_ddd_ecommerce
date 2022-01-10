@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * App\Domains\Cart\Models\Cart
  *
  * @property int $id
- * @property int $user_id
+ * @property int|null $user_id
  * @property string|null $key
  * @property \Akaunting\Money\Money $price_items
  * @property \Akaunting\Money\Money $price_items_discounted
