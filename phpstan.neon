@@ -19,7 +19,7 @@ parameters:
     ignoreErrors:
         - '#Attribute class JetBrains\\PhpStorm\\ArrayShape does not exist#'
         - '#Access to an undefined property Squire\\Models#'
-        - '#Access to an undefined property Illuminate\\Database\\Eloquent\\Model::\$id#'
+        - '#Illuminate\\Database\\Eloquent\\Model::\$id#'
         - '#Model::make\(\)#'
         - '#Call to an undefined static method Illuminate\\Support\\Facades\\Redis#'
         - '#\(Akaunting\\Money\\Money\) does not accept int#'

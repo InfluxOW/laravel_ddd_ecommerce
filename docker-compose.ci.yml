@@ -17,6 +17,9 @@ services:
             DB_USERNAME: postgres
             DB_HOST: database
             TEST_DB_HOST: database
+            CACHE_DRIVER: redis
+            REDIS_HOST: redis
+            REDIS_CLIENT: predis
         depends_on:
             - database
         command: [ "make", "install", "lint", "analyse", "test-coverage" ]

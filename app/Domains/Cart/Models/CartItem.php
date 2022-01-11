@@ -43,6 +43,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class CartItem extends Model
 {
+    public const MAX_QUANTITY = 99;
+
     protected $casts = [
         'price_item' => MoneyCast::class,
         'price_item_discounted' => MoneyCast::class,

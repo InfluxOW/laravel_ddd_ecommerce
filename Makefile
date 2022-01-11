@@ -9,7 +9,7 @@ install:
 test:
 	php artisan test -vvv
 test-coverage:
-	XDEBUG_MODE=coverage php artisan test --coverage-clover build/logs/clover.xml
+	XDEBUG_MODE=coverage php artisan test --coverage-clover storage/logs/clover.xml
 
 lint:
 	composer exec phpcs --verbose 2>/dev/null

@@ -64,6 +64,7 @@ abstract class TestCase extends BaseTestCase
     public static function tearDownAfterClass(): void
     {
         DatabaseState::$shouldRunSetUpOnce = true;
+        RefreshDatabaseState::$migrated = false;
 
         parent::tearDownAfterClass();
     }

@@ -173,16 +173,28 @@ class Product extends Model implements Purchasable
 
     public function getPurchasablePrice(string $currency): Money
     {
-        /** @var ProductPrice $price */
-        $price = $this->prices->where('currency', $currency)->first();
+        /**
+         * @var ProductPrice $price
+         *
+         * Clone prevents some strange bug related to casts
+         * that randomly nullifies the value
+         * @phpstan-ignore-next-line
+         */
+        $price = clone($this->prices)->where('currency', $currency)->first();
 
         return $price->price;
     }
 
     public function getPurchasablePriceDiscounted(string $currency): ?Money
     {
-        /** @var ProductPrice $price */
-        $price = $this->prices->where('currency', $currency)->first();
+        /**
+         * @var ProductPrice $price
+         *
+         * Clone prevents some strange bug related to casts
+         * that randomly nullifies the value
+         * @phpstan-ignore-next-line
+         */
+        $price = clone($this->prices)->where('currency', $currency)->first();
 
         return $price->price_discounted;
     }
