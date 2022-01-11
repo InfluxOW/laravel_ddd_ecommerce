@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Domains\Components\Priceable\Casts;
+namespace App\Domains\Components\Purchasable\Casts;
 
 use Akaunting\Money\Money;
+use App\Domains\Catalog\Models\Settings\CatalogSettings;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 
 use function money;
@@ -20,7 +21,14 @@ class MoneyCast implements CastsAttributes
      */
     public function get($model, string $key, $value, array $attributes)
     {
-        return is_int($value) ? money($value, $attributes['currency']) : null;
+        $currency = app(CatalogSettings::class)->default_currency;
+        if (array_key_exists('currency', $attributes)) {
+            $currency = $attributes['currency'];
+        } else if (isset($model->currency)) {
+            $currency = $model->currency;
+        }
+
+        return is_int($value) ? money($value, $currency) : null;
     }
 
     /**

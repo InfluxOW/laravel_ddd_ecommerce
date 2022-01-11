@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Components\Priceable\Http\Resources;
+namespace App\Domains\Components\Purchasable\Http\Resources;
 
 use Akaunting\Money\Currency;
 use Illuminate\Http\Resources\Json\JsonResource;

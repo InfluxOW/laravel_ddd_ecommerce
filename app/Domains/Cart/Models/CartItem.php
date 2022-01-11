@@ -2,7 +2,7 @@
 
 namespace App\Domains\Cart\Models;
 
-use App\Domains\Components\Priceable\Casts\MoneyCast;
+use App\Domains\Components\Purchasable\Casts\MoneyCast;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Domains\Cart\Models\Cart $cart
+ * @property-read string $currency
  * @property-read Model|\Eloquent $purchasable
  * @method static \Illuminate\Database\Eloquent\Builder|CartItem newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CartItem newQuery()
@@ -49,6 +50,23 @@ class CartItem extends Model
         'price_total_discounted' => MoneyCast::class,
         'purchasable_data' => 'array',
     ];
+    protected $fillable = [
+        'quantity',
+        'price_item',
+        'price_item_discounted',
+        'price_total',
+        'price_total_discounted',
+        'purchasable_data',
+    ];
+
+    /*
+     * Attributes
+     * */
+
+    public function getCurrencyAttribute(): string
+    {
+        return $this->cart->currency;
+    }
 
     /*
      * Relations

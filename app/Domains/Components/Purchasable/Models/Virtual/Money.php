@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Components\Priceable\Models\Virtual;
+namespace App\Domains\Components\Purchasable\Models\Virtual;
 
 /**
  * @OA\Schema(

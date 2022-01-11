@@ -2,9 +2,11 @@
 
 namespace App\Domains\Catalog\Models;
 
+use Akaunting\Money\Money;
 use App\Domains\Catalog\Database\Factories\ProductFactory;
 use App\Domains\Catalog\Enums\ProductAttributeValuesType;
 use App\Domains\Components\Generic\Enums\BooleanString;
+use App\Domains\Components\Purchasable\Abstracts\Purchasable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -48,7 +50,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Product whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class Product extends Model
+class Product extends Model implements Purchasable
 {
     use HasFactory;
     use HasSlug;
@@ -163,5 +165,33 @@ class Product extends Model
             ->join('product_prices', 'product_prices.product_id', '=', 'products.id')
             ->where('product_prices.currency', $currency)
             ->orderBy(ProductPrice::getDatabasePriceExpression(), $descending ? 'DESC' : 'ASC');
+    }
+
+    /*
+     * Purchasable
+     * */
+
+    public function getPurchasablePrice(string $currency): Money
+    {
+        /** @var ProductPrice $price */
+        $price = $this->prices->where('currency', $currency)->first();
+
+        return $price->price;
+    }
+
+    public function getPurchasablePriceDiscounted(string $currency): ?Money
+    {
+        /** @var ProductPrice $price */
+        $price = $this->prices->where('currency', $currency)->first();
+
+        return $price->price_discounted;
+    }
+
+    public function getPurchasableData(): array
+    {
+        return [
+            'title' => $this->title,
+            'description' => $this->description,
+        ];
     }
 }

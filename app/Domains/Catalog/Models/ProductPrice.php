@@ -3,7 +3,7 @@
 namespace App\Domains\Catalog\Models;
 
 use App\Domains\Catalog\Database\Factories\ProductPriceFactory;
-use App\Domains\Components\Priceable\Casts\MoneyCast;
+use App\Domains\Components\Purchasable\Casts\MoneyCast;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
