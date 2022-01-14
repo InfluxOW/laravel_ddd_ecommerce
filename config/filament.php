@@ -3,6 +3,7 @@
 use App\Domains\Catalog\Admin\Pages\ManageCatalogSettings;
 use App\Domains\Catalog\Admin\Resources\ProductAttributeResource;
 use App\Domains\Catalog\Admin\Resources\ProductCategoryResource;
+use App\Domains\Catalog\Admin\Resources\ProductResource;
 use App\Domains\Users\Admin\Resources\UserResource;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -108,6 +109,7 @@ return [
             UserResource::class,
             ProductCategoryResource::class,
             ProductAttributeResource::class,
+            ProductResource::class,
         ],
     ],
 

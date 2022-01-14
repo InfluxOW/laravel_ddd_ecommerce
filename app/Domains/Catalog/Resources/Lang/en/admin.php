@@ -9,6 +9,7 @@ use App\Domains\Catalog\Admin\Pages\ManageCatalogSettings;
 use App\Domains\Catalog\Admin\Resources\ProductAttributeResource;
 use App\Domains\Catalog\Admin\Resources\ProductCategoryResource;
 use App\Domains\Catalog\Admin\Resources\ProductCategoryResource\RelationManagers\ProductCategoryChildrenRelationManager;
+use App\Domains\Catalog\Admin\Resources\ProductResource;
 use App\Domains\Components\Generic\Utils\LangUtils;
 
 return [
@@ -22,6 +23,12 @@ return [
         AdminResourcePropertyTranslationKey::LABEL->name => 'Attribute',
         AdminResourcePropertyTranslationKey::PLURAL_LABEL->name => 'Attributes',
         AdminResourcePropertyTranslationKey::NAVIGATION_LABEL->name => 'Attributes',
+        AdminResourcePropertyTranslationKey::NAVIGATION_GROUP->name => LangUtils::translateEnum(DomainServiceProvider::TRANSLATION_NAMESPACE, AdminNavigationGroupTranslationKey::CATALOG),
+    ],
+    ProductResource::class => [
+        AdminResourcePropertyTranslationKey::LABEL->name => 'Product',
+        AdminResourcePropertyTranslationKey::PLURAL_LABEL->name => 'Products',
+        AdminResourcePropertyTranslationKey::NAVIGATION_LABEL->name => 'Products',
         AdminResourcePropertyTranslationKey::NAVIGATION_GROUP->name => LangUtils::translateEnum(DomainServiceProvider::TRANSLATION_NAMESPACE, AdminNavigationGroupTranslationKey::CATALOG),
     ],
     ProductCategoryChildrenRelationManager::class => [

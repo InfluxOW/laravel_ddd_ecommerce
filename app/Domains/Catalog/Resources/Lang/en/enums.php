@@ -6,6 +6,7 @@ use App\Domains\Catalog\Enums\Query\Sort\ProductAllowedSort;
 use App\Domains\Catalog\Enums\Translation\CatalogSettingsTranslationKey;
 use App\Domains\Catalog\Enums\Translation\ProductAttributeResourceTranslationKey;
 use App\Domains\Catalog\Enums\Translation\ProductCategoryResourceTranslationKey;
+use App\Domains\Catalog\Enums\Translation\ProductResourceTranslationKey;
 use App\Domains\Components\Generic\Utils\EnumUtils;
 
 return [
@@ -54,5 +55,10 @@ return [
         ProductAttributeValuesType::BOOLEAN->name => 'Boolean',
         ProductAttributeValuesType::FLOAT->name => 'Float',
         ProductAttributeValuesType::INTEGER->name => 'Integer',
+    ],
+    ProductResourceTranslationKey::class => [
+        ProductResourceTranslationKey::TITLE->name => 'Title',
+        ProductResourceTranslationKey::SLUG->name => 'Slug',
+        ProductResourceTranslationKey::DESCRIPTION->name => 'Description',
     ],
 ];
