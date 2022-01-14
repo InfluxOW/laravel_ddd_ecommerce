@@ -55,6 +55,11 @@ class Product extends Model implements Purchasable
     use HasFactory;
     use HasSlug;
 
+    protected $fillable = [
+        'title',
+        'description',
+    ];
+
     /*
      * Relations
      * */

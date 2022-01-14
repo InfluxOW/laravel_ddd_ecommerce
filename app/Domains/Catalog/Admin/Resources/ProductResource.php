@@ -7,8 +7,10 @@ use App\Domains\Admin\Traits\Translation\HasTranslatableAdminLabels;
 use App\Domains\Admin\Traits\Translation\TranslatableAdminResource;
 use App\Domains\Catalog\Enums\Translation\ProductResourceTranslationKey;
 use App\Domains\Catalog\Models\Product;
+use App\Domains\Catalog\Models\ProductCategory;
 use App\Domains\Catalog\Providers\DomainServiceProvider;
 use App\Domains\Components\Generic\Enums\Lang\TranslationNamespace;
+use Filament\Forms\Components\BelongsToManyMultiSelect;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\TextInput;
@@ -60,6 +62,19 @@ class ProductResource extends Resource
                     ->columnSpan(2),
                 TimestampsCard::make()
                     ->columnSpan(1),
+                Card::make()
+                    ->columnSpan(3)
+                    ->schema([
+                        BelongsToManyMultiSelect::make(ProductResourceTranslationKey::CATEGORIES->value)
+                            ->relationship('categories', 'title')
+                            ->options(fn (?Product $record, callable $get): array => ProductCategory::query()
+                                    ->hasLimitedDepth()
+                                    ->where('depth', '>=', ProductCategory::MAX_DEPTH - 1)
+                                    ->whereIntegerNotInRaw('id', $get(ProductResourceTranslationKey::CATEGORIES->value))
+                                    ->orderBy('left')
+                                    ->pluck('title', 'id')
+                                    ->toArray()),
+                    ]),
             ]))
             ->columns(3);
     }
