@@ -12,14 +12,14 @@ use Illuminate\Support\Facades\Redis;
 
 class CartService
 {
-    public static function make(string $currency, ?User $user): Cart
+    public function make(string $currency, ?User $user): Cart
     {
         $cart = Cart::make(['price_items' => 0, 'price_items_discounted' => 0, 'currency' => $currency]);
         $cart->user()->associate($user);
         if ($user === null) {
             do {
-                $key = self::generateCartKey();
-                $cacheKey = self::getCartCacheKey(null, $key);
+                $key = $this->generateCartKey();
+                $cacheKey = $this->getCartCacheKey(null, $key);
             } while (is_string($cacheKey) && Redis::exists($cacheKey));
 
             $cart->key = $key;
@@ -28,13 +28,13 @@ class CartService
         return $cart;
     }
 
-    public static function find(?User $user, ?string $key): ?Cart
+    public function find(?User $user, ?string $key): ?Cart
     {
         if ($user === null && $key === null) {
             return null;
         }
 
-        return self::getFromCache($user, $key);
+        return $this->getFromCache($user, $key);
     }
 
     /**
@@ -43,11 +43,11 @@ class CartService
      * @param int $quantity
      * @return Cart
      */
-    public static function add(Cart $cart, Model&Purchasable $purchasable, int $quantity): Cart
+    public function add(Cart $cart, Model&Purchasable $purchasable, int $quantity): Cart
     {
         $item = $cart->items->where('purchasable_id', $purchasable->id)->where('purchasable_type', $purchasable::class)->first();
         if (isset($item)) {
-            return self::update($cart, $purchasable, $quantity);
+            return $this->update($cart, $purchasable, $quantity);
         }
 
         /** @var CartItem $item */
@@ -58,8 +58,8 @@ class CartService
 
         $cart->setRelation('items', $cart->items->push($item));
 
-        $cart = self::recalculate($cart);
-        self::cache($cart);
+        $cart = $this->recalculate($cart);
+        $this->cache($cart);
 
         return $cart;
     }
@@ -70,57 +70,57 @@ class CartService
      * @param int $quantity
      * @return Cart
      */
-    public static function update(Cart $cart, Model&Purchasable $purchasable, int $quantity): Cart
+    public function update(Cart $cart, Model&Purchasable $purchasable, int $quantity): Cart
     {
         $item = $cart->items->where('purchasable_id', $purchasable->id)->where('purchasable_type', $purchasable::class)->first();
         if ($item === null) {
-            return self::add($cart, $purchasable, $quantity);
+            return $this->add($cart, $purchasable, $quantity);
         }
 
         $item->quantity = (int) MathUtils::clamp($quantity, 0, CartItem::MAX_QUANTITY);
 
-        $cart = self::recalculate($cart);
-        self::cache($cart);
+        $cart = $this->recalculate($cart);
+        $this->cache($cart);
 
         return $cart;
     }
 
-    public static function delete(?User $user, ?string $key): void
+    public function delete(?User $user, ?string $key): void
     {
         if ($user === null && $key === null) {
             return;
         }
 
-        $cacheKey = self::getCartCacheKey($user, $key);
+        $cacheKey = $this->getCartCacheKey($user, $key);
         if (isset($cacheKey)) {
             Redis::del($cacheKey);
         }
     }
 
-    public static function save(Cart $cart): void
+    public function save(Cart $cart): void
     {
-        self::delete($cart->user, $cart->key);
+        $this->delete($cart->user, $cart->key);
 
         $cart->user_id = null;
         $cart->key = null;
 
-        $cart = self::recalculate($cart);
+        $cart = $this->recalculate($cart);
 
         $cart->save();
         $cart->items()->saveMany($cart->items);
     }
 
-    protected static function cache(Cart $cart): void
+    protected function cache(Cart $cart): void
     {
-        $cacheKey = self::getCartCacheKey($cart->user, $cart->key);
+        $cacheKey = $this->getCartCacheKey($cart->user, $cart->key);
         if (isset($cacheKey)) {
             Redis::set($cacheKey, serialize($cart));
         }
     }
 
-    protected static function getFromCache(?User $user, ?string $key): ?Cart
+    protected function getFromCache(?User $user, ?string $key): ?Cart
     {
-        $cacheKey = self::getCartCacheKey($user, $key);
+        $cacheKey = $this->getCartCacheKey($user, $key);
         if ($cacheKey === null) {
             return null;
         }
@@ -130,7 +130,7 @@ class CartService
         return is_string($cart) ? unserialize($cart, [Cart::class]) : null;
     }
 
-    protected static function recalculate(Cart $cart): Cart
+    protected function recalculate(Cart $cart): Cart
     {
         $priceItems = 0;
         $priceItemsDiscounted = 0;
@@ -167,7 +167,7 @@ class CartService
         return $cart;
     }
 
-    private static function getCartCacheKey(?User $user, ?string $key): ?string
+    private function getCartCacheKey(?User $user, ?string $key): ?string
     {
         if ($user === null && $key === null) {
             return null;
@@ -176,7 +176,7 @@ class CartService
         return sprintf('carts.%s', ($user === null) ? $key : sprintf('user_id:%s', $user->id));
     }
 
-    private static function generateCartKey(): string
+    private function generateCartKey(): string
     {
         return bin2hex(random_bytes(24));
     }

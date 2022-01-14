@@ -14,12 +14,14 @@ use App\Domains\Catalog\Models\Settings\CatalogSettings;
 class CartServiceTest extends TestCase
 {
     private CatalogSettings $settings;
+    private CartService $service;
 
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->settings = app(CatalogSettings::class);
+        $this->service = app(CartService::class);
     }
 
     protected function setUpOnce(): void
@@ -39,10 +41,10 @@ class CartServiceTest extends TestCase
         $product = Product::query()->with(['prices'])->inRandomOrder()->first();
         $this->assertNotNull($product);
 
-        $cart = CartService::make($this->settings->default_currency, null);
-        $cart = CartService::add($cart, $product, $quantity);
+        $cart = $this->service->make($this->settings->default_currency, null);
+        $cart = $this->service->add($cart, $product, $quantity);
         /** @var Cart $cart */
-        $cart = CartService::find(null, $cart->key);
+        $cart = $this->service->find(null, $cart->key);
         $this->assertNotNull($cart);
 
         $productPrice = $product->getPurchasablePrice($this->settings->default_currency)->getAmount();
@@ -52,12 +54,12 @@ class CartServiceTest extends TestCase
         $this->assertEquals($productDiscountedPrice * $quantity, $cart->price_items_discounted->getAmount());
 
         $newQuantity = 10;
-        $cart = CartService::update($cart, $product, $newQuantity);
+        $cart = $this->service->update($cart, $product, $newQuantity);
 
         $this->assertEquals($productPrice * $newQuantity, $cart->price_items->getAmount());
         $this->assertEquals($productDiscountedPrice * $newQuantity, $cart->price_items_discounted->getAmount());
 
-        CartService::save($cart);
+        $this->service->save($cart);
         /** @var Cart $cart */
         $cart = Cart::query()->first();
         $this->assertNotNull($cart);
@@ -65,8 +67,8 @@ class CartServiceTest extends TestCase
         $this->assertEquals($productPrice * $newQuantity, $cart->price_items->getAmount());
         $this->assertEquals($productDiscountedPrice * $newQuantity, $cart->price_items_discounted->getAmount());
 
-        CartService::delete(null, $cart->key);
-        $cart = CartService::find(null, $cart->key);
+        $this->service->delete(null, $cart->key);
+        $cart = $this->service->find(null, $cart->key);
         $this->assertNull($cart);
     }
 }
