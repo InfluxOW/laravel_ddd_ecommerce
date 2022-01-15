@@ -4,6 +4,7 @@ namespace App\Domains\Catalog\Models;
 
 use App\Domains\Catalog\Database\Factories\ProductAttributeValueFactory;
 use App\Domains\Catalog\Enums\ProductAttributeValuesType;
+use App\Domains\Components\Generic\Utils\StringUtils;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -21,6 +22,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Domains\Catalog\Models\ProductAttribute $attribute
+ * @property-read string $readable_value
  * @property mixed|null $value
  * @property-read \App\Domains\Catalog\Models\Product $product
  * @method static \App\Domains\Catalog\Database\Factories\ProductAttributeValueFactory factory(...$parameters)
@@ -42,8 +44,22 @@ class ProductAttributeValue extends Model
 {
     use HasFactory;
 
+    protected const VALUES_COLUMNS = [
+        'value_string',
+        'value_boolean',
+        'value_float',
+        'value_integer',
+    ];
+
     protected $casts = [
         'value_float' => 'float',
+    ];
+    protected $fillable = [
+        'value_string',
+        'value_boolean',
+        'value_float',
+        'value_integer',
+        'attribute_id',
     ];
 
     /*
@@ -69,8 +85,23 @@ class ProductAttributeValue extends Model
         return $this->{self::getDatabaseValueColumnByAttributeType($this->attribute->values_type)};
     }
 
+    public function getReadableValueAttribute(): string
+    {
+        $value = $this->{self::getDatabaseValueColumnByAttributeType($this->attribute->values_type)};
+
+        if ($this->attribute->values_type === ProductAttributeValuesType::BOOLEAN) {
+            return StringUtils::boolToString($value);
+        }
+
+        return $value;
+    }
+
     public function setValueAttribute(mixed $value): void
     {
+        foreach (self::VALUES_COLUMNS as $column) {
+            $this->$column = null;
+        }
+
         $this->{self::getDatabaseValueColumnByAttributeType($this->attribute->values_type)} = $value;
     }
 

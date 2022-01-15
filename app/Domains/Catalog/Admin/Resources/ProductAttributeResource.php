@@ -75,7 +75,8 @@ class ProductAttributeResource extends Resource
                             ->placeholder('width'),
                         Select::make(ProductAttributeResourceTranslationKey::VALUES_TYPE->value)
                             ->required()
-                            ->options(collect(ProductAttributeValuesType::cases())->reduce(fn (Collection $acc, ProductAttributeValuesType $valuesType): Collection => tap($acc, static fn () => $acc->offsetSet($valuesType->value, self::translateEnum($valuesType))), collect([]))),
+                            ->options(collect(ProductAttributeValuesType::cases())->reduce(fn (Collection $acc, ProductAttributeValuesType $valuesType): Collection => tap($acc, static fn () => $acc->offsetSet($valuesType->value, self::translateEnum($valuesType))), collect([])))
+                            ->searchable(),
                     ]))
                     ->columnSpan(2),
                 TimestampsCard::make()

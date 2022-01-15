@@ -5,6 +5,7 @@ use App\Domains\Catalog\Enums\Query\Filter\ProductAllowedFilter;
 use App\Domains\Catalog\Enums\Query\Sort\ProductAllowedSort;
 use App\Domains\Catalog\Enums\Translation\CatalogSettingsTranslationKey;
 use App\Domains\Catalog\Enums\Translation\ProductAttributeResourceTranslationKey;
+use App\Domains\Catalog\Enums\Translation\ProductAttributeValueResourceTranslationKey;
 use App\Domains\Catalog\Enums\Translation\ProductCategoryResourceTranslationKey;
 use App\Domains\Catalog\Enums\Translation\ProductResourceTranslationKey;
 use App\Domains\Components\Generic\Utils\EnumUtils;
@@ -40,6 +41,15 @@ return [
         ProductCategoryResourceTranslationKey::IS_VISIBLE->name => 'Is Visible',
 
         ProductCategoryResourceTranslationKey::DEPTH->name => 'Depth',
+    ],
+    ProductAttributeValueResourceTranslationKey::class => [
+        ProductAttributeValueResourceTranslationKey::ATTRIBUTE_TITLE->name => 'Attribute',
+        ProductAttributeValueResourceTranslationKey::ATTRIBUTE->name => 'Attribute',
+        ProductAttributeValueResourceTranslationKey::READABLE_VALUE->name => 'Value',
+        ProductAttributeValueResourceTranslationKey::VALUE_STRING->name => 'Value',
+        ProductAttributeValueResourceTranslationKey::VALUE_BOOLEAN->name => 'Value',
+        ProductAttributeValueResourceTranslationKey::VALUE_FLOAT->name => 'Value',
+        ProductAttributeValueResourceTranslationKey::VALUE_INTEGER->name => 'Value',
     ],
     ProductAttributeResourceTranslationKey::class => [
         ProductAttributeResourceTranslationKey::TITLE->name => 'Title',

@@ -1324,29 +1324,29 @@
         },
         {
             "name": "dragonmantank/cron-expression",
-            "version": "v3.2.4",
+            "version": "v3.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dragonmantank/cron-expression.git",
-                "reference": "9545dea2a1d92b60c8b3d06f02025c83e999bde0"
+                "reference": "63f2a76a045bac6ec93cc2daf2b534b412aa0313"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dragonmantank/cron-expression/zipball/9545dea2a1d92b60c8b3d06f02025c83e999bde0",
-                "reference": "9545dea2a1d92b60c8b3d06f02025c83e999bde0",
+                "url": "https://api.github.com/repos/dragonmantank/cron-expression/zipball/63f2a76a045bac6ec93cc2daf2b534b412aa0313",
+                "reference": "63f2a76a045bac6ec93cc2daf2b534b412aa0313",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.2|^8.0",
-                "webmozart/assert": "^1.7.0"
+                "webmozart/assert": "^1.0"
             },
             "replace": {
                 "mtdowling/cron-expression": "^1.0"
             },
             "require-dev": {
                 "phpstan/extension-installer": "^1.0",
-                "phpstan/phpstan": "^0.12",
-                "phpstan/phpstan-webmozart-assert": "^0.12.7",
+                "phpstan/phpstan": "^1.0",
+                "phpstan/phpstan-webmozart-assert": "^1.0",
                 "phpunit/phpunit": "^7.0|^8.0|^9.0"
             },
             "type": "library",
@@ -1373,7 +1373,7 @@
             ],
             "support": {
                 "issues": "https://github.com/dragonmantank/cron-expression/issues",
-                "source": "https://github.com/dragonmantank/cron-expression/tree/v3.2.4"
+                "source": "https://github.com/dragonmantank/cron-expression/tree/v3.3.0"
             },
             "funding": [
                 {
@@ -1381,7 +1381,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-01-13T04:09:37+00:00"
+            "time": "2022-01-14T16:02:05+00:00"
         },
         {
             "name": "egulias/email-validator",
@@ -1518,16 +1518,16 @@
         },
         {
             "name": "filament/filament",
-            "version": "v2.8.10",
+            "version": "v2.8.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel-filament/admin.git",
-                "reference": "b07ba56cf4b63896b0fe516f3d95f32f1fab1b3b"
+                "reference": "d57ff8a6eb13db413725211b220a534ee647670e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel-filament/admin/zipball/b07ba56cf4b63896b0fe516f3d95f32f1fab1b3b",
-                "reference": "b07ba56cf4b63896b0fe516f3d95f32f1fab1b3b",
+                "url": "https://api.github.com/repos/laravel-filament/admin/zipball/d57ff8a6eb13db413725211b220a534ee647670e",
+                "reference": "d57ff8a6eb13db413725211b220a534ee647670e",
                 "shasum": ""
             },
             "require": {
@@ -1574,20 +1574,20 @@
                 "issues": "https://github.com/laravel-filament/filament/issues",
                 "source": "https://github.com/laravel-filament/filament"
             },
-            "time": "2022-01-13T10:42:01+00:00"
+            "time": "2022-01-14T21:08:05+00:00"
         },
         {
             "name": "filament/forms",
-            "version": "v2.8.10",
+            "version": "v2.8.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel-filament/forms.git",
-                "reference": "3486f41fec43d22a72a6676a5a6414fb4bb8748c"
+                "reference": "4c817523f259a101ce08e4859aba5d7244609f88"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel-filament/forms/zipball/3486f41fec43d22a72a6676a5a6414fb4bb8748c",
-                "reference": "3486f41fec43d22a72a6676a5a6414fb4bb8748c",
+                "url": "https://api.github.com/repos/laravel-filament/forms/zipball/4c817523f259a101ce08e4859aba5d7244609f88",
+                "reference": "4c817523f259a101ce08e4859aba5d7244609f88",
                 "shasum": ""
             },
             "require": {
@@ -1630,11 +1630,11 @@
                 "issues": "https://github.com/laravel-filament/filament/issues",
                 "source": "https://github.com/laravel-filament/filament"
             },
-            "time": "2022-01-13T10:41:55+00:00"
+            "time": "2022-01-14T21:08:03+00:00"
         },
         {
             "name": "filament/spatie-laravel-settings-plugin",
-            "version": "v2.8.10",
+            "version": "v2.8.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel-filament/spatie-laravel-settings-plugin.git",
@@ -1678,16 +1678,16 @@
         },
         {
             "name": "filament/tables",
-            "version": "v2.8.10",
+            "version": "v2.8.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel-filament/tables.git",
-                "reference": "f34736027a680d2523c3a5bb97920560d9d0981c"
+                "reference": "01ce6784d047a77031e3e8e4ce044b352d05dfc8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel-filament/tables/zipball/f34736027a680d2523c3a5bb97920560d9d0981c",
-                "reference": "f34736027a680d2523c3a5bb97920560d9d0981c",
+                "url": "https://api.github.com/repos/laravel-filament/tables/zipball/01ce6784d047a77031e3e8e4ce044b352d05dfc8",
+                "reference": "01ce6784d047a77031e3e8e4ce044b352d05dfc8",
                 "shasum": ""
             },
             "require": {
@@ -1727,7 +1727,7 @@
                 "issues": "https://github.com/laravel-filament/filament/issues",
                 "source": "https://github.com/laravel-filament/filament"
             },
-            "time": "2022-01-12T23:11:59+00:00"
+            "time": "2022-01-14T21:08:02+00:00"
         },
         {
             "name": "flowframe/laravel-trend",
@@ -9845,12 +9845,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "7d6528ddb1c492d77a92afd5cfa19ed0b1001f3a"
+                "reference": "72b04d97b5e6e60a081f17c416fef35bd521120b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/7d6528ddb1c492d77a92afd5cfa19ed0b1001f3a",
-                "reference": "7d6528ddb1c492d77a92afd5cfa19ed0b1001f3a",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/72b04d97b5e6e60a081f17c416fef35bd521120b",
+                "reference": "72b04d97b5e6e60a081f17c416fef35bd521120b",
                 "shasum": ""
             },
             "require": {
@@ -9882,7 +9882,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/master"
+                "source": "https://github.com/phpstan/phpstan/tree/1.4.0"
             },
             "funding": [
                 {
@@ -9902,7 +9902,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-01-13T19:34:52+00:00"
+            "time": "2022-01-14T15:58:47+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -10381,12 +10381,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "3665408e3d73c238711b8d522e7145ec18116cd4"
+                "reference": "38da7ef14348ff26d7c415c4ed18b82db07fe199"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/3665408e3d73c238711b8d522e7145ec18116cd4",
-                "reference": "3665408e3d73c238711b8d522e7145ec18116cd4",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/38da7ef14348ff26d7c415c4ed18b82db07fe199",
+                "reference": "38da7ef14348ff26d7c415c4ed18b82db07fe199",
                 "shasum": ""
             },
             "conflict": {
@@ -10575,7 +10575,7 @@
                 "october/cms": "= 1.1.1|= 1.0.471|= 1.0.469|>=1.0.319,<1.0.469",
                 "october/october": ">=1.0.319,<1.0.466|>=2.1,<2.1.12",
                 "october/rain": "<1.0.472|>=1.1,<1.1.2",
-                "october/system": "<1.0.472|>=1.1.1,<1.1.5|>=2.1,<2.1.12",
+                "october/system": "<1.0.473|>=1.1,<1.1.6|>=2.1,<2.1.12",
                 "onelogin/php-saml": "<2.10.4",
                 "oneup/uploader-bundle": "<1.9.3|>=2,<2.1.5",
                 "opencart/opencart": "<=3.0.3.2",
@@ -10815,7 +10815,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-01-13T23:16:03+00:00"
+            "time": "2022-01-14T21:13:43+00:00"
         },
         {
             "name": "sebastian/cli-parser",

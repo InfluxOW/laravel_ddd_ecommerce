@@ -10,6 +10,7 @@ use App\Domains\Catalog\Admin\Resources\ProductAttributeResource;
 use App\Domains\Catalog\Admin\Resources\ProductCategoryResource;
 use App\Domains\Catalog\Admin\Resources\ProductCategoryResource\RelationManagers\ProductCategoryChildrenRelationManager;
 use App\Domains\Catalog\Admin\Resources\ProductResource;
+use App\Domains\Catalog\Admin\Resources\ProductResource\RelationManagers\ProductAttributeValuesRelationManager;
 use App\Domains\Components\Generic\Utils\LangUtils;
 
 return [
@@ -35,6 +36,11 @@ return [
         AdminRelationPropertyTranslationKey::TITLE->name => 'Children',
         AdminRelationPropertyTranslationKey::LABEL->name => 'child',
         AdminRelationPropertyTranslationKey::PLURAL_LABEL->name => 'children',
+    ],
+    ProductAttributeValuesRelationManager::class => [
+        AdminRelationPropertyTranslationKey::TITLE->name => 'Attribute Values',
+        AdminRelationPropertyTranslationKey::LABEL->name => 'attribute value',
+        AdminRelationPropertyTranslationKey::PLURAL_LABEL->name => 'attribute values',
     ],
     ManageCatalogSettings::class => [
         AdminPagePropertyTranslationKey::TITLE->name => 'Catalog Settings',

@@ -5,6 +5,7 @@ namespace App\Domains\Catalog\Admin\Resources;
 use App\Domains\Admin\Admin\Components\Cards\TimestampsCard;
 use App\Domains\Admin\Traits\Translation\HasTranslatableAdminLabels;
 use App\Domains\Admin\Traits\Translation\TranslatableAdminResource;
+use App\Domains\Catalog\Admin\Resources\ProductResource\RelationManagers\ProductAttributeValuesRelationManager;
 use App\Domains\Catalog\Enums\Translation\ProductResourceTranslationKey;
 use App\Domains\Catalog\Models\Product;
 use App\Domains\Catalog\Models\ProductCategory;
@@ -18,6 +19,7 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables\Columns\TextColumn;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 
 class ProductResource extends Resource
@@ -94,7 +96,7 @@ class ProductResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            ProductAttributeValuesRelationManager::class,
         ];
     }
 
@@ -106,6 +108,11 @@ class ProductResource extends Resource
             'edit' => \App\Domains\Catalog\Admin\Resources\ProductResource\Pages\EditProduct::route('/{record}/edit'),
             'view' => \App\Domains\Catalog\Admin\Resources\ProductResource\Pages\ViewProduct::route('/{record}'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->with(['attributeValues.attribute']);
     }
 
     /*
