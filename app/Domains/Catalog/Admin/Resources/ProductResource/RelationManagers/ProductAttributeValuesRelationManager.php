@@ -28,7 +28,6 @@ class ProductAttributeValuesRelationManager extends HasManyRelationManager
     use HasTranslatableAdminLabels;
 
     protected static string $relationship = 'attributeValues';
-    protected static ?string $recordTitleAttribute = 'value';
 
     public static function form(Form $form): Form
     {
@@ -128,7 +127,7 @@ class ProductAttributeValuesRelationManager extends HasManyRelationManager
 
     private function isOnEditPage(): bool
     {
-        return Request::url() === ProductResource::getUrl('edit', $this->ownerRecord->id);
+        return Request::url() === ProductResource::getUrl('edit', $this->ownerRecord->id) || Request::routeIs('livewire.message');
     }
 
     /*

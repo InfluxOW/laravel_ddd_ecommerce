@@ -6,6 +6,7 @@ use App\Domains\Admin\Admin\Components\Cards\TimestampsCard;
 use App\Domains\Admin\Traits\Translation\HasTranslatableAdminLabels;
 use App\Domains\Admin\Traits\Translation\TranslatableAdminResource;
 use App\Domains\Catalog\Admin\Resources\ProductResource\RelationManagers\ProductAttributeValuesRelationManager;
+use App\Domains\Catalog\Admin\Resources\ProductResource\RelationManagers\ProductPricesRelationManager;
 use App\Domains\Catalog\Enums\Translation\ProductResourceTranslationKey;
 use App\Domains\Catalog\Models\Product;
 use App\Domains\Catalog\Models\ProductCategory;
@@ -20,6 +21,7 @@ use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 class ProductResource extends Resource
@@ -31,11 +33,29 @@ class ProductResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'title';
 
-    protected static ?string $navigationIcon = 'heroicon-o-currency-dollar';
-
     protected static ?string $slug = 'catalog/products';
 
+    protected static ?string $navigationIcon = 'heroicon-o-currency-dollar';
+
     protected static ?int $navigationSort = 0;
+
+    /*
+     * Global Search
+     * */
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['title', 'slug'];
+    }
+
+    public static function getGlobalSearchResultUrl(Model $record): string
+    {
+        return route(sprintf('filament.resources.%s.view', static::$slug), ['record' => $record]);
+    }
+
+    /*
+     * Data
+     * */
 
     public static function form(Form $form): Form
     {
@@ -97,6 +117,7 @@ class ProductResource extends Resource
     {
         return [
             ProductAttributeValuesRelationManager::class,
+            ProductPricesRelationManager::class,
         ];
     }
 
@@ -112,7 +133,7 @@ class ProductResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()->with(['attributeValues.attribute']);
+        return parent::getEloquentQuery()->with(['attributeValues.attribute', 'prices']);
     }
 
     /*

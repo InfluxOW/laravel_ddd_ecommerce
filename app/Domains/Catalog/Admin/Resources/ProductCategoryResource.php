@@ -38,9 +38,9 @@ class ProductCategoryResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'title';
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
-
     protected static ?string $slug = 'catalog/categories';
+
+    protected static ?string $navigationIcon = 'heroicon-o-collection';
 
     protected static ?int $navigationSort = 2;
 

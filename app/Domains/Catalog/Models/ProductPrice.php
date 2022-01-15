@@ -2,6 +2,7 @@
 
 namespace App\Domains\Catalog\Models;
 
+use Akaunting\Money\Money;
 use App\Domains\Catalog\Database\Factories\ProductPriceFactory;
 use App\Domains\Components\Purchasable\Casts\MoneyCast;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,8 +16,8 @@ use Illuminate\Support\Facades\DB;
  *
  * @property int $id
  * @property int $product_id
- * @property \Akaunting\Money\Money $price
- * @property \Akaunting\Money\Money|null $price_discounted
+ * @property Money $price
+ * @property Money|null $price_discounted
  * @property string $currency
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -41,6 +42,11 @@ class ProductPrice extends Model
     protected $casts = [
         'price' => MoneyCast::class,
         'price_discounted' => MoneyCast::class,
+    ];
+    protected $fillable = [
+        'currency',
+        'price',
+        'price_discounted',
     ];
 
     /*

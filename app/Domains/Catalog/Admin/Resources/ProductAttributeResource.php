@@ -31,9 +31,9 @@ class ProductAttributeResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'title';
 
-    protected static ?string $navigationIcon = 'heroicon-o-document-duplicate';
-
     protected static ?string $slug = 'catalog/attributes';
+
+    protected static ?string $navigationIcon = 'heroicon-o-document-duplicate';
 
     protected static ?int $navigationSort = 1;
 

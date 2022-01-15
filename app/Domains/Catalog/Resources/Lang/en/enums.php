@@ -7,6 +7,7 @@ use App\Domains\Catalog\Enums\Translation\CatalogSettingsTranslationKey;
 use App\Domains\Catalog\Enums\Translation\ProductAttributeResourceTranslationKey;
 use App\Domains\Catalog\Enums\Translation\ProductAttributeValueResourceTranslationKey;
 use App\Domains\Catalog\Enums\Translation\ProductCategoryResourceTranslationKey;
+use App\Domains\Catalog\Enums\Translation\ProductPriceResourceTranslationKey;
 use App\Domains\Catalog\Enums\Translation\ProductResourceTranslationKey;
 use App\Domains\Components\Generic\Utils\EnumUtils;
 
@@ -70,5 +71,10 @@ return [
         ProductResourceTranslationKey::TITLE->name => 'Title',
         ProductResourceTranslationKey::SLUG->name => 'Slug',
         ProductResourceTranslationKey::DESCRIPTION->name => 'Description',
+    ],
+    ProductPriceResourceTranslationKey::class => [
+        ProductPriceResourceTranslationKey::CURRENCY->name => 'Currency',
+        ProductPriceResourceTranslationKey::PRICE->name => 'Price',
+        ProductPriceResourceTranslationKey::PRICE_DISCOUNTED->name => 'Price Discounted',
     ],
 ];
