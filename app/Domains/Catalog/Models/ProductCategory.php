@@ -119,7 +119,7 @@ class ProductCategory extends Model
         }
         $path[] = $this->title;
 
-        return implode(' — ', array_reverse($path));
+        return implode(' — ', $path);
     }
 
     /*

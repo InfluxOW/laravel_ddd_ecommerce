@@ -107,27 +107,30 @@ class ProductAttributeValuesRelationManager extends HasManyRelationManager
         /** @var Product $product */
         $product = $this->ownerRecord;
 
-        return $product->attributeValues->count() < ProductAttribute::query()->count() && $this->isOnEditPage();
+        return $product->attributeValues->count() < ProductAttribute::query()->count() && $this->shouldBeDisplayed();
     }
 
     protected function canDeleteAny(): bool
     {
-        return $this->isOnEditPage();
+        return $this->shouldBeDisplayed();
     }
 
     protected function canDelete(Model $record): bool
     {
-        return $this->isOnEditPage();
+        return $this->shouldBeDisplayed();
     }
 
     protected function canEdit(Model $record): bool
     {
-        return $this->isOnEditPage();
+        return $this->shouldBeDisplayed();
     }
 
-    private function isOnEditPage(): bool
+    private function shouldBeDisplayed(): bool
     {
-        return Request::url() === ProductResource::getUrl('edit', $this->ownerRecord->id) || Request::routeIs('livewire.message');
+        return collect([
+            ProductResource::getUrl('view', $this->ownerRecord->id),
+            route('livewire.message', ['catalog.admin.resources.product-resource.pages.view-product']),
+        ])->doesntContain(Request::url());
     }
 
     /*

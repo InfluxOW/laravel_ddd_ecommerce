@@ -8,12 +8,15 @@ use App\Domains\Components\Addressable\Enums\Translation\AddressesRelationManage
 use App\Domains\Components\Addressable\Models\Address;
 use App\Domains\Components\Addressable\Providers\DomainServiceProvider;
 use App\Domains\Components\Generic\Enums\Lang\TranslationNamespace;
+use App\Domains\Users\Admin\Resources\UserResource;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
 use Filament\Resources\RelationManagers\MorphManyRelationManager;
 use Filament\Resources\Table;
 use Filament\Tables\Columns\TextColumn;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Request;
 use Squire\Models\Country;
 use Squire\Models\Region;
 
@@ -62,6 +65,38 @@ class AddressesRelationManager extends MorphManyRelationManager
             ->filters([
                 //
             ]);
+    }
+
+    /*
+     * Policies
+     * */
+
+    protected function canCreate(): bool
+    {
+        return $this->shouldBeDisplayed();
+    }
+
+    protected function canDeleteAny(): bool
+    {
+        return $this->shouldBeDisplayed();
+    }
+
+    protected function canDelete(Model $record): bool
+    {
+        return $this->shouldBeDisplayed();
+    }
+
+    protected function canEdit(Model $record): bool
+    {
+        return $this->shouldBeDisplayed();
+    }
+
+    private function shouldBeDisplayed(): bool
+    {
+        return collect([
+            UserResource::getUrl('view', $this->ownerRecord->id),
+            route('livewire.message', ['generic.admin.resources.user-resource.pages.view-user']),
+        ])->doesntContain(Request::url());
     }
 
     /*

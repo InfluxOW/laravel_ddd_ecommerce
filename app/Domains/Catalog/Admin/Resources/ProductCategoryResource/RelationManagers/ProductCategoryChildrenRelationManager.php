@@ -18,6 +18,8 @@ use Filament\Tables\Actions\ButtonAction;
 use Filament\Tables\Actions\LinkAction;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Request;
 
 class ProductCategoryChildrenRelationManager extends HasManyRelationManager
 {
@@ -29,6 +31,8 @@ class ProductCategoryChildrenRelationManager extends HasManyRelationManager
 
     public static function form(Form $form): Form
     {
+        ProductCategory::loadHeavyHierarchy();
+
         return $form->schema(ProductCategoryResource::getCreationFormSchema());
     }
 
@@ -56,6 +60,43 @@ class ProductCategoryChildrenRelationManager extends HasManyRelationManager
     protected function getTableQuery(): Builder
     {
         return parent::getTableQuery()->orderBy('left');
+    }
+
+    /*
+     * Policies
+     * */
+
+    protected function canCreate(): bool
+    {
+        /** @var ProductCategory $category */
+        $category = $this->ownerRecord;
+
+        return $this->shouldBeDisplayed() && $category->depth < ProductCategory::MAX_DEPTH;
+    }
+
+    protected function canDeleteAny(): bool
+    {
+        return $this->shouldBeDisplayed() && ProductCategoryResource::canDeleteAny();
+    }
+
+    /** @param ProductCategory $record */
+    protected function canDelete(Model $record): bool
+    {
+        return $this->shouldBeDisplayed() && ProductCategoryResource::canDelete($record);
+    }
+
+    /** @param ProductCategory $record */
+    protected function canEdit(Model $record): bool
+    {
+        return $this->shouldBeDisplayed();
+    }
+
+    private function shouldBeDisplayed(): bool
+    {
+        return collect([
+            ProductCategoryResource::getUrl('view', $this->ownerRecord->id),
+            route('livewire.message', ['catalog.admin.resources.product-category-resource.pages.view-product-category']),
+        ])->doesntContain(Request::url());
     }
 
     /*
