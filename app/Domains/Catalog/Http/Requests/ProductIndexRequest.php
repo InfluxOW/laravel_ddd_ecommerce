@@ -2,7 +2,6 @@
 
 namespace App\Domains\Catalog\Http\Requests;
 
-use Akaunting\Money\Currency;
 use App\Domains\Catalog\Enums\Query\Filter\ProductAllowedFilter;
 use App\Domains\Catalog\Models\Settings\CatalogSettings;
 use App\Domains\Components\Queryable\Enums\QueryKey;
@@ -20,7 +19,7 @@ class ProductIndexRequest extends FormRequest
             sprintf('%s.%s', QueryKey::FILTER->value, ProductAllowedFilter::DESCRIPTION->value) => ['nullable', 'string'],
             sprintf('%s.%s', QueryKey::FILTER->value, ProductAllowedFilter::CATEGORY->value) => ['nullable', 'array'],
             sprintf('%s.%s.*', QueryKey::FILTER->value, ProductAllowedFilter::CATEGORY->value) => ['required', 'string'],
-            sprintf('%s.%s', QueryKey::FILTER->value, ProductAllowedFilter::CURRENCY->value) => ['nullable', 'string', Rule::in(array_keys(Currency::getCurrencies()))],
+            sprintf('%s.%s', QueryKey::FILTER->value, ProductAllowedFilter::CURRENCY->value) => ['nullable', 'string', Rule::in(app(CatalogSettings::class)->available_currencies)],
             sprintf('%s.%s', QueryKey::FILTER->value, ProductAllowedFilter::PRICE_BETWEEN->value) => ['nullable', 'array', 'size:2'],
             sprintf('%s.%s.*', QueryKey::FILTER->value, ProductAllowedFilter::PRICE_BETWEEN->value) => ['nullable', 'numeric', 'min:0.01'],
             sprintf('%s.%s.*', QueryKey::FILTER->value, ProductAllowedFilter::ATTRIBUTE_VALUE->value) => ['nullable', 'array'],
