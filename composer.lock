@@ -1518,16 +1518,16 @@
         },
         {
             "name": "filament/filament",
-            "version": "v2.8.11",
+            "version": "v2.9.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel-filament/admin.git",
-                "reference": "d57ff8a6eb13db413725211b220a534ee647670e"
+                "reference": "bc3e0ab5068be22da52bab9b1ee607b8b45cd072"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel-filament/admin/zipball/d57ff8a6eb13db413725211b220a534ee647670e",
-                "reference": "d57ff8a6eb13db413725211b220a534ee647670e",
+                "url": "https://api.github.com/repos/laravel-filament/admin/zipball/bc3e0ab5068be22da52bab9b1ee607b8b45cd072",
+                "reference": "bc3e0ab5068be22da52bab9b1ee607b8b45cd072",
                 "shasum": ""
             },
             "require": {
@@ -1574,20 +1574,20 @@
                 "issues": "https://github.com/laravel-filament/filament/issues",
                 "source": "https://github.com/laravel-filament/filament"
             },
-            "time": "2022-01-14T21:08:05+00:00"
+            "time": "2022-01-17T09:04:00+00:00"
         },
         {
             "name": "filament/forms",
-            "version": "v2.8.11",
+            "version": "v2.9.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel-filament/forms.git",
-                "reference": "4c817523f259a101ce08e4859aba5d7244609f88"
+                "reference": "8478b60e38c138127d350bc1453284514863cc75"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel-filament/forms/zipball/4c817523f259a101ce08e4859aba5d7244609f88",
-                "reference": "4c817523f259a101ce08e4859aba5d7244609f88",
+                "url": "https://api.github.com/repos/laravel-filament/forms/zipball/8478b60e38c138127d350bc1453284514863cc75",
+                "reference": "8478b60e38c138127d350bc1453284514863cc75",
                 "shasum": ""
             },
             "require": {
@@ -1630,20 +1630,20 @@
                 "issues": "https://github.com/laravel-filament/filament/issues",
                 "source": "https://github.com/laravel-filament/filament"
             },
-            "time": "2022-01-14T21:08:03+00:00"
+            "time": "2022-01-16T21:59:12+00:00"
         },
         {
             "name": "filament/spatie-laravel-settings-plugin",
-            "version": "v2.8.11",
+            "version": "v2.9.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel-filament/spatie-laravel-settings-plugin.git",
-                "reference": "02654d1598cde57d6b5c516e2c1619803c8248a9"
+                "reference": "031ff86268104cac74e28d6ae92ae182dc59d028"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel-filament/spatie-laravel-settings-plugin/zipball/02654d1598cde57d6b5c516e2c1619803c8248a9",
-                "reference": "02654d1598cde57d6b5c516e2c1619803c8248a9",
+                "url": "https://api.github.com/repos/laravel-filament/spatie-laravel-settings-plugin/zipball/031ff86268104cac74e28d6ae92ae182dc59d028",
+                "reference": "031ff86268104cac74e28d6ae92ae182dc59d028",
                 "shasum": ""
             },
             "require": {
@@ -1674,20 +1674,20 @@
                 "issues": "https://github.com/laravel-filament/filament/issues",
                 "source": "https://github.com/laravel-filament/filament"
             },
-            "time": "2021-12-23T22:25:56+00:00"
+            "time": "2022-01-16T21:59:13+00:00"
         },
         {
             "name": "filament/tables",
-            "version": "v2.8.11",
+            "version": "v2.9.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel-filament/tables.git",
-                "reference": "01ce6784d047a77031e3e8e4ce044b352d05dfc8"
+                "reference": "191cf0692ffb8a2a710f88167b18a2b7b0b8e9c8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel-filament/tables/zipball/01ce6784d047a77031e3e8e4ce044b352d05dfc8",
-                "reference": "01ce6784d047a77031e3e8e4ce044b352d05dfc8",
+                "url": "https://api.github.com/repos/laravel-filament/tables/zipball/191cf0692ffb8a2a710f88167b18a2b7b0b8e9c8",
+                "reference": "191cf0692ffb8a2a710f88167b18a2b7b0b8e9c8",
                 "shasum": ""
             },
             "require": {
@@ -1727,7 +1727,7 @@
                 "issues": "https://github.com/laravel-filament/filament/issues",
                 "source": "https://github.com/laravel-filament/filament"
             },
-            "time": "2022-01-14T21:08:02+00:00"
+            "time": "2022-01-16T21:59:11+00:00"
         },
         {
             "name": "flowframe/laravel-trend",
@@ -9845,12 +9845,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "a65fcbf338d263bd8340ac5558d92b7eedb71e79"
+                "reference": "c070c4b7400e038737af1bf06b0d94d053686f72"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/a65fcbf338d263bd8340ac5558d92b7eedb71e79",
-                "reference": "a65fcbf338d263bd8340ac5558d92b7eedb71e79",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/c070c4b7400e038737af1bf06b0d94d053686f72",
+                "reference": "c070c4b7400e038737af1bf06b0d94d053686f72",
                 "shasum": ""
             },
             "require": {
@@ -9902,7 +9902,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-01-16T10:55:12+00:00"
+            "time": "2022-01-16T19:23:59+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",

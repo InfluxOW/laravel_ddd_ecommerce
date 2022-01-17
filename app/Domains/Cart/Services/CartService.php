@@ -20,7 +20,7 @@ class CartService
             do {
                 $key = $this->generateCartKey();
                 $cacheKey = $this->getCartCacheKey(null, $key);
-            } while (is_string($cacheKey) && Redis::exists($cacheKey));
+            } while ((is_string($cacheKey) && Redis::exists($cacheKey)) || Cart::query()->where('key', $key)->exists());
 
             $cart->key = $key;
         }
