@@ -2,9 +2,8 @@
 
 namespace App\Domains\Users\Admin\Resources;
 
+use App\Domains\Admin\Admin\Abstracts\Resource;
 use App\Domains\Admin\Admin\Components\Cards\TimestampsCard;
-use App\Domains\Admin\Traits\Translation\HasTranslatableAdminLabels;
-use App\Domains\Admin\Traits\Translation\TranslatableAdminResource;
 use App\Domains\Components\Addressable\Admin\RelationManagers\AddressesRelationManager;
 use App\Domains\Components\Generic\Enums\Lang\TranslationNamespace;
 use App\Domains\Users\Enums\Translation\UserResourceTranslationKey;
@@ -19,25 +18,16 @@ use Filament\Resources\Form;
 use Filament\Resources\Pages\CreateRecord;
 use Filament\Resources\Pages\Page;
 use Filament\Resources\Pages\ViewRecord;
-use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
 
 class UserResource extends Resource
 {
-    use TranslatableAdminResource;
-    use HasTranslatableAdminLabels;
-
     protected static ?string $model = User::class;
-
     protected static ?string $recordTitleAttribute = 'name';
-
     protected static ?string $slug = 'users';
-
     protected static ?string $navigationIcon = 'heroicon-o-users';
-
-    protected static ?int $navigationSort = 0;
 
     /*
      * Global Search
@@ -145,6 +135,20 @@ class UserResource extends Resource
             'edit' => \App\Domains\Users\Admin\Resources\UserResource\Pages\EditUser::route('/{record}/edit'),
             'view' => \App\Domains\Users\Admin\Resources\UserResource\Pages\ViewUser::route('/{record}'),
         ];
+    }
+
+    /*
+     * Policies
+     * */
+
+    public static function canDeleteAny(): bool
+    {
+        return false;
+    }
+
+    public static function canDelete(Model $record): bool
+    {
+        return false;
     }
 
     /*

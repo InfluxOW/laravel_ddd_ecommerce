@@ -3,6 +3,8 @@
 namespace App\Domains\Catalog\Admin\Pages;
 
 use Akaunting\Money\Currency;
+use App\Domains\Admin\Admin\Abstracts\SettingsPage;
+use App\Domains\Admin\Traits\HasNavigationSort;
 use App\Domains\Admin\Traits\Translation\HasTranslatableAdminLabels;
 use App\Domains\Admin\Traits\Translation\TranslatableAdminPage;
 use App\Domains\Catalog\Enums\Translation\CatalogSettingsTranslationKey;
@@ -11,19 +13,19 @@ use App\Domains\Catalog\Providers\DomainServiceProvider;
 use App\Domains\Components\Generic\Enums\Lang\TranslationNamespace;
 use Filament\Forms\Components\MultiSelect;
 use Filament\Forms\Components\Select;
-use Filament\Pages\SettingsPage;
 use Illuminate\Support\Collection;
 
 class ManageCatalogSettings extends SettingsPage
 {
     use TranslatableAdminPage;
     use HasTranslatableAdminLabels;
-
-    protected static ?string $navigationIcon = 'heroicon-o-cog';
+    use HasNavigationSort;
 
     protected static string $settings = CatalogSettings::class;
 
     protected static ?string $slug = 'settings/catalog';
+
+    protected static ?string $navigationIcon = 'heroicon-o-cog';
 
     protected function getFormSchema(): array
     {

@@ -2,9 +2,8 @@
 
 namespace App\Domains\Catalog\Admin\Resources\ProductCategoryResource\RelationManagers;
 
+use App\Domains\Admin\Admin\Abstracts\RelationManagers\HasManyRelationManager;
 use App\Domains\Admin\Admin\Components\Actions\ViewAction;
-use App\Domains\Admin\Traits\Translation\HasTranslatableAdminLabels;
-use App\Domains\Admin\Traits\Translation\TranslatableAdminRelation;
 use App\Domains\Catalog\Admin\Resources\ProductCategoryResource;
 use App\Domains\Catalog\Enums\Translation\ProductCategoryResourceTranslationKey;
 use App\Domains\Catalog\Models\ProductCategory;
@@ -12,7 +11,6 @@ use App\Domains\Catalog\Providers\DomainServiceProvider;
 use App\Domains\Components\Generic\Enums\Lang\TranslationNamespace;
 use Baum\Node;
 use Filament\Resources\Form;
-use Filament\Resources\RelationManagers\HasManyRelationManager;
 use Filament\Resources\Table;
 use Filament\Tables\Actions\ButtonAction;
 use Filament\Tables\Actions\LinkAction;
@@ -23,9 +21,6 @@ use Illuminate\Support\Facades\Request;
 
 class ProductCategoryChildrenRelationManager extends HasManyRelationManager
 {
-    use TranslatableAdminRelation;
-    use HasTranslatableAdminLabels;
-
     protected static string $relationship = 'children';
     protected static ?string $recordTitleAttribute = 'title';
 

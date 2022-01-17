@@ -2,9 +2,8 @@
 
 namespace App\Domains\Catalog\Admin\Resources;
 
+use App\Domains\Admin\Admin\Abstracts\Resource;
 use App\Domains\Admin\Admin\Components\Cards\TimestampsCard;
-use App\Domains\Admin\Traits\Translation\HasTranslatableAdminLabels;
-use App\Domains\Admin\Traits\Translation\TranslatableAdminResource;
 use App\Domains\Catalog\Enums\ProductAttributeValuesType;
 use App\Domains\Catalog\Enums\Translation\ProductAttributeResourceTranslationKey;
 use App\Domains\Catalog\Models\ProductAttribute;
@@ -14,7 +13,6 @@ use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
-use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
@@ -24,18 +22,10 @@ use Illuminate\Support\Str;
 
 class ProductAttributeResource extends Resource
 {
-    use TranslatableAdminResource;
-    use HasTranslatableAdminLabels;
-
     protected static ?string $model = ProductAttribute::class;
-
     protected static ?string $recordTitleAttribute = 'title';
-
     protected static ?string $slug = 'catalog/attributes';
-
     protected static ?string $navigationIcon = 'heroicon-o-document-duplicate';
-
-    protected static ?int $navigationSort = 1;
 
     /*
      * Global Search

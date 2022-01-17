@@ -2,8 +2,7 @@
 
 namespace App\Domains\Catalog\Admin\Resources\ProductResource\RelationManagers;
 
-use App\Domains\Admin\Traits\Translation\HasTranslatableAdminLabels;
-use App\Domains\Admin\Traits\Translation\TranslatableAdminRelation;
+use App\Domains\Admin\Admin\Abstracts\RelationManagers\HasManyRelationManager;
 use App\Domains\Catalog\Admin\Resources\ProductResource;
 use App\Domains\Catalog\Enums\ProductAttributeValuesType;
 use App\Domains\Catalog\Enums\Translation\ProductAttributeValueResourceTranslationKey;
@@ -16,7 +15,6 @@ use Filament\Forms\Components\BelongsToSelect;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Form;
-use Filament\Resources\RelationManagers\HasManyRelationManager;
 use Filament\Resources\Table;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
@@ -24,9 +22,6 @@ use Illuminate\Support\Facades\Request;
 
 class ProductAttributeValuesRelationManager extends HasManyRelationManager
 {
-    use TranslatableAdminRelation;
-    use HasTranslatableAdminLabels;
-
     protected static string $relationship = 'attributeValues';
 
     public static function form(Form $form): Form

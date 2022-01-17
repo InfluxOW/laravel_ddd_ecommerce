@@ -2,9 +2,8 @@
 
 namespace App\Domains\Catalog\Admin\Resources;
 
+use App\Domains\Admin\Admin\Abstracts\Resource;
 use App\Domains\Admin\Admin\Components\Cards\TimestampsCard;
-use App\Domains\Admin\Traits\Translation\HasTranslatableAdminLabels;
-use App\Domains\Admin\Traits\Translation\TranslatableAdminResource;
 use App\Domains\Catalog\Admin\Resources\ProductResource\RelationManagers\ProductAttributeValuesRelationManager;
 use App\Domains\Catalog\Admin\Resources\ProductResource\RelationManagers\ProductPricesRelationManager;
 use App\Domains\Catalog\Enums\Translation\ProductResourceTranslationKey;
@@ -17,7 +16,6 @@ use Filament\Forms\Components\Card;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
-use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
@@ -26,18 +24,10 @@ use Illuminate\Support\Str;
 
 class ProductResource extends Resource
 {
-    use TranslatableAdminResource;
-    use HasTranslatableAdminLabels;
-
     protected static ?string $model = Product::class;
-
     protected static ?string $recordTitleAttribute = 'title';
-
     protected static ?string $slug = 'catalog/products';
-
     protected static ?string $navigationIcon = 'heroicon-o-currency-dollar';
-
-    protected static ?int $navigationSort = 0;
 
     /*
      * Global Search
@@ -76,6 +66,7 @@ class ProductResource extends Resource
                             ->maxLength(255)
                             ->placeholder('tv'),
                         MarkdownEditor::make(ProductResourceTranslationKey::DESCRIPTION->value)
+                            ->required()
                             ->disableToolbarButtons([
                                 'attachFiles',
                             ])
@@ -90,12 +81,12 @@ class ProductResource extends Resource
                         BelongsToManyMultiSelect::make(ProductResourceTranslationKey::CATEGORIES->value)
                             ->relationship('categories', 'title')
                             ->options(fn (?Product $record, callable $get): array => ProductCategory::query()
-                                    ->hasLimitedDepth()
-                                    ->where('depth', '>=', ProductCategory::MAX_DEPTH - 1)
-                                    ->whereIntegerNotInRaw('id', $get(ProductResourceTranslationKey::CATEGORIES->value))
-                                    ->orderBy('left')
-                                    ->pluck('title', 'id')
-                                    ->toArray()),
+                                ->hasLimitedDepth()
+                                ->where('depth', '>=', ProductCategory::MAX_DEPTH - 1)
+                                ->whereIntegerNotInRaw('id', $get(ProductResourceTranslationKey::CATEGORIES->value))
+                                ->orderBy('left')
+                                ->pluck('title', 'id')
+                                ->toArray()),
                     ]),
             ]))
             ->columns(3);

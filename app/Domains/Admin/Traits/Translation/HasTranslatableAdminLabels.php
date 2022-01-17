@@ -2,6 +2,8 @@
 
 namespace App\Domains\Admin\Traits\Translation;
 
+use UnitEnum;
+
 trait HasTranslatableAdminLabels
 {
     use TranslatableAdmin;
@@ -27,6 +29,7 @@ trait HasTranslatableAdminLabels
     }
 
     /**
+     * @phpstan-ignore-next-line
      * @return string<UnitEnum>
      */
     abstract protected static function getTranslationKeyClass(): string;

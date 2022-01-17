@@ -2,9 +2,8 @@
 
 namespace App\Domains\Catalog\Admin\Resources;
 
+use App\Domains\Admin\Admin\Abstracts\Resource;
 use App\Domains\Admin\Admin\Components\Cards\TimestampsCard;
-use App\Domains\Admin\Traits\Translation\HasTranslatableAdminLabels;
-use App\Domains\Admin\Traits\Translation\TranslatableAdminResource;
 use App\Domains\Catalog\Admin\Resources\ProductCategoryResource\RelationManagers\ProductCategoryChildrenRelationManager;
 use App\Domains\Catalog\Enums\Translation\ProductCategoryResourceTranslationKey;
 use App\Domains\Catalog\Models\ProductCategory;
@@ -22,7 +21,6 @@ use Filament\Pages\Page;
 use Filament\Resources\Form;
 use Filament\Resources\Pages\CreateRecord;
 use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
@@ -31,18 +29,10 @@ use Illuminate\Support\Str;
 
 class ProductCategoryResource extends Resource
 {
-    use TranslatableAdminResource;
-    use HasTranslatableAdminLabels;
-
     protected static ?string $model = ProductCategory::class;
-
     protected static ?string $recordTitleAttribute = 'title';
-
     protected static ?string $slug = 'catalog/categories';
-
     protected static ?string $navigationIcon = 'heroicon-o-collection';
-
-    protected static ?int $navigationSort = 2;
 
     /*
      * Global Search
@@ -64,8 +54,6 @@ class ProductCategoryResource extends Resource
 
     public static function form(Form $form): Form
     {
-        ProductCategory::loadHeavyHierarchy();
-
         return $form
             ->schema([
                 Tabs::make('_')

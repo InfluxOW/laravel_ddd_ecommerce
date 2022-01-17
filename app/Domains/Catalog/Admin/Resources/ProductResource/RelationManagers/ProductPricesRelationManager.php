@@ -2,8 +2,7 @@
 
 namespace App\Domains\Catalog\Admin\Resources\ProductResource\RelationManagers;
 
-use App\Domains\Admin\Traits\Translation\HasTranslatableAdminLabels;
-use App\Domains\Admin\Traits\Translation\TranslatableAdminRelation;
+use App\Domains\Admin\Admin\Abstracts\RelationManagers\HasManyRelationManager;
 use App\Domains\Catalog\Admin\Resources\ProductResource;
 use App\Domains\Catalog\Enums\Translation\ProductPriceResourceTranslationKey;
 use App\Domains\Catalog\Models\Product;
@@ -13,7 +12,6 @@ use App\Domains\Components\Generic\Enums\Lang\TranslationNamespace;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
-use Filament\Resources\RelationManagers\HasManyRelationManager;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Table;
 use Filament\Tables\Columns\TextColumn;
@@ -22,9 +20,6 @@ use Illuminate\Support\Facades\Request;
 
 class ProductPricesRelationManager extends HasManyRelationManager
 {
-    use TranslatableAdminRelation;
-    use HasTranslatableAdminLabels;
-
     protected static string $relationship = 'prices';
 
     public static function form(Form $form): Form

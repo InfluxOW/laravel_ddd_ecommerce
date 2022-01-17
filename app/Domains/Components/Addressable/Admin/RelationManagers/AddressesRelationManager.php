@@ -2,8 +2,7 @@
 
 namespace App\Domains\Components\Addressable\Admin\RelationManagers;
 
-use App\Domains\Admin\Traits\Translation\HasTranslatableAdminLabels;
-use App\Domains\Admin\Traits\Translation\TranslatableAdminRelation;
+use App\Domains\Admin\Admin\Abstracts\RelationManagers\MorphManyRelationManager;
 use App\Domains\Components\Addressable\Enums\Translation\AddressesRelationManagerTranslationKey;
 use App\Domains\Components\Addressable\Models\Address;
 use App\Domains\Components\Addressable\Providers\DomainServiceProvider;
@@ -12,7 +11,6 @@ use App\Domains\Users\Admin\Resources\UserResource;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
-use Filament\Resources\RelationManagers\MorphManyRelationManager;
 use Filament\Resources\Table;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
@@ -22,9 +20,6 @@ use Squire\Models\Region;
 
 class AddressesRelationManager extends MorphManyRelationManager
 {
-    use TranslatableAdminRelation;
-    use HasTranslatableAdminLabels;
-
     protected static ?string $recordTitleAttribute = 'string_representation';
     protected static string $relationship = 'addresses';
 

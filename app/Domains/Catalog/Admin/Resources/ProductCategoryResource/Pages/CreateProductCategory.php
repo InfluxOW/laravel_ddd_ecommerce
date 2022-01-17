@@ -3,6 +3,7 @@
 namespace App\Domains\Catalog\Admin\Resources\ProductCategoryResource\Pages;
 
 use App\Domains\Catalog\Admin\Resources\ProductCategoryResource;
+use App\Domains\Catalog\Models\ProductCategory;
 use Filament\Resources\Form;
 use Filament\Resources\Pages\CreateRecord;
 
@@ -19,8 +20,13 @@ class CreateProductCategory extends CreateRecord
         return $this->resourceForm;
     }
 
-    protected function getRedirectUrl(): ?string
+    /**
+     * @return void
+     */
+    public function bootIfNotBooted()
     {
-        return static::$resource::getUrl('view', ['record' => $this->record]);
+        parent::bootIfNotBooted();
+
+        ProductCategory::loadHeavyHierarchy();
     }
 }
