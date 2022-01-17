@@ -16,7 +16,7 @@ class CreateCartsTable extends Migration
     {
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class, 'user_id')->nullable()->constrained('users');
+            $table->foreignIdFor(User::class, 'user_id')->nullable()->constrained('users')->cascadeOnDelete();
             $table->string('key')->index()->nullable();
             $table->string('currency');
             $table->unsignedInteger('price_items');

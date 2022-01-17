@@ -16,7 +16,7 @@ class CreateProductPricesTable extends Migration
     {
         Schema::create('product_prices', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Product::class, 'product_id')->constrained('products');
+            $table->foreignIdFor(Product::class, 'product_id')->constrained('products')->cascadeOnDelete();
             $table->unsignedInteger('price');
             $table->unsignedInteger('price_discounted')->nullable();
             $table->string('currency', 3);

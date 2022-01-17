@@ -3,6 +3,8 @@
 namespace App\Domains\Users\Providers;
 
 use App\Domains\Components\Generic\Enums\Lang\TranslationNamespace;
+use App\Domains\Users\Models\User;
+use App\Domains\Users\Observers\UserObserver;
 use App\Infrastructure\Abstracts\ServiceProviderBase;
 
 class DomainServiceProvider extends ServiceProviderBase
@@ -16,4 +18,11 @@ class DomainServiceProvider extends ServiceProviderBase
         RouteServiceProvider::class,
         EventServiceProvider::class,
     ];
+
+    public function boot(): void
+    {
+        parent::boot();
+
+        User::observe([UserObserver::class]);
+    }
 }

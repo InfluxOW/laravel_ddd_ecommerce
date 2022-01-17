@@ -17,8 +17,8 @@ class CreateProductAttributeValuesTable extends Migration
     {
         Schema::create('product_attribute_values', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Product::class, 'product_id')->constrained('products');
-            $table->foreignIdFor(ProductAttribute::class, 'attribute_id')->constrained('product_attributes');
+            $table->foreignIdFor(Product::class, 'product_id')->constrained('products')->cascadeOnDelete();
+            $table->foreignIdFor(ProductAttribute::class, 'attribute_id')->constrained('product_attributes')->cascadeOnDelete();
             $table->string('value_string')->nullable();
             $table->unsignedInteger('value_integer')->nullable();
             $table->boolean('value_boolean')->nullable();
