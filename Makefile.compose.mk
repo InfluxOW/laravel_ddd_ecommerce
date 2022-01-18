@@ -1,8 +1,10 @@
 # Works only for project root
 
-project=$(shell git rev-parse --show-toplevel)
+project := $(shell git rev-parse --show-toplevel)
 sail_dir := $(project)/tools/laravel/sail
 sail := $(sail_dir)/vendor/bin/sail
+
+# Application
 
 setup: sail-install build start dependencies-install
 
@@ -17,19 +19,21 @@ sail-install:
 build:
 	$(sail) build
 
-start:
-	$(sail) up --detach --remove-orphans
-
 dependencies-install:
 	$(sail) exec application make install
 
 destroy:
 	$(sail) down --rmi all --volumes --remove-orphans
 
+start:
+	$(sail) up --detach
+
 stop:
 	$(sail) stop
 
 restart: stop start
+
+# CI
 
 ci: sail-install
 	$(sail) -f docker-compose.ci.yml build

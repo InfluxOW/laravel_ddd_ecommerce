@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-    application:
+    application_ci:
         build:
             context: ./docker/8.1
             dockerfile: Dockerfile
@@ -15,15 +15,14 @@ services:
             DB_CONNECTION: pgsql
             DB_DATABASE: postgres
             DB_USERNAME: postgres
-            DB_HOST: database
-            TEST_DB_HOST: database
-            CACHE_DRIVER: redis
-            REDIS_HOST: redis
+            DB_HOST: database_ci
             REDIS_CLIENT: predis
+            REDIS_HOST: redis_ci
         depends_on:
-            - database
+            - database_ci
+            - redis_ci
         command: [ "make", "install", "lint", "analyse", "test-coverage" ]
-    database:
+    database_ci:
         image: 'postgres:14.1-alpine'
         environment:
             POSTGRES_HOST_AUTH_METHOD: trust
@@ -31,7 +30,7 @@ services:
             test: [ "CMD", "pg_isready", "-q", "-d", "${DB_DATABASE}", "-U", "${DB_USERNAME}" ]
             retries: 3
             timeout: 5s
-    redis:
+    redis_ci:
         image: 'redis:6.2.6-alpine'
         healthcheck:
             test: [ "CMD", "redis-cli", "ping" ]

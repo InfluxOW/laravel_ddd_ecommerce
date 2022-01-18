@@ -2,7 +2,7 @@
 version: '3.8'
 
 services:
-    application:
+    application_test:
         build:
             context: ./docker/8.1
             dockerfile: Dockerfile
@@ -11,8 +11,6 @@ services:
         image: sail-8.1/app
         extra_hosts:
             - 'host.docker.internal:host-gateway'
-        ports:
-            - '${APP_PORT:-80}:80'
         environment:
             WWWUSER: '${WWWUSER}'
             LARAVEL_SAIL: 1
@@ -21,46 +19,36 @@ services:
         volumes:
             - '.:/var/www/html'
         networks:
-            - sail
+            - sail_test
         depends_on:
-            - database
-            - redis
-    database:
+            - database_test
+            - redis_test
+    database_test:
         image: 'postgres:14.1'
         ports:
-            - '${FORWARD_DB_PORT:-5432}:5432'
+            - '${FORWARD_TEST_DB_PORT:-5433}:5432'
         environment:
             PGPASSWORD: '${DB_PASSWORD:-secret}'
             POSTGRES_DB: '${DB_DATABASE}'
             POSTGRES_USER: '${DB_USERNAME}'
             POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
-        volumes:
-            - 'database:/var/lib/postgresql/data'
         networks:
-            - sail
+            - sail_test
         healthcheck:
             test: [ "CMD", "pg_isready", "-q", "-d", "${DB_DATABASE}", "-U", "${DB_USERNAME}" ]
             retries: 3
             timeout: 5s
-    redis:
+    redis_test:
         image: 'redis:6.2.6-alpine'
         ports:
-            - '${FORWARD_REDIS_PORT:-6379}:6379'
-        volumes:
-            - 'sailredis:/data'
+            - '${FORWARD_TEST_REDIS_PORT:-6379}:6379'
         networks:
-            - sail
+            - sail_test
         healthcheck:
             test: [ "CMD", "redis-cli", "ping" ]
             retries: 3
             timeout: 5s
 
 networks:
-    sail:
+    sail_test:
         driver: bridge
-
-volumes:
-    database:
-        driver: local
-    sailredis:
-        driver: local
