@@ -39,9 +39,7 @@ class ProductCategoryTest extends TestCase
     /** @test */
     public function product_categories_hierarchy_can_be_filtered_and_mapped(): void
     {
-        ProductCategory::loadLightHierarchy();
-
-        $hierarchy = ProductCategory::filterHierarchy(static fn (ProductCategory $category): bool => $category->is_visible, ProductCategory::$hierarchy);
+        $hierarchy = ProductCategory::filterHierarchy(static fn (ProductCategory $category): bool => $category->is_visible, ProductCategory::getHierarchy());
         $hierarchy = ProductCategory::mapHierarchy(static fn (ProductCategory $category): bool => $category->is_visible, $hierarchy);
 
         $this->assertTrue($hierarchy->every(fn (bool $isVisible): bool => $isVisible));

@@ -4,7 +4,7 @@ namespace App\Domains\Catalog\Database\Seeders;
 
 use App\Domains\Catalog\Enums\ProductAttributeValuesType;
 use App\Domains\Catalog\Models\ProductAttribute;
-use Illuminate\Database\Seeder;
+use App\Infrastructure\Abstracts\Seeder;
 
 class ProductAttributeSeeder extends Seeder
 {

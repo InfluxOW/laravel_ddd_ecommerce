@@ -47,6 +47,8 @@ class ProductControllerTest extends TestCase
         ]);
 
         ProductCategory::query()->update(['is_visible' => true]);
+
+        ProductCategory::loadHierarchy();
     }
 
     /** @test */
@@ -67,7 +69,7 @@ class ProductControllerTest extends TestCase
             $appliedFilters = collect($response->json(sprintf('%s.%s.%s', ResponseKey::QUERY->value, QueryKey::FILTER->value, 'applied')));
 
             $this->assertNotEmpty($items);
-            $this->assertTrue($items->every(fn (array $item): bool => str_contains($item['title'], $query)));
+            $items->each(fn (array $item) => $this->assertTrue(str_contains($item['title'], $query)));
 
             $this->assertCount(count($filters) + 1, $appliedFilters);
             $this->assertTrue($appliedFilters->pluck('query')->contains(ProductAllowedFilter::TITLE->value));
@@ -86,7 +88,7 @@ class ProductControllerTest extends TestCase
             $appliedFilters = collect($response->json(sprintf('%s.%s.%s', ResponseKey::QUERY->value, QueryKey::FILTER->value, 'applied')));
 
             $this->assertNotEmpty($items);
-            $this->assertTrue($items->every(fn (array $item): bool => str_contains($item['description'], $query)));
+            $items->each(fn (array $item) => $this->assertTrue(str_contains($item['description'], $query)));
 
             $this->assertCount(count($filters) + 1, $appliedFilters);
             $this->assertTrue($appliedFilters->pluck('query')->contains(ProductAllowedFilter::DESCRIPTION->value));
@@ -96,8 +98,6 @@ class ProductControllerTest extends TestCase
     /** @test */
     public function a_user_can_filter_products_by_categories(): void
     {
-        ProductCategory::loadLightHierarchy();
-
         $deepestCategory = ProductCategory::query()->visible()->hasLimitedDepth()->whereHas('products')->where('depth', ProductCategory::MAX_DEPTH)->first();
         $this->assertNotNull($deepestCategory);
 
@@ -165,7 +165,7 @@ class ProductControllerTest extends TestCase
             }
 
             $this->assertNotEmpty($items);
-            $this->assertTrue($items->every(function (array $item) use ($minPrice, $maxPrice): bool {
+            $items->each(function (array $item) use ($minPrice, $maxPrice): void {
                 $actualPrice = $item['price_discounted']['value'] ?? $item['price']['value'];
 
                 $result = true;
@@ -176,8 +176,8 @@ class ProductControllerTest extends TestCase
                     $result = $result && $actualPrice <= $maxPrice;
                 }
 
-                return $result;
-            }));
+                $this->assertTrue($result);
+            });
 
             $this->assertCount(count($filters) + 1, $appliedFilters);
             $this->assertTrue($appliedFilters->pluck('query')->contains(ProductAllowedFilter::PRICE_BETWEEN->value));
@@ -192,8 +192,13 @@ class ProductControllerTest extends TestCase
     public function a_user_can_filter_products_by_attribute_values(): void
     {
         /** @var Product $product */
-        $product = Product::query()->with(['attributeValues.attribute'])->whereHas('attributeValues', null, '>', 1)->inRandomOrder()->first();
+        $product = Product::query()->with(['attributeValues.attribute'])->whereHas('attributeValues', null, '>', 1)->inRandomOrder()->find(9);
         $this->assertNotNull($product);
+
+        $originalValueToString = static fn (mixed $originalValue, ProductAttributeValuesType $valueType): string => match ($valueType) {
+            ProductAttributeValuesType::BOOLEAN => StringUtils::boolToString($originalValue),
+            ProductAttributeValuesType::INTEGER, ProductAttributeValuesType::STRING, ProductAttributeValuesType::FLOAT => (string) $originalValue,
+        };
 
         /**
          * @var ProductAttributeValue $firstAttributeValue
@@ -205,20 +210,13 @@ class ProductControllerTest extends TestCase
         $firstAttributeFirstValueOriginal = $firstAttributeValue->value;
         $firstAttributeSecondValueOriginal = ProductAttributeValue::query()->whereBelongsTo($firstAttribute, 'attribute')->where(ProductAttributeValue::getDatabaseValueColumnByAttributeType($firstAttribute->values_type), '<>', $firstAttributeFirstValueOriginal)->first()?->value;
 
-        $firstAttributeFirstValue = $firstAttributeFirstValueOriginal;
-        $firstAttributeSecondValue = $firstAttributeSecondValueOriginal;
-        if ($firstAttribute->values_type === ProductAttributeValuesType::BOOLEAN) {
-            $firstAttributeFirstValue = StringUtils::boolToString($firstAttributeFirstValueOriginal);
-            $firstAttributeSecondValue = StringUtils::boolToString($firstAttributeSecondValueOriginal);
-        }
+        $firstAttributeFirstValue = $originalValueToString($firstAttributeFirstValueOriginal, $firstAttribute->values_type);
+        $firstAttributeSecondValue = $originalValueToString($firstAttributeSecondValueOriginal, $firstAttribute->values_type);
 
         $secondAttribute = $secondAttributeValue->attribute;
         $secondAttributeFirstValueOriginal = $secondAttributeValue->value;
 
-        $secondAttributeFirstValue = $secondAttributeFirstValueOriginal;
-        if ($secondAttribute->values_type === ProductAttributeValuesType::BOOLEAN) {
-            $secondAttributeFirstValue = StringUtils::boolToString($secondAttributeFirstValueOriginal);
-        }
+        $secondAttributeFirstValue = $originalValueToString($secondAttributeFirstValueOriginal, $secondAttribute->values_type);
 
         $query = [
             $firstAttribute->slug => implode(',', [$firstAttributeFirstValue, $firstAttributeSecondValue]),
@@ -231,12 +229,12 @@ class ProductControllerTest extends TestCase
         $appliedFilters = collect($response->json(sprintf('%s.%s.%s', ResponseKey::QUERY->value, QueryKey::FILTER->value, 'applied')));
 
         $this->assertNotEmpty($items);
-        $this->assertTrue($items->every(function (array $item) use ($firstAttribute, $secondAttribute, $firstAttributeFirstValueOriginal, $firstAttributeSecondValueOriginal, $secondAttributeFirstValueOriginal): bool {
+        $items->each(function (array $item) use ($firstAttribute, $secondAttribute, $firstAttributeFirstValueOriginal, $firstAttributeSecondValueOriginal, $secondAttributeFirstValueOriginal): void {
             $attributes = collect($item['attributes']);
 
-            return in_array($attributes->where('attribute.slug', $firstAttribute->slug)->first()['value'], [$firstAttributeFirstValueOriginal, $firstAttributeSecondValueOriginal], true) &&
-                $attributes->where('attribute.slug', $secondAttribute->slug)->first()['value'] === $secondAttributeFirstValueOriginal;
-        }));
+            $this->assertEquals($attributes->where('attribute.slug', $secondAttribute->slug)->first()['value'], $secondAttributeFirstValueOriginal);
+            $this->assertContains($attributes->where('attribute.slug', $firstAttribute->slug)->first()['value'], [$firstAttributeFirstValueOriginal, $firstAttributeSecondValueOriginal]);
+        });
 
         $this->assertCount(count($filters) + 1, $appliedFilters);
         $this->assertTrue($appliedFilters->pluck('query')->contains(ProductAllowedFilter::ATTRIBUTE_VALUE->value));

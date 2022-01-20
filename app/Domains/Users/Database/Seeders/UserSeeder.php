@@ -3,7 +3,7 @@
 namespace App\Domains\Users\Database\Seeders;
 
 use App\Domains\Users\Models\User;
-use Illuminate\Database\Seeder;
+use App\Infrastructure\Abstracts\Seeder;
 
 class UserSeeder extends Seeder
 {

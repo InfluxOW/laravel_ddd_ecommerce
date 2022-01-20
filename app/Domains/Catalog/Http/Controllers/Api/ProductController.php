@@ -35,8 +35,6 @@ class ProductController extends Controller
 
     public function index(ProductIndexRequest $request, ProductFilterService $filterService, ProductSortService $sortService): AnonymousResourceCollection
     {
-        ProductCategory::loadLightHierarchy();
-
         $validated = $request->validated();
 
         $currency = $validated[QueryKey::FILTER->value][ProductAllowedFilter::CURRENCY->value];
@@ -84,8 +82,6 @@ class ProductController extends Controller
 
     public function show(ProductShowRequest $request, string $slug): JsonResource|JsonResponse
     {
-        ProductCategory::loadLightHierarchy();
-
         $product = $this->getBaseProductQuery($request->validated()[QueryKey::FILTER->value][ProductAllowedFilter::CURRENCY->value])->where('slug', $slug)->first();
 
         if ($product === null) {

@@ -8,8 +8,9 @@ use App\Domains\Catalog\Database\Seeders\ProductAttributeValueSeeder;
 use App\Domains\Catalog\Database\Seeders\ProductCategorySeeder;
 use App\Domains\Catalog\Database\Seeders\ProductPriceSeeder;
 use App\Domains\Catalog\Database\Seeders\ProductSeeder;
+use App\Domains\Catalog\Models\ProductCategory;
 use App\Domains\Users\Database\Seeders\UserSeeder;
-use Illuminate\Database\Seeder;
+use App\Infrastructure\Abstracts\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -29,5 +30,7 @@ class DatabaseSeeder extends Seeder
             ProductAttributeValueSeeder::class,
             ProductPriceSeeder::class,
         ]);
+
+        ProductCategory::loadHierarchy();
     }
 }

@@ -48,8 +48,6 @@ class ProductFilterBuilderRepository
 
     public function getCategories(SpatieQueryBuilder $productsQuery): Collection
     {
-        ProductCategory::loadLightHierarchy();
-
         $childCategories = ProductCategory::query()
             ->hasLimitedDepth()
             ->select(['slug', 'title', 'parent_id', 'id'])
@@ -63,7 +61,7 @@ class ProductFilterBuilderRepository
         while ($parentCategoryIds->isNotEmpty()) {
             $parentCategoryId = $parentCategoryIds->pop();
             if (isset($parentCategoryId) && $checkedParentCategoryIds->doesntContain($parentCategoryId)) {
-                $category = ProductCategory::findInHierarchy($parentCategoryId, ProductCategory::$hierarchy);
+                $category = ProductCategory::findInHierarchy($parentCategoryId, ProductCategory::getHierarchy());
 
                 if (isset($category)) {
                     $categories->offsetSet($category->title, $category->slug);

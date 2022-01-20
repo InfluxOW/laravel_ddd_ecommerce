@@ -5,6 +5,7 @@ namespace App\Domains\Catalog\Models;
 use Akaunting\Money\Money;
 use App\Domains\Catalog\Database\Factories\ProductFactory;
 use App\Domains\Catalog\Enums\ProductAttributeValuesType;
+use App\Domains\Catalog\Models\Pivot\ProductProductCategory;
 use App\Domains\Components\Generic\Enums\BooleanString;
 use App\Domains\Components\Purchasable\Abstracts\Purchasable;
 use Illuminate\Database\Eloquent\Builder;
@@ -66,7 +67,7 @@ class Product extends Model implements Purchasable
 
     public function categories(): BelongsToMany
     {
-        return $this->belongsToMany(ProductCategory::class, 'product_categories_products', 'product_id', 'category_id')->withTimestamps();
+        return $this->belongsToMany(ProductCategory::class, 'product_categories_products', 'product_id', 'category_id')->withTimestamps()->using(ProductProductCategory::class);
     }
 
     public function attributeValues(): HasMany
@@ -185,7 +186,7 @@ class Product extends Model implements Purchasable
          * that randomly nullifies the value
          * @phpstan-ignore-next-line
          */
-        $price = clone($this->prices)->where('currency', $currency)->first();
+        $price = clone ($this->prices)->where('currency', $currency)->first();
 
         return $price->price;
     }
@@ -199,7 +200,7 @@ class Product extends Model implements Purchasable
          * that randomly nullifies the value
          * @phpstan-ignore-next-line
          */
-        $price = clone($this->prices)->where('currency', $currency)->first();
+        $price = clone ($this->prices)->where('currency', $currency)->first();
 
         return $price->price_discounted;
     }
