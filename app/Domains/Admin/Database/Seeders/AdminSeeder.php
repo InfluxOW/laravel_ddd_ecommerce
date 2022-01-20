@@ -14,6 +14,9 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
-        Admin::factory()->create(['email' => 'admin@admin.com']);
+        $email = 'admin@admin.com';
+        if (Admin::query()->where('email', $email)->doesntExist()) {
+            Admin::factory()->create(['email' => $email]);
+        }
     }
 }
