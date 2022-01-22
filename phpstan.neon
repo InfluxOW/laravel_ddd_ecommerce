@@ -2,9 +2,6 @@ includes:
     - ./vendor/nunomaduro/larastan/extension.neon
 
 parameters:
-
-    reportUnmatchedIgnoredErrors: false
-
     paths:
         - app
         - database
@@ -21,7 +18,6 @@ parameters:
         - '#Access to an undefined property Squire\\Models#'
         - '#Illuminate\\Database\\Eloquent\\Model::\$id#'
         - '#Model::make\(\)#'
-        - '#Call to an undefined static method Illuminate\\Support\\Facades\\Redis#'
         - '#\(Akaunting\\Money\\Money\) does not accept int#'
 
     checkMissingIterableValueType: false
