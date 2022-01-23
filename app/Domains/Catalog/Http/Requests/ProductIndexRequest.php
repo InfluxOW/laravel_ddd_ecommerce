@@ -2,9 +2,9 @@
 
 namespace App\Domains\Catalog\Http\Requests;
 
+use App\Components\Queryable\Enums\QueryKey;
 use App\Domains\Catalog\Enums\Query\Filter\ProductAllowedFilter;
 use App\Domains\Catalog\Models\Settings\CatalogSettings;
-use App\Domains\Components\Queryable\Enums\QueryKey;
 use App\Infrastructure\Abstracts\FormRequest;
 use Illuminate\Validation\Rule;
 

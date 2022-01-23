@@ -2,13 +2,13 @@
 
 namespace App\Domains\Catalog\Admin\Resources\ProductCategoryResource\RelationManagers;
 
+use App\Components\Generic\Enums\Lang\TranslationNamespace;
 use App\Domains\Admin\Admin\Abstracts\RelationManagers\HasManyRelationManager;
 use App\Domains\Admin\Admin\Components\Actions\ViewAction;
 use App\Domains\Catalog\Admin\Resources\ProductCategoryResource;
 use App\Domains\Catalog\Enums\Translation\ProductCategoryResourceTranslationKey;
 use App\Domains\Catalog\Models\ProductCategory;
 use App\Domains\Catalog\Providers\DomainServiceProvider;
-use App\Domains\Components\Generic\Enums\Lang\TranslationNamespace;
 use Baum\Node;
 use Filament\Resources\Form;
 use Filament\Resources\Table;

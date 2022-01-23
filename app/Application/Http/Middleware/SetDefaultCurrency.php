@@ -2,9 +2,9 @@
 
 namespace App\Application\Http\Middleware;
 
+use App\Components\Queryable\Enums\QueryKey;
 use App\Domains\Catalog\Enums\Query\Filter\ProductAllowedFilter;
 use App\Domains\Catalog\Models\Settings\CatalogSettings;
-use App\Domains\Components\Queryable\Enums\QueryKey;
 use Closure;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

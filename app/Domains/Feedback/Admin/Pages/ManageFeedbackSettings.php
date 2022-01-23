@@ -2,11 +2,11 @@
 
 namespace App\Domains\Feedback\Admin\Pages;
 
+use App\Components\Generic\Enums\Lang\TranslationNamespace;
 use App\Domains\Admin\Admin\Abstracts\SettingsPage;
 use App\Domains\Admin\Traits\HasNavigationSort;
 use App\Domains\Admin\Traits\Translation\HasTranslatableAdminLabels;
 use App\Domains\Admin\Traits\Translation\TranslatableAdminPage;
-use App\Domains\Components\Generic\Enums\Lang\TranslationNamespace;
 use App\Domains\Feedback\Enums\Translation\FeedbackSettingsTranslationKey;
 use App\Domains\Feedback\Models\Settings\FeedbackSettings;
 use App\Domains\Feedback\Providers\DomainServiceProvider;

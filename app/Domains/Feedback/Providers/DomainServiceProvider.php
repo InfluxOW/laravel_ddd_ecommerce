@@ -2,7 +2,7 @@
 
 namespace App\Domains\Feedback\Providers;
 
-use App\Domains\Components\Generic\Enums\Lang\TranslationNamespace;
+use App\Components\Generic\Enums\Lang\TranslationNamespace;
 use App\Domains\Feedback\Models\Feedback;
 use App\Domains\Feedback\Policies\FeedbackPolicy;
 use App\Infrastructure\Abstracts\ServiceProviderBase;

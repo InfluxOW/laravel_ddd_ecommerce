@@ -2,7 +2,7 @@
 
 namespace App\Domains\Cart\Models;
 
-use App\Domains\Components\Purchasable\Casts\MoneyCast;
+use App\Components\Purchasable\Casts\MoneyCast;
 use App\Domains\Users\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

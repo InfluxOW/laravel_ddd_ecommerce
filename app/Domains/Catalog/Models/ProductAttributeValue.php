@@ -2,9 +2,9 @@
 
 namespace App\Domains\Catalog\Models;
 
+use App\Components\Generic\Utils\StringUtils;
 use App\Domains\Catalog\Database\Factories\ProductAttributeValueFactory;
 use App\Domains\Catalog\Enums\ProductAttributeValuesType;
-use App\Domains\Components\Generic\Utils\StringUtils;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

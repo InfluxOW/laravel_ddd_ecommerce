@@ -1,5 +1,6 @@
 <?php
 
+use App\Components\Generic\Utils\LangUtils;
 use App\Domains\Admin\Enums\Translation\AdminNavigationGroupTranslationKey;
 use App\Domains\Admin\Enums\Translation\AdminPagePropertyTranslationKey;
 use App\Domains\Admin\Enums\Translation\AdminRelationPropertyTranslationKey;
@@ -12,7 +13,6 @@ use App\Domains\Catalog\Admin\Resources\ProductCategoryResource\RelationManagers
 use App\Domains\Catalog\Admin\Resources\ProductResource;
 use App\Domains\Catalog\Admin\Resources\ProductResource\RelationManagers\ProductAttributeValuesRelationManager;
 use App\Domains\Catalog\Admin\Resources\ProductResource\RelationManagers\ProductPricesRelationManager;
-use App\Domains\Components\Generic\Utils\LangUtils;
 
 return [
     ProductCategoryResource::class => [

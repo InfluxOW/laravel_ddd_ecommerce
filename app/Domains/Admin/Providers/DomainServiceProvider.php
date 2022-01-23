@@ -2,7 +2,7 @@
 
 namespace App\Domains\Admin\Providers;
 
-use App\Domains\Components\Generic\Enums\Lang\TranslationNamespace;
+use App\Components\Generic\Enums\Lang\TranslationNamespace;
 use App\Infrastructure\Abstracts\ServiceProviderBase;
 
 class DomainServiceProvider extends ServiceProviderBase

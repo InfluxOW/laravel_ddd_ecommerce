@@ -2,7 +2,7 @@
 
 namespace App\Domains\Users\Database\Factories;
 
-use App\Domains\Components\Addressable\Models\Address;
+use App\Components\Addressable\Models\Address;
 use App\Domains\Users\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;

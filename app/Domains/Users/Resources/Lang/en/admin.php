@@ -1,9 +1,9 @@
 <?php
 
+use App\Components\Generic\Utils\LangUtils;
 use App\Domains\Admin\Enums\Translation\AdminNavigationGroupTranslationKey;
 use App\Domains\Admin\Enums\Translation\AdminResourcePropertyTranslationKey;
 use App\Domains\Admin\Providers\DomainServiceProvider;
-use App\Domains\Components\Generic\Utils\LangUtils;
 use App\Domains\Users\Admin\Resources\UserResource;
 
 return [

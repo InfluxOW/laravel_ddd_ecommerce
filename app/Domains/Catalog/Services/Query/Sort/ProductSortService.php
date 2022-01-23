@@ -2,12 +2,12 @@
 
 namespace App\Domains\Catalog\Services\Query\Sort;
 
+use App\Components\Generic\Enums\Lang\TranslationNamespace;
+use App\Components\Queryable\Abstracts\QueryService;
+use App\Components\Queryable\Classes\Sort\Sort;
+use App\Components\Queryable\Enums\QueryKey;
 use App\Domains\Catalog\Enums\Query\Sort\ProductAllowedSort;
 use App\Domains\Catalog\Providers\DomainServiceProvider;
-use App\Domains\Components\Generic\Enums\Lang\TranslationNamespace;
-use App\Domains\Components\Queryable\Abstracts\QueryService;
-use App\Domains\Components\Queryable\Classes\Sort\Sort;
-use App\Domains\Components\Queryable\Enums\QueryKey;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 

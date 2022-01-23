@@ -3,6 +3,7 @@
 namespace App\Domains\Catalog\Admin\Pages;
 
 use Akaunting\Money\Currency;
+use App\Components\Generic\Enums\Lang\TranslationNamespace;
 use App\Domains\Admin\Admin\Abstracts\SettingsPage;
 use App\Domains\Admin\Traits\HasNavigationSort;
 use App\Domains\Admin\Traits\Translation\HasTranslatableAdminLabels;
@@ -10,7 +11,6 @@ use App\Domains\Admin\Traits\Translation\TranslatableAdminPage;
 use App\Domains\Catalog\Enums\Translation\CatalogSettingsTranslationKey;
 use App\Domains\Catalog\Models\Settings\CatalogSettings;
 use App\Domains\Catalog\Providers\DomainServiceProvider;
-use App\Domains\Components\Generic\Enums\Lang\TranslationNamespace;
 use Filament\Forms\Components\MultiSelect;
 use Filament\Forms\Components\Select;
 use Illuminate\Support\Collection;

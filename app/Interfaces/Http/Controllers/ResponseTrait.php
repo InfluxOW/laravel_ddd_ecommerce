@@ -2,7 +2,7 @@
 
 namespace App\Interfaces\Http\Controllers;
 
-use App\Domains\Components\Generic\Enums\Response\ResponseKey;
+use App\Components\Generic\Enums\Response\ResponseKey;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;

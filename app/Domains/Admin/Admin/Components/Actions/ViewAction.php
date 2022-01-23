@@ -2,9 +2,9 @@
 
 namespace App\Domains\Admin\Admin\Components\Actions;
 
+use App\Components\Generic\Utils\LangUtils;
 use App\Domains\Admin\Enums\Translation\Components\AdminActionTranslationKey;
 use App\Domains\Admin\Providers\DomainServiceProvider;
-use App\Domains\Components\Generic\Utils\LangUtils;
 use Filament\Resources\Pages\Page;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables\Actions\LinkAction;

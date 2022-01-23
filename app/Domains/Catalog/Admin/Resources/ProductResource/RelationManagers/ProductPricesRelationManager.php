@@ -2,13 +2,13 @@
 
 namespace App\Domains\Catalog\Admin\Resources\ProductResource\RelationManagers;
 
+use App\Components\Generic\Enums\Lang\TranslationNamespace;
 use App\Domains\Admin\Admin\Abstracts\RelationManagers\HasManyRelationManager;
 use App\Domains\Catalog\Admin\Resources\ProductResource;
 use App\Domains\Catalog\Enums\Translation\ProductPriceResourceTranslationKey;
 use App\Domains\Catalog\Models\Product;
 use App\Domains\Catalog\Models\Settings\CatalogSettings;
 use App\Domains\Catalog\Providers\DomainServiceProvider;
-use App\Domains\Components\Generic\Enums\Lang\TranslationNamespace;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;

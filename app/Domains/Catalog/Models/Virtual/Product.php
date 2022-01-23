@@ -2,8 +2,8 @@
 
 namespace App\Domains\Catalog\Models\Virtual;
 
-use App\Domains\Components\Purchasable\Models\Virtual\Currency;
-use App\Domains\Components\Purchasable\Models\Virtual\Money;
+use App\Components\Purchasable\Models\Virtual\Currency;
+use App\Components\Purchasable\Models\Virtual\Money;
 
 /**
  * @OA\Schema(
