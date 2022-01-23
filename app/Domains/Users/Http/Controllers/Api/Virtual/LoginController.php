@@ -18,6 +18,7 @@ class LoginController
      *          required={"email","password"},
      *          @OA\Property(property="email", type="string", format="email", example="user@mail.com"),
      *          @OA\Property(property="password", type="string", format="password", example="password"),
+     *          @OA\Property(property="remember", type="bool", nullable="true", example="true"),
      *       ),
      *    ),
      *    @OA\Response(
@@ -30,7 +31,7 @@ class LoginController
      *    ),
      *    @OA\Response(
      *       response=422,
-     *       description="Login failed",
+     *       description="Validation Error",
      *       @OA\JsonContent(
      *          @OA\Property(property="message", type="string", example="Sorry, wrong email address or password. Please, try again!"),
      *       ),

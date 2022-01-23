@@ -30,6 +30,11 @@ trait ResponseTrait
         return response()->json($data, $status);
     }
 
+    protected function respondSuccess(): JsonResponse
+    {
+        return response()->json([], SymfonyResponse::HTTP_NO_CONTENT);
+    }
+
     protected function respondWithCollection(Collection|LengthAwarePaginator $collection, array $additional = []): AnonymousResourceCollection
     {
         return $this->resource::collection($collection)->additional($additional);

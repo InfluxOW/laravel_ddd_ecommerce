@@ -15,7 +15,7 @@ class RegisterController
      *       required=true,
      *       description="User data",
      *       @OA\JsonContent(
-     *          required={"name", "email", "role", "password", "password_confirmation" },
+     *          required={"name", "email", "role", "password", "password_confirmation"},
      *          @OA\Property(property="name", type="string", example="John Doe"),
      *          @OA\Property(property="email", type="string", format="email", example="john_doe@mail.com"),
      *          @OA\Property(property="password", type="string", example="password"),
@@ -32,7 +32,7 @@ class RegisterController
      *    ),
      *    @OA\Response(
      *    response=422,
-     *    description="Registration failed due to validation error",
+     *    description="Validation Error",
      *    @OA\JsonContent(
      *       @OA\Property(property="message", type="string", example="The given data was invalid."),
      *       @OA\Property(
