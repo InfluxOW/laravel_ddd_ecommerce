@@ -2,10 +2,10 @@
 
 namespace App\Domains\Cart\Services;
 
+use App\Components\Generic\Utils\MathUtils;
+use App\Components\Purchasable\Abstracts\Purchasable;
 use App\Domains\Cart\Models\Cart;
 use App\Domains\Cart\Models\CartItem;
-use App\Domains\Components\Generic\Utils\MathUtils;
-use App\Domains\Components\Purchasable\Abstracts\Purchasable;
 use App\Domains\Users\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Redis;

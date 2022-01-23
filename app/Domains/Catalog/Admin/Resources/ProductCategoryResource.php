@@ -2,13 +2,13 @@
 
 namespace App\Domains\Catalog\Admin\Resources;
 
+use App\Components\Generic\Enums\Lang\TranslationNamespace;
 use App\Domains\Admin\Admin\Abstracts\Resource;
 use App\Domains\Admin\Admin\Components\Cards\TimestampsCard;
 use App\Domains\Catalog\Admin\Resources\ProductCategoryResource\RelationManagers\ProductCategoryChildrenRelationManager;
 use App\Domains\Catalog\Enums\Translation\ProductCategoryResourceTranslationKey;
 use App\Domains\Catalog\Models\ProductCategory;
 use App\Domains\Catalog\Providers\DomainServiceProvider;
-use App\Domains\Components\Generic\Enums\Lang\TranslationNamespace;
 use Filament\Forms\Components\BelongsToSelect;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Grid;

@@ -2,9 +2,9 @@
 
 namespace App\Domains\Catalog\Services\Query\Filter;
 
-use App\Domains\Components\Queryable\Abstracts\QueryService;
-use App\Domains\Components\Queryable\Classes\Filter\Filter;
-use App\Domains\Components\Queryable\Enums\QueryKey;
+use App\Components\Queryable\Abstracts\QueryService;
+use App\Components\Queryable\Classes\Filter\Filter;
+use App\Components\Queryable\Enums\QueryKey;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Spatie\QueryBuilder\QueryBuilder as SpatieQueryBuilder;

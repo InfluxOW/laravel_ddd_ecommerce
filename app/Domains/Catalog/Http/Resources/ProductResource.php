@@ -2,12 +2,12 @@
 
 namespace App\Domains\Catalog\Http\Resources;
 
+use App\Components\Purchasable\Http\Resources\CurrencyResource;
+use App\Components\Purchasable\Http\Resources\MoneyResource;
+use App\Components\Queryable\Enums\QueryKey;
 use App\Domains\Catalog\Enums\Query\Filter\ProductAllowedFilter;
 use App\Domains\Catalog\Models\Product;
 use App\Domains\Catalog\Models\ProductPrice;
-use App\Domains\Components\Purchasable\Http\Resources\CurrencyResource;
-use App\Domains\Components\Purchasable\Http\Resources\MoneyResource;
-use App\Domains\Components\Queryable\Enums\QueryKey;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 use JetBrains\PhpStorm\ArrayShape;

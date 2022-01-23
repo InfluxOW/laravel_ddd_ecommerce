@@ -1,5 +1,6 @@
 <?php
 
+use App\Components\Generic\Utils\EnumUtils;
 use App\Domains\Catalog\Enums\ProductAttributeValuesType;
 use App\Domains\Catalog\Enums\Query\Filter\ProductAllowedFilter;
 use App\Domains\Catalog\Enums\Query\Sort\ProductAllowedSort;
@@ -9,7 +10,6 @@ use App\Domains\Catalog\Enums\Translation\ProductAttributeValueResourceTranslati
 use App\Domains\Catalog\Enums\Translation\ProductCategoryResourceTranslationKey;
 use App\Domains\Catalog\Enums\Translation\ProductPriceResourceTranslationKey;
 use App\Domains\Catalog\Enums\Translation\ProductResourceTranslationKey;
-use App\Domains\Components\Generic\Utils\EnumUtils;
 
 return [
     ProductAllowedFilter::class => [

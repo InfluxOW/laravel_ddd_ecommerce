@@ -2,7 +2,7 @@
 
 namespace App\Domains\Users\Models;
 
-use App\Domains\Components\Addressable\Models\Address;
+use App\Components\Addressable\Models\Address;
 use App\Domains\Feedback\Models\Feedback;
 use App\Domains\Users\Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

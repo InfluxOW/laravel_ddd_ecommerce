@@ -3,11 +3,11 @@
 namespace App\Domains\Catalog\Models;
 
 use Akaunting\Money\Money;
+use App\Components\Generic\Enums\BooleanString;
+use App\Components\Purchasable\Abstracts\Purchasable;
 use App\Domains\Catalog\Database\Factories\ProductFactory;
 use App\Domains\Catalog\Enums\ProductAttributeValuesType;
 use App\Domains\Catalog\Models\Pivot\ProductProductCategory;
-use App\Domains\Components\Generic\Enums\BooleanString;
-use App\Domains\Components\Purchasable\Abstracts\Purchasable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

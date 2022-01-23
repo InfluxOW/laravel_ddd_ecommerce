@@ -2,14 +2,14 @@
 
 namespace App\Domains\Catalog\Services\Query\Filter;
 
+use App\Components\Generic\Enums\Lang\TranslationNamespace;
+use App\Components\Queryable\Classes\Filter\Filter;
+use App\Components\Queryable\Classes\Filter\InputFilter;
+use App\Components\Queryable\Classes\Filter\MultiselectFilter;
+use App\Components\Queryable\Classes\Filter\RangeFilter;
+use App\Components\Queryable\Classes\Filter\SelectFilter;
 use App\Domains\Catalog\Enums\Query\Filter\ProductAllowedFilter;
 use App\Domains\Catalog\Providers\DomainServiceProvider;
-use App\Domains\Components\Generic\Enums\Lang\TranslationNamespace;
-use App\Domains\Components\Queryable\Classes\Filter\Filter;
-use App\Domains\Components\Queryable\Classes\Filter\InputFilter;
-use App\Domains\Components\Queryable\Classes\Filter\MultiselectFilter;
-use App\Domains\Components\Queryable\Classes\Filter\RangeFilter;
-use App\Domains\Components\Queryable\Classes\Filter\SelectFilter;
 use Spatie\QueryBuilder\QueryBuilder as SpatieQueryBuilder;
 
 class ProductFilterBuilder

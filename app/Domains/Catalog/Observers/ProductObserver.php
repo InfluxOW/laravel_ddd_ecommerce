@@ -2,9 +2,9 @@
 
 namespace App\Domains\Catalog\Observers;
 
+use App\Components\Generic\Utils\AppUtils;
 use App\Domains\Catalog\Models\Product;
 use App\Domains\Catalog\Models\ProductCategory;
-use App\Domains\Components\Generic\Utils\AppUtils;
 
 class ProductObserver
 {

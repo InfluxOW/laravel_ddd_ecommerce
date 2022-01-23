@@ -2,13 +2,13 @@
 
 namespace App\Domains\Catalog\Services\Query\Filter;
 
+use App\Components\Queryable\Classes\Filter\Resources\Multiselect\MultiselectFilterNestedValues;
+use App\Components\Queryable\Classes\Filter\Resources\Multiselect\MultiselectFilterNestedValuesAttribute;
 use App\Domains\Catalog\Models\ProductAttribute;
 use App\Domains\Catalog\Models\ProductAttributeValue;
 use App\Domains\Catalog\Models\ProductCategory;
 use App\Domains\Catalog\Models\ProductPrice;
 use App\Domains\Catalog\Models\Settings\CatalogSettings;
-use App\Domains\Components\Queryable\Classes\Filter\Resources\Multiselect\MultiselectFilterNestedValues;
-use App\Domains\Components\Queryable\Classes\Filter\Resources\Multiselect\MultiselectFilterNestedValuesAttribute;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;

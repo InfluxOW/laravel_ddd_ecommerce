@@ -1,10 +1,10 @@
 <?php
 
+use App\Components\Generic\Utils\LangUtils;
 use App\Domains\Admin\Enums\Translation\AdminNavigationGroupTranslationKey;
 use App\Domains\Admin\Enums\Translation\AdminPagePropertyTranslationKey;
 use App\Domains\Admin\Enums\Translation\AdminResourcePropertyTranslationKey;
 use App\Domains\Admin\Providers\DomainServiceProvider;
-use App\Domains\Components\Generic\Utils\LangUtils;
 use App\Domains\Feedback\Admin\Pages\ManageFeedbackSettings;
 use App\Domains\Feedback\Admin\Resources\FeedbackResource;
 

@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\Abstracts;
 
-use App\Domains\Components\Generic\Enums\Lang\TranslationNamespace;
+use App\Components\Generic\Enums\Lang\TranslationNamespace;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 use ReflectionClass;

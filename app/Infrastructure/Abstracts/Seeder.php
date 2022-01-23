@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\Abstracts;
 
-use App\Domains\Components\Generic\Enums\EnvironmentVariable;
+use App\Components\Generic\Enums\EnvironmentVariable;
 use Illuminate\Database\Seeder as BaseSeeder;
 
 abstract class Seeder extends BaseSeeder

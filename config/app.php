@@ -172,14 +172,18 @@ return [
         App\Application\Providers\AppServiceProvider::class,
 
         /*
-         * Domain Service Providers
+         * Domains Service Providers
          */
         App\Domains\Users\Providers\DomainServiceProvider::class,
         App\Domains\Catalog\Providers\DomainServiceProvider::class,
         App\Domains\Admin\Providers\DomainServiceProvider::class,
-        App\Domains\Components\Addressable\Providers\DomainServiceProvider::class,
         App\Domains\Cart\Providers\DomainServiceProvider::class,
         App\Domains\Feedback\Providers\DomainServiceProvider::class,
+
+        /*
+         * Components Service Providers
+         */
+        App\Components\Addressable\Providers\DomainServiceProvider::class,
     ],
 
     /*

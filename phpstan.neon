@@ -11,7 +11,7 @@ parameters:
     level: 8
 
     excludePaths:
-        - app/Domains/Components/Purchasable/Casts/MoneyCast.php
+        - app/Components/Purchasable/Casts/MoneyCast.php
 
     ignoreErrors:
         - '#Attribute class JetBrains\\PhpStorm\\ArrayShape does not exist#'

@@ -20,6 +20,9 @@
             <directory>./app/Domains/*/Database/*</directory>
             <directory>./app/Domains/*/Resources/Lang/*</directory>
             <directory>./app/Domains/*/Tests/*</directory>
+            <directory>./app/Components/*/Database/*</directory>
+            <directory>./app/Components/*/Resources/Lang/*</directory>
+            <directory>./app/Components/*/Tests/*</directory>
         </exclude>
         <include>
             <directory suffix=".php">./app</directory>

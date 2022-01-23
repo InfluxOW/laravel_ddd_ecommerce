@@ -2,6 +2,7 @@
 
 namespace App\Domains\Catalog\Admin\Resources\ProductResource\RelationManagers;
 
+use App\Components\Generic\Enums\Lang\TranslationNamespace;
 use App\Domains\Admin\Admin\Abstracts\RelationManagers\HasManyRelationManager;
 use App\Domains\Catalog\Admin\Resources\ProductResource;
 use App\Domains\Catalog\Enums\ProductAttributeValuesType;
@@ -10,7 +11,6 @@ use App\Domains\Catalog\Models\Product;
 use App\Domains\Catalog\Models\ProductAttribute;
 use App\Domains\Catalog\Models\ProductAttributeValue;
 use App\Domains\Catalog\Providers\DomainServiceProvider;
-use App\Domains\Components\Generic\Enums\Lang\TranslationNamespace;
 use Filament\Forms\Components\BelongsToSelect;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
