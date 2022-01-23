@@ -13,7 +13,7 @@ class AddTimestamp
     {
         /** @var JsonResponse $response */
         $response = $next($request);
-        $response->setData(array_merge_recursive($response->getData(true), ['meta' => ['timestamp' => intdiv((int) Carbon::now()->format('Uu'), 1000)]]));
+        $response->setData(array_merge_recursive($response->getData(assoc: true), ['meta' => ['timestamp' => intdiv((int) Carbon::now()->format('Uu'), 1000)]]));
 
         return $response;
     }

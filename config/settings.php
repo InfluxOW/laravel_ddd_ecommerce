@@ -1,6 +1,7 @@
 <?php
 
 use App\Domains\Catalog\Models\Settings\CatalogSettings;
+use App\Domains\Catalog\Models\Settings\FeedbackSettings;
 
 return [
 
@@ -10,6 +11,7 @@ return [
      */
     'settings' => [
         CatalogSettings::class,
+        FeedbackSettings::class,
     ],
 
     /*
@@ -19,6 +21,7 @@ return [
      */
     'migrations_paths' => [
         app()->path('Domains/Catalog/Database/Settings'),
+        app()->path('Domains/Feedback/Database/Settings'),
     ],
 
     /*

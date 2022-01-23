@@ -8,7 +8,7 @@ use Illuminate\Support\Arr;
 
 class RegisterControllerTest extends TestCase
 {
-    public array $validData;
+    protected array $validData;
 
     protected function setUp(): void
     {
@@ -25,9 +25,13 @@ class RegisterControllerTest extends TestCase
     /** @test */
     public function a_user_can_register_with_valid_data(): void
     {
+        $this->assertDatabaseMissing('users', Arr::only($this->validData, ['name', 'email']));
+
         $this->post(route('register'), $this->validData)
             ->assertOk()
             ->assertJsonStructure(['user', 'access_token']);
+
+        $this->assertDatabaseHas('users', Arr::only($this->validData, ['name', 'email']));
     }
 
     /** @test */

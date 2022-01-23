@@ -10,6 +10,7 @@ return [
         AdminNavigationGroupTranslationKey::GENERIC->name => 'Generic',
         AdminNavigationGroupTranslationKey::CATALOG->name => 'Catalog',
         AdminNavigationGroupTranslationKey::SETTINGS->name => 'Settings',
+        AdminNavigationGroupTranslationKey::FEEDBACK->name => 'Feedback',
     ],
     AdminTimestampsCardTranslationKey::class => [
         AdminTimestampsCardTranslationKey::UPDATED_AT->name => 'Last Modified At',

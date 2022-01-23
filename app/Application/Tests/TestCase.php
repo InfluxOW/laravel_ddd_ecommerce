@@ -31,6 +31,8 @@ abstract class TestCase extends BaseTestCase
 
         parent::setUp();
 
+        Redis::flushall();
+
         if (DatabaseState::$shouldRunSetUpOnce) {
             $this->setUpOnce();
 
@@ -47,12 +49,18 @@ abstract class TestCase extends BaseTestCase
         }
 
         $this->artisan('migrate:fresh', $this->migrateFreshUsing());
-        Redis::flushall();
 
         /* @phpstan-ignore-next-line */
         $this->app[Kernel::class]->setArtisan(null);
 
         RefreshDatabaseState::$migrated = true;
+    }
+
+    protected function setIp(string $ip): static
+    {
+        $this->serverVariables['REMOTE_ADDR'] = $ip;
+
+        return $this;
     }
 
     /**

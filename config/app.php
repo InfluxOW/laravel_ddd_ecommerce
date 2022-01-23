@@ -179,6 +179,7 @@ return [
         App\Domains\Admin\Providers\DomainServiceProvider::class,
         App\Domains\Components\Addressable\Providers\DomainServiceProvider::class,
         App\Domains\Cart\Providers\DomainServiceProvider::class,
+        App\Domains\Feedback\Providers\DomainServiceProvider::class,
     ],
 
     /*
@@ -233,6 +234,10 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+    ],
+
+    'rate_limits' => [
+        'api' => env('API_RATE_LIMIT', 60),
     ],
 
 ];

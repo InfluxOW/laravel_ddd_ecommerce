@@ -183,7 +183,7 @@ class ProductController
      *    ),
      *    @OA\Response(
      *    response=422,
-     *    description="Products were not fetched due to validation error",
+     *    description="Validation Error",
      *    @OA\JsonContent(
      *       @OA\Property(property="message", type="string", example="The given data was invalid."),
      *       @OA\Property(

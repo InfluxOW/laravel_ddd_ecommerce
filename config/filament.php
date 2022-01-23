@@ -4,6 +4,8 @@ use App\Domains\Catalog\Admin\Pages\ManageCatalogSettings;
 use App\Domains\Catalog\Admin\Resources\ProductAttributeResource;
 use App\Domains\Catalog\Admin\Resources\ProductCategoryResource;
 use App\Domains\Catalog\Admin\Resources\ProductResource;
+use App\Domains\Feedback\Admin\Pages\ManageFeedbackSettings;
+use App\Domains\Feedback\Admin\Resources\FeedbackResource;
 use App\Domains\Users\Admin\Resources\UserResource;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -89,6 +91,7 @@ return [
         'register' => [
             Pages\Dashboard::class,
             ManageCatalogSettings::class,
+            ManageFeedbackSettings::class,
         ],
     ],
 
@@ -110,6 +113,7 @@ return [
             ProductCategoryResource::class,
             ProductAttributeResource::class,
             ProductResource::class,
+            FeedbackResource::class,
         ],
     ],
 

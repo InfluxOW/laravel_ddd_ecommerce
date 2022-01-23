@@ -34,9 +34,14 @@ abstract class AdminCrudTestCase extends AdminTestCase
 
         if (isset($this->viewRecord)) {
             $this->assertNotNull($record);
-
             /** @phpstan-ignore-next-line  */
             $this->getResourceActionUrl($this->viewRecord, ['record' => $record?->id])->assertOk();
+
+            /** @phpstan-ignore-next-line  */
+            foreach ($this->viewRecord::getResource()::getRelations() as $relation) {
+                /** @phpstan-ignore-next-line  */
+                $this->getResourceActionUrl($this->viewRecord, ['record' => $record?->id, 'activeRelationManager' => $relation])->assertOk();
+            }
         }
 
         if (isset($this->editRecord)) {
