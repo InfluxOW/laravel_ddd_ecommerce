@@ -16,7 +16,6 @@ class DomainServiceProvider extends ServiceProviderBase
     public const TRANSLATION_NAMESPACE = TranslationNamespace::CATALOG;
 
     protected bool $hasMigrations = true;
-
     protected bool $hasTranslations = true;
 
     protected array $providers = [

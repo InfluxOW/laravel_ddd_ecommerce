@@ -2,9 +2,7 @@
 
 namespace App\Domains\Admin\Admin\Components\Widgets;
 
-use App\Components\Generic\Enums\Lang\TranslationNamespace;
 use App\Domains\Admin\Enums\Translation\Components\AdminDatasetTranslationKey;
-use App\Domains\Admin\Providers\DomainServiceProvider;
 use App\Domains\Admin\Traits\Translation\TranslatableAdminWidget;
 use App\Domains\Users\Models\User;
 use Filament\Widgets\LineChartWidget;
@@ -36,10 +34,5 @@ class CustomersChartWidget extends LineChartWidget
             ],
             'labels' => $data->map(fn (TrendValue $value) => $value->date),
         ];
-    }
-
-    protected static function getTranslationNamespace(): TranslationNamespace
-    {
-        return DomainServiceProvider::TRANSLATION_NAMESPACE;
     }
 }

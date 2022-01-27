@@ -10,21 +10,33 @@ trait TranslatableAdminResource
 
     public static function getLabel(): string
     {
-        return static::translateComponentProperty(AdminResourcePropertyTranslationKey::LABEL);
+        /** @var string $translation */
+        $translation = static::translateComponentProperty(AdminResourcePropertyTranslationKey::LABEL);
+
+        return $translation;
     }
 
     public static function getPluralLabel(): string
     {
-        return static::translateComponentProperty(AdminResourcePropertyTranslationKey::PLURAL_LABEL);
+        /** @var string $translation */
+        $translation = static::translateComponentProperty(AdminResourcePropertyTranslationKey::PLURAL_LABEL);
+
+        return $translation;
     }
 
     protected static function getNavigationLabel(): string
     {
-        return static::translateComponentProperty(AdminResourcePropertyTranslationKey::NAVIGATION_LABEL);
+        /** @var string $translation */
+        $translation = static::translateComponentProperty(AdminResourcePropertyTranslationKey::NAVIGATION_LABEL);
+
+        return $translation;
     }
 
     protected static function getNavigationGroup(): ?string
     {
-        return static::translateComponentProperty(AdminResourcePropertyTranslationKey::NAVIGATION_GROUP);
+        /** @var string $translation */
+        $translation = static::translateComponentProperty(AdminResourcePropertyTranslationKey::NAVIGATION_GROUP);
+
+        return $translation;
     }
 }

@@ -2,13 +2,11 @@
 
 namespace App\Domains\Catalog\Admin\Resources;
 
-use App\Components\Generic\Enums\Lang\TranslationNamespace;
 use App\Domains\Admin\Admin\Abstracts\Resource;
 use App\Domains\Admin\Admin\Components\Cards\TimestampsCard;
 use App\Domains\Catalog\Enums\ProductAttributeValuesType;
 use App\Domains\Catalog\Enums\Translation\ProductAttributeResourceTranslationKey;
 use App\Domains\Catalog\Models\ProductAttribute;
-use App\Domains\Catalog\Providers\DomainServiceProvider;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -130,11 +128,6 @@ class ProductAttributeResource extends Resource
     /*
      * Translation
      * */
-
-    protected static function getTranslationNamespace(): TranslationNamespace
-    {
-        return DomainServiceProvider::TRANSLATION_NAMESPACE;
-    }
 
     protected static function getTranslationKeyClass(): string
     {

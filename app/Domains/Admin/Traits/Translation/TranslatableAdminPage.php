@@ -10,16 +10,25 @@ trait TranslatableAdminPage
 
     protected function getTitle(): string
     {
-        return static::translateComponentProperty(AdminPagePropertyTranslationKey::TITLE);
+        /** @var string $translation */
+        $translation = static::translateComponentProperty(AdminPagePropertyTranslationKey::TITLE);
+
+        return $translation;
     }
 
     protected static function getNavigationLabel(): string
     {
-        return static::translateComponentProperty(AdminPagePropertyTranslationKey::NAVIGATION_LABEL);
+        /** @var string $translation */
+        $translation = static::translateComponentProperty(AdminPagePropertyTranslationKey::NAVIGATION_LABEL);
+
+        return $translation;
     }
 
     protected static function getNavigationGroup(): ?string
     {
-        return static::translateComponentProperty(AdminPagePropertyTranslationKey::NAVIGATION_GROUP);
+        /** @var string $translation */
+        $translation = static::translateComponentProperty(AdminPagePropertyTranslationKey::NAVIGATION_GROUP);
+
+        return $translation;
     }
 }

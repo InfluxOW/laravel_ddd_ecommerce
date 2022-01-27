@@ -4,7 +4,7 @@ namespace App\Components\Generic\Utils;
 
 use BackedEnum;
 
-class EnumUtils
+final class EnumUtils
 {
     public static function descendingValue(BackedEnum $sort): string
     {

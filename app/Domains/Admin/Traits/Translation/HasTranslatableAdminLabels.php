@@ -15,17 +15,20 @@ trait HasTranslatableAdminLabels
     protected static function setTranslatableLabels(array $schema): array
     {
         return collect($schema)
-            ->map(function (object $item): object {
-                if (method_exists($item, 'getName') && method_exists($item, 'label')) {
-                    $formTranslationKeyEnum = static::getTranslationKeyClass()::tryFrom($item->getName());
-                    if (isset($formTranslationKeyEnum)) {
-                        $item->label(static::translateEnum($formTranslationKeyEnum));
-                    }
-                }
-
-                return $item;
-            })
+            ->map(fn (object $item): object => static::setTranslatableLabel($item))
             ->toArray();
+    }
+
+    protected static function setTranslatableLabel(object $item): object
+    {
+        if (method_exists($item, 'getName') && method_exists($item, 'label')) {
+            $formTranslationKeyEnum = static::getTranslationKeyClass()::tryFrom($item->getName());
+            if (isset($formTranslationKeyEnum)) {
+                $item->label(static::translateEnum($formTranslationKeyEnum, allowClosures: true));
+            }
+        }
+
+        return $item;
     }
 
     /**

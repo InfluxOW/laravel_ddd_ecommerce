@@ -10,16 +10,25 @@ trait TranslatableAdminRelation
 
     protected static function getRecordLabel(): string
     {
-        return static::translateComponentProperty(AdminRelationPropertyTranslationKey::LABEL);
+        /** @var string $translation */
+        $translation = static::translateComponentProperty(AdminRelationPropertyTranslationKey::LABEL);
+
+        return $translation;
     }
 
     protected static function getPluralRecordLabel(): string
     {
-        return static::translateComponentProperty(AdminRelationPropertyTranslationKey::PLURAL_LABEL);
+        /** @var string $translation */
+        $translation = static::translateComponentProperty(AdminRelationPropertyTranslationKey::PLURAL_LABEL);
+
+        return $translation;
     }
 
     public static function getTitle(): string
     {
-        return static::translateComponentProperty(AdminRelationPropertyTranslationKey::TITLE);
+        /** @var string $translation */
+        $translation = static::translateComponentProperty(AdminRelationPropertyTranslationKey::TITLE);
+
+        return $translation;
     }
 }

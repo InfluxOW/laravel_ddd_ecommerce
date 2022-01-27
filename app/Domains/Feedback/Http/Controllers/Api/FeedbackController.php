@@ -25,6 +25,7 @@ class FeedbackController extends Controller
             $feedback->email = $user->email;
             $feedback->phone = $user->phone;
         }
+        $feedback->is_reviewed = false;
         $feedback->ip = $request->ip();
         $feedback->save();
 

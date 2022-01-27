@@ -19,6 +19,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property string $email
  * @property string|null $phone
  * @property string $text
+ * @property bool $is_reviewed
  * @property string|null $ip
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -33,6 +34,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @method static Builder|Feedback whereEmail($value)
  * @method static Builder|Feedback whereId($value)
  * @method static Builder|Feedback whereIp($value)
+ * @method static Builder|Feedback whereIsReviewed($value)
  * @method static Builder|Feedback wherePhone($value)
  * @method static Builder|Feedback whereText($value)
  * @method static Builder|Feedback whereUpdatedAt($value)

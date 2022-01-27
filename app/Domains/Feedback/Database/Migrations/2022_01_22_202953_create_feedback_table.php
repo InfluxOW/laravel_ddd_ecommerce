@@ -21,6 +21,7 @@ class CreateFeedbackTable extends Migration
             $table->string('email');
             $table->string('phone', 12)->nullable();
             $table->mediumText('text');
+            $table->boolean('is_reviewed');
             $table->string('ip')->nullable();
             $table->timestamps();
         });

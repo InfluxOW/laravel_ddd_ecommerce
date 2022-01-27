@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection;
 use JetBrains\PhpStorm\ArrayShape;
 
-class MultiselectFilter extends Filter
+final class MultiselectFilter extends Filter
 {
     public static QueryFilterType $type = QueryFilterType::MULTISELECT;
 

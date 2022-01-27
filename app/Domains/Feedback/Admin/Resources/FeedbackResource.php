@@ -2,20 +2,25 @@
 
 namespace App\Domains\Feedback\Admin\Resources;
 
-use App\Components\Generic\Enums\Lang\TranslationNamespace;
 use App\Domains\Admin\Admin\Abstracts\Resource;
+use App\Domains\Admin\Admin\Components\Actions\BulkUpdateAction;
 use App\Domains\Admin\Admin\Components\Cards\TimestampsCard;
 use App\Domains\Feedback\Enums\Translation\FeedbackResourceTranslationKey;
 use App\Domains\Feedback\Models\Feedback;
-use App\Domains\Feedback\Providers\DomainServiceProvider;
 use Filament\Forms\Components\BelongsToSelect;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
+use Filament\Tables\Columns\BooleanColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 
 class FeedbackResource extends Resource
 {
@@ -29,23 +34,31 @@ class FeedbackResource extends Resource
 
     public static function form(Form $form): Form
     {
+
+
         return $form
             ->schema([
                 Card::make()
-                    ->schema(self::setTranslatableLabels([
+                    ->schema(static::setTranslatableLabels([
+                        Toggle::make(FeedbackResourceTranslationKey::IS_REVIEWED->value),
                         Grid::make()
-                            ->schema(self::setTranslatableLabels([
-                                TextInput::make(FeedbackResourceTranslationKey::USERNAME->value),
+                            ->schema(static::setTranslatableLabels([
+                                TextInput::make(FeedbackResourceTranslationKey::USERNAME->value)
+                                    ->disabled(),
                                 TextInput::make(FeedbackResourceTranslationKey::EMAIL->value)
-                                    ->email(),
+                                    ->email()
+                                    ->disabled(),
                                 TextInput::make(FeedbackResourceTranslationKey::PHONE->value)
                                     ->mask(fn (TextInput\Mask $mask): TextInput\Mask => $mask->pattern('+0 (000) 000-00-00'))
-                                    ->tel(),
+                                    ->tel()
+                                    ->disabled(),
                             ]))
                             ->columns(3),
                         BelongsToSelect::make(FeedbackResourceTranslationKey::USER->value)
-                            ->relationship('user', 'name'),
-                        Textarea::make(FeedbackResourceTranslationKey::TEXT->value),
+                            ->relationship('user', 'name')
+                            ->disabled(),
+                        Textarea::make(FeedbackResourceTranslationKey::TEXT->value)
+                            ->disabled(),
                     ]))
                     ->columnSpan(2),
                 TimestampsCard::make()
@@ -57,14 +70,29 @@ class FeedbackResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->columns(self::setTranslatableLabels([
-                TextColumn::make(FeedbackResourceTranslationKey::USERNAME->value)->sortable()->searchable(),
-                TextColumn::make(FeedbackResourceTranslationKey::EMAIL->value)->sortable()->searchable(),
-                TextColumn::make(FeedbackResourceTranslationKey::PHONE->value)->sortable()->searchable(),
-                TextColumn::make(FeedbackResourceTranslationKey::TEXT->value)->sortable()->searchable()->limit(),
+            ->columns(static::setTranslatableLabels([
+                BooleanColumn::make(FeedbackResourceTranslationKey::IS_REVIEWED->value)->sortable(),
+                TextColumn::make(FeedbackResourceTranslationKey::TEXT->value)->sortable()->searchable()->limit(70),
+                TextColumn::make(FeedbackResourceTranslationKey::CREATED_AT->value)->sortable()->dateTime(),
             ]))
-            ->filters([
-                //
+            ->filters(static::setTranslatableLabels([
+                Filter::make(FeedbackResourceTranslationKey::IS_REVIEWED->value)
+                    ->form(static::setTranslatableLabels([
+                        Toggle::make(FeedbackResourceTranslationKey::IS_REVIEWED->value)->required(),
+                    ]))
+                    ->query(fn (Builder $query, array $data): Builder => $query->where('is_reviewed', $data[FeedbackResourceTranslationKey::IS_REVIEWED->value])),
+            ]))->pushBulkActions([
+                BulkUpdateAction::create()
+                    ->action(function (Collection $records, array $data): void {
+                        $records->each(function (Feedback $feedback) use ($data): void {
+                            $feedback->is_reviewed = $data[FeedbackResourceTranslationKey::IS_REVIEWED->value];
+                            $feedback->save();
+                        });
+                    })
+                    ->form(static::setTranslatableLabels([
+                        Toggle::make(FeedbackResourceTranslationKey::IS_REVIEWED->value)->required(),
+                    ]))
+                    ->deselectRecordsAfterCompletion(),
             ]);
     }
 
@@ -79,18 +107,28 @@ class FeedbackResource extends Resource
     {
         return [
             'index' => \App\Domains\Feedback\Admin\Resources\FeedbackResource\Pages\ListFeedback::route('/'),
+            'edit' => \App\Domains\Feedback\Admin\Resources\FeedbackResource\Pages\EditFeedback::route('/{record}/edit'),
             'view' => \App\Domains\Feedback\Admin\Resources\FeedbackResource\Pages\ViewFeedback::route('/{record}'),
         ];
     }
 
     /*
-     * Translation
+     * Policies
      * */
 
-    protected static function getTranslationNamespace(): TranslationNamespace
+    public static function canDeleteAny(): bool
     {
-        return DomainServiceProvider::TRANSLATION_NAMESPACE;
+        return false;
     }
+
+    public static function canDelete(Model $record): bool
+    {
+        return false;
+    }
+
+    /*
+     * Translation
+     * */
 
     protected static function getTranslationKeyClass(): string
     {

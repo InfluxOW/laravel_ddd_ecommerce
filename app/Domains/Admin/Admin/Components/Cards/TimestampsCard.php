@@ -2,9 +2,7 @@
 
 namespace App\Domains\Admin\Admin\Components\Cards;
 
-use App\Components\Generic\Enums\Lang\TranslationNamespace;
 use App\Domains\Admin\Enums\Translation\Components\Cards\AdminTimestampsCardTranslationKey;
-use App\Domains\Admin\Providers\DomainServiceProvider;
 use App\Domains\Admin\Traits\Translation\HasTranslatableAdminLabels;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Placeholder;
@@ -29,11 +27,6 @@ class TimestampsCard extends Card
     /*
      * Translation
      * */
-
-    protected static function getTranslationNamespace(): TranslationNamespace
-    {
-        return DomainServiceProvider::TRANSLATION_NAMESPACE;
-    }
 
     protected static function getTranslationKeyClass(): string
     {
