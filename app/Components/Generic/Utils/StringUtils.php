@@ -4,7 +4,7 @@ namespace App\Components\Generic\Utils;
 
 use App\Components\Generic\Enums\BooleanString;
 
-class StringUtils
+final class StringUtils
 {
     public static function boolToString(bool $bool): string
     {

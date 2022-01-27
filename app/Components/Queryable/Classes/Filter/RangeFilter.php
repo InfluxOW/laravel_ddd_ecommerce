@@ -10,7 +10,7 @@ use App\Components\Queryable\Enums\QueryFilterType;
 use BackedEnum;
 use JetBrains\PhpStorm\ArrayShape;
 
-class RangeFilter extends Filter
+final class RangeFilter extends Filter
 {
     public static QueryFilterType $type = QueryFilterType::RANGE;
 

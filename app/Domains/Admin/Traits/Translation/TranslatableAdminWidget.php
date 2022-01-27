@@ -8,8 +8,11 @@ trait TranslatableAdminWidget
 {
     use TranslatableAdmin;
 
-    protected function getHeading(): string
+    protected function getHeading(): ?string
     {
-        return static::translateComponentProperty(AdminWidgetPropertyTranslationKey::HEADING);
+        /** @var string $translation */
+        $translation = static::translateComponentProperty(AdminWidgetPropertyTranslationKey::HEADING);
+
+        return $translation;
     }
 }

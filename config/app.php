@@ -183,7 +183,7 @@ return [
         /*
          * Components Service Providers
          */
-        App\Components\Addressable\Providers\DomainServiceProvider::class,
+        App\Components\Addressable\Providers\ComponentServiceProvider::class,
     ],
 
     /*

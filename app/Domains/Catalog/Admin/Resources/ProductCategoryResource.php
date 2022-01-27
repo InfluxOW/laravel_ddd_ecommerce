@@ -2,13 +2,11 @@
 
 namespace App\Domains\Catalog\Admin\Resources;
 
-use App\Components\Generic\Enums\Lang\TranslationNamespace;
 use App\Domains\Admin\Admin\Abstracts\Resource;
 use App\Domains\Admin\Admin\Components\Cards\TimestampsCard;
 use App\Domains\Catalog\Admin\Resources\ProductCategoryResource\RelationManagers\ProductCategoryChildrenRelationManager;
 use App\Domains\Catalog\Enums\Translation\ProductCategoryResourceTranslationKey;
 use App\Domains\Catalog\Models\ProductCategory;
-use App\Domains\Catalog\Providers\DomainServiceProvider;
 use Filament\Forms\Components\BelongsToSelect;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Grid;
@@ -54,13 +52,18 @@ class ProductCategoryResource extends Resource
 
     public static function form(Form $form): Form
     {
+        /** @var string $mainTabTitle */
+        $mainTabTitle = self::translateEnum(ProductCategoryResourceTranslationKey::MAIN);
+        /** @var string $statisticsTabTitle */
+        $statisticsTabTitle = self::translateEnum(ProductCategoryResourceTranslationKey::STATISTICS);
+
         return $form
             ->schema([
                 Tabs::make('_')
                     ->columns(3)
                     ->columnSpan(2)
                     ->tabs([
-                        Tabs\Tab::make(self::translateEnum(ProductCategoryResourceTranslationKey::MAIN))
+                        Tabs\Tab::make($mainTabTitle)
                             ->columns(3)
                             ->schema(self::setTranslatableLabels([
                                 Card::make()
@@ -72,7 +75,7 @@ class ProductCategoryResource extends Resource
                                     ->content(fn (?ProductCategory $record): string => ($record === null || $record->path === '') ? '-' : $record->path)
                                     ->columnSpan(2),
                             ])),
-                        Tabs\Tab::make(self::translateEnum(ProductCategoryResourceTranslationKey::STATISTICS))
+                        Tabs\Tab::make($statisticsTabTitle)
                             ->schema([
                                 Grid::make()
                                     ->schema(self::setTranslatableLabels([
@@ -197,11 +200,6 @@ class ProductCategoryResource extends Resource
     /*
      * Translation
      * */
-
-    protected static function getTranslationNamespace(): TranslationNamespace
-    {
-        return DomainServiceProvider::TRANSLATION_NAMESPACE;
-    }
 
     protected static function getTranslationKeyClass(): string
     {

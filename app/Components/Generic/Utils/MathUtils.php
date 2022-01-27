@@ -2,7 +2,7 @@
 
 namespace App\Components\Generic\Utils;
 
-class MathUtils
+final class MathUtils
 {
     public static function clamp(int|float $value, int|float $min, int|float $max): int|float
     {

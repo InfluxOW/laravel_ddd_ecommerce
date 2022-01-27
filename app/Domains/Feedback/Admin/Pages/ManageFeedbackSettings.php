@@ -2,14 +2,12 @@
 
 namespace App\Domains\Feedback\Admin\Pages;
 
-use App\Components\Generic\Enums\Lang\TranslationNamespace;
 use App\Domains\Admin\Admin\Abstracts\SettingsPage;
 use App\Domains\Admin\Traits\HasNavigationSort;
 use App\Domains\Admin\Traits\Translation\HasTranslatableAdminLabels;
 use App\Domains\Admin\Traits\Translation\TranslatableAdminPage;
 use App\Domains\Feedback\Enums\Translation\FeedbackSettingsTranslationKey;
 use App\Domains\Feedback\Models\Settings\FeedbackSettings;
-use App\Domains\Feedback\Providers\DomainServiceProvider;
 use Filament\Forms\Components\TextInput;
 
 class ManageFeedbackSettings extends SettingsPage
@@ -36,11 +34,6 @@ class ManageFeedbackSettings extends SettingsPage
     /*
      * Translation
      * */
-
-    protected static function getTranslationNamespace(): TranslationNamespace
-    {
-        return DomainServiceProvider::TRANSLATION_NAMESPACE;
-    }
 
     protected static function getTranslationKeyClass(): string
     {

@@ -19,6 +19,7 @@ return [
     AdminActionTranslationKey::class => [
         AdminActionTranslationKey::VIEW->name => 'View',
         AdminActionTranslationKey::DELETE->name => 'Delete',
+        AdminActionTranslationKey::UPDATE->name => 'Update',
     ],
     AdminDatasetTranslationKey::class => [
         AdminDatasetTranslationKey::CUSTOMERS->name => 'Customers',

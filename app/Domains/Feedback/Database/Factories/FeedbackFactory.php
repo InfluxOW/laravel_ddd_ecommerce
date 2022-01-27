@@ -15,6 +15,7 @@ class FeedbackFactory extends Factory
         return [
             'ip' => $this->faker->boolean(10) ? null : $this->faker->ipv4,
             'text' => $this->faker->realTextBetween(200, 1000),
+            'is_reviewed' => $this->faker->boolean(60),
             'created_at' => $this->faker->dateTimeBetween('-1 year'),
         ];
     }

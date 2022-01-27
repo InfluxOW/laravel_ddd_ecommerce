@@ -3,12 +3,10 @@
 namespace App\Domains\Users\Admin\Resources;
 
 use App\Components\Addressable\Admin\RelationManagers\AddressesRelationManager;
-use App\Components\Generic\Enums\Lang\TranslationNamespace;
 use App\Domains\Admin\Admin\Abstracts\Resource;
 use App\Domains\Admin\Admin\Components\Cards\TimestampsCard;
 use App\Domains\Users\Enums\Translation\UserResourceTranslationKey;
 use App\Domains\Users\Models\User;
-use App\Domains\Users\Providers\DomainServiceProvider;
 use Carbon\Carbon;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\DateTimePicker;
@@ -154,11 +152,6 @@ class UserResource extends Resource
     /*
      * Translation
      * */
-
-    protected static function getTranslationNamespace(): TranslationNamespace
-    {
-        return DomainServiceProvider::TRANSLATION_NAMESPACE;
-    }
 
     protected static function getTranslationKeyClass(): string
     {

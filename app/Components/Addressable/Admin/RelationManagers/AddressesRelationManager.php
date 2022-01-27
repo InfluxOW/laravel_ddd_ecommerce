@@ -4,8 +4,6 @@ namespace App\Components\Addressable\Admin\RelationManagers;
 
 use App\Components\Addressable\Enums\Translation\AddressesRelationManagerTranslationKey;
 use App\Components\Addressable\Models\Address;
-use App\Components\Addressable\Providers\DomainServiceProvider;
-use App\Components\Generic\Enums\Lang\TranslationNamespace;
 use App\Domains\Admin\Admin\Abstracts\RelationManagers\MorphManyRelationManager;
 use App\Domains\Users\Admin\Resources\UserResource;
 use Filament\Forms\Components\Select;
@@ -97,11 +95,6 @@ class AddressesRelationManager extends MorphManyRelationManager
     /*
      * Translation
      * */
-
-    protected static function getTranslationNamespace(): TranslationNamespace
-    {
-        return DomainServiceProvider::TRANSLATION_NAMESPACE;
-    }
 
     protected static function getTranslationKeyClass(): string
     {
