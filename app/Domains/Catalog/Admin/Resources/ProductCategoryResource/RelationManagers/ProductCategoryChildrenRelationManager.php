@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Request;
 
-class ProductCategoryChildrenRelationManager extends HasManyRelationManager
+final class ProductCategoryChildrenRelationManager extends HasManyRelationManager
 {
     protected static string $relationship = 'children';
     protected static ?string $recordTitleAttribute = 'title';

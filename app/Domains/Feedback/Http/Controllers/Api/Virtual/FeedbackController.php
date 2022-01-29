@@ -2,7 +2,7 @@
 
 namespace App\Domains\Feedback\Http\Controllers\Api\Virtual;
 
-class FeedbackController
+final class FeedbackController
 {
     /**
      * @OA\Post(

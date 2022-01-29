@@ -13,7 +13,7 @@ use Filament\Forms\Components\MultiSelect;
 use Filament\Forms\Components\Select;
 use Illuminate\Support\Collection;
 
-class ManageCatalogSettings extends SettingsPage
+final class ManageCatalogSettings extends SettingsPage
 {
     use TranslatableAdminPage;
     use HasTranslatableAdminLabels;

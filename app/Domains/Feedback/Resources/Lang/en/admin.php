@@ -13,11 +13,11 @@ return [
         AdminResourcePropertyTranslationKey::LABEL->name => 'Feedback',
         AdminResourcePropertyTranslationKey::PLURAL_LABEL->name => 'Feedback',
         AdminResourcePropertyTranslationKey::NAVIGATION_LABEL->name => 'Feedback',
-        AdminResourcePropertyTranslationKey::NAVIGATION_GROUP->name => LangUtils::translateEnum(DomainServiceProvider::TRANSLATION_NAMESPACE, AdminNavigationGroupTranslationKey::FEEDBACK),
+        AdminResourcePropertyTranslationKey::NAVIGATION_GROUP->name => LangUtils::translateEnum(DomainServiceProvider::NAMESPACE, AdminNavigationGroupTranslationKey::FEEDBACK),
     ],
     ManageFeedbackSettings::class => [
         AdminPagePropertyTranslationKey::TITLE->name => 'Feedback Settings',
         AdminPagePropertyTranslationKey::NAVIGATION_LABEL->name => 'Feedback',
-        AdminPagePropertyTranslationKey::NAVIGATION_GROUP->name => LangUtils::translateEnum(DomainServiceProvider::TRANSLATION_NAMESPACE, AdminNavigationGroupTranslationKey::SETTINGS),
+        AdminPagePropertyTranslationKey::NAVIGATION_GROUP->name => LangUtils::translateEnum(DomainServiceProvider::NAMESPACE, AdminNavigationGroupTranslationKey::SETTINGS),
     ],
 ];

@@ -6,7 +6,7 @@ use App\Components\Generic\Utils\AppUtils;
 use App\Domains\Catalog\Models\Product;
 use App\Domains\Catalog\Models\ProductCategory;
 
-class ProductObserver
+final class ProductObserver
 {
     public function created(Product $product): void
     {

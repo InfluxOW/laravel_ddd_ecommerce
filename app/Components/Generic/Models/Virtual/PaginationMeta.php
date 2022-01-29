@@ -7,7 +7,7 @@ namespace App\Components\Generic\Models\Virtual;
  *    @OA\Xml(name="PaginationMeta")
  * )
  */
-class PaginationMeta
+final class PaginationMeta
 {
     /**
      * @OA\Property()

@@ -42,7 +42,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @method static Builder|Feedback whereUsername($value)
  * @mixin \Eloquent
  */
-class Feedback extends Authenticatable
+final class Feedback extends Authenticatable
 {
     use HasFactory;
 
@@ -81,7 +81,7 @@ class Feedback extends Authenticatable
             return false;
         }
 
-        return static::query()->forUser($ip, $user)->inLastHour()->count() < $limitPerHour;
+        return self::query()->forUser($ip, $user)->inLastHour()->count() < $limitPerHour;
     }
 
     public static function getTimeStringDecayBeforeNextFeedback(?string $ip, ?User $user): ?string
@@ -90,7 +90,7 @@ class Feedback extends Authenticatable
             return Carbon::now()->longAbsoluteDiffForHumans(Carbon::now()->subHour());
         }
 
-        $feedback = static::query()->select(['created_at'])->forUser($ip, $user)->inLastHour()->latest('created_at')->first();
+        $feedback = self::query()->select(['created_at'])->forUser($ip, $user)->inLastHour()->latest('created_at')->first();
 
         return ($feedback === null) ? null : $feedback->created_at?->addHour()->longAbsoluteDiffForHumans(Carbon::now());
     }

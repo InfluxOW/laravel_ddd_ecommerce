@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Components\Generic\Enums\Lang;
+namespace App\Components\Generic\Enums;
 
-enum TranslationNamespace: string
+enum ServiceProviderNamespace: string
 {
     case DEFAULT = 'app';
     case ADMIN = 'admin';

@@ -6,7 +6,7 @@ use App\Domains\Catalog\Enums\ProductAttributeValuesType;
 use App\Domains\Catalog\Models\ProductAttribute;
 use App\Infrastructure\Abstracts\Seeder;
 
-class ProductAttributeSeeder extends Seeder
+final class ProductAttributeSeeder extends Seeder
 {
     /**
      * Run the database seeds.

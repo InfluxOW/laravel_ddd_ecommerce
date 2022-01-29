@@ -4,7 +4,7 @@ namespace App\Domains\Users\Http\Requests;
 
 use App\Infrastructure\Abstracts\FormRequest;
 
-class RegisterRequest extends FormRequest
+final class RegisterRequest extends FormRequest
 {
     public function rules(): array
     {

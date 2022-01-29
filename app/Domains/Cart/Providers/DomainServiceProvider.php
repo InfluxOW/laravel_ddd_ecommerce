@@ -2,12 +2,12 @@
 
 namespace App\Domains\Cart\Providers;
 
-use App\Components\Generic\Enums\Lang\TranslationNamespace;
+use App\Components\Generic\Enums\ServiceProviderNamespace;
 use App\Infrastructure\Abstracts\ServiceProviderBase;
 
-class DomainServiceProvider extends ServiceProviderBase
+final class DomainServiceProvider extends ServiceProviderBase
 {
-    public const TRANSLATION_NAMESPACE = TranslationNamespace::CART;
+    public const NAMESPACE = ServiceProviderNamespace::CART;
 
     protected bool $hasMigrations = true;
 

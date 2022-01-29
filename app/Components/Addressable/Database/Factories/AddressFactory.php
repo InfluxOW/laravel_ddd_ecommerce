@@ -6,7 +6,7 @@ use App\Components\Addressable\Models\Address;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Squire\Models\Country;
 
-class AddressFactory extends Factory
+final class AddressFactory extends Factory
 {
     protected $model = Address::class;
 

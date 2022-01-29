@@ -6,7 +6,7 @@ use App\Domains\Catalog\Models\Product;
 use App\Domains\Catalog\Models\ProductCategory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ProductFactory extends Factory
+final class ProductFactory extends Factory
 {
     protected $model = Product::class;
 

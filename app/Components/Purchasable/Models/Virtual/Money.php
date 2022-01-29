@@ -7,7 +7,7 @@ namespace App\Components\Purchasable\Models\Virtual;
  *    @OA\Xml(name="Money")
  * )
  */
-class Money
+final class Money
 {
     /**
      * @OA\Property()

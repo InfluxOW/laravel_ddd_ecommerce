@@ -15,7 +15,7 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 /**
- * App\Models\ProductCategory
+ * App\Domains\Catalog\Models\ProductCategory
  *
  * @property int $id
  * @property string $title
@@ -60,7 +60,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|ProductCategory withoutSelf()
  * @mixin \Eloquent
  */
-class ProductCategory extends Model
+final class ProductCategory extends Model
 {
     use HasFactory;
     use HasSlug;
@@ -101,12 +101,12 @@ class ProductCategory extends Model
 
     public function getOverallProductsCountAttribute(): int
     {
-        return static::mapHierarchy(static fn (ProductCategory $category): Collection => $category->products->pluck('id'), collect([static::findInHierarchy($this->id, static::getHierarchy())]))->unique()->count();
+        return self::mapHierarchy(static fn (ProductCategory $category): Collection => $category->products->pluck('id'), collect([self::findInHierarchy($this->id, self::getHierarchy())]))->unique()->count();
     }
 
     public function getProductsCountAttribute(): int
     {
-        $category = static::findInHierarchy($this->id, static::getHierarchy());
+        $category = self::findInHierarchy($this->id, self::getHierarchy());
 
         return ($category === null) ? 0 : $category->products->count();
     }
@@ -114,10 +114,10 @@ class ProductCategory extends Model
     public function getPathAttribute(): string
     {
         $path = [];
-        $category = static::findInHierarchy($this->id, static::getHierarchy())?->parent;
+        $category = self::findInHierarchy($this->id, self::getHierarchy())?->parent;
         while (isset($category)) {
             $path[] = $category->title;
-            $category = ($category->parent_id === null) ? null : static::findInHierarchy($category->parent_id, static::getHierarchy());
+            $category = ($category->parent_id === null) ? null : self::findInHierarchy($category->parent_id, self::getHierarchy());
         }
         $path[] = $this->title;
 
@@ -135,29 +135,29 @@ class ProductCategory extends Model
 
     public static function loadHierarchy(): void
     {
-        $hierarchy = static::query()->hasLimitedDepth()->with(['parent', 'products' => fn (BelongsToMany $query): BelongsToMany => $query->select(['products.id'])])->get()->toHierarchy();
+        $hierarchy = self::query()->hasLimitedDepth()->with(['parent', 'products' => fn (BelongsToMany $query): BelongsToMany => $query->select(['products.id'])])->get()->toHierarchy();
 
-        Redis::set(static::getHierarchyCacheKey(), $hierarchy);
+        Redis::set(self::getHierarchyCacheKey(), $hierarchy);
 
-        static::$hierarchy = $hierarchy;
+        self::$hierarchy = $hierarchy;
     }
 
     public static function getHierarchy(): Collection
     {
-        if (isset(static::$hierarchy)) {
-            return static::$hierarchy;
+        if (isset(self::$hierarchy)) {
+            return self::$hierarchy;
         }
 
-        if (Redis::exists(static::getHierarchyCacheKey())) {
+        if (Redis::exists(self::getHierarchyCacheKey())) {
             /** @var Collection $hierarchy */
-            $hierarchy = Redis::get(static::getHierarchyCacheKey());
+            $hierarchy = Redis::get(self::getHierarchyCacheKey());
 
-            static::$hierarchy = $hierarchy;
+            self::$hierarchy = $hierarchy;
         } else {
-            static::loadHierarchy();
+            self::loadHierarchy();
         }
 
-        return static::getHierarchy();
+        return self::getHierarchy();
     }
 
     public static function findInHierarchy(int $id, Collection $hierarchy): ?static
@@ -177,7 +177,7 @@ class ProductCategory extends Model
     {
         return $hierarchy->filter(function (self $item) use ($filter): bool {
             if ($filter($item)) {
-                $item->setRelation('children', static::filterHierarchy($filter, $item->children));
+                $item->setRelation('children', self::filterHierarchy($filter, $item->children));
 
                 return true;
             }
@@ -189,18 +189,18 @@ class ProductCategory extends Model
     public static function mapHierarchy(Closure $map, Collection $hierarchy): Collection
     {
         return $hierarchy
-            ->map(fn (self $item): Collection => collect($map($item))->merge(static::mapHierarchy($map, $item->children)))
+            ->map(fn (self $item): Collection => collect($map($item))->merge(self::mapHierarchy($map, $item->children)))
             ->flatten();
     }
 
     public static function getVisibleHierarchy(): Collection
     {
-        return static::filterHierarchy(static fn (self $category): bool => $category->is_visible, static::getHierarchy());
+        return self::filterHierarchy(static fn (self $category): bool => $category->is_visible, self::getHierarchy());
     }
 
     protected static function getHierarchyCacheKey(): string
     {
-        return sprintf('%s:%s', static::class, static::HIERARCHY_CACHE_KEY);
+        return sprintf('%s:%s', self::class, self::HIERARCHY_CACHE_KEY);
     }
 
     /*
@@ -210,11 +210,11 @@ class ProductCategory extends Model
     public function scopeHasLimitedDepth(Builder|Model $query): void
     {
         /** @phpstan-ignore-next-line */
-        $query->limitDepth(static::MAX_DEPTH);
+        $query->limitDepth(self::MAX_DEPTH);
     }
 
     public function scopeVisible(Builder $query): void
     {
-        $query->whereIntegerInRaw('product_categories.id', static::mapHierarchy(static fn (self $category) => $category->id, static::getVisibleHierarchy()));
+        $query->whereIntegerInRaw('product_categories.id', self::mapHierarchy(static fn (self $category) => $category->id, self::getVisibleHierarchy()));
     }
 }

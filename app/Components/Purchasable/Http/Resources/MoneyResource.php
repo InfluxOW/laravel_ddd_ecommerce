@@ -6,7 +6,7 @@ use Akaunting\Money\Money;
 use Illuminate\Http\Resources\Json\JsonResource;
 use JetBrains\PhpStorm\ArrayShape;
 
-class MoneyResource extends JsonResource
+final class MoneyResource extends JsonResource
 {
     #[ArrayShape(['value' => "float", 'amount' => "float|int", 'render' => "string"])]
     public function toArray($request): array

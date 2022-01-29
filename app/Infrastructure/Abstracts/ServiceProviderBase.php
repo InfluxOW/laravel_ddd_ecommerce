@@ -2,52 +2,64 @@
 
 namespace App\Infrastructure\Abstracts;
 
-use App\Components\Generic\Enums\Lang\TranslationNamespace;
+use App\Components\Generic\Enums\ServiceProviderNamespace;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
+use Illuminate\Support\Str;
+use Livewire\Livewire;
 use ReflectionClass;
 
 abstract class ServiceProviderBase extends LaravelServiceProvider
 {
     /*
-     * Namespace for loading translations
+     * Namespace for loading translations.
      * */
-    public const TRANSLATION_NAMESPACE = TranslationNamespace::DEFAULT;
+    public const NAMESPACE = ServiceProviderNamespace::DEFAULT;
 
     /**
-     * @var bool Set true if provider will load commands
+     * @var bool Set true if provider will load commands.
      */
     protected bool $hasCommands = false;
 
     /**
-     * @var bool Set true if provider will load migrations
+     * @var bool Set true if provider will load migrations.
      */
     protected bool $hasMigrations = false;
 
     /**
-     * @var bool Set true if provider will load translations
+     * @var bool Set true if provider will load translations.
      */
     protected bool $hasTranslations = false;
 
     /**
-     * @var bool Set true if provider will load policies
+     * @var bool Set true if provider will load policies.
      */
     protected bool $hasPolicies = false;
 
     /**
-     * @var array List of custom Artisan commands
+     * @var bool Set true if provider will load livewire components.
+     */
+    protected bool $hasLivewireComponents = false;
+
+    /**
+     * @var array List of custom Artisan commands.
      */
     protected array $commands = [];
 
     /**
-     * @var array List of providers to load
+     * @var array List of providers to load.
      */
     protected array $providers = [];
 
     /**
-     * @var array List of policies to load
+     * @var array List of policies to load.
      */
     protected array $policies = [];
+
+    /**
+     * @var array List of Livewire components to load.
+     */
+    protected array $livewireComponents = [];
 
     /**
      * Boot required registering of views and translations.
@@ -58,12 +70,13 @@ abstract class ServiceProviderBase extends LaravelServiceProvider
         $this->registerCommands();
         $this->registerMigrations();
         $this->registerTranslations();
+        $this->registerLivewireComponents();
     }
 
     /**
      * Register the application's policies.
      */
-    public function registerPolicies(): void
+    protected function registerPolicies(): void
     {
         if ($this->hasPolicies) {
             foreach ($this->policies as $key => $value) {
@@ -93,6 +106,30 @@ abstract class ServiceProviderBase extends LaravelServiceProvider
     }
 
     /**
+     * Register domain translations.
+     */
+    protected function registerTranslations(): void
+    {
+        if ($this->hasTranslations) {
+            $this->loadTranslationsFrom($this->domainPath('Resources/Lang'), static::NAMESPACE->value);
+        }
+    }
+
+    /**
+     * Register Livewire components.
+     */
+    protected function registerLivewireComponents(): void
+    {
+        if ($this->hasLivewireComponents) {
+            foreach ($this->livewireComponents as $component) {
+                $alias = sprintf('%s.%s', static::NAMESPACE->value, Str::of(Str::of($component)->explode('\\')->last())->kebab());
+
+                Livewire::component($alias, $component);
+            }
+        }
+    }
+
+    /**
      * Detects the domain base path so resources can be proper loaded on child classes.
      */
     protected function domainPath(?string $append = null): string
@@ -103,16 +140,6 @@ abstract class ServiceProviderBase extends LaravelServiceProvider
         $realPath = dirname($path, 2) . '/';
 
         return ($append === null) ? $realPath : "{$realPath}{$append}";
-    }
-
-    /**
-     * Register domain translations.
-     */
-    protected function registerTranslations(): void
-    {
-        if ($this->hasTranslations) {
-            $this->loadTranslationsFrom($this->domainPath('Resources/Lang'), static::TRANSLATION_NAMESPACE->value);
-        }
     }
 
     /**

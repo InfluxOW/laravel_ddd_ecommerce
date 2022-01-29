@@ -7,7 +7,7 @@ namespace App\Components\Generic\Models\Virtual;
  *    @OA\Xml(name="PaginationLinks")
  * )
  */
-class PaginationLinks
+final class PaginationLinks
 {
     /**
      * @OA\Property()

@@ -2,14 +2,14 @@
 
 namespace App\Domains\Users\Providers;
 
-use App\Components\Generic\Enums\Lang\TranslationNamespace;
+use App\Components\Generic\Enums\ServiceProviderNamespace;
 use App\Domains\Users\Models\User;
 use App\Domains\Users\Observers\UserObserver;
 use App\Infrastructure\Abstracts\ServiceProviderBase;
 
-class DomainServiceProvider extends ServiceProviderBase
+final class DomainServiceProvider extends ServiceProviderBase
 {
-    public const TRANSLATION_NAMESPACE = TranslationNamespace::USERS;
+    public const NAMESPACE = ServiceProviderNamespace::USERS;
 
     protected bool $hasMigrations = true;
     protected bool $hasTranslations = true;

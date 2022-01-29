@@ -2,7 +2,7 @@
 
 namespace App\Domains\Catalog\Providers;
 
-use App\Components\Generic\Enums\Lang\TranslationNamespace;
+use App\Components\Generic\Enums\ServiceProviderNamespace;
 use App\Domains\Catalog\Models\Pivot\ProductProductCategory;
 use App\Domains\Catalog\Models\Product;
 use App\Domains\Catalog\Models\ProductCategory;
@@ -11,9 +11,9 @@ use App\Domains\Catalog\Observers\ProductObserver;
 use App\Domains\Catalog\Observers\ProductProductCategoryObserver;
 use App\Infrastructure\Abstracts\ServiceProviderBase;
 
-class DomainServiceProvider extends ServiceProviderBase
+final class DomainServiceProvider extends ServiceProviderBase
 {
-    public const TRANSLATION_NAMESPACE = TranslationNamespace::CATALOG;
+    public const NAMESPACE = ServiceProviderNamespace::CATALOG;
 
     protected bool $hasMigrations = true;
     protected bool $hasTranslations = true;

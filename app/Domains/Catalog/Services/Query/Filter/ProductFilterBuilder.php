@@ -2,7 +2,7 @@
 
 namespace App\Domains\Catalog\Services\Query\Filter;
 
-use App\Components\Generic\Enums\Lang\TranslationNamespace;
+use App\Components\Generic\Enums\ServiceProviderNamespace;
 use App\Components\Queryable\Classes\Filter\Filter;
 use App\Components\Queryable\Classes\Filter\InputFilter;
 use App\Components\Queryable\Classes\Filter\MultiselectFilter;
@@ -12,13 +12,13 @@ use App\Domains\Catalog\Enums\Query\Filter\ProductAllowedFilter;
 use App\Domains\Catalog\Providers\DomainServiceProvider;
 use Spatie\QueryBuilder\QueryBuilder as SpatieQueryBuilder;
 
-class ProductFilterBuilder
+final class ProductFilterBuilder
 {
-    private readonly TranslationNamespace $namespace;
+    private readonly ServiceProviderNamespace $namespace;
 
     public function __construct(private ProductFilterBuilderRepository $repository)
     {
-        $this->namespace = DomainServiceProvider::TRANSLATION_NAMESPACE;
+        $this->namespace = DomainServiceProvider::NAMESPACE;
     }
 
     public function buildTitleFilter(): Filter

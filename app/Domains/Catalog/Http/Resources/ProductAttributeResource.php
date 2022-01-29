@@ -6,7 +6,7 @@ use App\Domains\Catalog\Models\ProductAttribute;
 use Illuminate\Http\Resources\Json\JsonResource;
 use JetBrains\PhpStorm\ArrayShape;
 
-class ProductAttributeResource extends JsonResource
+final class ProductAttributeResource extends JsonResource
 {
     #[ArrayShape(['slug' => "string", 'title' => "string", 'values_type' => "string"])]
     public function toArray($request): array

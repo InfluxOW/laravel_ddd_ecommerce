@@ -10,7 +10,7 @@ use App\Domains\Feedback\Enums\Translation\FeedbackSettingsTranslationKey;
 use App\Domains\Feedback\Models\Settings\FeedbackSettings;
 use Filament\Forms\Components\TextInput;
 
-class ManageFeedbackSettings extends SettingsPage
+final class ManageFeedbackSettings extends SettingsPage
 {
     use TranslatableAdminPage;
     use HasTranslatableAdminLabels;

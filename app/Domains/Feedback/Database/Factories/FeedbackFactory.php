@@ -6,7 +6,7 @@ use App\Domains\Feedback\Models\Feedback;
 use App\Domains\Users\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class FeedbackFactory extends Factory
+final class FeedbackFactory extends Factory
 {
     protected $model = Feedback::class;
 

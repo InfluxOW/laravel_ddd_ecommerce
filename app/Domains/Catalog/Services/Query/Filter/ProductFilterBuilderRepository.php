@@ -14,7 +14,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Spatie\QueryBuilder\QueryBuilder as SpatieQueryBuilder;
 
-class ProductFilterBuilderRepository
+final class ProductFilterBuilderRepository
 {
     public function __construct(private readonly CatalogSettings $settings)
     {

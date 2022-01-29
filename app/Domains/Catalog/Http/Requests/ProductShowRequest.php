@@ -8,7 +8,7 @@ use App\Domains\Catalog\Models\Settings\CatalogSettings;
 use App\Infrastructure\Abstracts\FormRequest;
 use Illuminate\Validation\Rule;
 
-class ProductShowRequest extends FormRequest
+final class ProductShowRequest extends FormRequest
 {
     public function rules(): array
     {

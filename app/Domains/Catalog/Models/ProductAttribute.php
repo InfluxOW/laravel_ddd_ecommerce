@@ -11,7 +11,7 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 /**
- * App\Models\ProductAttribute
+ * App\Domains\Catalog\Models\ProductAttribute
  *
  * @property int $id
  * @property string $title
@@ -33,7 +33,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|ProductAttribute whereValuesType($value)
  * @mixin \Eloquent
  */
-class ProductAttribute extends Model
+final class ProductAttribute extends Model
 {
     use HasFactory;
     use HasSlug;

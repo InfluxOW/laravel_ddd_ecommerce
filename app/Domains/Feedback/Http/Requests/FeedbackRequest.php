@@ -5,7 +5,7 @@ namespace App\Domains\Feedback\Http\Requests;
 use App\Infrastructure\Abstracts\FormRequest;
 use Illuminate\Validation\Rule;
 
-class FeedbackRequest extends FormRequest
+final class FeedbackRequest extends FormRequest
 {
     public function rules(): array
     {

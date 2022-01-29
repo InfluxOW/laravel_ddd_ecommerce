@@ -8,7 +8,7 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Http\Request;
 
-class FeedbackPolicy
+final class FeedbackPolicy
 {
     use HandlesAuthorization;
 

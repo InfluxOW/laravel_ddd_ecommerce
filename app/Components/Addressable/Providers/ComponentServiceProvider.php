@@ -2,12 +2,12 @@
 
 namespace App\Components\Addressable\Providers;
 
-use App\Components\Generic\Enums\Lang\TranslationNamespace;
+use App\Components\Generic\Enums\ServiceProviderNamespace;
 use App\Infrastructure\Abstracts\ServiceProviderBase;
 
-class ComponentServiceProvider extends ServiceProviderBase
+final class ComponentServiceProvider extends ServiceProviderBase
 {
-    public const TRANSLATION_NAMESPACE = TranslationNamespace::ADDRESS;
+    public const NAMESPACE = ServiceProviderNamespace::ADDRESS;
 
     protected bool $hasMigrations = true;
     protected bool $hasTranslations = true;

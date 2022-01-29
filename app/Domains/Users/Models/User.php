@@ -3,6 +3,7 @@
 namespace App\Domains\Users\Models;
 
 use App\Components\Addressable\Models\Address;
+use App\Domains\Cart\Models\Cart;
 use App\Domains\Feedback\Models\Feedback;
 use App\Domains\Users\Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,7 +14,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 /**
- * App\Models\User
+ * App\Domains\Users\Models\User
  *
  * @property int $id
  * @property string $name
@@ -26,6 +27,8 @@ use Laravel\Sanctum\HasApiTokens;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|Address[] $addresses
  * @property-read int|null $addresses_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|Cart[] $carts
+ * @property-read int|null $carts_count
  * @property-read \Illuminate\Database\Eloquent\Collection|Feedback[] $feedback
  * @property-read int|null $feedback_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
@@ -47,7 +50,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class User extends Authenticatable
+final class User extends Authenticatable
 {
     use HasApiTokens;
     use HasFactory;
@@ -91,6 +94,11 @@ class User extends Authenticatable
     public function addresses(): MorphMany
     {
         return $this->morphMany(Address::class, 'addressable');
+    }
+
+    public function carts(): HasMany
+    {
+        return $this->hasMany(Cart::class);
     }
 
     public function feedback(): HasMany

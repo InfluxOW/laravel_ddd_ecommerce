@@ -2,7 +2,7 @@
 
 namespace App\Components\Queryable\Classes\Sort;
 
-use App\Components\Generic\Enums\Lang\TranslationNamespace;
+use App\Components\Generic\Enums\ServiceProviderNamespace;
 use App\Components\Generic\Utils\EnumUtils;
 use App\Components\Generic\Utils\LangUtils;
 use App\Components\Queryable\Abstracts\Query;
@@ -14,7 +14,7 @@ final class Sort extends Query
     {
     }
 
-    public static function createAsc(BackedEnum $sort, TranslationNamespace $namespace): static
+    public static function createAsc(BackedEnum $sort, ServiceProviderNamespace $namespace): self
     {
         /** @var string $translation */
         $translation = LangUtils::translateEnum($namespace, $sort);
@@ -22,7 +22,7 @@ final class Sort extends Query
         return new self((string) $sort->value, $translation);
     }
 
-    public static function createDesc(BackedEnum $sort, TranslationNamespace $namespace): static
+    public static function createDesc(BackedEnum $sort, ServiceProviderNamespace $namespace): self
     {
         /** @var string $translation */
         $translation = LangUtils::translateEnum($namespace, $sort, EnumUtils::descendingValue($sort));

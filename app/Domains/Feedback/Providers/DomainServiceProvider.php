@@ -2,14 +2,14 @@
 
 namespace App\Domains\Feedback\Providers;
 
-use App\Components\Generic\Enums\Lang\TranslationNamespace;
+use App\Components\Generic\Enums\ServiceProviderNamespace;
 use App\Domains\Feedback\Models\Feedback;
 use App\Domains\Feedback\Policies\FeedbackPolicy;
 use App\Infrastructure\Abstracts\ServiceProviderBase;
 
-class DomainServiceProvider extends ServiceProviderBase
+final class DomainServiceProvider extends ServiceProviderBase
 {
-    public const TRANSLATION_NAMESPACE = TranslationNamespace::FEEDBACK;
+    public const NAMESPACE = ServiceProviderNamespace::FEEDBACK;
 
     protected bool $hasMigrations = true;
     protected bool $hasTranslations = true;

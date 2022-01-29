@@ -3,14 +3,14 @@
 namespace App\Components\Generic\Utils;
 
 use App\Components\Generic\Enums\Lang\TranslationFilename;
-use App\Components\Generic\Enums\Lang\TranslationNamespace;
+use App\Components\Generic\Enums\ServiceProviderNamespace;
 use Closure;
 use Illuminate\Support\Arr;
 use UnitEnum;
 
 final class LangUtils
 {
-    public static function translateValue(TranslationNamespace $namespace, TranslationFilename $filename, string|int $value, ?string $key = null, bool $allowClosures = false): string|Closure
+    public static function translateValue(ServiceProviderNamespace $namespace, TranslationFilename $filename, string|int $value, ?string $key = null, bool $allowClosures = false): string|Closure
     {
         $value = ($key === null) ? $value : sprintf('%s.%s', $key, $value);
         /*
@@ -34,7 +34,7 @@ final class LangUtils
         return (string) $value;
     }
 
-    public static function translateEnum(TranslationNamespace $namespace, UnitEnum $enum, string|int|null $value = null, bool $allowClosures = false): string|Closure
+    public static function translateEnum(ServiceProviderNamespace $namespace, UnitEnum $enum, string|int|null $value = null, bool $allowClosures = false): string|Closure
     {
         return self::translateValue($namespace, TranslationFilename::ENUMS, $value ?? $enum->name, $enum::class, $allowClosures);
     }

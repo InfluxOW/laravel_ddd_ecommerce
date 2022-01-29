@@ -25,7 +25,7 @@ use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class ProductCategoryResource extends Resource
+final class ProductCategoryResource extends Resource
 {
     protected static ?string $model = ProductCategory::class;
     protected static ?string $recordTitleAttribute = 'title';
@@ -39,11 +39,6 @@ class ProductCategoryResource extends Resource
     public static function getGloballySearchableAttributes(): array
     {
         return ['title', 'slug'];
-    }
-
-    public static function getGlobalSearchResultUrl(Model $record): string
-    {
-        return route(sprintf('filament.resources.%s.view', static::$slug), ['record' => $record]);
     }
 
     /*

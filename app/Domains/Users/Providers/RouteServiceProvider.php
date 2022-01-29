@@ -8,7 +8,7 @@ use App\Domains\Users\Http\Controllers\Api\RegisterController;
 use App\Infrastructure\Abstracts\RouteServiceProviderBase;
 use Illuminate\Routing\Router;
 
-class RouteServiceProvider extends RouteServiceProviderBase
+final class RouteServiceProvider extends RouteServiceProviderBase
 {
     protected function mapApiRoutes(Router $router): void
     {

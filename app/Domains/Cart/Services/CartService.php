@@ -10,7 +10,7 @@ use App\Domains\Users\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Redis;
 
-class CartService
+final class CartService
 {
     public function make(string $currency, ?User $user): Cart
     {

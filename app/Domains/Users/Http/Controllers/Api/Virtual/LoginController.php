@@ -2,7 +2,7 @@
 
 namespace App\Domains\Users\Http\Controllers\Api\Virtual;
 
-class LoginController
+final class LoginController
 {
     /**
      * @OA\Post(

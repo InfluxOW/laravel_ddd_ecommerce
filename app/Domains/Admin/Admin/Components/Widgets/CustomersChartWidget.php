@@ -9,7 +9,7 @@ use Filament\Widgets\LineChartWidget;
 use Flowframe\Trend\Trend;
 use Flowframe\Trend\TrendValue;
 
-class CustomersChartWidget extends LineChartWidget
+final class CustomersChartWidget extends LineChartWidget
 {
     use TranslatableAdminWidget;
 

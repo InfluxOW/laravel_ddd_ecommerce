@@ -10,7 +10,7 @@ use App\Components\Purchasable\Models\Virtual\Money;
  *    @OA\Xml(name="Product")
  * )
  */
-class Product
+final class Product
 {
     /**
      * @OA\Property()

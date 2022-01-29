@@ -2,7 +2,7 @@
 
 namespace App\Domains\Catalog\Http\Controllers\Api\Virtual;
 
-class ProductController
+final class ProductController
 {
     /**
      * @OA\Get(

@@ -7,7 +7,7 @@ use App\Domains\Catalog\Models\Settings\CatalogSettings;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
 
-class MoneyCast implements CastsAttributes
+final class MoneyCast implements CastsAttributes
 {
     /**
      * Cast the given value.
@@ -23,10 +23,8 @@ class MoneyCast implements CastsAttributes
         $currency = app(CatalogSettings::class)->default_currency;
         if (array_key_exists('currency', $attributes)) {
             $currency = $attributes['currency'];
-        } else {
-            if (isset($model->currency)) {
-                $currency = $model->currency;
-            }
+        } elseif (isset($model->currency)) {
+            $currency = $model->currency;
         }
 
         return is_int($value) ? money($value, $currency) : null;
