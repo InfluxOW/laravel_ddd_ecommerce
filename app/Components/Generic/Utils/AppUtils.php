@@ -3,6 +3,7 @@
 namespace App\Components\Generic\Utils;
 
 use App\Components\Generic\Enums\EnvironmentVariable;
+use App\Components\Generic\Enums\ServiceProviderNamespace;
 use App\Infrastructure\Abstracts\ServiceProviderBase;
 use Illuminate\Support\Str;
 
@@ -20,11 +21,19 @@ final class AppUtils
         return is_string($runningSeeders) && $runningSeeders;
     }
 
+    public static function guessServiceProviderNamespace(string $class): ServiceProviderNamespace
+    {
+        /** @var ServiceProviderBase|null $domainServiceProvider */
+        $domainServiceProvider = self::guessDomainServiceProvider($class);
+
+        return ($domainServiceProvider === null) ? ServiceProviderNamespace::DEFAULT : $domainServiceProvider::NAMESPACE;
+    }
+
     /**
      * @param string $class
      * @return class-string<ServiceProviderBase>|null
      */
-    public static function guessDomainServiceProvider(string $class): ?string
+    private static function guessDomainServiceProvider(string $class): ?string
     {
         $classParts = Str::of($class)->explode('\\')->reverse();
 

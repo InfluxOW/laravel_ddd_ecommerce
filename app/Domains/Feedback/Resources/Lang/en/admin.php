@@ -4,7 +4,6 @@ use App\Components\Generic\Utils\LangUtils;
 use App\Domains\Admin\Enums\Translation\AdminNavigationGroupTranslationKey;
 use App\Domains\Admin\Enums\Translation\AdminPagePropertyTranslationKey;
 use App\Domains\Admin\Enums\Translation\AdminResourcePropertyTranslationKey;
-use App\Domains\Admin\Providers\DomainServiceProvider;
 use App\Domains\Feedback\Admin\Pages\ManageFeedbackSettings;
 use App\Domains\Feedback\Admin\Resources\FeedbackResource;
 
@@ -13,11 +12,11 @@ return [
         AdminResourcePropertyTranslationKey::LABEL->name => 'Feedback',
         AdminResourcePropertyTranslationKey::PLURAL_LABEL->name => 'Feedback',
         AdminResourcePropertyTranslationKey::NAVIGATION_LABEL->name => 'Feedback',
-        AdminResourcePropertyTranslationKey::NAVIGATION_GROUP->name => LangUtils::translateEnum(DomainServiceProvider::NAMESPACE, AdminNavigationGroupTranslationKey::FEEDBACK),
+        AdminResourcePropertyTranslationKey::NAVIGATION_GROUP->name => LangUtils::translateEnum(AdminNavigationGroupTranslationKey::FEEDBACK),
     ],
     ManageFeedbackSettings::class => [
         AdminPagePropertyTranslationKey::TITLE->name => 'Feedback Settings',
         AdminPagePropertyTranslationKey::NAVIGATION_LABEL->name => 'Feedback',
-        AdminPagePropertyTranslationKey::NAVIGATION_GROUP->name => LangUtils::translateEnum(DomainServiceProvider::NAMESPACE, AdminNavigationGroupTranslationKey::SETTINGS),
+        AdminPagePropertyTranslationKey::NAVIGATION_GROUP->name => LangUtils::translateEnum(AdminNavigationGroupTranslationKey::SETTINGS),
     ],
 ];

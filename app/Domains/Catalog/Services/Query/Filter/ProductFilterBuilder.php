@@ -2,38 +2,33 @@
 
 namespace App\Domains\Catalog\Services\Query\Filter;
 
-use App\Components\Generic\Enums\ServiceProviderNamespace;
 use App\Components\Queryable\Classes\Filter\Filter;
 use App\Components\Queryable\Classes\Filter\InputFilter;
 use App\Components\Queryable\Classes\Filter\MultiselectFilter;
 use App\Components\Queryable\Classes\Filter\RangeFilter;
 use App\Components\Queryable\Classes\Filter\SelectFilter;
 use App\Domains\Catalog\Enums\Query\Filter\ProductAllowedFilter;
-use App\Domains\Catalog\Providers\DomainServiceProvider;
 use Spatie\QueryBuilder\QueryBuilder as SpatieQueryBuilder;
 
 final class ProductFilterBuilder
 {
-    private readonly ServiceProviderNamespace $namespace;
-
     public function __construct(private ProductFilterBuilderRepository $repository)
     {
-        $this->namespace = DomainServiceProvider::NAMESPACE;
     }
 
     public function buildTitleFilter(): Filter
     {
-        return new InputFilter(ProductAllowedFilter::TITLE, $this->namespace);
+        return new InputFilter(ProductAllowedFilter::TITLE);
     }
 
     public function buildDescriptionFilter(): Filter
     {
-        return new InputFilter(ProductAllowedFilter::DESCRIPTION, $this->namespace);
+        return new InputFilter(ProductAllowedFilter::DESCRIPTION);
     }
 
     public function buildCurrencyFilter(SpatieQueryBuilder $productsQuery): Filter
     {
-        return new SelectFilter(ProductAllowedFilter::CURRENCY, $this->namespace, $this->repository->getAvailableCurrencies($productsQuery->clone()));
+        return new SelectFilter(ProductAllowedFilter::CURRENCY, $this->repository->getAvailableCurrencies($productsQuery->clone()));
     }
 
     public function buildPriceBetweenFilter(SpatieQueryBuilder $productsQuery, string $currency): Filter
@@ -43,7 +38,6 @@ final class ProductFilterBuilder
 
         return new RangeFilter(
             ProductAllowedFilter::PRICE_BETWEEN,
-            $this->namespace,
             $minPrice,
             $maxPrice,
             $currency
@@ -52,11 +46,11 @@ final class ProductFilterBuilder
 
     public function buildCategoryFilter(SpatieQueryBuilder $productsQuery): Filter
     {
-        return MultiselectFilter::createWithPlainValues(ProductAllowedFilter::CATEGORY, $this->namespace, $this->repository->getCategories($productsQuery->clone()));
+        return MultiselectFilter::createWithPlainValues(ProductAllowedFilter::CATEGORY, $this->repository->getCategories($productsQuery->clone()));
     }
 
     public function buildAttributeValuesFilter(SpatieQueryBuilder $productsQuery): Filter
     {
-        return MultiselectFilter::createWithNestedValues(ProductAllowedFilter::ATTRIBUTE_VALUE, $this->namespace, $this->repository->getAttributeValues($productsQuery->clone()));
+        return MultiselectFilter::createWithNestedValues(ProductAllowedFilter::ATTRIBUTE_VALUE, $this->repository->getAttributeValues($productsQuery->clone()));
     }
 }

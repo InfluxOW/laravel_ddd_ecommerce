@@ -17,7 +17,6 @@ use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 final class ProductResource extends Resource

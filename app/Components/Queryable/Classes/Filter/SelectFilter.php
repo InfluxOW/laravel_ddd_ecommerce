@@ -2,7 +2,6 @@
 
 namespace App\Components\Queryable\Classes\Filter;
 
-use App\Components\Generic\Enums\ServiceProviderNamespace;
 use App\Components\Queryable\Enums\QueryFilterType;
 use BackedEnum;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
@@ -15,10 +14,9 @@ final class SelectFilter extends Filter
 
     public function __construct(
         BackedEnum $filter,
-        ServiceProviderNamespace $namespace,
         public Collection|EloquentCollection $values
     ) {
-        parent::__construct($filter, $namespace);
+        parent::__construct($filter);
     }
 
     #[ArrayShape(['query' => "string", 'title' => "string", 'type' => "string", 'values' => "array"])]

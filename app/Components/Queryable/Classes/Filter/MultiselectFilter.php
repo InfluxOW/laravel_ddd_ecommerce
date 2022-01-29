@@ -2,7 +2,6 @@
 
 namespace App\Components\Queryable\Classes\Filter;
 
-use App\Components\Generic\Enums\ServiceProviderNamespace;
 use App\Components\Queryable\Classes\Filter\Resources\Multiselect\MultiselectFilterNestedValues;
 use App\Components\Queryable\Enums\QueryFilterType;
 use BackedEnum;
@@ -16,33 +15,30 @@ final class MultiselectFilter extends Filter
 
     protected function __construct(
         BackedEnum $filter,
-        ServiceProviderNamespace $namespace,
         public readonly bool $isNested,
         public Collection|EloquentCollection $values
     ) {
-        parent::__construct($filter, $namespace);
+        parent::__construct($filter);
     }
 
     /**
      * @param BackedEnum $filter
-     * @param ServiceProviderNamespace $namespace
      * @param Collection<string>|EloquentCollection<string> $values
      * @return self
      */
-    public static function createWithPlainValues(BackedEnum $filter, ServiceProviderNamespace $namespace, Collection|EloquentCollection $values): self
+    public static function createWithPlainValues(BackedEnum $filter, Collection|EloquentCollection $values): self
     {
-        return new self($filter, $namespace, false, $values);
+        return new self($filter, false, $values);
     }
 
     /**
      * @param BackedEnum $filter
-     * @param ServiceProviderNamespace $namespace
      * @param Collection<MultiselectFilterNestedValues> $values
      * @return self
      */
-    public static function createWithNestedValues(BackedEnum $filter, ServiceProviderNamespace $namespace, Collection $values): self
+    public static function createWithNestedValues(BackedEnum $filter, Collection $values): self
     {
-        return new self($filter, $namespace, true, $values);
+        return new self($filter, true, $values);
     }
 
     #[ArrayShape(['query' => "string", 'title' => "string", 'type' => "string", 'is_nested' => "boolean", 'values' => "array"])]

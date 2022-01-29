@@ -3,7 +3,6 @@
 use App\Components\Generic\Utils\LangUtils;
 use App\Domains\Admin\Enums\Translation\AdminNavigationGroupTranslationKey;
 use App\Domains\Admin\Enums\Translation\AdminResourcePropertyTranslationKey;
-use App\Domains\Admin\Providers\DomainServiceProvider;
 use App\Domains\Users\Admin\Resources\UserResource;
 
 return [
@@ -11,6 +10,6 @@ return [
         AdminResourcePropertyTranslationKey::LABEL->name => 'Customer',
         AdminResourcePropertyTranslationKey::PLURAL_LABEL->name => 'Customers',
         AdminResourcePropertyTranslationKey::NAVIGATION_LABEL->name => 'Customers',
-        AdminResourcePropertyTranslationKey::NAVIGATION_GROUP->name => LangUtils::translateEnum(DomainServiceProvider::NAMESPACE, AdminNavigationGroupTranslationKey::GENERIC),
+        AdminResourcePropertyTranslationKey::NAVIGATION_GROUP->name => LangUtils::translateEnum(AdminNavigationGroupTranslationKey::GENERIC),
     ],
 ];

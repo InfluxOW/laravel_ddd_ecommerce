@@ -19,7 +19,7 @@ abstract class Resource extends BaseResource
         if (static::canView($record)) {
             return static::getUrl('view', ['record' => $record]);
         }
-        
+
         if (static::canEdit($record)) {
             return static::getUrl('edit', ['record' => $record]);
         }

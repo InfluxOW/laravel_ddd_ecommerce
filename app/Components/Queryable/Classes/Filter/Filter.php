@@ -2,7 +2,6 @@
 
 namespace App\Components\Queryable\Classes\Filter;
 
-use App\Components\Generic\Enums\ServiceProviderNamespace;
 use App\Components\Generic\Utils\LangUtils;
 use App\Components\Queryable\Abstracts\Query;
 use App\Components\Queryable\Enums\QueryFilterType;
@@ -13,10 +12,10 @@ abstract class Filter extends Query
 {
     public static QueryFilterType $type;
 
-    public function __construct(BackedEnum $filter, ServiceProviderNamespace $namespace)
+    public function __construct(BackedEnum $filter)
     {
         /** @var string $translation */
-        $translation = LangUtils::translateEnum($namespace, $filter);
+        $translation = LangUtils::translateEnum($filter);
 
         $this->query = (string) $filter->value;
         $this->title = $translation;
