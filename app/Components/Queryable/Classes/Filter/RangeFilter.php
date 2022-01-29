@@ -4,7 +4,7 @@ namespace App\Components\Queryable\Classes\Filter;
 
 use Akaunting\Money\Currency;
 use Akaunting\Money\Money;
-use App\Components\Generic\Enums\Lang\TranslationNamespace;
+use App\Components\Generic\Enums\ServiceProviderNamespace;
 use App\Components\Generic\Utils\MathUtils;
 use App\Components\Queryable\Enums\QueryFilterType;
 use BackedEnum;
@@ -18,7 +18,7 @@ final class RangeFilter extends Filter
     public Money|int|float|null $maxValue;
     public readonly ?Currency $currency;
 
-    public function __construct(BackedEnum $filter, TranslationNamespace $namespace, ?float $minValue, ?float $maxValue, ?string $currency)
+    public function __construct(BackedEnum $filter, ServiceProviderNamespace $namespace, ?float $minValue, ?float $maxValue, ?string $currency)
     {
         parent::__construct($filter, $namespace);
 
@@ -37,7 +37,7 @@ final class RangeFilter extends Filter
         ]);
     }
 
-    public function ofValues(mixed ...$values): static
+    public function ofValues(mixed ...$values): self
     {
         [$selectedMinValue, $selectedMaxValue] = $values;
         if (isset($selectedMinValue, $selectedMaxValue) && $selectedMinValue > $selectedMaxValue) {

@@ -5,7 +5,7 @@ namespace App\Components\Queryable\Http\Resources;
 use App\Components\Queryable\Enums\QueryKey;
 use JetBrains\PhpStorm\ArrayShape;
 
-class QueryServiceResource
+final class QueryServiceResource
 {
     public function __construct(protected readonly QueryKey $query, protected readonly bool $isNested, protected readonly array $applied, protected readonly array $allowed)
     {

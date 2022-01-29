@@ -5,7 +5,7 @@ namespace App\Application\Tests;
 class DatabaseState
 {
     /**
-     * Indicates if the test database should be migrated before test suite.
+     * Indicates if the suit's `setUpOnce` method should be executed.
      *
      * @var bool
      */

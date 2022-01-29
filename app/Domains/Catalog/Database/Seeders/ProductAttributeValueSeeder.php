@@ -8,7 +8,7 @@ use App\Domains\Catalog\Models\ProductAttributeValue;
 use App\Infrastructure\Abstracts\Seeder;
 use Exception;
 
-class ProductAttributeValueSeeder extends Seeder
+final class ProductAttributeValueSeeder extends Seeder
 {
     /**
      * Run the database seeds.

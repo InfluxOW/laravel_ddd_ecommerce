@@ -6,7 +6,7 @@ use App\Domains\Catalog\Enums\ProductAttributeValuesType;
 use App\Domains\Catalog\Models\ProductAttribute;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ProductAttributeFactory extends Factory
+final class ProductAttributeFactory extends Factory
 {
     protected $model = ProductAttribute::class;
 

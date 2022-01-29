@@ -5,7 +5,7 @@ namespace App\Domains\Catalog\Database\Factories;
 use App\Domains\Catalog\Models\ProductPrice;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ProductPriceFactory extends Factory
+final class ProductPriceFactory extends Factory
 {
     protected $model = ProductPrice::class;
 

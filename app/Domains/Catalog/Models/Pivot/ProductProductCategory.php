@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  * @method static \Illuminate\Database\Eloquent\Builder|ProductProductCategory query()
  * @mixin \Eloquent
  */
-class ProductProductCategory extends Pivot
+final class ProductProductCategory extends Pivot
 {
     //
 }

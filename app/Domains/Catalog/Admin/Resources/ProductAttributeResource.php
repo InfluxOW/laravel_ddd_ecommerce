@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
-class ProductAttributeResource extends Resource
+final class ProductAttributeResource extends Resource
 {
     protected static ?string $model = ProductAttribute::class;
     protected static ?string $recordTitleAttribute = 'title';
@@ -32,11 +32,6 @@ class ProductAttributeResource extends Resource
     public static function getGloballySearchableAttributes(): array
     {
         return ['title', 'slug'];
-    }
-
-    public static function getGlobalSearchResultUrl(Model $record): string
-    {
-        return route(sprintf('filament.resources.%s.view', static::$slug), ['record' => $record]);
     }
 
     /*

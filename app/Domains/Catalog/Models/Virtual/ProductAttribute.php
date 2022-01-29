@@ -7,7 +7,7 @@ namespace App\Domains\Catalog\Models\Virtual;
  *    @OA\Xml(name="ProductAttribute")
  * )
  */
-class ProductAttribute
+final class ProductAttribute
 {
     /**
      * @OA\Property()

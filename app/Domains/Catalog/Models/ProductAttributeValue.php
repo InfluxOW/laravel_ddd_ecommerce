@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * App\Models\ProductAttributeValue
+ * App\Domains\Catalog\Models\ProductAttributeValue
  *
  * @property int $id
  * @property int $product_id
@@ -40,7 +40,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|ProductAttributeValue whereValueString($value)
  * @mixin \Eloquent
  */
-class ProductAttributeValue extends Model
+final class ProductAttributeValue extends Model
 {
     use HasFactory;
 

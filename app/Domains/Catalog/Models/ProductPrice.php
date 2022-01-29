@@ -35,7 +35,7 @@ use Illuminate\Support\Facades\DB;
  * @method static \Illuminate\Database\Eloquent\Builder|ProductPrice whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class ProductPrice extends Model
+final class ProductPrice extends Model
 {
     use HasFactory;
 

@@ -9,7 +9,7 @@ use App\Domains\Users\Models\User;
 use App\Interfaces\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 
-class FeedbackController extends Controller
+final class FeedbackController extends Controller
 {
     public function store(FeedbackRequest $request, FeedbackSettings $settings): JsonResponse
     {

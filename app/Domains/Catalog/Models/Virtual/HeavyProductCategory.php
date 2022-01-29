@@ -7,7 +7,7 @@ namespace App\Domains\Catalog\Models\Virtual;
  *    @OA\Xml(name="HeavyProductCategory")
  * )
  */
-class HeavyProductCategory extends LightProductCategory
+final class HeavyProductCategory extends LightProductCategory
 {
     /**
      * @OA\Property()

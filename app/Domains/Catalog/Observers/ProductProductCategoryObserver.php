@@ -6,7 +6,7 @@ use App\Components\Generic\Utils\AppUtils;
 use App\Domains\Catalog\Models\Pivot\ProductProductCategory;
 use App\Domains\Catalog\Models\ProductCategory;
 
-class ProductProductCategoryObserver
+final class ProductProductCategoryObserver
 {
     public function created(ProductProductCategory $model): void
     {

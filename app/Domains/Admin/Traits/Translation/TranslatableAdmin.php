@@ -3,7 +3,7 @@
 namespace App\Domains\Admin\Traits\Translation;
 
 use App\Components\Generic\Enums\Lang\TranslationFilename;
-use App\Components\Generic\Enums\Lang\TranslationNamespace;
+use App\Components\Generic\Enums\ServiceProviderNamespace;
 use App\Components\Generic\Utils\AppUtils;
 use App\Components\Generic\Utils\LangUtils;
 use App\Domains\Admin\Enums\Translation\AdminPagePropertyTranslationKey;
@@ -31,11 +31,11 @@ trait TranslatableAdmin
         return LangUtils::translateEnum(static::getTranslationNamespace(), $enum, null, $allowClosures);
     }
 
-    protected static function getTranslationNamespace(): TranslationNamespace
+    protected static function getTranslationNamespace(): ServiceProviderNamespace
     {
         /** @var ServiceProviderBase|null $domainServiceProvider */
         $domainServiceProvider = AppUtils::guessDomainServiceProvider(static::class);
 
-        return ($domainServiceProvider === null) ? TranslationNamespace::DEFAULT : $domainServiceProvider::TRANSLATION_NAMESPACE;
+        return ($domainServiceProvider === null) ? ServiceProviderNamespace::DEFAULT : $domainServiceProvider::NAMESPACE;
     }
 }

@@ -7,12 +7,12 @@ use App\Domains\Admin\Enums\Translation\Components\AdminActionTranslationKey;
 use Filament\Resources\Pages\Page;
 use Illuminate\Database\Eloquent\Model;
 
-class DeleteAction extends LinkAction
+final class DeleteAction extends LinkAction
 {
-    public static function create(): static
+    public static function create(): self
     {
-        /** @var static $action */
-        $action = static::setTranslatableModal(static::setTranslatableLabel(static::make(AdminActionTranslationKey::DELETE->value)
+        /** @var self $action */
+        $action = self::setTranslatableModal(self::setTranslatableLabel(self::make(AdminActionTranslationKey::DELETE->value)
             ->requiresConfirmation()
             ->action(fn (?Model $record) => $record?->delete())
             ->icon('heroicon-o-trash')

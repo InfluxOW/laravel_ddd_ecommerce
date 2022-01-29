@@ -41,7 +41,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|CartItem whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class CartItem extends Model
+final class CartItem extends Model
 {
     public const MAX_QUANTITY = 99;
 

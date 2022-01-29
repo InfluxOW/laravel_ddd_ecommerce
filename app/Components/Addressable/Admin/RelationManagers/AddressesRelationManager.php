@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Request;
 use Squire\Models\Country;
 use Squire\Models\Region;
 
-class AddressesRelationManager extends MorphManyRelationManager
+final class AddressesRelationManager extends MorphManyRelationManager
 {
     protected static ?string $recordTitleAttribute = 'string_representation';
     protected static string $relationship = 'addresses';

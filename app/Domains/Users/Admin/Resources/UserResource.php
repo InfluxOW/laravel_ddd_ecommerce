@@ -20,7 +20,7 @@ use Filament\Resources\Table;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
 
-class UserResource extends Resource
+final class UserResource extends Resource
 {
     protected static ?string $model = User::class;
     protected static ?string $recordTitleAttribute = 'name';
@@ -48,11 +48,6 @@ class UserResource extends Resource
         }
 
         return $result;
-    }
-
-    public static function getGlobalSearchResultUrl(Model $record): string
-    {
-        return route(sprintf('filament.resources.%s.view', static::$slug), ['record' => $record]);
     }
 
     /*

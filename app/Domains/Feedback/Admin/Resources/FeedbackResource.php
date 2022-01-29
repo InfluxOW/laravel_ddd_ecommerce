@@ -21,12 +21,42 @@ use Filament\Tables\Filters\Filter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
-class FeedbackResource extends Resource
+final class FeedbackResource extends Resource
 {
     protected static ?string $model = Feedback::class;
     protected static ?string $slug = 'feedback';
     protected static ?string $navigationIcon = 'heroicon-o-mail';
+
+    /*
+     * Global Search
+     * */
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['text', 'username', 'email', 'phone'];
+    }
+
+    /** @param ?Feedback $record */
+    public static function getRecordTitle(?Model $record): ?string
+    {
+        return ($record === null) ? null : Str::limit($record->text);
+    }
+
+    /** @param Feedback $record */
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        $result = [
+            'E-mail' => $record->email,
+        ];
+
+        if (isset($record->phone)) {
+            $result['Phone'] = $record->phone;
+        }
+
+        return $result;
+    }
 
     /*
      * Data
@@ -35,14 +65,13 @@ class FeedbackResource extends Resource
     public static function form(Form $form): Form
     {
 
-
         return $form
             ->schema([
                 Card::make()
-                    ->schema(static::setTranslatableLabels([
+                    ->schema(self::setTranslatableLabels([
                         Toggle::make(FeedbackResourceTranslationKey::IS_REVIEWED->value),
                         Grid::make()
-                            ->schema(static::setTranslatableLabels([
+                            ->schema(self::setTranslatableLabels([
                                 TextInput::make(FeedbackResourceTranslationKey::USERNAME->value)
                                     ->disabled(),
                                 TextInput::make(FeedbackResourceTranslationKey::EMAIL->value)
@@ -70,14 +99,14 @@ class FeedbackResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->columns(static::setTranslatableLabels([
+            ->columns(self::setTranslatableLabels([
                 BooleanColumn::make(FeedbackResourceTranslationKey::IS_REVIEWED->value)->sortable(),
                 TextColumn::make(FeedbackResourceTranslationKey::TEXT->value)->sortable()->searchable()->limit(70),
                 TextColumn::make(FeedbackResourceTranslationKey::CREATED_AT->value)->sortable()->dateTime(),
             ]))
-            ->filters(static::setTranslatableLabels([
+            ->filters(self::setTranslatableLabels([
                 Filter::make(FeedbackResourceTranslationKey::IS_REVIEWED->value)
-                    ->form(static::setTranslatableLabels([
+                    ->form(self::setTranslatableLabels([
                         Toggle::make(FeedbackResourceTranslationKey::IS_REVIEWED->value)->required(),
                     ]))
                     ->query(fn (Builder $query, array $data): Builder => $query->where('is_reviewed', $data[FeedbackResourceTranslationKey::IS_REVIEWED->value])),
@@ -89,7 +118,7 @@ class FeedbackResource extends Resource
                             $feedback->save();
                         });
                     })
-                    ->form(static::setTranslatableLabels([
+                    ->form(self::setTranslatableLabels([
                         Toggle::make(FeedbackResourceTranslationKey::IS_REVIEWED->value)->required(),
                     ]))
                     ->deselectRecordsAfterCompletion(),

@@ -35,7 +35,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Cart whereUserId($value)
  * @mixin \Eloquent
  */
-class Cart extends Model
+final class Cart extends Model
 {
     protected $fillable = ['key', 'price_items', 'price_items_discounted', 'currency'];
     protected $casts = [

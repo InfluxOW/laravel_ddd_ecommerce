@@ -16,7 +16,7 @@ use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Request;
 
-class ProductPricesRelationManager extends HasManyRelationManager
+final class ProductPricesRelationManager extends HasManyRelationManager
 {
     protected static string $relationship = 'prices';
 

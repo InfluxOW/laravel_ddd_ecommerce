@@ -7,7 +7,7 @@ namespace App\Domains\Users\Models\Virtual;
  *    @OA\Xml(name="User")
  * )
  */
-class User
+final class User
 {
     /**
      * @OA\Property()

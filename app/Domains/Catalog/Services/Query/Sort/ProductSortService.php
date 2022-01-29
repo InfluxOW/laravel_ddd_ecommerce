@@ -2,7 +2,7 @@
 
 namespace App\Domains\Catalog\Services\Query\Sort;
 
-use App\Components\Generic\Enums\Lang\TranslationNamespace;
+use App\Components\Generic\Enums\ServiceProviderNamespace;
 use App\Components\Queryable\Abstracts\QueryService;
 use App\Components\Queryable\Classes\Sort\Sort;
 use App\Components\Queryable\Enums\QueryKey;
@@ -11,13 +11,13 @@ use App\Domains\Catalog\Providers\DomainServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
-class ProductSortService implements QueryService
+final class ProductSortService implements QueryService
 {
-    private readonly TranslationNamespace $namespace;
+    private readonly ServiceProviderNamespace $namespace;
 
     public function __construct()
     {
-        $this->namespace = DomainServiceProvider::TRANSLATION_NAMESPACE;
+        $this->namespace = DomainServiceProvider::NAMESPACE;
     }
 
     public function getAllowed(): Collection

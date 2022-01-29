@@ -7,7 +7,7 @@ use App\Domains\Catalog\Models\ProductCategory;
 use App\Interfaces\Http\Controllers\Controller;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
-class ProductCategoryController extends Controller
+final class ProductCategoryController extends Controller
 {
     protected string $resource = HeavyProductCategoryResource::class;
 

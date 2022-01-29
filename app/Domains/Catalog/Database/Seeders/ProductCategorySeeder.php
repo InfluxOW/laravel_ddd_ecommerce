@@ -5,7 +5,7 @@ namespace App\Domains\Catalog\Database\Seeders;
 use App\Domains\Catalog\Models\ProductCategory;
 use App\Infrastructure\Abstracts\Seeder;
 
-class ProductCategorySeeder extends Seeder
+final class ProductCategorySeeder extends Seeder
 {
     /**
      * Run the database seeds.

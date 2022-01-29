@@ -27,7 +27,7 @@ use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
 use Symfony\Component\HttpFoundation\Response;
 
-class ProductController extends Controller
+final class ProductController extends Controller
 {
     protected string $resource = ProductResource::class;
 

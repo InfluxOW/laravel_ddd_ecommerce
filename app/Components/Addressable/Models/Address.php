@@ -40,7 +40,7 @@ use Squire\Models\Region;
  * @method static \Illuminate\Database\Eloquent\Builder|Address whereZip($value)
  * @mixin \Eloquent
  */
-class Address extends Model
+final class Address extends Model
 {
     use HasFactory;
 

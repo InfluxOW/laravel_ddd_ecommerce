@@ -18,7 +18,7 @@ use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Request;
 
-class ProductAttributeValuesRelationManager extends HasManyRelationManager
+final class ProductAttributeValuesRelationManager extends HasManyRelationManager
 {
     protected static string $relationship = 'attributeValues';
 

@@ -8,7 +8,7 @@ use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Placeholder;
 use Illuminate\Database\Eloquent\Model;
 
-class TimestampsCard extends Card
+final class TimestampsCard extends Card
 {
     use HasTranslatableAdminLabels;
 
@@ -16,7 +16,7 @@ class TimestampsCard extends Card
     {
         parent::setUp();
 
-        $this->schema(static::setTranslatableLabels([
+        $this->schema(self::setTranslatableLabels([
             Placeholder::make(AdminTimestampsCardTranslationKey::CREATED_AT->value)
                 ->content(fn (?Model $record): string => isset($record->created_at) ? $record->created_at->diffForHumans() : '-'),
             Placeholder::make(AdminTimestampsCardTranslationKey::UPDATED_AT->value)

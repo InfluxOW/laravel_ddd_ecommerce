@@ -5,7 +5,7 @@ namespace App\Domains\Catalog\Observers;
 use App\Components\Generic\Utils\AppUtils;
 use App\Domains\Catalog\Models\ProductCategory;
 
-class ProductCategoryObserver
+final class ProductCategoryObserver
 {
     public function saving(ProductCategory $category): bool
     {

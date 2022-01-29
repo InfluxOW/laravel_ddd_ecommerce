@@ -18,7 +18,7 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 /**
- * App\Models\Product
+ * App\Domains\Catalog\Models\Product
  *
  * @property int $id
  * @property string $title
@@ -51,7 +51,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Product whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class Product extends Model implements Purchasable
+final class Product extends Model implements Purchasable
 {
     use HasFactory;
     use HasSlug;

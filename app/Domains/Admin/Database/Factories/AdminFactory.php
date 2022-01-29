@@ -6,7 +6,7 @@ use App\Domains\Admin\Models\Admin;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
-class AdminFactory extends Factory
+final class AdminFactory extends Factory
 {
     protected $model = Admin::class;
 

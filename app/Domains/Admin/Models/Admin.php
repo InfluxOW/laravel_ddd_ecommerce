@@ -32,7 +32,7 @@ use Illuminate\Notifications\Notifiable;
  * @method static \Illuminate\Database\Eloquent\Builder|Admin whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class Admin extends Authenticatable
+final class Admin extends Authenticatable
 {
     use HasFactory;
     use Notifiable;

@@ -4,7 +4,7 @@ namespace App\Domains\Users\Observers;
 
 use App\Domains\Users\Models\User;
 
-class UserObserver
+final class UserObserver
 {
     public function deleting(User $user): void
     {

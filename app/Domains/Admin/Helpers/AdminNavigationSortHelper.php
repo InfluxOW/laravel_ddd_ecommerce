@@ -10,7 +10,7 @@ use App\Domains\Feedback\Admin\Pages\ManageFeedbackSettings;
 use App\Domains\Feedback\Admin\Resources\FeedbackResource;
 use App\Domains\Users\Admin\Resources\UserResource;
 
-class AdminNavigationSortHelper
+final class AdminNavigationSortHelper
 {
     public const NAVIGATION_SORT_BY_CLASS = [
         ManageCatalogSettings::class,

@@ -8,7 +8,7 @@ final class InputFilter extends Filter
 {
     public static QueryFilterType $type = QueryFilterType::INPUT;
 
-    public function ofValues(mixed ...$values): static
+    public function ofValues(mixed ...$values): self
     {
         return clone($this);
     }

@@ -5,12 +5,12 @@ namespace App\Domains\Admin\Admin\Components\Actions;
 use App\Domains\Admin\Admin\Abstracts\Actions\BulkAction;
 use App\Domains\Admin\Enums\Translation\Components\AdminActionTranslationKey;
 
-class BulkUpdateAction extends BulkAction
+final class BulkUpdateAction extends BulkAction
 {
-    public static function create(): static
+    public static function create(): self
     {
-        /** @var static $action */
-        $action = static::setTranslatableModal(static::setTranslatableLabel(static::make(AdminActionTranslationKey::UPDATE->value)->icon('heroicon-o-pencil')));
+        /** @var self $action */
+        $action = self::setTranslatableModal(self::setTranslatableLabel(self::make(AdminActionTranslationKey::UPDATE->value)->icon('heroicon-o-pencil')));
 
         return $action;
     }

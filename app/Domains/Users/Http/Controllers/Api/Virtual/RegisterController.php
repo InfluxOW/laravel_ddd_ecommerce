@@ -2,7 +2,7 @@
 
 namespace App\Domains\Users\Http\Controllers\Api\Virtual;
 
-class RegisterController
+final class RegisterController
 {
     /**
      * @OA\Post(

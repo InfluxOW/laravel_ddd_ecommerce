@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Spatie\QueryBuilder\QueryBuilder as SpatieQueryBuilder;
 
-class ProductFilterService implements QueryService
+final class ProductFilterService implements QueryService
 {
     protected SpatieQueryBuilder $productsQuery;
     protected string $currency;

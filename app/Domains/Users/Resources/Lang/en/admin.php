@@ -11,6 +11,6 @@ return [
         AdminResourcePropertyTranslationKey::LABEL->name => 'Customer',
         AdminResourcePropertyTranslationKey::PLURAL_LABEL->name => 'Customers',
         AdminResourcePropertyTranslationKey::NAVIGATION_LABEL->name => 'Customers',
-        AdminResourcePropertyTranslationKey::NAVIGATION_GROUP->name => LangUtils::translateEnum(DomainServiceProvider::TRANSLATION_NAMESPACE, AdminNavigationGroupTranslationKey::GENERIC),
+        AdminResourcePropertyTranslationKey::NAVIGATION_GROUP->name => LangUtils::translateEnum(DomainServiceProvider::NAMESPACE, AdminNavigationGroupTranslationKey::GENERIC),
     ],
 ];

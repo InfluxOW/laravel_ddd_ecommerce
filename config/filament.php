@@ -1,5 +1,6 @@
 <?php
 
+use App\Domains\Admin\Admin\Components\Widgets\CustomersChartWidget;
 use App\Domains\Catalog\Admin\Pages\ManageCatalogSettings;
 use App\Domains\Catalog\Admin\Resources\ProductAttributeResource;
 use App\Domains\Catalog\Admin\Resources\ProductCategoryResource;
@@ -86,8 +87,6 @@ return [
     */
 
     'pages' => [
-        'namespace' => 'App\\Domains\\Admin\\Admin\\Components\\Pages',
-        'path' => app_path('Domains/Admin/Admin/Components/Pages'),
         'register' => [
             Pages\Dashboard::class,
             ManageCatalogSettings::class,
@@ -106,8 +105,6 @@ return [
     */
 
     'resources' => [
-        'namespace' => 'App\\Domains\\Admin\\Admin\\Components\\Resources',
-        'path' => app_path('Domains/Admin/Admin/Components/Resources'),
         'register' => [
             UserResource::class,
             ProductCategoryResource::class,
@@ -128,27 +125,11 @@ return [
     */
 
     'widgets' => [
-        'namespace' => 'App\\Domains\\Admin\\Admin\\Components\\Widgets',
-        'path' => app_path('Domains/Admin/Admin/Components/Widgets'),
         'register' => [
             Widgets\AccountWidget::class,
             Widgets\FilamentInfoWidget::class,
+            CustomersChartWidget::class,
         ],
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Livewire
-    |--------------------------------------------------------------------------
-    |
-    | This is the namespace and directory that Filament will automatically
-    | register Livewire components inside.
-    |
-    */
-
-    'livewire' => [
-        'namespace' => 'App\\Domains\\Admin\\Admin\\Components\\Widgets',
-        'path' => app_path('Domains/Admin/Admin/Components/Widgets'),
     ],
 
     /*

@@ -64,7 +64,7 @@ abstract class TestCase extends BaseTestCase
     }
 
     /**
-     * Define actions that should be executed once before the whole suit
+     * Define actions that should be executed once before the whole suit.
      */
     protected function setUpOnce(): void
     {

@@ -2,7 +2,7 @@
 
 namespace App\Domains\Users\Http\Controllers\Api\Virtual;
 
-class LogoutController
+final class LogoutController
 {
     /**
      * @OA\Post(
