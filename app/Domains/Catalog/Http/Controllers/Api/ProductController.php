@@ -101,6 +101,7 @@ final class ProductController extends Controller
                 'categories' => fn (BelongsToMany|ProductCategory $query): BelongsToMany => $query->visible(),
                 'attributeValues.attribute',
                 'prices' => fn (HasMany $query): HasMany => $query->where('currency', $currency),
+                'media.model',
             ]);
     }
 }

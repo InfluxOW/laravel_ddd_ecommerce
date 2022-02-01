@@ -71,6 +71,8 @@ return [
         ProductResourceTranslationKey::TITLE->name => 'Title',
         ProductResourceTranslationKey::SLUG->name => 'Slug',
         ProductResourceTranslationKey::DESCRIPTION->name => 'Description',
+        ProductResourceTranslationKey::CATEGORIES->name => 'Categories',
+        ProductResourceTranslationKey::IMAGES->name => 'Images',
     ],
     ProductPriceResourceTranslationKey::class => [
         ProductPriceResourceTranslationKey::CURRENCY->name => 'Currency',

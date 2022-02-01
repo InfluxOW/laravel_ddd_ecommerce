@@ -9,9 +9,9 @@ use App\Domains\Catalog\Models\ProductCategory;
 use App\Domains\Catalog\Observers\ProductCategoryObserver;
 use App\Domains\Catalog\Observers\ProductObserver;
 use App\Domains\Catalog\Observers\ProductProductCategoryObserver;
-use App\Infrastructure\Abstracts\ServiceProviderBase;
+use App\Infrastructure\Abstracts\BaseServiceProvider;
 
-final class DomainServiceProvider extends ServiceProviderBase
+final class DomainServiceProvider extends BaseServiceProvider
 {
     public const NAMESPACE = ServiceProviderNamespace::CATALOG;
 

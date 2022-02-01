@@ -9,4 +9,5 @@ enum ProductResourceTranslationKey: string
     case DESCRIPTION = 'description';
 
     case CATEGORIES = 'categories';
+    case IMAGES = 'images';
 }

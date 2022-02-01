@@ -3,9 +3,9 @@
 namespace App\Components\Addressable\Providers;
 
 use App\Components\Generic\Enums\ServiceProviderNamespace;
-use App\Infrastructure\Abstracts\ServiceProviderBase;
+use App\Infrastructure\Abstracts\BaseServiceProvider;
 
-final class ComponentServiceProvider extends ServiceProviderBase
+final class ComponentServiceProvider extends BaseServiceProvider
 {
     public const NAMESPACE = ServiceProviderNamespace::ADDRESS;
 

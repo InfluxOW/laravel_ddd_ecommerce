@@ -14,6 +14,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -24,12 +26,15 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $title
  * @property string $slug
  * @property string $description
+ * @property string|null $image
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Domains\Catalog\Models\ProductAttributeValue[] $attributeValues
  * @property-read int|null $attribute_values_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Domains\Catalog\Models\ProductCategory[] $categories
  * @property-read int|null $categories_count
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|\App\Components\Mediable\Models\Media[] $media
+ * @property-read int|null $media_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Domains\Catalog\Models\ProductPrice[] $prices
  * @property-read int|null $prices_count
  * @method static \App\Domains\Catalog\Database\Factories\ProductFactory factory(...$parameters)
@@ -42,6 +47,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Product whereHasAttributeValue(array $attributesValuesByAttributeSlug)
  * @method static Builder|Product whereHasPriceCurrency(string $currency)
  * @method static Builder|Product whereId($value)
+ * @method static Builder|Product whereImage($value)
  * @method static Builder|Product whereInCategory(\Illuminate\Support\Collection $categories)
  * @method static Builder|Product wherePriceAbove(string $currency, int $minPrice)
  * @method static Builder|Product wherePriceBelow(string $currency, int $maxPrice)
@@ -51,10 +57,11 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Product whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-final class Product extends Model implements Purchasable
+final class Product extends Model implements Purchasable, HasMedia
 {
     use HasFactory;
     use HasSlug;
+    use InteractsWithMedia;
 
     protected $fillable = [
         'title',

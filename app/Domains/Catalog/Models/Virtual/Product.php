@@ -2,6 +2,7 @@
 
 namespace App\Domains\Catalog\Models\Virtual;
 
+use App\Components\Mediable\Models\Virtual\Media;
 use App\Components\Purchasable\Models\Virtual\Currency;
 use App\Components\Purchasable\Models\Virtual\Money;
 
@@ -14,10 +15,9 @@ final class Product
 {
     /**
      * @OA\Property()
-     * @var string
-     * @example Playstation 4 Pro
+     * @var Media[]
      */
-    public $title;
+    public $media;
 
     /**
      * @OA\Property()
@@ -25,6 +25,13 @@ final class Product
      * @example playstation-4-pro
      */
     public $slug;
+
+    /**
+     * @OA\Property()
+     * @var string
+     * @example Playstation 4 Pro
+     */
+    public $title;
 
     /**
      * @OA\Property()
