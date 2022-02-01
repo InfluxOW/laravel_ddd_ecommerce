@@ -2,6 +2,7 @@
 
 namespace App\Domains\Catalog\Http\Resources;
 
+use App\Components\Mediable\Http\Resources\MediaResource;
 use App\Components\Purchasable\Http\Resources\CurrencyResource;
 use App\Components\Purchasable\Http\Resources\MoneyResource;
 use App\Components\Queryable\Enums\QueryKey;
@@ -14,7 +15,7 @@ use JetBrains\PhpStorm\ArrayShape;
 
 final class ProductResource extends JsonResource
 {
-    #[ArrayShape(['slug' => 'string', 'title' => "string", 'created_at' => "null|string", 'price' => 'string|optional', 'price_discounted' => "string|null|optional", 'currency' => "string", 'categories' => AnonymousResourceCollection::class, 'attributes' => AnonymousResourceCollection::class, 'description' => "string"])]
+    #[ArrayShape(['media' => AnonymousResourceCollection::class, 'slug' => 'string', 'title' => "string", 'created_at' => "null|string", 'price' => 'string|optional', 'price_discounted' => "string|null|optional", 'currency' => "string", 'categories' => AnonymousResourceCollection::class, 'attributes' => AnonymousResourceCollection::class, 'description' => "string"])]
     public function toArray($request): array
     {
         /** @var Product $product */
@@ -25,6 +26,7 @@ final class ProductResource extends JsonResource
         $priceModel = $product->prices->where('currency', $currency)->first();
 
         return [
+            'media' => MediaResource::collection($product->media),
             'slug' => $product->slug,
             'title' => $product->title,
             'created_at' => $product->created_at?->format('d M Y H:i:s'),

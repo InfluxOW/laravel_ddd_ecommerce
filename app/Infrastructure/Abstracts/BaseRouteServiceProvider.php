@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\RateLimiter;
 
-abstract class RouteServiceProviderBase extends ServiceProvider
+abstract class BaseRouteServiceProvider extends ServiceProvider
 {
     public function boot()
     {

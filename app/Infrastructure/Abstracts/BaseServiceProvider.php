@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 use Livewire\Livewire;
 use ReflectionClass;
 
-abstract class ServiceProviderBase extends LaravelServiceProvider
+abstract class BaseServiceProvider extends LaravelServiceProvider
 {
     /*
      * Namespace for loading translations.

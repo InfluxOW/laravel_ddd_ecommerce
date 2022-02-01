@@ -5,9 +5,9 @@ namespace App\Domains\Feedback\Providers;
 use App\Components\Generic\Enums\ServiceProviderNamespace;
 use App\Domains\Feedback\Models\Feedback;
 use App\Domains\Feedback\Policies\FeedbackPolicy;
-use App\Infrastructure\Abstracts\ServiceProviderBase;
+use App\Infrastructure\Abstracts\BaseServiceProvider;
 
-final class DomainServiceProvider extends ServiceProviderBase
+final class DomainServiceProvider extends BaseServiceProvider
 {
     public const NAMESPACE = ServiceProviderNamespace::FEEDBACK;
 

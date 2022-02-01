@@ -2,6 +2,7 @@
 
 namespace App\Domains\Catalog\Admin\Resources;
 
+use App\Components\Mediable\Admin\Components\Fields\MediaLibraryFileUpload;
 use App\Domains\Admin\Admin\Abstracts\Resource;
 use App\Domains\Admin\Admin\Components\Cards\TimestampsCard;
 use App\Domains\Catalog\Admin\Resources\ProductResource\RelationManagers\ProductAttributeValuesRelationManager;
@@ -69,7 +70,7 @@ final class ProductResource extends Resource
                     ->columnSpan(1),
                 Card::make()
                     ->columnSpan(3)
-                    ->schema([
+                    ->schema(self::setTranslatableLabels([
                         BelongsToManyMultiSelect::make(ProductResourceTranslationKey::CATEGORIES->value)
                             ->relationship('categories', 'title')
                             ->options(fn (?Product $record, callable $get): array => ProductCategory::query()
@@ -79,7 +80,14 @@ final class ProductResource extends Resource
                                 ->orderBy('left')
                                 ->pluck('title', 'id')
                                 ->toArray()),
-                    ]),
+                    ])),
+                MediaLibraryFileUpload::make(ProductResourceTranslationKey::IMAGES->value)
+                    ->multiple()
+                    ->minFiles(1)
+                    ->maxFiles(10)
+                    ->image()
+                    ->preserveFilenames()
+                    ->columnSpan(3),
             ]))
             ->columns(3);
     }
@@ -116,7 +124,7 @@ final class ProductResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()->with(['attributeValues.attribute', 'prices']);
+        return parent::getEloquentQuery()->with(['attributeValues.attribute', 'prices', 'media.model']);
     }
 
     /*

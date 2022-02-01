@@ -184,6 +184,7 @@ return [
          * Components Service Providers
          */
         App\Components\Addressable\Providers\ComponentServiceProvider::class,
+        App\Components\Mediable\Providers\ComponentServiceProvider::class,
     ],
 
     /*

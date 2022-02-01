@@ -5,10 +5,10 @@ namespace App\Domains\Users\Providers;
 use App\Domains\Users\Http\Controllers\Api\LoginController;
 use App\Domains\Users\Http\Controllers\Api\LogoutController;
 use App\Domains\Users\Http\Controllers\Api\RegisterController;
-use App\Infrastructure\Abstracts\RouteServiceProviderBase;
+use App\Infrastructure\Abstracts\BaseRouteServiceProvider;
 use Illuminate\Routing\Router;
 
-final class RouteServiceProvider extends RouteServiceProviderBase
+final class RouteServiceProvider extends BaseRouteServiceProvider
 {
     protected function mapApiRoutes(Router $router): void
     {
