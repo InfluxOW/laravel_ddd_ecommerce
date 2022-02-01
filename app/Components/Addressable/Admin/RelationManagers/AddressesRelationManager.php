@@ -34,7 +34,7 @@ final class AddressesRelationManager extends MorphManyRelationManager
                     ->afterStateUpdated(fn (callable $set) => $set(AddressesRelationManagerTranslationKey::REGION->value, null))
                     ->reactive(),
                 Select::make(AddressesRelationManagerTranslationKey::REGION->value)
-                    ->id(fn (callable $get, self $livewire) => sprintf('%s|%s|%s', $livewire->ownerRecord->id, $get(AddressesRelationManagerTranslationKey::COUNTRY->value), $get(AddressesRelationManagerTranslationKey::REGION->value)))
+                    ->id(fn (callable $get, self $livewire) => sprintf('%s|%s|%s', $livewire->ownerRecord->getKey(), $get(AddressesRelationManagerTranslationKey::COUNTRY->value), $get(AddressesRelationManagerTranslationKey::REGION->value)))
                     ->disabled(fn (callable $get): bool => $get(AddressesRelationManagerTranslationKey::COUNTRY->value) === null)
                     ->searchable()
                     ->options(fn (callable $get): array => Region::query()->where('country_id', $get(AddressesRelationManagerTranslationKey::COUNTRY->value))->pluck('name', 'id')->toArray())
@@ -87,7 +87,7 @@ final class AddressesRelationManager extends MorphManyRelationManager
     private function shouldBeDisplayed(): bool
     {
         return collect([
-            UserResource::getUrl('view', $this->ownerRecord->id),
+            UserResource::getUrl('view', $this->ownerRecord->getKey()),
             route('livewire.message', ['generic.admin.resources.user-resource.pages.view-user']),
         ])->doesntContain(Request::url());
     }

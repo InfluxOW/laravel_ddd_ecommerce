@@ -34,6 +34,6 @@ abstract class BaseRouteServiceProvider extends ServiceProvider
      */
     protected function configureRateLimiting(): void
     {
-        RateLimiter::for('api', static fn (Request $request) => Limit::perMinute(config('app.rate_limits.api'))->by(optional($request->user())->id ?: $request->ip()));
+        RateLimiter::for('api', static fn (Request $request) => Limit::perMinute(config('app.rate_limits.api'))->by($request->user()?->id ?? $request->ip()));
     }
 }

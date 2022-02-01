@@ -85,7 +85,7 @@ final class ProductCategoryChildrenRelationManager extends HasManyRelationManage
     private function shouldBeDisplayed(): bool
     {
         return collect([
-            ProductCategoryResource::getUrl('view', $this->ownerRecord->id),
+            ProductCategoryResource::getUrl('view', $this->ownerRecord->getKey()),
             route('livewire.message', ['catalog.admin.resources.product-category-resource.pages.view-product-category']),
         ])->doesntContain(Request::url());
     }

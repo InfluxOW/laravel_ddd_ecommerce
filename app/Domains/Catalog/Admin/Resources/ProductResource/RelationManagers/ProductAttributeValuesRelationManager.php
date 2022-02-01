@@ -121,7 +121,7 @@ final class ProductAttributeValuesRelationManager extends HasManyRelationManager
     private function shouldBeDisplayed(): bool
     {
         return collect([
-            ProductResource::getUrl('view', $this->ownerRecord->id),
+            ProductResource::getUrl('view', $this->ownerRecord->getKey()),
             route('livewire.message', ['catalog.admin.resources.product-resource.pages.view-product']),
         ])->doesntContain(Request::url());
     }

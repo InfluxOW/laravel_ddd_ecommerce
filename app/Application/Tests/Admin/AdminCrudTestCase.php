@@ -35,24 +35,24 @@ abstract class AdminCrudTestCase extends AdminTestCase
         if (isset($this->viewRecord)) {
             $this->assertNotNull($record);
             /** @phpstan-ignore-next-line  */
-            $this->getResourceActionUrl($this->viewRecord, ['record' => $record?->id])->assertOk();
+            $this->getResourceActionUrl($this->viewRecord, ['record' => $record?->getKey()])->assertOk();
 
             /** @phpstan-ignore-next-line  */
             foreach ($this->viewRecord::getResource()::getRelations() as $relation) {
                 /** @phpstan-ignore-next-line  */
-                $this->getResourceActionUrl($this->viewRecord, ['record' => $record?->id, 'activeRelationManager' => $relation])->assertOk();
+                $this->getResourceActionUrl($this->viewRecord, ['record' => $record?->getKey(), 'activeRelationManager' => $relation])->assertOk();
             }
         }
 
         if (isset($this->editRecord)) {
             $this->assertNotNull($record);
             /** @phpstan-ignore-next-line  */
-            $this->getResourceActionUrl($this->editRecord, ['record' => $record?->id])->assertOk();
+            $this->getResourceActionUrl($this->editRecord, ['record' => $record?->getKey()])->assertOk();
 
             /** @phpstan-ignore-next-line  */
             foreach ($this->editRecord::getResource()::getRelations() as $relation) {
                 /** @phpstan-ignore-next-line  */
-                $this->getResourceActionUrl($this->editRecord, ['record' => $record?->id, 'activeRelationManager' => $relation])->assertOk();
+                $this->getResourceActionUrl($this->editRecord, ['record' => $record?->getKey(), 'activeRelationManager' => $relation])->assertOk();
             }
         }
     }

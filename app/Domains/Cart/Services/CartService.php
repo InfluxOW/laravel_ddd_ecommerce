@@ -45,7 +45,7 @@ final class CartService
      */
     public function add(Cart $cart, Model&Purchasable $purchasable, int $quantity): Cart
     {
-        $item = $cart->items->where('purchasable_id', $purchasable->id)->where('purchasable_type', $purchasable::class)->first();
+        $item = $cart->items->where('purchasable_id', $purchasable->getKey())->where('purchasable_type', $purchasable::class)->first();
         if (isset($item)) {
             return $this->update($cart, $purchasable, $quantity);
         }
@@ -72,7 +72,7 @@ final class CartService
      */
     public function update(Cart $cart, Model&Purchasable $purchasable, int $quantity): Cart
     {
-        $item = $cart->items->where('purchasable_id', $purchasable->id)->where('purchasable_type', $purchasable::class)->first();
+        $item = $cart->items->where('purchasable_id', $purchasable->getKey())->where('purchasable_type', $purchasable::class)->first();
         if ($item === null) {
             return $this->add($cart, $purchasable, $quantity);
         }

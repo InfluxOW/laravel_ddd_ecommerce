@@ -19,7 +19,7 @@ final class PathGenerator extends DefaultPathGenerator
         $model = $media->model;
 
         $folder = StringUtils::pluralBasename($model::class);
-        $subfolder = isset($model->slug) ? sprintf('%s-%s', $model->id, $model->slug) : $model->id;
+        $subfolder = isset($model->slug) ? sprintf('%s-%s', $model->getKey(), $model->slug) : $model->getKey();
 
         return PathUtils::join([$folder, $subfolder, $media->getKey()]);
     }

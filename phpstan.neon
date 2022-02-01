@@ -16,7 +16,6 @@ parameters:
     ignoreErrors:
         - '#Attribute class JetBrains\\PhpStorm\\ArrayShape does not exist#'
         - '#Access to an undefined property Squire\\Models#'
-        - '#Illuminate\\Database\\Eloquent\\Model::\$id#'
         - '#Model::make\(\)#'
         - '#\(Akaunting\\Money\\Money\) does not accept int#'
 

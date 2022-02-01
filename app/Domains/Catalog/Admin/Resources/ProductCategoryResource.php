@@ -123,7 +123,7 @@ final class ProductCategoryResource extends Resource
                     return $categories->pluck('title', 'id')->toArray();
                 })
                 ->disabled(fn (Page|RelationManager $livewire): bool => $livewire instanceof RelationManager)
-                ->default(fn (Page|RelationManager $livewire): ?int => ($livewire instanceof RelationManager && isset($livewire->ownerRecord->id)) ? $livewire->ownerRecord->id : null)
+                ->default(fn (Page|RelationManager $livewire): ?int => $livewire instanceof RelationManager ? $livewire->ownerRecord->getKey() : null)
                 ->searchable(fn (Page|RelationManager $livewire) => $livewire instanceof Page)
                 ->reactive()
                 ->afterStateUpdated(function (callable $set, callable $get): void {
