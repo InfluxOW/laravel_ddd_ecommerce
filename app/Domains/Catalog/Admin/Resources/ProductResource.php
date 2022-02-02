@@ -7,6 +7,7 @@ use App\Domains\Admin\Admin\Abstracts\Resource;
 use App\Domains\Admin\Admin\Components\Cards\TimestampsCard;
 use App\Domains\Catalog\Admin\Resources\ProductResource\RelationManagers\ProductAttributeValuesRelationManager;
 use App\Domains\Catalog\Admin\Resources\ProductResource\RelationManagers\ProductPricesRelationManager;
+use App\Domains\Catalog\Enums\ProductMediaCollectionKey;
 use App\Domains\Catalog\Enums\Translation\ProductResourceTranslationKey;
 use App\Domains\Catalog\Models\Product;
 use App\Domains\Catalog\Models\ProductCategory;
@@ -82,6 +83,7 @@ final class ProductResource extends Resource
                                 ->toArray()),
                     ])),
                 MediaLibraryFileUpload::make(ProductResourceTranslationKey::IMAGES->value)
+                    ->collection(ProductMediaCollectionKey::IMAGES->value)
                     ->multiple()
                     ->minFiles(1)
                     ->maxFiles(10)

@@ -45,7 +45,7 @@ final class ProductController extends Controller
         $appliedSort = $sortService->getApplied($request) ?? $defaultSort;
         $sortQueryServiceResource = new QueryServiceResource(QueryKey::SORT, false, [$appliedSort->toArray()], $allowedSorts->map->toArray()->toArray());
 
-        $productsQueryBase = QueryBuilder::for($this->getBaseProductsQuery($currency));
+        $productsQueryBase = QueryBuilder::for($this->getBaseProductsQuery($currency)->with(['image.model']));
         $productsQuery = $productsQueryBase->clone()
             ->allowedFilters([
                 ProductAllowedFilter::TITLE->value,
@@ -81,7 +81,10 @@ final class ProductController extends Controller
 
     public function show(ProductShowRequest $request, string $slug): JsonResource|JsonResponse
     {
-        $product = $this->getBaseProductsQuery($request->validated()[QueryKey::FILTER->value][ProductAllowedFilter::CURRENCY->value])->with(['attributeValues.attribute',])->where('slug', $slug)->first();
+        $product = $this->getBaseProductsQuery($request->validated()[QueryKey::FILTER->value][ProductAllowedFilter::CURRENCY->value])
+            ->with(['attributeValues.attribute', 'images.model'])
+            ->where('slug', $slug)
+            ->first();
 
         if ($product === null) {
             return $this->respondWithMessage("Product '{$slug}' was not found.", Response::HTTP_NOT_FOUND);
@@ -99,7 +102,6 @@ final class ProductController extends Controller
                 /** @phpstan-ignore-next-line */
                 'categories' => fn (BelongsToMany|ProductCategory $query): BelongsToMany => $query->visible(),
                 'prices' => fn (HasMany $query): HasMany => $query->where('currency', $currency),
-                'media.model',
             ]);
     }
 }

@@ -7,12 +7,15 @@ use App\Components\Generic\Enums\BooleanString;
 use App\Components\Purchasable\Abstracts\Purchasable;
 use App\Domains\Catalog\Database\Factories\ProductFactory;
 use App\Domains\Catalog\Enums\ProductAttributeValuesType;
+use App\Domains\Catalog\Enums\ProductMediaCollectionKey;
 use App\Domains\Catalog\Models\Pivot\ProductProductCategory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Support\Collection;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -30,8 +33,13 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Domains\Catalog\Models\ProductAttributeValue[] $attributeValues
  * @property-read int|null $attribute_values_count
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|\App\Components\Mediable\Models\Media[] $baseMedia
+ * @property-read int|null $base_media_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Domains\Catalog\Models\ProductCategory[] $categories
  * @property-read int|null $categories_count
+ * @property-read \App\Components\Mediable\Models\Media|null $image
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|\App\Components\Mediable\Models\Media[] $images
+ * @property-read int|null $images_count
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|\App\Components\Mediable\Models\Media[] $media
  * @property-read int|null $media_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Domains\Catalog\Models\ProductPrice[] $prices
@@ -59,7 +67,9 @@ final class Product extends Model implements Purchasable, HasMedia
 {
     use HasFactory;
     use HasSlug;
-    use InteractsWithMedia;
+    use InteractsWithMedia {
+        media as baseMedia;
+    }
 
     protected $fillable = [
         'title',
@@ -83,6 +93,21 @@ final class Product extends Model implements Purchasable, HasMedia
     public function prices(): HasMany
     {
         return $this->hasMany(ProductPrice::class);
+    }
+
+    public function media(): MorphMany
+    {
+        return $this->baseMedia()->orderBy('order_column');
+    }
+
+    public function images(): MorphMany
+    {
+        return $this->media()->where('collection_name', ProductMediaCollectionKey::IMAGES->value);
+    }
+
+    public function image(): MorphOne
+    {
+        return $this->morphOne(config('media-library.media_model'), 'model')->where('collection_name', ProductMediaCollectionKey::IMAGES->value);
     }
 
     /*

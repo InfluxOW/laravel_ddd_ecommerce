@@ -2,7 +2,6 @@
 
 namespace App\Components\Mediable\Admin\Components\Fields;
 
-use App\Components\Generic\Utils\StringUtils;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 
 final class MediaLibraryFileUpload extends SpatieMediaLibraryFileUpload
@@ -13,7 +12,6 @@ final class MediaLibraryFileUpload extends SpatieMediaLibraryFileUpload
 
         $this
             ->disk(config('filesystems.default'))
-            ->collection(fn (?string $model): ?string => ($model === null) ? null : StringUtils::pluralBasename($model))
             ->visibility('private');
     }
 }

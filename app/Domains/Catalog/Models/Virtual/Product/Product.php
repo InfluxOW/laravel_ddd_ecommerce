@@ -2,18 +2,11 @@
 
 namespace App\Domains\Catalog\Models\Virtual\Product;
 
-use App\Components\Mediable\Models\Virtual\Media;
 use App\Components\Purchasable\Models\Virtual\Currency;
 use App\Components\Purchasable\Models\Virtual\Money;
 
 abstract class Product
 {
-    /**
-     * @OA\Property()
-     * @var Media[]
-     */
-    public $media;
-
     /**
      * @OA\Property()
      * @var string

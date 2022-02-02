@@ -2,6 +2,7 @@
 
 namespace App\Domains\Catalog\Models\Virtual\Product;
 
+use App\Components\Mediable\Models\Virtual\Media;
 use App\Domains\Catalog\Models\Virtual\ProductAttributeValue;
 use App\Domains\Catalog\Models\Virtual\ProductCategory\MediumProductCategory;
 
@@ -12,6 +13,12 @@ use App\Domains\Catalog\Models\Virtual\ProductCategory\MediumProductCategory;
  */
 final class HeavyProduct extends LightProduct
 {
+    /**
+     * @OA\Property()
+     * @var Media[]
+     */
+    public $images;
+
     /**
      * @OA\Property()
      * @var MediumProductCategory[]
