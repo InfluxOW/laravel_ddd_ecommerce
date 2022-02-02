@@ -5,13 +5,13 @@ namespace App\Application\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class ForceJsonResponse
+final class ForceJsonResponse
 {
     /**
      * Handle an incoming request.
      *
-     * @param  Request  $request
-     * @param  \Closure  $next
+     * @param Request $request
+     * @param \Closure $next
      * @return mixed
      */
     public function handle(Request $request, Closure $next)

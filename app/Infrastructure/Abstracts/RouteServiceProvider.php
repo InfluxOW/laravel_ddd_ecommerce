@@ -3,12 +3,12 @@
 namespace App\Infrastructure\Abstracts;
 
 use Illuminate\Cache\RateLimiting\Limit;
-use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Foundation\Support\Providers\RouteServiceProvider as BaseRouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\RateLimiter;
 
-abstract class BaseRouteServiceProvider extends ServiceProvider
+abstract class RouteServiceProvider extends BaseRouteServiceProvider
 {
     public function boot()
     {

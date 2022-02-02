@@ -13,13 +13,6 @@ use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 trait ResponseTrait
 {
-    /**
-     * The current path of resource to respond
-     *
-     * @var class-string<JsonResource>
-     */
-    protected string $resource;
-
     protected function respondWithMessage(string $message, int $status = SymfonyResponse::HTTP_OK): JsonResponse
     {
         return response()->json([ResponseKey::MESSAGE->value => $message], $status);
@@ -35,13 +28,19 @@ trait ResponseTrait
         return response()->json([], SymfonyResponse::HTTP_NO_CONTENT);
     }
 
-    protected function respondWithCollection(Collection|LengthAwarePaginator $collection, array $additional = []): AnonymousResourceCollection
+    /**
+     * @param class-string<JsonResource> $resource
+     */
+    protected function respondWithCollection(string $resource, Collection|LengthAwarePaginator $collection, array $additional = []): AnonymousResourceCollection
     {
-        return $this->resource::collection($collection)->additional($additional);
+        return $resource::collection($collection)->additional($additional);
     }
 
-    protected function respondWithItem(Model $item, array $additional = []): JsonResource
+    /**
+     * @param class-string<JsonResource> $resource
+     */
+    protected function respondWithItem(string $resource, Model $item, array $additional = []): JsonResource
     {
-        return $this->resource::make($item)->additional($additional);
+        return $resource::make($item)->additional($additional);
     }
 }

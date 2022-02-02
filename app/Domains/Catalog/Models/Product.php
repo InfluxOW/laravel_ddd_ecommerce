@@ -26,7 +26,6 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $title
  * @property string $slug
  * @property string $description
- * @property string|null $image
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Domains\Catalog\Models\ProductAttributeValue[] $attributeValues
@@ -47,7 +46,6 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Product whereHasAttributeValue(array $attributesValuesByAttributeSlug)
  * @method static Builder|Product whereHasPriceCurrency(string $currency)
  * @method static Builder|Product whereId($value)
- * @method static Builder|Product whereImage($value)
  * @method static Builder|Product whereInCategory(\Illuminate\Support\Collection $categories)
  * @method static Builder|Product wherePriceAbove(string $currency, int $minPrice)
  * @method static Builder|Product wherePriceBelow(string $currency, int $maxPrice)

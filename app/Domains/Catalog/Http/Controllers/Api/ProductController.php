@@ -10,7 +10,8 @@ use App\Domains\Catalog\Enums\Query\Filter\ProductAllowedFilter;
 use App\Domains\Catalog\Enums\Query\Sort\ProductAllowedSort;
 use App\Domains\Catalog\Http\Requests\ProductIndexRequest;
 use App\Domains\Catalog\Http\Requests\ProductShowRequest;
-use App\Domains\Catalog\Http\Resources\ProductResource;
+use App\Domains\Catalog\Http\Resources\Product\HeavyProductResource;
+use App\Domains\Catalog\Http\Resources\Product\LightProductResource;
 use App\Domains\Catalog\Models\Product;
 use App\Domains\Catalog\Models\ProductCategory;
 use App\Domains\Catalog\Services\Query\Filter\ProductFilterService;
@@ -29,8 +30,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class ProductController extends Controller
 {
-    protected string $resource = ProductResource::class;
-
     private const DEFAULT_ITEMS_PER_PAGE = 20;
 
     public function index(ProductIndexRequest $request, ProductFilterService $filterService, ProductSortService $sortService): AnonymousResourceCollection
@@ -46,7 +45,7 @@ final class ProductController extends Controller
         $appliedSort = $sortService->getApplied($request) ?? $defaultSort;
         $sortQueryServiceResource = new QueryServiceResource(QueryKey::SORT, false, [$appliedSort->toArray()], $allowedSorts->map->toArray()->toArray());
 
-        $productsQueryBase = QueryBuilder::for($this->getBaseProductQuery($currency));
+        $productsQueryBase = QueryBuilder::for($this->getBaseProductsQuery($currency));
         $productsQuery = $productsQueryBase->clone()
             ->allowedFilters([
                 ProductAllowedFilter::TITLE->value,
@@ -72,7 +71,7 @@ final class ProductController extends Controller
             ->paginate($validated[QueryKey::PER_PAGE->value] ?? self::DEFAULT_ITEMS_PER_PAGE, ['*'], QueryKey::PAGE->value, $validated[QueryKey::PAGE->value] ?? 1)
             ->appends($request->query() ?? []);
 
-        return $this->respondWithCollection($products, [
+        return $this->respondWithCollection(LightProductResource::class, $products, [
             ResponseKey::QUERY->value => [
                 QueryKey::SORT->value => $sortQueryServiceResource->toArray(),
                 QueryKey::FILTER->value => $filterQueryServiceResource->toArray(),
@@ -82,16 +81,16 @@ final class ProductController extends Controller
 
     public function show(ProductShowRequest $request, string $slug): JsonResource|JsonResponse
     {
-        $product = $this->getBaseProductQuery($request->validated()[QueryKey::FILTER->value][ProductAllowedFilter::CURRENCY->value])->where('slug', $slug)->first();
+        $product = $this->getBaseProductsQuery($request->validated()[QueryKey::FILTER->value][ProductAllowedFilter::CURRENCY->value])->with(['attributeValues.attribute',])->where('slug', $slug)->first();
 
         if ($product === null) {
             return $this->respondWithMessage("Product '{$slug}' was not found.", Response::HTTP_NOT_FOUND);
         }
 
-        return $this->respondWithItem($product);
+        return $this->respondWithItem(HeavyProductResource::class, $product);
     }
 
-    private function getBaseProductQuery(string $currency): Builder
+    private function getBaseProductsQuery(string $currency): Builder
     {
         return Product::query()
             /** @phpstan-ignore-next-line */
@@ -99,7 +98,6 @@ final class ProductController extends Controller
             ->with([
                 /** @phpstan-ignore-next-line */
                 'categories' => fn (BelongsToMany|ProductCategory $query): BelongsToMany => $query->visible(),
-                'attributeValues.attribute',
                 'prices' => fn (HasMany $query): HasMany => $query->where('currency', $currency),
                 'media.model',
             ]);

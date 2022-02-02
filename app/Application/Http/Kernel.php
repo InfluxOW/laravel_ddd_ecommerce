@@ -14,7 +14,7 @@ use Illuminate\Foundation\Http\Middleware\ValidatePostSize;
 use Illuminate\Http\Middleware\SetCacheHeaders;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 
-class Kernel extends HttpKernel
+final class Kernel extends HttpKernel
 {
     /**
      * The application's global HTTP middleware stack.

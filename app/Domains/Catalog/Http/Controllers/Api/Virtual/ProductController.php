@@ -108,7 +108,7 @@ final class ProductController
      *             collectionFormat="multi",
      *             @OA\Items(
      *               type="object",
-     *               ref="#/components/schemas/Product",
+     *               ref="#/components/schemas/LightProduct",
      *             ),
      *          ),
      *          @OA\Property(
@@ -227,7 +227,7 @@ final class ProductController
      *       response=200,
      *       description="Specified product has been found",
      *       @OA\JsonContent(
-     *          @OA\Property(property="data", type="object", ref="#/components/schemas/Product"),
+     *          @OA\Property(property="data", type="object", ref="#/components/schemas/HeavyProduct"),
      *       ),
      *    ),
      *    @OA\Response(

@@ -1,27 +1,19 @@
 <?php
 
-namespace App\Domains\Catalog\Models\Virtual;
+namespace App\Domains\Catalog\Models\Virtual\ProductCategory;
 
 /**
  * @OA\Schema(
- *    @OA\Xml(name="LightProductCategory")
+ *    @OA\Xml(name="MediumProductCategory")
  * )
  */
-class LightProductCategory
+class MediumProductCategory extends LightProductCategory
 {
     /**
      * @OA\Property()
-     * @var string
-     * @example Electronics
+     * @var self
      */
-    public $title;
-
-    /**
-     * @OA\Property()
-     * @var string
-     * @example electronics
-     */
-    public $slug;
+    public $parent;
 
     /**
      * @OA\Property()

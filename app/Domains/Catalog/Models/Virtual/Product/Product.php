@@ -1,17 +1,12 @@
 <?php
 
-namespace App\Domains\Catalog\Models\Virtual;
+namespace App\Domains\Catalog\Models\Virtual\Product;
 
 use App\Components\Mediable\Models\Virtual\Media;
 use App\Components\Purchasable\Models\Virtual\Currency;
 use App\Components\Purchasable\Models\Virtual\Money;
 
-/**
- * @OA\Schema(
- *    @OA\Xml(name="Product")
- * )
- */
-final class Product
+abstract class Product
 {
     /**
      * @OA\Property()
@@ -32,6 +27,13 @@ final class Product
      * @example Playstation 4 Pro
      */
     public $title;
+
+    /**
+     * @OA\Property()
+     * @var string
+     * @example http://localhost:8085/api/products/libero-laboriosam-dolorum
+     */
+    public $url;
 
     /**
      * @OA\Property()
@@ -57,23 +59,4 @@ final class Product
      * @var Currency
      */
     public $currency;
-
-    /**
-     * @OA\Property()
-     * @var LightProductCategory[]
-     */
-    public $categories;
-
-    /**
-     * @OA\Property()
-     * @var ProductAttributeValue[]
-     */
-    public $attributes;
-
-    /**
-     * @OA\Property()
-     * @var string
-     * @example Home video game console developed by Sony Computer Entertainment.
-     */
-    public $description;
 }

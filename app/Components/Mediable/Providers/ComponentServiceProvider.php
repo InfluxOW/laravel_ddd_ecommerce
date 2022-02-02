@@ -3,10 +3,10 @@
 namespace App\Components\Mediable\Providers;
 
 use App\Components\Mediable\Services\Media\FileAdder;
-use App\Infrastructure\Abstracts\BaseServiceProvider;
+use App\Infrastructure\Abstracts\ServiceProvider;
 use Spatie\MediaLibrary\MediaCollections\FileAdder as BaseFileAdder;
 
-class ComponentServiceProvider extends BaseServiceProvider
+class ComponentServiceProvider extends ServiceProvider
 {
     public function register(): void
     {

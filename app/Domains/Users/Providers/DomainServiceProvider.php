@@ -5,9 +5,9 @@ namespace App\Domains\Users\Providers;
 use App\Components\Generic\Enums\ServiceProviderNamespace;
 use App\Domains\Users\Models\User;
 use App\Domains\Users\Observers\UserObserver;
-use App\Infrastructure\Abstracts\BaseServiceProvider;
+use App\Infrastructure\Abstracts\ServiceProvider;
 
-final class DomainServiceProvider extends BaseServiceProvider
+final class DomainServiceProvider extends ServiceProvider
 {
     public const NAMESPACE = ServiceProviderNamespace::USERS;
 

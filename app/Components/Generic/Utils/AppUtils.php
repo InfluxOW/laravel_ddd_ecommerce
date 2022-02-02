@@ -4,7 +4,7 @@ namespace App\Components\Generic\Utils;
 
 use App\Components\Generic\Enums\EnvironmentVariable;
 use App\Components\Generic\Enums\ServiceProviderNamespace;
-use App\Infrastructure\Abstracts\BaseServiceProvider;
+use App\Infrastructure\Abstracts\ServiceProvider;
 use Illuminate\Support\Str;
 
 final class AppUtils
@@ -23,7 +23,7 @@ final class AppUtils
 
     public static function guessServiceProviderNamespace(string $class): ServiceProviderNamespace
     {
-        /** @var BaseServiceProvider|null $domainServiceProvider */
+        /** @var ServiceProvider|null $domainServiceProvider */
         $domainServiceProvider = self::guessDomainServiceProvider($class);
 
         return ($domainServiceProvider === null) ? ServiceProviderNamespace::DEFAULT : $domainServiceProvider::NAMESPACE;
@@ -31,7 +31,7 @@ final class AppUtils
 
     /**
      * @param string $class
-     * @return class-string<BaseServiceProvider>|null
+     * @return class-string<ServiceProvider>|null
      */
     private static function guessDomainServiceProvider(string $class): ?string
     {
@@ -51,10 +51,10 @@ final class AppUtils
             if (isset($possibleSubclassProvidersDirectory)) {
                 $providersDirectoryContent = FileUtils::getDirectoryContent($possibleSubclassProvidersDirectory);
 
-                /** @var class-string<BaseServiceProvider>|null $domainServiceProvider */
+                /** @var class-string<ServiceProvider>|null $domainServiceProvider */
                 $domainServiceProvider = collect($providersDirectoryContent)
                     ->map(fn (string $path): string => collect([self::APP_NAMESPACE])->push($subclassParts->implode('\\'), self::PROVIDERS_DIRECTORY_BASENAME, pathinfo($path, PATHINFO_FILENAME))->implode('\\'))
-                    ->filter(fn (string $class): bool => is_subclass_of($class, BaseServiceProvider::class))
+                    ->filter(fn (string $class): bool => is_subclass_of($class, ServiceProvider::class))
                     ->first();
 
                 return $domainServiceProvider;

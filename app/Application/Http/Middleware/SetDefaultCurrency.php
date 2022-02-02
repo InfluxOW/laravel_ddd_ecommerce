@@ -9,7 +9,7 @@ use Closure;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class SetDefaultCurrency
+final class SetDefaultCurrency
 {
     public function handle(Request $request, Closure $next): JsonResponse
     {

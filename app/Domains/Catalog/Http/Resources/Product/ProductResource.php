@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Catalog\Http\Resources;
+namespace App\Domains\Catalog\Http\Resources\Product;
 
 use App\Components\Mediable\Http\Resources\MediaResource;
 use App\Components\Purchasable\Http\Resources\CurrencyResource;
@@ -13,9 +13,9 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 use JetBrains\PhpStorm\ArrayShape;
 
-final class ProductResource extends JsonResource
+abstract class ProductResource extends JsonResource
 {
-    #[ArrayShape(['media' => AnonymousResourceCollection::class, 'slug' => 'string', 'title' => "string", 'created_at' => "null|string", 'price' => 'string|optional', 'price_discounted' => "string|null|optional", 'currency' => "string", 'categories' => AnonymousResourceCollection::class, 'attributes' => AnonymousResourceCollection::class, 'description' => "string"])]
+    #[ArrayShape(['media' => AnonymousResourceCollection::class, 'slug' => 'string', 'title' => "string", 'url' => "string", 'created_at' => "null|string", 'price' => 'string|optional', 'price_discounted' => "string|null|optional", 'currency' => "string", 'categories' => AnonymousResourceCollection::class, 'attributes' => AnonymousResourceCollection::class, 'description' => "string"])]
     public function toArray($request): array
     {
         /** @var Product $product */
@@ -29,15 +29,13 @@ final class ProductResource extends JsonResource
             'media' => MediaResource::collection($product->media),
             'slug' => $product->slug,
             'title' => $product->title,
+            'url' => route('products.show', $product),
             'created_at' => $product->created_at?->format('d M Y H:i:s'),
             /* @phpstan-ignore-next-line */
             'price' => $this->when(isset($priceModel), fn (): MoneyResource => MoneyResource::make($priceModel->price)),
             /* @phpstan-ignore-next-line */
             'price_discounted' => $this->when(isset($priceModel, $priceModel->price_discounted), fn (): MoneyResource => MoneyResource::make($priceModel->price_discounted)),
             'currency' => CurrencyResource::make(currency($currency)),
-            'categories' => LightProductCategoryResource::collection($product->categories->sortBy('title')),
-            'attributes' => ProductAttributeValueResource::collection($product->attributeValues->sortBy('attribute.title')),
-            'description' => $product->description,
         ];
     }
 }

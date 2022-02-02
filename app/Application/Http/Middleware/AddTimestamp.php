@@ -7,7 +7,7 @@ use Closure;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class AddTimestamp
+final class AddTimestamp
 {
     public function handle(Request $request, Closure $next): JsonResponse
     {

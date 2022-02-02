@@ -5,7 +5,7 @@ namespace App\Domains\Catalog\Providers;
 use App\Application\Http\Middleware\SetDefaultCurrency;
 use App\Domains\Catalog\Http\Controllers\Api\ProductCategoryController;
 use App\Domains\Catalog\Http\Controllers\Api\ProductController;
-use App\Infrastructure\Abstracts\BaseRouteServiceProvider;
+use App\Infrastructure\Abstracts\RouteServiceProvider as BaseRouteServiceProvider;
 use Illuminate\Routing\Router;
 
 final class RouteServiceProvider extends BaseRouteServiceProvider

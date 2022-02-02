@@ -88,7 +88,7 @@ class ProductControllerTest extends TestCase
             $appliedFilters = collect($response->json(sprintf('%s.%s.%s', ResponseKey::QUERY->value, QueryKey::FILTER->value, 'applied')));
 
             $this->assertNotEmpty($items);
-            $items->each(fn (array $item) => $this->assertTrue(str_contains($item['description'], $query)));
+            $items->each(fn (array $item) => $this->assertTrue(str_contains($this->get($item['url'])->json(ResponseKey::DATA->value)['description'], $query)));
 
             $this->assertCount(count($filters) + 1, $appliedFilters);
             $this->assertTrue($appliedFilters->pluck('query')->contains(ProductAllowedFilter::DESCRIPTION->value));
@@ -230,6 +230,7 @@ class ProductControllerTest extends TestCase
 
         $this->assertNotEmpty($items);
         $items->each(function (array $item) use ($firstAttribute, $secondAttribute, $firstAttributeFirstValueOriginal, $firstAttributeSecondValueOriginal, $secondAttributeFirstValueOriginal): void {
+            $item = $this->get($item['url'])->json(ResponseKey::DATA->value);
             $attributes = collect($item['attributes']);
 
             $this->assertEquals($attributes->where('attribute.slug', $secondAttribute->slug)->first()['value'], $secondAttributeFirstValueOriginal);
