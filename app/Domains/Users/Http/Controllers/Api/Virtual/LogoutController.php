@@ -12,7 +12,7 @@ final class LogoutController
      *    operationId="authLogout",
      *    tags={"Authentication"},
      *    security={
-     *      {"access_token": {}},
+     *      {"sanctum": {}},
      *    },
      *    @OA\Response(
      *       response=200,
