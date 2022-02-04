@@ -6,7 +6,6 @@ use App\Components\Generic\Utils\LangUtils;
 use App\Components\Queryable\Abstracts\Query;
 use App\Components\Queryable\Enums\QueryFilterType;
 use BackedEnum;
-use JetBrains\PhpStorm\ArrayShape;
 
 abstract class Filter extends Query
 {
@@ -21,7 +20,6 @@ abstract class Filter extends Query
         $this->title = $translation;
     }
 
-    #[ArrayShape(['query' => "string", 'title' => "string", 'type' => "string"])]
     public function toArray(): array
     {
         return array_merge(parent::toArray(), [

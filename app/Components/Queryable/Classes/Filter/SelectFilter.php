@@ -6,7 +6,6 @@ use App\Components\Queryable\Enums\QueryFilterType;
 use BackedEnum;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection;
-use JetBrains\PhpStorm\ArrayShape;
 
 final class SelectFilter extends Filter
 {
@@ -19,7 +18,6 @@ final class SelectFilter extends Filter
         parent::__construct($filter);
     }
 
-    #[ArrayShape(['query' => "string", 'title' => "string", 'type' => "string", 'values' => "array"])]
     public function toArray(): array
     {
         return array_merge(parent::toArray(), [

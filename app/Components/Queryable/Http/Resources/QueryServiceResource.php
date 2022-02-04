@@ -3,7 +3,6 @@
 namespace App\Components\Queryable\Http\Resources;
 
 use App\Components\Queryable\Enums\QueryKey;
-use JetBrains\PhpStorm\ArrayShape;
 
 final class QueryServiceResource
 {
@@ -11,7 +10,6 @@ final class QueryServiceResource
     {
     }
 
-    #[ArrayShape(['query' => "string", 'is_nested' => "bool", 'applied' => "array", 'allowed' => "array"])]
     public function toArray(): array
     {
         return [

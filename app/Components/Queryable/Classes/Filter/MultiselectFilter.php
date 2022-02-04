@@ -7,7 +7,6 @@ use App\Components\Queryable\Enums\QueryFilterType;
 use BackedEnum;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection;
-use JetBrains\PhpStorm\ArrayShape;
 
 final class MultiselectFilter extends Filter
 {
@@ -41,7 +40,6 @@ final class MultiselectFilter extends Filter
         return new self($filter, true, $values);
     }
 
-    #[ArrayShape(['query' => "string", 'title' => "string", 'type' => "string", 'is_nested' => "boolean", 'values' => "array"])]
     public function toArray(): array
     {
         return array_merge(parent::toArray(), [
