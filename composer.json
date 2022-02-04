@@ -26,7 +26,8 @@
         "spatie/laravel-query-builder": "^4.0",
         "spatie/laravel-sluggable": "^3.1",
         "squirephp/countries-en": "^3.2",
-        "squirephp/regions-en": "^3.2"
+        "squirephp/regions-en": "^3.2",
+        "zircote/swagger-php": "master"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.11",

@@ -10,7 +10,7 @@ use Illuminate\Routing\Controller as BaseController;
 /**
  * @OA\Info(
  *    title="App API",
- *    description="App",
+ *    description="E-Commerce App",
  *    version="1.0.0",
  *    @OA\Contact(
  *       email="krochak_n@mail.ru",

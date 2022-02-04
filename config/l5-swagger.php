@@ -1,7 +1,5 @@
 <?php
 
-use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
-
 return [
     'default' => 'default',
     'documentations' => [
@@ -70,7 +68,6 @@ return [
                     \Illuminate\View\Middleware\ShareErrorsFromSession::class,
                     \App\Application\Http\Middleware\VerifyCsrfToken::class,
                     \Illuminate\Routing\Middleware\SubstituteBindings::class,
-                    EnsureFrontendRequestsAreStateful::class,
                 ],
                 'asset' => [],
                 'docs' => [],
@@ -195,6 +192,12 @@ return [
                         ],
                     ],
                 ],
+                'sanctum' => [ // Unique name of security
+                    'type' => 'apiKey', // Valid values are "basic", "apiKey" or "oauth2".
+                    'description' => 'Enter token in format (Bearer <token>)',
+                    'name' => 'Authorization', // The name of the header or query parameter to be used.
+                    'in' => 'header', // The location of the API key. Valid values are "query" or "header".
+                ],
                 */
             ],
             'security' => [
@@ -251,15 +254,41 @@ return [
         'validator_url' => null,
 
         /*
-         * Persist authorization login after refresh browser
-         */
-        'persist_authorization' => true,
+         * Swagger UI configuration parameters
+        */
+        'ui' => [
+            'display' => [
+                /*
+                 * Controls the default expansion setting for the operations and tags. It can be :
+                 * 'list' (expands only the tags),
+                 * 'full' (expands the tags and operations),
+                 * 'none' (expands nothing).
+                 */
+                'doc_expansion' => env('L5_SWAGGER_UI_DOC_EXPANSION', 'none'),
 
+                /**
+                 * If set, enables filtering. The top bar will show an edit box that
+                 * you can use to filter the tagged operations that are shown. Can be
+                 * Boolean to enable or disable, or a string, in which case filtering
+                 * will be enabled using that string as the filter expression. Filtering
+                 * is case-sensitive matching the filter expression anywhere inside
+                 * the tag.
+                 */
+                'filter' => env('L5_SWAGGER_UI_FILTERS', true), // true | false
+            ],
+
+            'authorization' => [
+                /*
+                 * If set to true, it persists authorization data, and it would not be lost on browser close/refresh
+                 */
+                'persist_authorization' => env('L5_SWAGGER_UI_PERSIST_AUTHORIZATION', false),
+            ],
+        ],
         /*
-         * Uncomment to add constants which can be used in annotations
+         * Constants which can be used in annotations
          */
-         'constants' => [
+        'constants' => [
             'L5_SWAGGER_CONST_HOST' => env('L5_SWAGGER_CONST_HOST', 'http://my-default-host.com'),
-         ],
+        ],
     ],
 ];
