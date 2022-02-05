@@ -8,13 +8,13 @@ use App\Components\Queryable\Enums\QueryKey;
 use App\Domains\Catalog\Enums\Query\Filter\ProductAllowedFilter;
 use App\Domains\Catalog\Models\Product;
 use App\Domains\Catalog\Models\ProductPrice;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use DateTime;
 use Illuminate\Http\Resources\Json\JsonResource;
 use JetBrains\PhpStorm\ArrayShape;
 
 abstract class ProductResource extends JsonResource
 {
-    #[ArrayShape(['slug' => 'string', 'title' => "string", 'url' => "string", 'created_at' => "null|string", 'price' => 'string|optional', 'price_discounted' => "string|null|optional", 'currency' => "string", 'categories' => AnonymousResourceCollection::class, 'attributes' => AnonymousResourceCollection::class, 'description' => "string"])]
+    #[ArrayShape(['slug' => 'string', 'title' => "string", 'url' => "string", 'created_at' => "string|null", 'price' => 'string|optional', 'price_discounted' => "string|null|optional", 'currency' => "string"])]
     public function toArray($request): array
     {
         /** @var Product $product */
@@ -28,7 +28,7 @@ abstract class ProductResource extends JsonResource
             'slug' => $product->slug,
             'title' => $product->title,
             'url' => route('products.show', $product),
-            'created_at' => $product->created_at?->format('d M Y H:i:s'),
+            'created_at' => $product->created_at?->format(DateTime::RFC3339),
             /* @phpstan-ignore-next-line */
             'price' => $this->when(isset($priceModel), fn (): MoneyResource => MoneyResource::make($priceModel->price)),
             /* @phpstan-ignore-next-line */

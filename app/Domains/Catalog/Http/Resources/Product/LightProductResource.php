@@ -10,7 +10,7 @@ use JetBrains\PhpStorm\ArrayShape;
 
 class LightProductResource extends ProductResource
 {
-    #[ArrayShape(['image' => MediaResource::class, 'slug' => 'string', 'title' => "string", 'url' => "string", 'created_at' => "null|string", 'price' => 'string|optional', 'price_discounted' => "string|null|optional", 'currency' => "string", 'categories' => AnonymousResourceCollection::class])]
+    #[ArrayShape(['image' => MediaResource::class, 'categories' => AnonymousResourceCollection::class, 'slug' => 'string', 'title' => "string", 'url' => "string", 'created_at' => "string|null", 'price' => 'string|optional', 'price_discounted' => "string|null|optional", 'currency' => "string"])]
     public function toArray($request): array
     {
         /** @var Product $product */

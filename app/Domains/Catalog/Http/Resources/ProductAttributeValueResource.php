@@ -8,7 +8,7 @@ use JetBrains\PhpStorm\ArrayShape;
 
 final class ProductAttributeValueResource extends JsonResource
 {
-    #[ArrayShape(['value' => "mixed", 'attribute' => JsonResource::class])]
+    #[ArrayShape(['value' => "mixed", 'attribute' => ProductAttributeResource::class])]
     public function toArray($request): array
     {
         /** @var ProductAttributeValue $value */

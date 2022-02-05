@@ -31,9 +31,9 @@ final class User
     public $phone;
 
     /**
-     * @OA\Property()
+     * @OA\Property(format="date-time")
      * @var string
-     * @example 20 Oct 2020 22:40:18
+     * @example 2022-02-05T04:21:52+00:00
      */
     public $created_at;
 }
