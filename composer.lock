@@ -179,16 +179,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.209.17",
+            "version": "3.209.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "3ed5a5ff379e518a4e8c089e412207774daa25e7"
+                "reference": "db08dfe00bbd68658ebff98b1970c54752b37c90"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/3ed5a5ff379e518a4e8c089e412207774daa25e7",
-                "reference": "3ed5a5ff379e518a4e8c089e412207774daa25e7",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/db08dfe00bbd68658ebff98b1970c54752b37c90",
+                "reference": "db08dfe00bbd68658ebff98b1970c54752b37c90",
                 "shasum": ""
             },
             "require": {
@@ -264,9 +264,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.209.17"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.209.18"
             },
-            "time": "2022-02-03T19:19:22+00:00"
+            "time": "2022-02-04T19:56:33+00:00"
         },
         {
             "name": "baum/baum",
@@ -5884,16 +5884,16 @@
         },
         {
             "name": "swagger-api/swagger-ui",
-            "version": "v4.4.1",
+            "version": "v4.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/swagger-api/swagger-ui.git",
-                "reference": "3e61af20425ffca4f899b5d50cf3b85c29e34f8f"
+                "reference": "9813b14544cae274db43e4dcf9e87f223a8a1eeb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swagger-api/swagger-ui/zipball/3e61af20425ffca4f899b5d50cf3b85c29e34f8f",
-                "reference": "3e61af20425ffca4f899b5d50cf3b85c29e34f8f",
+                "url": "https://api.github.com/repos/swagger-api/swagger-ui/zipball/9813b14544cae274db43e4dcf9e87f223a8a1eeb",
+                "reference": "9813b14544cae274db43e4dcf9e87f223a8a1eeb",
                 "shasum": ""
             },
             "type": "library",
@@ -5939,9 +5939,9 @@
             ],
             "support": {
                 "issues": "https://github.com/swagger-api/swagger-ui/issues",
-                "source": "https://github.com/swagger-api/swagger-ui/tree/v4.4.1"
+                "source": "https://github.com/swagger-api/swagger-ui/tree/v4.5.0"
             },
-            "time": "2022-01-31T14:03:10+00:00"
+            "time": "2022-02-04T18:03:52+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -8558,12 +8558,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zircote/swagger-php.git",
-                "reference": "a145a6cbcf05338f101ce2fee33288439cdd7038"
+                "reference": "2d12005ff3b8882e45ece835f0bb5cdccca19929"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zircote/swagger-php/zipball/a145a6cbcf05338f101ce2fee33288439cdd7038",
-                "reference": "a145a6cbcf05338f101ce2fee33288439cdd7038",
+                "url": "https://api.github.com/repos/zircote/swagger-php/zipball/2d12005ff3b8882e45ece835f0bb5cdccca19929",
+                "reference": "2d12005ff3b8882e45ece835f0bb5cdccca19929",
                 "shasum": ""
             },
             "require": {
@@ -8626,7 +8626,7 @@
                 "issues": "https://github.com/zircote/swagger-php/issues",
                 "source": "https://github.com/zircote/swagger-php/tree/master"
             },
-            "time": "2022-02-04T03:18:58+00:00"
+            "time": "2022-02-04T21:53:17+00:00"
         }
     ],
     "packages-dev": [
@@ -8854,16 +8854,16 @@
         },
         {
             "name": "composer/composer",
-            "version": "2.2.5",
+            "version": "2.2.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "22c41ef275c7bb64fa28fb2c0871a39666832cb9"
+                "reference": "ce785a18c0fb472421e52d958bab339247cb0e82"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/22c41ef275c7bb64fa28fb2c0871a39666832cb9",
-                "reference": "22c41ef275c7bb64fa28fb2c0871a39666832cb9",
+                "url": "https://api.github.com/repos/composer/composer/zipball/ce785a18c0fb472421e52d958bab339247cb0e82",
+                "reference": "ce785a18c0fb472421e52d958bab339247cb0e82",
                 "shasum": ""
             },
             "require": {
@@ -8933,7 +8933,7 @@
             "support": {
                 "irc": "ircs://irc.libera.chat:6697/composer",
                 "issues": "https://github.com/composer/composer/issues",
-                "source": "https://github.com/composer/composer/tree/2.2.5"
+                "source": "https://github.com/composer/composer/tree/2.2.6"
             },
             "funding": [
                 {
@@ -8949,7 +8949,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-01-21T16:25:52+00:00"
+            "time": "2022-02-04T16:00:38+00:00"
         },
         {
             "name": "composer/metadata-minifier",
@@ -9093,16 +9093,16 @@
         },
         {
             "name": "composer/semver",
-            "version": "3.2.8",
+            "version": "3.2.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/semver.git",
-                "reference": "3976a9e563da06e8dd8ca856fa2adcd66cdd98f3"
+                "reference": "a951f614bd64dcd26137bc9b7b2637ddcfc57649"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/semver/zipball/3976a9e563da06e8dd8ca856fa2adcd66cdd98f3",
-                "reference": "3976a9e563da06e8dd8ca856fa2adcd66cdd98f3",
+                "url": "https://api.github.com/repos/composer/semver/zipball/a951f614bd64dcd26137bc9b7b2637ddcfc57649",
+                "reference": "a951f614bd64dcd26137bc9b7b2637ddcfc57649",
                 "shasum": ""
             },
             "require": {
@@ -9154,7 +9154,7 @@
             "support": {
                 "irc": "irc://irc.freenode.org/composer",
                 "issues": "https://github.com/composer/semver/issues",
-                "source": "https://github.com/composer/semver/tree/3.2.8"
+                "source": "https://github.com/composer/semver/tree/3.2.9"
             },
             "funding": [
                 {
@@ -9170,7 +9170,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-02-04T12:12:24+00:00"
+            "time": "2022-02-04T13:58:43+00:00"
         },
         {
             "name": "composer/spdx-licenses",
@@ -9320,27 +9320,27 @@
         },
         {
             "name": "dealerdirect/phpcodesniffer-composer-installer",
-            "version": "v0.7.1",
+            "version": "v0.7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Dealerdirect/phpcodesniffer-composer-installer.git",
-                "reference": "fe390591e0241955f22eb9ba327d137e501c771c"
+                "reference": "1c968e542d8843d7cd71de3c5c9c3ff3ad71a1db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Dealerdirect/phpcodesniffer-composer-installer/zipball/fe390591e0241955f22eb9ba327d137e501c771c",
-                "reference": "fe390591e0241955f22eb9ba327d137e501c771c",
+                "url": "https://api.github.com/repos/Dealerdirect/phpcodesniffer-composer-installer/zipball/1c968e542d8843d7cd71de3c5c9c3ff3ad71a1db",
+                "reference": "1c968e542d8843d7cd71de3c5c9c3ff3ad71a1db",
                 "shasum": ""
             },
             "require": {
                 "composer-plugin-api": "^1.0 || ^2.0",
                 "php": ">=5.3",
-                "squizlabs/php_codesniffer": "^2.0 || ^3.0 || ^4.0"
+                "squizlabs/php_codesniffer": "^2.0 || ^3.1.0 || ^4.0"
             },
             "require-dev": {
                 "composer/composer": "*",
-                "phpcompatibility/php-compatibility": "^9.0",
-                "sensiolabs/security-checker": "^4.1.0"
+                "php-parallel-lint/php-parallel-lint": "^1.3.1",
+                "phpcompatibility/php-compatibility": "^9.0"
             },
             "type": "composer-plugin",
             "extra": {
@@ -9361,6 +9361,10 @@
                     "email": "franck.nijhof@dealerdirect.com",
                     "homepage": "http://www.frenck.nl",
                     "role": "Developer / IT Manager"
+                },
+                {
+                    "name": "Contributors",
+                    "homepage": "https://github.com/Dealerdirect/phpcodesniffer-composer-installer/graphs/contributors"
                 }
             ],
             "description": "PHP_CodeSniffer Standards Composer Installer Plugin",
@@ -9372,6 +9376,7 @@
                 "codesniffer",
                 "composer",
                 "installer",
+                "phpcbf",
                 "phpcs",
                 "plugin",
                 "qa",
@@ -9386,7 +9391,7 @@
                 "issues": "https://github.com/dealerdirect/phpcodesniffer-composer-installer/issues",
                 "source": "https://github.com/dealerdirect/phpcodesniffer-composer-installer"
             },
-            "time": "2020-12-07T18:04:37+00:00"
+            "time": "2022-02-04T12:51:07+00:00"
         },
         {
             "name": "doctrine/instantiator",
@@ -11017,12 +11022,12 @@
             },
             "type": "library",
             "autoload": {
-                "psr-4": {
-                    "React\\Promise\\": "src/"
-                },
                 "files": [
                     "src/functions_include.php"
-                ]
+                ],
+                "psr-4": {
+                    "React\\Promise\\": "src/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -11051,12 +11056,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "8ba45c14eb7b79db601052ba90c2811d9b028d7a"
+                "reference": "2ec9ad634c459ee60c42d99390be37c8a3c6e8e5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/8ba45c14eb7b79db601052ba90c2811d9b028d7a",
-                "reference": "8ba45c14eb7b79db601052ba90c2811d9b028d7a",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/2ec9ad634c459ee60c42d99390be37c8a3c6e8e5",
+                "reference": "2ec9ad634c459ee60c42d99390be37c8a3c6e8e5",
                 "shasum": ""
             },
             "conflict": {
@@ -11202,7 +11207,7 @@
                 "klaviyo/magento2-extension": ">=1,<3",
                 "kreait/firebase-php": ">=3.2,<3.8.1",
                 "la-haute-societe/tcpdf": "<6.2.22",
-                "laminas/laminas-form": "<2.17.2|>=3,<3.0.2|>=3.1,<3.1.1",
+                "laminas/laminas-form": "<2.17.1|>=3,<3.0.2|>=3.1,<3.1.1",
                 "laminas/laminas-http": "<2.14.2",
                 "laravel/framework": "<6.20.42|>=7,<7.30.6|>=8,<8.75",
                 "laravel/socialite": ">=1,<1.0.99|>=2,<2.0.10",
@@ -11491,7 +11496,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-02-04T09:12:31+00:00"
+            "time": "2022-02-05T03:12:57+00:00"
         },
         {
             "name": "sebastian/cli-parser",
