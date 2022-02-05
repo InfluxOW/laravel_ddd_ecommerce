@@ -15,14 +15,14 @@ final class ProductIndexRequest extends FormRequest
         return [
             QueryKey::PAGE->value => ['nullable', 'int', 'min:1'],
             QueryKey::PER_PAGE->value => ['nullable', 'int', 'min:1', 'max:100'],
-            sprintf('%s.%s', QueryKey::FILTER->value, ProductAllowedFilter::TITLE->value) => ['nullable', 'string'],
-            sprintf('%s.%s', QueryKey::FILTER->value, ProductAllowedFilter::DESCRIPTION->value) => ['nullable', 'string'],
-            sprintf('%s.%s', QueryKey::FILTER->value, ProductAllowedFilter::CATEGORY->value) => ['nullable', 'array'],
-            sprintf('%s.%s.*', QueryKey::FILTER->value, ProductAllowedFilter::CATEGORY->value) => ['required', 'string'],
-            sprintf('%s.%s', QueryKey::FILTER->value, ProductAllowedFilter::CURRENCY->value) => ['nullable', 'string', Rule::in(app(CatalogSettings::class)->available_currencies)],
-            sprintf('%s.%s', QueryKey::FILTER->value, ProductAllowedFilter::PRICE_BETWEEN->value) => ['nullable', 'array', 'size:2'],
-            sprintf('%s.%s.*', QueryKey::FILTER->value, ProductAllowedFilter::PRICE_BETWEEN->value) => ['nullable', 'numeric', 'min:0.01'],
-            sprintf('%s.%s.*', QueryKey::FILTER->value, ProductAllowedFilter::ATTRIBUTE_VALUE->value) => ['nullable', 'array'],
+            sprintf('%s.%s', QueryKey::FILTER->value, ProductAllowedFilter::TITLE->name) => ['nullable', 'string'],
+            sprintf('%s.%s', QueryKey::FILTER->value, ProductAllowedFilter::DESCRIPTION->name) => ['nullable', 'string'],
+            sprintf('%s.%s', QueryKey::FILTER->value, ProductAllowedFilter::CATEGORY->name) => ['nullable', 'array'],
+            sprintf('%s.%s.*', QueryKey::FILTER->value, ProductAllowedFilter::CATEGORY->name) => ['required', 'string'],
+            sprintf('%s.%s', QueryKey::FILTER->value, ProductAllowedFilter::CURRENCY->name) => ['nullable', 'string', Rule::in(app(CatalogSettings::class)->available_currencies)],
+            sprintf('%s.%s', QueryKey::FILTER->value, ProductAllowedFilter::PRICE_BETWEEN->name) => ['nullable', 'array', 'size:2'],
+            sprintf('%s.%s.*', QueryKey::FILTER->value, ProductAllowedFilter::PRICE_BETWEEN->name) => ['nullable', 'numeric', 'min:0.01'],
+            sprintf('%s.%s.*', QueryKey::FILTER->value, ProductAllowedFilter::ATTRIBUTE_VALUE->name) => ['nullable', 'array'],
             QueryKey::SORT->value => ['nullable', 'string'],
         ];
     }
@@ -34,16 +34,10 @@ final class ProductIndexRequest extends FormRequest
             $this->merge([
                 QueryKey::FILTER->value => array_merge(
                     $filter,
-                    array_key_exists(ProductAllowedFilter::CATEGORY->value, $filter) ? [ProductAllowedFilter::CATEGORY->value => explode(',', $filter[ProductAllowedFilter::CATEGORY->value])] : [],
-                    array_key_exists(ProductAllowedFilter::PRICE_BETWEEN->value, $filter) ? [ProductAllowedFilter::PRICE_BETWEEN->value => array_map(static fn (string $value): ?int => ($value === '') ? null : (int) money($value, array_key_exists(ProductAllowedFilter::CURRENCY->value, $filter) ? $filter[ProductAllowedFilter::CURRENCY->value] : app(CatalogSettings::class)->default_currency, true)->getAmount(), explode(',', $filter[ProductAllowedFilter::PRICE_BETWEEN->value]))] : [],
-                    array_key_exists(ProductAllowedFilter::ATTRIBUTE_VALUE->value, $filter) ? [ProductAllowedFilter::ATTRIBUTE_VALUE->value => array_map(static fn (string $value): array => explode(',', $value), (array) $filter[ProductAllowedFilter::ATTRIBUTE_VALUE->value])] : [],
+                    array_key_exists(ProductAllowedFilter::CATEGORY->name, $filter) ? [ProductAllowedFilter::CATEGORY->name => explode(',', $filter[ProductAllowedFilter::CATEGORY->name])] : [],
+                    array_key_exists(ProductAllowedFilter::PRICE_BETWEEN->name, $filter) ? [ProductAllowedFilter::PRICE_BETWEEN->name => array_map(static fn (string $value): ?int => ($value === '') ? null : (int) money($value, $filter[ProductAllowedFilter::CURRENCY->name], true)->getAmount(), explode(',', $filter[ProductAllowedFilter::PRICE_BETWEEN->name]))] : [],
+                    array_key_exists(ProductAllowedFilter::ATTRIBUTE_VALUE->name, $filter) ? [ProductAllowedFilter::ATTRIBUTE_VALUE->name => array_map(static fn (string $value): array => explode(',', $value), (array) $filter[ProductAllowedFilter::ATTRIBUTE_VALUE->name])] : [],
                 ),
-            ]);
-        }
-
-        if (isset($this->sort)) {
-            $this->merge([
-                QueryKey::SORT->value => str_starts_with($this->sort, '-') ? '-' . ltrim($this->sort, '-') : $this->sort,
             ]);
         }
     }

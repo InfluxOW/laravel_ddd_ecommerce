@@ -24,9 +24,9 @@ return [
         ProductAllowedSort::TITLE->name => 'Title A-Z',
         ProductAllowedSort::PRICE->name => 'Cheap First',
         ProductAllowedSort::CREATED_AT->name => 'Oldest First',
-        EnumUtils::descendingValue(ProductAllowedSort::TITLE) => 'Title Z-A',
-        EnumUtils::descendingValue(ProductAllowedSort::PRICE) => 'Expensive First',
-        EnumUtils::descendingValue(ProductAllowedSort::CREATED_AT) => 'Newest First',
+        ProductAllowedSort::TITLE_DESC->name => 'Title Z-A',
+        ProductAllowedSort::PRICE_DESC->name => 'Expensive First',
+        ProductAllowedSort::CREATED_AT_DESC->name => 'Newest First',
     ],
     ProductCategoryResourceTranslationKey::class => [
         ProductCategoryResourceTranslationKey::MAIN->name => 'Main',

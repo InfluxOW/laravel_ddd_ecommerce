@@ -2,6 +2,9 @@
 
 namespace App\Components\Generic\Enums\Response;
 
+/**
+ * @OA\Schema()
+ */
 enum ResponseValueType: string
 {
     case INTEGER = 'integer';

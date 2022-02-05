@@ -11,7 +11,7 @@ enum ProductAttributeValuesType: int
     case STRING = 2;
     case BOOLEAN = 3;
 
-    public function readableType(): ResponseValueType
+    public function responseValueType(): ResponseValueType
     {
         return match ($this) {
             self::INTEGER => ResponseValueType::INTEGER,

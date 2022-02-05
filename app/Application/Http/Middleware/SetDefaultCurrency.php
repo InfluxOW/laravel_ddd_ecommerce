@@ -20,7 +20,7 @@ final class SetDefaultCurrency
         $filters = $request->request->get(QueryKey::FILTER->value, []);
 
         $request->request->set(QueryKey::FILTER->value, array_merge([
-            ProductAllowedFilter::CURRENCY->value => app(CatalogSettings::class)->default_currency,
+            ProductAllowedFilter::CURRENCY->name => app(CatalogSettings::class)->default_currency,
         ], $filters));
 
         return $next($request);

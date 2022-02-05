@@ -13,93 +13,90 @@ final class ProductController
      *    description="View all products",
      *    operationId="productsIndex",
      *    tags={"Products"},
-     *     @OA\Parameter(
-     *        name="filter[title]",
-     *        in="query",
-     *        description="Filter products by specific title",
-     *        required=false,
-     *        @OA\Schema(
-     *           type="string"
-     *        ),
-     *     ),
-     *     @OA\Parameter(
-     *        name="filter[description]",
-     *        in="query",
-     *        description="Filter products by specific source",
-     *        required=false,
-     *        @OA\Schema(
-     *           type="string"
-     *        ),
-     *     ),
-     *     @OA\Parameter(
-     *        name="filter[category]",
-     *        in="query",
-     *        description="Filter products by having one of the specific categories. Multiple values can be provided with comma separated strings.",
-     *        required=false,
-     *        example="first-category,second-category",
-     *        @OA\Schema(
-     *           type="string"
-     *        ),
-     *     ),
-     *     @OA\Parameter(
-     *        name="filter[currency]",
-     *        in="query",
-     *        description="Filter products by currency.",
-     *        required=false,
-     *        example="USD",
-     *        @OA\Schema(
-     *           type="string"
-     *        ),
-     *     ),
-     *     @OA\Parameter(
-     *        name="filter[price_between]",
-     *        in="query",
-     *        description="Filter products by price range. Requires two comma separated values.",
-     *        explode=true,
-     *        required=false,
-     *        example="100,500",
-     *        @OA\Schema(
-     *           type="string",
-     *        ),
-     *     ),
-     *     @OA\Parameter(
-     *        name="filter[attribute]",
-     *        in="query",
-     *        description="Filter products by having one of the specific attribute values. Multiple values can be provided with comma separated strings.",
-     *        required=false,
-     *        example={"filter[attribute][width]": "20,30,50", "filter[attribute][height]": "50,60,70"},
-     *        @OA\Schema(
-     *           type="object",
-     *        ),
-     *     ),
-     *     @OA\Parameter(
-     *        name="sort",
-     *        in="query",
-     *        description="Sort products by one of the available params. Sorts with '-' symbol before the param name are the DESC sorts.",
-     *        required=false,
-     *        @OA\Schema(
-     *           type="string",
-     *           enum={"title", "created_at", "price", "-title", "-created_at", "-price"},
-     *        ),
-     *     ),
-     *     @OA\Parameter(
-     *        name="page",
-     *        in="query",
-     *        description="Results page",
-     *        required=false,
-     *        @OA\Schema(
-     *           type="integer"
-     *        ),
-     *     ),
-     *     @OA\Parameter(
-     *       name="per_page",
+     *    @OA\Parameter(
+     *       name="filter[TITLE]",
      *       in="query",
-     *       description="Results per page",
+     *       description="Filter products by specific title",
+     *       required=false,
+     *       @OA\Schema(
+     *          type="string"
+     *       ),
+     *    ),
+     *    @OA\Parameter(
+     *       name="filter[DESCRIPTION]",
+     *       in="query",
+     *       description="Filter products by specific source",
+     *       required=false,
+     *       @OA\Schema(
+     *          type="string"
+     *       ),
+     *    ),
+     *    @OA\Parameter(
+     *       name="filter[CATEGORY]",
+     *       in="query",
+     *       description="Filter products by having one of the specific categories. Multiple values can be provided with comma separated strings.",
+     *       required=false,
+     *       example="first-category,second-category",
+     *       @OA\Schema(
+     *          type="string"
+     *       ),
+     *    ),
+     *    @OA\Parameter(
+     *       name="filter[CURRENCY]",
+     *       in="query",
+     *       description="Filter products by currency.",
+     *       required=false,
+     *       example="USD",
+     *       @OA\Schema(
+     *          type="string"
+     *       ),
+     *    ),
+     *    @OA\Parameter(
+     *       name="filter[PRICE_BETWEEN]",
+     *       in="query",
+     *       description="Filter products by price range. Requires two comma separated values.",
+     *       explode=true,
+     *       required=false,
+     *       example="100,500",
+     *       @OA\Schema(
+     *          type="string",
+     *       ),
+     *    ),
+     *    @OA\Parameter(
+     *       name="filter[ATTRIBUTE]",
+     *       in="query",
+     *       description="Filter products by having one of the specific attribute values. Multiple values can be provided with comma separated strings.",
+     *       required=false,
+     *       example={"filter[attribute][width]": "20,30,50", "filter[attribute][height]": "50,60,70"},
+     *       @OA\Schema(
+     *          type="object",
+     *       ),
+     *    ),
+     *    @OA\Parameter(
+     *       name="sort",
+     *       in="query",
+     *       description="Sort products by one of the available params.",
+     *       required=false,
+     *       @OA\Schema(ref="#/components/schemas/ProductAllowedSort"),
+     *    ),
+     *    @OA\Parameter(
+     *       name="page",
+     *       in="query",
+     *       description="Results page",
      *       required=false,
      *       @OA\Schema(
      *          type="integer"
-     *       )
-     *     ),
+     *       ),
+     *    ),
+     *    @OA\Parameter(
+     *      name="per_page",
+     *      in="query",
+     *      description="Results per page",
+     *      required=false,
+     *      @OA\Schema(
+     *         type="integer"
+     *      )
+     *    ),
      *    @OA\Response(
      *       response=200,
      *       description="Products were fetched",
@@ -137,7 +134,7 @@ final class ProductController
      *                   collectionFormat="multi",
      *                   @OA\Items(
      *                      type="object",
-     *                      @OA\Property(property="query", type="string", example="-price"),
+     *                      @OA\Property(property="query", type="string", example="PRICE_DESC"),
      *                      @OA\Property(property="title", type="string", example="Expensive First"),
      *                   ),
      *                ),
@@ -147,7 +144,7 @@ final class ProductController
      *                   collectionFormat="multi",
      *                   @OA\Items(
      *                      type="object",
-     *                      @OA\Property(property="query", type="string", example="-price"),
+     *                      @OA\Property(property="query", type="string", example="PRICE_DESC"),
      *                      @OA\Property(property="title", type="string", example="Expensive First"),
      *                   ),
      *                ),
@@ -163,7 +160,7 @@ final class ProductController
      *                   collectionFormat="multi",
      *                   @OA\Items(
      *                      type="object",
-     *                      @OA\Property(property="query", type="string", example="title"),
+     *                      @OA\Property(property="query", type="string", example="TITLE"),
      *                      @OA\Property(property="title", type="string", example="Title"),
      *                      @OA\Property(property="type", type="string", example="input"),
      *                   ),
@@ -174,7 +171,7 @@ final class ProductController
      *                   collectionFormat="multi",
      *                   @OA\Items(
      *                      type="object",
-     *                      @OA\Property(property="query", type="string", example="title"),
+     *                      @OA\Property(property="query", type="string", example="TITLE"),
      *                      @OA\Property(property="title", type="string", example="Title"),
      *                      @OA\Property(property="type", type="string", example="input"),
      *                   ),
@@ -192,12 +189,12 @@ final class ProductController
      *       property="errors",
      *       type="object",
      *          @OA\Property(
-     *             property="filter.price_between",
+     *             property="filter.PRICE_BETWEEN",
      *             type="array",
      *             collectionFormat="multi",
      *             @OA\Items(
      *                type="string",
-     *                example={"The filter.price_between must contain 2 items."},
+     *                example={"The filter.PRICE_BETWEEN must contain 2 items."},
      *             ),
      *          ),
      *       ),

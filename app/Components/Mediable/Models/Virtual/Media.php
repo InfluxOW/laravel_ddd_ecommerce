@@ -2,6 +2,7 @@
 
 namespace App\Components\Mediable\Models\Virtual;
 
+use App\Components\Mediable\Enums\MediaType;
 use App\Components\Mediable\Models\Virtual\ResponsiveImage;
 use OpenApi\Annotations as OA;
 
@@ -11,9 +12,8 @@ use OpenApi\Annotations as OA;
 final class Media
 {
     /**
-     * @OA\Property()
-     * @var string
-     * @example image
+     * @OA\Property(ref="#/components/schemas/MediaType")
+     * @var MediaType
      */
     public $type;
 

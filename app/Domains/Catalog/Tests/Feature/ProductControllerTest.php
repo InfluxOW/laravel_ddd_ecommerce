@@ -63,7 +63,7 @@ class ProductControllerTest extends TestCase
         $queries = [$this->product->title, trim(substr($this->product->title, 0, 5))];
 
         foreach ($queries as $query) {
-            $filters = [ProductAllowedFilter::TITLE->value => $query];
+            $filters = [ProductAllowedFilter::TITLE->name => $query];
             $response = $this->get(route('products.index', [QueryKey::FILTER->value => $filters]))->assertOk();
             $items = collect($response->json(ResponseKey::DATA->value));
             $appliedFilters = collect($response->json(sprintf('%s.%s.%s', ResponseKey::QUERY->value, QueryKey::FILTER->value, 'applied')));
@@ -72,7 +72,7 @@ class ProductControllerTest extends TestCase
             $items->each(fn (array $item) => $this->assertTrue(str_contains($item['title'], $query)));
 
             $this->assertCount(count($filters) + 1, $appliedFilters);
-            $this->assertTrue($appliedFilters->pluck('query')->contains(ProductAllowedFilter::TITLE->value));
+            $this->assertTrue($appliedFilters->pluck('query')->contains(ProductAllowedFilter::TITLE->name));
         }
     }
 
@@ -82,7 +82,7 @@ class ProductControllerTest extends TestCase
         $queries = [$this->product->description, trim(substr($this->product->description, 0, 5))];
 
         foreach ($queries as $query) {
-            $filters = [ProductAllowedFilter::DESCRIPTION->value => $query];
+            $filters = [ProductAllowedFilter::DESCRIPTION->name => $query];
             $response = $this->get(route('products.index', [QueryKey::FILTER->value => $filters]))->assertOk();
             $items = collect($response->json(ResponseKey::DATA->value));
             $appliedFilters = collect($response->json(sprintf('%s.%s.%s', ResponseKey::QUERY->value, QueryKey::FILTER->value, 'applied')));
@@ -91,7 +91,7 @@ class ProductControllerTest extends TestCase
             $items->each(fn (array $item) => $this->assertTrue(str_contains($this->get($item['url'])->json(ResponseKey::DATA->value)['description'], $query)));
 
             $this->assertCount(count($filters) + 1, $appliedFilters);
-            $this->assertTrue($appliedFilters->pluck('query')->contains(ProductAllowedFilter::DESCRIPTION->value));
+            $this->assertTrue($appliedFilters->pluck('query')->contains(ProductAllowedFilter::DESCRIPTION->name));
         }
     }
 
@@ -111,7 +111,7 @@ class ProductControllerTest extends TestCase
             $query[] = $category->slug;
 
             foreach ([$category->slug, implode(',', $query)] as $categoriesQuery) {
-                $filters = [ProductAllowedFilter::CATEGORY->value => $categoriesQuery];
+                $filters = [ProductAllowedFilter::CATEGORY->name => $categoriesQuery];
                 $response = $this->get(route('products.index', [QueryKey::FILTER->value => $filters, QueryKey::PER_PAGE->value => $productsCount]))->assertOk();
                 $items = collect($response->json(ResponseKey::DATA->value));
                 $appliedFilters = collect($response->json(sprintf('%s.%s.%s', ResponseKey::QUERY->value, QueryKey::FILTER->value, 'applied')));
@@ -120,9 +120,9 @@ class ProductControllerTest extends TestCase
                 $this->assertTrue($items->pluck('slug')->contains($product?->slug));
 
                 $this->assertCount(count($filters) + 1, $appliedFilters);
-                $this->assertTrue($appliedFilters->pluck('query')->contains(ProductAllowedFilter::CATEGORY->value));
+                $this->assertTrue($appliedFilters->pluck('query')->contains(ProductAllowedFilter::CATEGORY->name));
 
-                $categoryFilterValues = collect($appliedFilters->filter(fn (array $filter): bool => $filter['query'] === ProductAllowedFilter::CATEGORY->value)->first()['values']);
+                $categoryFilterValues = collect($appliedFilters->filter(fn (array $filter): bool => $filter['query'] === ProductAllowedFilter::CATEGORY->name)->first()['values']);
                 if ($categoriesQuery === $category->slug) {
                     $this->assertTrue($categoryFilterValues->contains($category->slug));
                 } else {
@@ -155,7 +155,7 @@ class ProductControllerTest extends TestCase
         ];
 
         foreach ($queries as [$minPrice, $maxPrice]) {
-            $filters = [ProductAllowedFilter::PRICE_BETWEEN->value => "{$minPrice},{$maxPrice}"];
+            $filters = [ProductAllowedFilter::PRICE_BETWEEN->name => "{$minPrice},{$maxPrice}"];
             $response = $this->get(route('products.index', [QueryKey::FILTER->value => $filters]))->assertOk();
             $items = collect($response->json(ResponseKey::DATA->value));
             $appliedFilters = collect($response->json(sprintf('%s.%s.%s', ResponseKey::QUERY->value, QueryKey::FILTER->value, 'applied')));
@@ -180,9 +180,9 @@ class ProductControllerTest extends TestCase
             });
 
             $this->assertCount(count($filters) + 1, $appliedFilters);
-            $this->assertTrue($appliedFilters->pluck('query')->contains(ProductAllowedFilter::PRICE_BETWEEN->value));
+            $this->assertTrue($appliedFilters->pluck('query')->contains(ProductAllowedFilter::PRICE_BETWEEN->name));
 
-            $priceBetweenFilter = $appliedFilters->filter(fn (array $filter): bool => $filter['query'] === ProductAllowedFilter::PRICE_BETWEEN->value)->first();
+            $priceBetweenFilter = $appliedFilters->filter(fn (array $filter): bool => $filter['query'] === ProductAllowedFilter::PRICE_BETWEEN->name)->first();
             $this->assertEquals(isset($minPrice) ? max($minPrice, $lowestAvailablePrice) : $lowestAvailablePrice, $priceBetweenFilter['min_value']);
             $this->assertEquals(isset($maxPrice) ? min($maxPrice, $highestAvailablePrice) : $highestAvailablePrice, $priceBetweenFilter['max_value']);
         }
@@ -223,7 +223,7 @@ class ProductControllerTest extends TestCase
             $secondAttribute->slug => $secondAttributeFirstValue,
         ];
 
-        $filters = [ProductAllowedFilter::ATTRIBUTE_VALUE->value => $query];
+        $filters = [ProductAllowedFilter::ATTRIBUTE_VALUE->name => $query];
         $response = $this->get(route('products.index', [QueryKey::FILTER->value => $filters, QueryKey::PER_PAGE->value => Product::query()->count()]))->assertOk();
         $items = collect($response->json(ResponseKey::DATA->value));
         $appliedFilters = collect($response->json(sprintf('%s.%s.%s', ResponseKey::QUERY->value, QueryKey::FILTER->value, 'applied')));
@@ -238,9 +238,9 @@ class ProductControllerTest extends TestCase
         });
 
         $this->assertCount(count($filters) + 1, $appliedFilters);
-        $this->assertTrue($appliedFilters->pluck('query')->contains(ProductAllowedFilter::ATTRIBUTE_VALUE->value));
+        $this->assertTrue($appliedFilters->pluck('query')->contains(ProductAllowedFilter::ATTRIBUTE_VALUE->name));
 
-        $attributeValuesFilterValues = collect($appliedFilters->filter(fn (array $filter): bool => $filter['query'] === ProductAllowedFilter::ATTRIBUTE_VALUE->value)->first()['values']);
+        $attributeValuesFilterValues = collect($appliedFilters->filter(fn (array $filter): bool => $filter['query'] === ProductAllowedFilter::ATTRIBUTE_VALUE->name)->first()['values']);
         $this->assertEqualsCanonicalizing([$firstAttributeFirstValue, $firstAttributeSecondValue], $attributeValuesFilterValues->where('attribute.query', $firstAttribute->slug)->first()['values']);
         $this->assertEqualsCanonicalizing([$secondAttributeFirstValue], $attributeValuesFilterValues->where('attribute.query', $secondAttribute->slug)->first()['values']);
     }
@@ -248,13 +248,13 @@ class ProductControllerTest extends TestCase
     /** @test */
     public function a_user_can_view_specific_product_if_it_has_at_least_one_visible_category(): void
     {
-        $this->get(route('products.show', [$this->product, QueryKey::FILTER->value => [ProductAllowedFilter::CURRENCY->value => Arr::first($this->settings->available_currencies)]]))->assertOk();
+        $this->get(route('products.show', [$this->product, QueryKey::FILTER->value => [ProductAllowedFilter::CURRENCY->name => Arr::first($this->settings->available_currencies)]]))->assertOk();
     }
 
     /** @test */
     public function a_user_cannot_view_nonexistent_product(): void
     {
-        $this->get(route('products.show', ['wrong_product', QueryKey::FILTER->value => [ProductAllowedFilter::CURRENCY->value => Arr::first($this->settings->available_currencies)]]))->assertNotFound();
+        $this->get(route('products.show', ['wrong_product', QueryKey::FILTER->value => [ProductAllowedFilter::CURRENCY->name => Arr::first($this->settings->available_currencies)]]))->assertNotFound();
     }
 
     /** @test */
@@ -285,17 +285,17 @@ class ProductControllerTest extends TestCase
 
         $setProductCategory($this->product, $firstLevelCategory);
 
-        $this->get(route('products.show', [$this->product, QueryKey::FILTER->value => [ProductAllowedFilter::CURRENCY->value => Arr::first($this->settings->available_currencies)]]))->assertNotFound();
+        $this->get(route('products.show', [$this->product, QueryKey::FILTER->value => [ProductAllowedFilter::CURRENCY->name => Arr::first($this->settings->available_currencies)]]))->assertNotFound();
         $this->assertFalse(ProductCategory::query()->where('product_categories.id', $firstLevelCategory->id)->visible()->exists());
 
         $setVisibility($firstLevelCategory, true);
 
-        $this->get(route('products.show', [$this->product, QueryKey::FILTER->value => [ProductAllowedFilter::CURRENCY->value => Arr::first($this->settings->available_currencies)]]))->assertNotFound();
+        $this->get(route('products.show', [$this->product, QueryKey::FILTER->value => [ProductAllowedFilter::CURRENCY->name => Arr::first($this->settings->available_currencies)]]))->assertNotFound();
         $this->assertFalse(ProductCategory::query()->where('product_categories.id', $firstLevelCategory->id)->visible()->exists());
 
         $setVisibility($rootCategory, true);
 
-        $this->get(route('products.show', [$this->product, QueryKey::FILTER->value => [ProductAllowedFilter::CURRENCY->value => Arr::first($this->settings->available_currencies)]]))->assertOk();
+        $this->get(route('products.show', [$this->product, QueryKey::FILTER->value => [ProductAllowedFilter::CURRENCY->name => Arr::first($this->settings->available_currencies)]]))->assertOk();
         $this->assertTrue(ProductCategory::query()->where('product_categories.id', $firstLevelCategory->id)->visible()->exists());
     }
 }
