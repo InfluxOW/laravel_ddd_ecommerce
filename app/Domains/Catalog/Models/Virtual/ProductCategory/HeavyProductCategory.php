@@ -3,9 +3,7 @@
 namespace App\Domains\Catalog\Models\Virtual\ProductCategory;
 
 /**
- * @OA\Schema(
- *    @OA\Xml(name="HeavyProductCategory")
- * )
+ * @OA\Schema()
  */
 final class HeavyProductCategory extends LightProductCategory
 {

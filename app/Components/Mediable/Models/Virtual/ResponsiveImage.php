@@ -3,9 +3,7 @@
 namespace App\Components\Mediable\Models\Virtual;
 
 /**
- * @OA\Schema(
- *    @OA\Xml(name="ResponsiveImage")
- * )
+ * @OA\Schema()
  */
 final class ResponsiveImage
 {

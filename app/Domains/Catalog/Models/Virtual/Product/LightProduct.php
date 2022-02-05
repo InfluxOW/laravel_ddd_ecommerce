@@ -6,9 +6,7 @@ use App\Components\Mediable\Models\Virtual\Media;
 use App\Domains\Catalog\Models\Virtual\ProductCategory\LightProductCategory;
 
 /**
- * @OA\Schema(
- *    @OA\Xml(name="LightProduct")
- * )
+ * @OA\Schema()
  */
 class LightProduct extends Product
 {

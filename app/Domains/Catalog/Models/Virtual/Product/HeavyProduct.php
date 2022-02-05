@@ -7,9 +7,7 @@ use App\Domains\Catalog\Models\Virtual\ProductAttributeValue;
 use App\Domains\Catalog\Models\Virtual\ProductCategory\MediumProductCategory;
 
 /**
- * @OA\Schema(
- *    @OA\Xml(name="HeavyProduct")
- * )
+ * @OA\Schema()
  */
 final class HeavyProduct extends LightProduct
 {

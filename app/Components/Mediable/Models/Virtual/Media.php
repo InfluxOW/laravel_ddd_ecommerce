@@ -5,9 +5,7 @@ namespace App\Components\Mediable\Models\Virtual;
 use App\Components\Mediable\Models\Virtual\ResponsiveImage;
 
 /**
- * @OA\Schema(
- *    @OA\Xml(name="Media")
- * )
+ * @OA\Schema()
  */
 final class Media
 {

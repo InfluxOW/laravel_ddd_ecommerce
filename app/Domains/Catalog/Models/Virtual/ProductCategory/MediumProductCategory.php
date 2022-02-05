@@ -3,9 +3,7 @@
 namespace App\Domains\Catalog\Models\Virtual\ProductCategory;
 
 /**
- * @OA\Schema(
- *    @OA\Xml(name="MediumProductCategory")
- * )
+ * @OA\Schema()
  */
 class MediumProductCategory extends LightProductCategory
 {

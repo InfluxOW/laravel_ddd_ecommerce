@@ -3,9 +3,7 @@
 namespace App\Components\Purchasable\Models\Virtual;
 
 /**
- * @OA\Schema(
- *    @OA\Xml(name="Money")
- * )
+ * @OA\Schema()
  */
 final class Money
 {

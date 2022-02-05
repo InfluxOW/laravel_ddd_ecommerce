@@ -3,9 +3,7 @@
 namespace App\Domains\Catalog\Models\Virtual;
 
 /**
- * @OA\Schema(
- *    @OA\Xml(name="ProductAttributeValue")
- * )
+ * @OA\Schema()
  */
 final class ProductAttributeValue
 {

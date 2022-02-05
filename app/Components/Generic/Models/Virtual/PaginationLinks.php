@@ -3,9 +3,7 @@
 namespace App\Components\Generic\Models\Virtual;
 
 /**
- * @OA\Schema(
- *    @OA\Xml(name="PaginationLinks")
- * )
+ * @OA\Schema()
  */
 final class PaginationLinks
 {

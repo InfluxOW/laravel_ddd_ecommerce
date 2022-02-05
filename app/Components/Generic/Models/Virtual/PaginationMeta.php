@@ -3,9 +3,7 @@
 namespace App\Components\Generic\Models\Virtual;
 
 /**
- * @OA\Schema(
- *    @OA\Xml(name="PaginationMeta")
- * )
+ * @OA\Schema()
  */
 final class PaginationMeta
 {

@@ -3,9 +3,7 @@
 namespace App\Domains\Users\Models\Virtual;
 
 /**
- * @OA\Schema(
- *    @OA\Xml(name="User")
- * )
+ * @OA\Schema()
  */
 final class User
 {
