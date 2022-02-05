@@ -5,8 +5,13 @@ namespace App\Domains\Catalog\Services\Query\Filter;
 use App\Components\Queryable\Abstracts\QueryService;
 use App\Components\Queryable\Classes\Filter\Filter;
 use App\Components\Queryable\Enums\QueryKey;
+use App\Domains\Catalog\Enums\Query\Filter\ProductAllowedFilter;
+use App\Domains\Catalog\Models\Product;
+use App\Domains\Catalog\Models\ProductCategory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder as SpatieQueryBuilder;
 
 final class ProductFilterService implements QueryService
@@ -18,14 +23,14 @@ final class ProductFilterService implements QueryService
     {
     }
 
-    public function setCurrency(string $currency): static
+    public function setCurrency(string $currency): self
     {
         $this->currency = $currency;
 
         return $this;
     }
 
-    public function setProductsQuery(SpatieQueryBuilder $productsQuery): static
+    public function setProductsQuery(SpatieQueryBuilder $productsQuery): self
     {
         $this->productsQuery = $productsQuery;
 
@@ -42,6 +47,21 @@ final class ProductFilterService implements QueryService
             $this->filterBuilder->buildCategoryFilter($this->productsQuery),
             $this->filterBuilder->buildAttributeValuesFilter($this->productsQuery),
         ]);
+    }
+
+    /**
+     * @return AllowedFilter[]
+     */
+    public function getAllowedFiltersForQuery(string $currency, array $validated): array
+    {
+        return [
+            AllowedFilter::partial(ProductAllowedFilter::TITLE->name, ProductAllowedFilter::TITLE->value),
+            AllowedFilter::partial(ProductAllowedFilter::DESCRIPTION->name, ProductAllowedFilter::DESCRIPTION->value),
+            AllowedFilter::callback(ProductAllowedFilter::CURRENCY->name, static fn (Builder|Product $query): Builder => $query->whereHasPriceCurrency($currency)),
+            AllowedFilter::callback(ProductAllowedFilter::CATEGORY->name, static fn (Builder|Product $query): Builder => $query->whereInCategory(ProductCategory::query()->visible()->hasLimitedDepth()->whereIn('slug', $validated[QueryKey::FILTER->value][ProductAllowedFilter::CATEGORY->name])->get())),
+            AllowedFilter::callback(ProductAllowedFilter::PRICE_BETWEEN->name, static fn (Builder|Product $query): Builder => $query->wherePriceBetween($currency, ...$validated[QueryKey::FILTER->value][ProductAllowedFilter::PRICE_BETWEEN->name])),
+            AllowedFilter::callback(ProductAllowedFilter::ATTRIBUTE_VALUE->name, static fn (Builder|Product $query): Builder => $query->whereHasAttributeValue($validated[QueryKey::FILTER->value][ProductAllowedFilter::ATTRIBUTE_VALUE->name])),
+        ];
     }
 
     public function getApplied(Request $request): Collection

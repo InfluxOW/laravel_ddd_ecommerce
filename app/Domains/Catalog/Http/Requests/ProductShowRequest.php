@@ -13,7 +13,7 @@ final class ProductShowRequest extends FormRequest
     public function rules(): array
     {
         return [
-            sprintf('%s.%s', QueryKey::FILTER->value, ProductAllowedFilter::CURRENCY->value) => ['nullable', 'string', Rule::in(app(CatalogSettings::class)->available_currencies)],
+            sprintf('%s.%s', QueryKey::FILTER->value, ProductAllowedFilter::CURRENCY->name) => ['nullable', 'string', Rule::in(app(CatalogSettings::class)->available_currencies)],
         ];
     }
 }

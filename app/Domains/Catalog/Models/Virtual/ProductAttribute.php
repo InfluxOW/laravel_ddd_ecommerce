@@ -2,6 +2,7 @@
 
 namespace App\Domains\Catalog\Models\Virtual;
 
+use App\Components\Generic\Enums\Response\ResponseValueType;
 use OpenApi\Annotations as OA;
 
 /**
@@ -24,9 +25,8 @@ final class ProductAttribute
     public $slug;
 
     /**
-     * @OA\Property(enum={"string", "boolean", "integer", "float"})
-     * @var string
-     * @example float
+     * @OA\Property(ref="#/components/schemas/ResponseValueType")
+     * @var ResponseValueType
      */
     public $type;
 }

@@ -3,11 +3,9 @@
 namespace App\Domains\Catalog\Http\Controllers\Api;
 
 use App\Components\Generic\Enums\Response\ResponseKey;
-use App\Components\Queryable\Classes\Sort\Sort;
 use App\Components\Queryable\Enums\QueryKey;
 use App\Components\Queryable\Http\Resources\QueryServiceResource;
 use App\Domains\Catalog\Enums\Query\Filter\ProductAllowedFilter;
-use App\Domains\Catalog\Enums\Query\Sort\ProductAllowedSort;
 use App\Domains\Catalog\Http\Requests\ProductIndexRequest;
 use App\Domains\Catalog\Http\Requests\ProductShowRequest;
 use App\Domains\Catalog\Http\Resources\Product\HeavyProductResource;
@@ -23,8 +21,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Spatie\QueryBuilder\AllowedFilter;
-use Spatie\QueryBuilder\AllowedSort;
+use Illuminate\Support\Arr;
 use Spatie\QueryBuilder\QueryBuilder;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -36,32 +33,20 @@ final class ProductController extends Controller
     {
         $validated = $request->validated();
 
-        $currency = $validated[QueryKey::FILTER->value][ProductAllowedFilter::CURRENCY->value];
+        $currency = $validated[QueryKey::FILTER->value][ProductAllowedFilter::CURRENCY->name];
         $filterService->setCurrency($currency);
 
         $allowedSorts = $sortService->getAllowed();
-        /** @var Sort $defaultSort */
-        $defaultSort = $allowedSorts->first();
-        $appliedSort = $sortService->getApplied($request) ?? $defaultSort;
+        $appliedSort = $sortService->getApplied($request) ?? $allowedSorts->first();
         $sortQueryServiceResource = new QueryServiceResource(QueryKey::SORT, false, [$appliedSort->toArray()], $allowedSorts->map->toArray()->toArray());
+
+        $allowedQuerySorts = $sortService->getAllowedSortsForQuery($currency);
 
         $productsQueryBase = QueryBuilder::for($this->getBaseProductsQuery($currency)->with(['image.model']));
         $productsQuery = $productsQueryBase->clone()
-            ->allowedFilters([
-                ProductAllowedFilter::TITLE->value,
-                ProductAllowedFilter::DESCRIPTION->value,
-                AllowedFilter::callback(ProductAllowedFilter::CURRENCY->value, static fn (Builder|Product $query): Builder => $query->whereHasPriceCurrency($currency)),
-                AllowedFilter::callback(ProductAllowedFilter::CATEGORY->value, static fn (Builder|Product $query): Builder => $query->whereInCategory(ProductCategory::query()->visible()->hasLimitedDepth()->whereIn('slug', $validated[QueryKey::FILTER->value][ProductAllowedFilter::CATEGORY->value])->get())),
-                AllowedFilter::callback(ProductAllowedFilter::PRICE_BETWEEN->value, static fn (Builder|Product $query): Builder => $query->wherePriceBetween($currency, ...$validated[QueryKey::FILTER->value][ProductAllowedFilter::PRICE_BETWEEN->value])),
-                AllowedFilter::callback(ProductAllowedFilter::ATTRIBUTE_VALUE->value, static fn (Builder|Product $query): Builder => $query->whereHasAttributeValue($validated[QueryKey::FILTER->value][ProductAllowedFilter::ATTRIBUTE_VALUE->value])),
-            ])
-            ->allowedSorts([
-                ProductAllowedSort::TITLE->value,
-                ProductAllowedSort::CREATED_AT->value,
-                /** @phpstan-ignore-next-line */
-                AllowedSort::callback(ProductAllowedSort::PRICE->value, static fn (Builder|Product $query, bool $descending): Builder => $query->orderByCurrentPrice($currency, $descending)),
-            ])
-            ->defaultSort($defaultSort->query);
+            ->allowedFilters($filterService->getAllowedFiltersForQuery($currency, $validated))
+            ->allowedSorts($allowedQuerySorts)
+            ->defaultSort(Arr::first($allowedQuerySorts));
 
         $allowedFilters = $filterService->setProductsQuery($productsQuery->clone())->getAllowed();
         $appliedFilters = $filterService->setProductsQuery($productsQueryBase->clone())->getApplied($request);
@@ -81,7 +66,7 @@ final class ProductController extends Controller
 
     public function show(ProductShowRequest $request, string $slug): JsonResource|JsonResponse
     {
-        $product = $this->getBaseProductsQuery($request->validated()[QueryKey::FILTER->value][ProductAllowedFilter::CURRENCY->value])
+        $product = $this->getBaseProductsQuery($request->validated()[QueryKey::FILTER->value][ProductAllowedFilter::CURRENCY->name])
             ->with(['attributeValues.attribute', 'images.model'])
             ->where('slug', $slug)
             ->first();

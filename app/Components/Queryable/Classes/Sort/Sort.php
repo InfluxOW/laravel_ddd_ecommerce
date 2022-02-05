@@ -2,7 +2,6 @@
 
 namespace App\Components\Queryable\Classes\Sort;
 
-use App\Components\Generic\Utils\EnumUtils;
 use App\Components\Generic\Utils\LangUtils;
 use App\Components\Queryable\Abstracts\Query;
 use BackedEnum;
@@ -13,19 +12,11 @@ final class Sort extends Query
     {
     }
 
-    public static function createAsc(BackedEnum $sort): self
+    public static function create(BackedEnum $sort): self
     {
         /** @var string $translation */
         $translation = LangUtils::translateEnum($sort);
 
-        return new self((string) $sort->value, $translation);
-    }
-
-    public static function createDesc(BackedEnum $sort): self
-    {
-        /** @var string $translation */
-        $translation = LangUtils::translateEnum($sort, EnumUtils::descendingValue($sort));
-
-        return new self(EnumUtils::descendingValue($sort), $translation);
+        return new self($sort->name, $translation);
     }
 }

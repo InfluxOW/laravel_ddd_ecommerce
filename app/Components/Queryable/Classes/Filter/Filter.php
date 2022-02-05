@@ -17,7 +17,7 @@ abstract class Filter extends Query
         /** @var string $translation */
         $translation = LangUtils::translateEnum($filter);
 
-        $this->query = (string) $filter->value;
+        $this->query = $filter->name;
         $this->title = $translation;
     }
 

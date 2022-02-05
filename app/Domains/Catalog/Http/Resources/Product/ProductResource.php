@@ -20,7 +20,7 @@ abstract class ProductResource extends JsonResource
         /** @var Product $product */
         $product = $this->resource;
 
-        $currency = $request->get(QueryKey::FILTER->value)[ProductAllowedFilter::CURRENCY->value];
+        $currency = $request->get(QueryKey::FILTER->value)[ProductAllowedFilter::CURRENCY->name];
         /** @var ProductPrice|null $priceModel */
         $priceModel = $product->prices->where('currency', $currency)->first();
 
