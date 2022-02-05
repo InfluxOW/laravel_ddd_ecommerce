@@ -3,6 +3,7 @@
 namespace App\Components\Mediable\Models\Virtual;
 
 use App\Components\Mediable\Models\Virtual\ResponsiveImage;
+use OpenApi\Annotations as OA;
 
 /**
  * @OA\Schema()

@@ -2,6 +2,8 @@
 
 namespace App\Domains\Catalog\Models\Virtual;
 
+use OpenApi\Annotations as OA;
+
 /**
  * @OA\Schema()
  */

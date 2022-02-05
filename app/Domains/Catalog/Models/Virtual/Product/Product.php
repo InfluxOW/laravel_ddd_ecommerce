@@ -4,6 +4,7 @@ namespace App\Domains\Catalog\Models\Virtual\Product;
 
 use App\Components\Purchasable\Models\Virtual\Currency;
 use App\Components\Purchasable\Models\Virtual\Money;
+use OpenApi\Annotations as OA;
 
 abstract class Product
 {

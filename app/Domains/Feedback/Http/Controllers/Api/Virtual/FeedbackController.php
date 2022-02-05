@@ -2,6 +2,8 @@
 
 namespace App\Domains\Feedback\Http\Controllers\Api\Virtual;
 
+use OpenApi\Annotations as OA;
+
 final class FeedbackController
 {
     /**

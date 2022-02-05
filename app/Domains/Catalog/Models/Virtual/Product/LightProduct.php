@@ -4,6 +4,7 @@ namespace App\Domains\Catalog\Models\Virtual\Product;
 
 use App\Components\Mediable\Models\Virtual\Media;
 use App\Domains\Catalog\Models\Virtual\ProductCategory\LightProductCategory;
+use OpenApi\Annotations as OA;
 
 /**
  * @OA\Schema()

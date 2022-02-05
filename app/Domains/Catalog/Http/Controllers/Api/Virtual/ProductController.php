@@ -2,6 +2,8 @@
 
 namespace App\Domains\Catalog\Http\Controllers\Api\Virtual;
 
+use OpenApi\Annotations as OA;
+
 final class ProductController
 {
     /**

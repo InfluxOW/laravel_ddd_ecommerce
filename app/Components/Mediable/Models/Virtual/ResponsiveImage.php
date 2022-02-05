@@ -2,6 +2,8 @@
 
 namespace App\Components\Mediable\Models\Virtual;
 
+use OpenApi\Annotations as OA;
+
 /**
  * @OA\Schema()
  */
