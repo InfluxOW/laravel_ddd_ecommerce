@@ -6,9 +6,11 @@ use App\Components\Queryable\Enums\QueryKey;
 use App\Domains\Catalog\Enums\Query\Filter\ProductAllowedFilter;
 use App\Domains\Catalog\Models\ProductCategory;
 use Illuminate\Http\Resources\Json\JsonResource;
+use JetBrains\PhpStorm\ArrayShape;
 
 final class LightProductCategoryResource extends JsonResource
 {
+    #[ArrayShape(['slug' => "string", 'title' => "string", 'url' => "string"])]
     public function toArray($request): array
     {
         /** @var ProductCategory $category */

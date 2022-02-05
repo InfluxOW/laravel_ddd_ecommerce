@@ -7,6 +7,7 @@ use Akaunting\Money\Money;
 use App\Components\Generic\Utils\MathUtils;
 use App\Components\Queryable\Enums\QueryFilterType;
 use BackedEnum;
+use JetBrains\PhpStorm\ArrayShape;
 
 final class RangeFilter extends Filter
 {
@@ -26,6 +27,7 @@ final class RangeFilter extends Filter
         $this->maxValue = isset($this->currency, $maxValue) ? money($maxValue, $this->currency->getCurrency()) : $maxValue;
     }
 
+    #[ArrayShape(['query' => "string", 'title' => "string", 'type' => "string", 'min_value' => "float", 'max_value' => "float"])]
     public function toArray(): array
     {
         return array_merge(parent::toArray(), [

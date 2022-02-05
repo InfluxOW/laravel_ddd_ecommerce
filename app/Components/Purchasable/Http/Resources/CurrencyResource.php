@@ -4,9 +4,11 @@ namespace App\Components\Purchasable\Http\Resources;
 
 use Akaunting\Money\Currency;
 use Illuminate\Http\Resources\Json\JsonResource;
+use JetBrains\PhpStorm\ArrayShape;
 
 final class CurrencyResource extends JsonResource
 {
+    #[ArrayShape(['name' => "string", 'abbreviation' => "string", 'symbol' => "string"])]
     public function toArray($request): array
     {
         /** @var Currency $currency */

@@ -3,6 +3,7 @@
 namespace App\Components\Queryable\Classes\Filter\Resources\Multiselect;
 
 use App\Components\Generic\Enums\Response\ResponseValueType;
+use JetBrains\PhpStorm\ArrayShape;
 
 final class MultiselectFilterNestedValuesAttribute
 {
@@ -10,6 +11,7 @@ final class MultiselectFilterNestedValuesAttribute
     {
     }
 
+    #[ArrayShape(['query' => "string", 'title' => "string", 'values_type' => "string"])]
     public function toArray(): array
     {
         return [
