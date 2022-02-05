@@ -12,13 +12,16 @@ use OpenApi\Annotations as OA;
 class LightProduct extends Product
 {
     /**
-     * @OA\Property()
+     * @OA\Property(ref="#/components/schemas/Media")
      * @var Media
      */
     public $image;
 
     /**
-     * @OA\Property()
+     * @OA\Property(
+     *     type="array",
+     *     @OA\Items(ref="#/components/schemas/LightProductCategory")
+     * )
      * @var LightProductCategory[]
      */
     public $categories;

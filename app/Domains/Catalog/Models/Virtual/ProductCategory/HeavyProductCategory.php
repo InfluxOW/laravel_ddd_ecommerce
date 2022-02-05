@@ -24,7 +24,10 @@ final class HeavyProductCategory extends LightProductCategory
     public $products_count;
 
     /**
-     * @OA\Property()
+     * @OA\Property(
+     *     type="array",
+     *     @OA\Items(ref="#/components/schemas/HeavyProductCategory")
+     * )
      * @var self[]
      */
     public $children;

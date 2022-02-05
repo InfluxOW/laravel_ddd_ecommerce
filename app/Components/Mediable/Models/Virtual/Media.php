@@ -25,7 +25,10 @@ final class Media
     public $url;
 
     /**
-     * @OA\Property()
+     * @OA\Property(
+     *     type="array",
+     *     @OA\Items(ref="#/components/schemas/ResponsiveImage")
+     * )
      * @var ResponsiveImage[]
      */
     public $responsive_images;

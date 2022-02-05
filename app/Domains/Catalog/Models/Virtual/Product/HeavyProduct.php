@@ -13,19 +13,28 @@ use OpenApi\Annotations as OA;
 final class HeavyProduct extends LightProduct
 {
     /**
-     * @OA\Property()
+     * @OA\Property(
+     *     type="array",
+     *     @OA\Items(ref="#/components/schemas/Media")
+     * )
      * @var Media[]
      */
     public $images;
 
     /**
-     * @OA\Property()
+     * @OA\Property(
+     *     type="array",
+     *     @OA\Items(ref="#/components/schemas/MediumProductCategory")
+     * )
      * @var MediumProductCategory[]
      */
     public $categories;
 
     /**
-     * @OA\Property()
+     * @OA\Property(
+     *     type="array",
+     *     @OA\Items(ref="#/components/schemas/ProductAttributeValue")
+     * )
      * @var ProductAttributeValue[]
      */
     public $attributes;

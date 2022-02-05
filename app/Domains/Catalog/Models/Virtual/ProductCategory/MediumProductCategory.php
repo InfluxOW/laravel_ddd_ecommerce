@@ -10,7 +10,7 @@ use OpenApi\Annotations as OA;
 class MediumProductCategory extends LightProductCategory
 {
     /**
-     * @OA\Property()
+     * @OA\Property(ref="#/components/schemas/MediumProductCategory")
      * @var self
      */
     public $parent;

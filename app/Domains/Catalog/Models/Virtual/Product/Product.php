@@ -37,19 +37,19 @@ abstract class Product
     public $created_at;
 
     /**
-     * @OA\Property()
+     * @OA\Property(ref="#/components/schemas/Money")
      * @var Money
      */
     public $price;
 
     /**
-     * @OA\Property()
+     * @OA\Property(ref="#/components/schemas/Money")
      * @var Money|null
      */
     public $price_discounted;
 
     /**
-     * @OA\Property()
+     * @OA\Property(ref="#/components/schemas/Currency")
      * @var Currency
      */
     public $currency;

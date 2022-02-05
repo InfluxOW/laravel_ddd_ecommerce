@@ -22,7 +22,7 @@ final class ProductAttributeValue
     public $value;
 
     /**
-     * @OA\Property()
+     * @OA\Property(ref="#/components/schemas/ProductAttribute")
      * @var ProductAttribute
      */
     public $attribute;
