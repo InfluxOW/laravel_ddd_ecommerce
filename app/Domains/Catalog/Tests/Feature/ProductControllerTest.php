@@ -18,7 +18,7 @@ use App\Domains\Catalog\Models\ProductAttributeValue;
 use App\Domains\Catalog\Models\ProductCategory;
 use App\Domains\Catalog\Models\ProductPrice;
 use App\Domains\Catalog\Models\Settings\CatalogSettings;
-use Illuminate\Support\Arr;
+use Illuminate\Database\Eloquent\Builder;
 
 class ProductControllerTest extends TestCase
 {
@@ -137,14 +137,12 @@ class ProductControllerTest extends TestCase
     /** @test */
     public function a_user_can_filter_products_by_current_price(): void
     {
-        $currency = Arr::first($this->settings->available_currencies);
+        $currency = $this->settings->default_currency;
         /** @var ProductPrice $priceModel */
         $priceModel = $this->product->prices->where('currency', $currency)->first();
         $this->assertNotNull($priceModel);
 
         $basePrice = ($priceModel->price_discounted === null) ? $priceModel->price->getValue() : $priceModel->price_discounted->getValue();
-        $lowestAvailablePrice = money(ProductPrice::query()->where('currency', $currency)->min(ProductPrice::getDatabasePriceExpression()), $currency)->getValue();
-        $highestAvailablePrice = money(ProductPrice::query()->where('currency', $currency)->max(ProductPrice::getDatabasePriceExpression()), $currency)->getValue();
 
         $queries = [
             [max($basePrice - 10, 0.01), $basePrice + 10],
@@ -163,6 +161,19 @@ class ProductControllerTest extends TestCase
             if (isset($minPrice, $maxPrice) && $maxPrice < $minPrice) {
                 [$minPrice, $maxPrice] = [$maxPrice, $minPrice];
             }
+
+            $priceQuery = ProductPrice::query()->where('currency', $currency);
+
+            $minPriceQuery = $priceQuery->clone();
+            $maxPriceQuery = $priceQuery->clone();
+            if (isset($minPrice)) {
+                $minPriceQuery->where(ProductPrice::getDatabasePriceExpression(), '>=', money($minPrice, $currency, true)->getAmount());
+            }
+            if (isset($maxPrice)) {
+                $maxPriceQuery->where(ProductPrice::getDatabasePriceExpression(), '<=', money($maxPrice, $currency, true)->getAmount());
+            }
+            $lowestAvailablePrice = money($minPriceQuery->min(ProductPrice::getDatabasePriceExpression()), $currency)->getValue();
+            $highestAvailablePrice = money($maxPriceQuery->max(ProductPrice::getDatabasePriceExpression()), $currency)->getValue();
 
             $this->assertNotEmpty($items);
             $items->each(function (array $item) use ($minPrice, $maxPrice): void {
@@ -183,6 +194,7 @@ class ProductControllerTest extends TestCase
             $this->assertTrue($appliedFilters->pluck('query')->contains(ProductAllowedFilter::PRICE_BETWEEN->name));
 
             $priceBetweenFilter = $appliedFilters->filter(fn (array $filter): bool => $filter['query'] === ProductAllowedFilter::PRICE_BETWEEN->name)->first();
+
             $this->assertEquals(isset($minPrice) ? max($minPrice, $lowestAvailablePrice) : $lowestAvailablePrice, $priceBetweenFilter['min_value']);
             $this->assertEquals(isset($maxPrice) ? min($maxPrice, $highestAvailablePrice) : $highestAvailablePrice, $priceBetweenFilter['max_value']);
         }
@@ -191,9 +203,9 @@ class ProductControllerTest extends TestCase
     /** @test */
     public function a_user_can_filter_products_by_attribute_values(): void
     {
-        /** @var Product $product */
-        $product = Product::query()->with(['attributeValues.attribute'])->whereHas('attributeValues', null, '>', 1)->inRandomOrder()->find(9);
-        $this->assertNotNull($product);
+        /** @var Product $firstProduct */
+        $firstProduct = Product::query()->with(['attributeValues.attribute'])->whereHas('attributeValues', null, '>', 1)->inRandomOrder()->first();
+        $this->assertNotNull($firstProduct);
 
         $originalValueToString = static fn (mixed $originalValue, ProductAttributeValuesType $valueType): string => match ($valueType) {
             ProductAttributeValuesType::BOOLEAN => StringUtils::boolToString($originalValue),
@@ -204,11 +216,11 @@ class ProductControllerTest extends TestCase
          * @var ProductAttributeValue $firstAttributeValue
          * @var ProductAttributeValue $secondAttributeValue
          */
-        [$firstAttributeValue, $secondAttributeValue] = $product->attributeValues;
+        [$firstAttributeValue, $secondAttributeValue] = $firstProduct->attributeValues;
 
         $firstAttribute = $firstAttributeValue->attribute;
         $firstAttributeFirstValueOriginal = $firstAttributeValue->value;
-        $firstAttributeSecondValueOriginal = ProductAttributeValue::query()->whereBelongsTo($firstAttribute, 'attribute')->where(ProductAttributeValue::getDatabaseValueColumnByAttributeType($firstAttribute->values_type), '<>', $firstAttributeFirstValueOriginal)->first()?->value;
+        $firstAttributeSecondValueOriginal = ProductAttributeValue::query()->whereBelongsTo($firstAttribute, 'attribute')->where(ProductAttributeValue::getDatabaseValueColumnByAttributeType($firstAttribute->values_type), '<>', $firstAttributeFirstValueOriginal)->inRandomOrder()->first()?->value;
 
         $firstAttributeFirstValue = $originalValueToString($firstAttributeFirstValueOriginal, $firstAttribute->values_type);
         $firstAttributeSecondValue = $originalValueToString($firstAttributeSecondValueOriginal, $firstAttribute->values_type);
@@ -216,8 +228,26 @@ class ProductControllerTest extends TestCase
         $secondAttribute = $secondAttributeValue->attribute;
         $secondAttributeFirstValueOriginal = $secondAttributeValue->value;
 
+        /** @var Product $secondProduct */
+        $secondProduct = Product::query()
+            ->with(['attributeValues.attribute'])
+            ->whereHas('attributeValues', fn (Builder $query): Builder => $query->where(ProductAttributeValue::getDatabaseValueColumnByAttributeType($firstAttribute->values_type), $firstAttributeSecondValueOriginal))
+            ->first();
+        $this->assertNotNull($secondProduct);
+
+        /** @var ProductAttributeValue $attributeValueThatAddsSecondProductToTheSearch */
+        $attributeValueThatAddsSecondProductToTheSearch = $secondProduct->attributeValues->where('attribute.id', $secondAttribute->id)->isNotEmpty() ? $secondProduct->attributeValues->where('attribute.id', $secondAttribute->id)->first() : $secondProduct->attributeValues()->make();
+        $attributeValueThatAddsSecondProductToTheSearch->attribute()->associate($secondAttribute);
+        $attributeValueThatAddsSecondProductToTheSearch->value = $secondAttributeFirstValueOriginal;
+        $attributeValueThatAddsSecondProductToTheSearch->save();
+
         $secondAttributeFirstValue = $originalValueToString($secondAttributeFirstValueOriginal, $secondAttribute->values_type);
 
+        /*
+         * It should find products that both have first and second attributes,
+         * but first attribute may have one of 2 available values while second's
+         * attribute value is locked to 1 available value.
+         * */
         $query = [
             $firstAttribute->slug => implode(',', [$firstAttributeFirstValue, $firstAttributeSecondValue]),
             $secondAttribute->slug => $secondAttributeFirstValue,
@@ -229,6 +259,7 @@ class ProductControllerTest extends TestCase
         $appliedFilters = collect($response->json(sprintf('%s.%s.%s', ResponseKey::QUERY->value, QueryKey::FILTER->value, 'applied')));
 
         $this->assertNotEmpty($items);
+        $this->assertCount(2, $items);
         $items->each(function (array $item) use ($firstAttribute, $secondAttribute, $firstAttributeFirstValueOriginal, $firstAttributeSecondValueOriginal, $secondAttributeFirstValueOriginal): void {
             $item = $this->get($item['url'])->json(ResponseKey::DATA->value);
             $attributes = collect($item['attributes']);
@@ -246,15 +277,15 @@ class ProductControllerTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_view_specific_product_if_it_has_at_least_one_visible_category(): void
+    public function a_user_cannot_view_nonexistent_product(): void
     {
-        $this->get(route('products.show', [$this->product, QueryKey::FILTER->value => [ProductAllowedFilter::CURRENCY->name => Arr::first($this->settings->available_currencies)]]))->assertOk();
+        $this->get(route('products.show', 'wrong_product'))->assertNotFound();
     }
 
     /** @test */
-    public function a_user_cannot_view_nonexistent_product(): void
+    public function a_user_can_view_specific_product_if_it_has_at_least_one_visible_category(): void
     {
-        $this->get(route('products.show', ['wrong_product', QueryKey::FILTER->value => [ProductAllowedFilter::CURRENCY->name => Arr::first($this->settings->available_currencies)]]))->assertNotFound();
+        $this->get(route('products.show', $this->product))->assertOk();
     }
 
     /** @test */
@@ -285,17 +316,17 @@ class ProductControllerTest extends TestCase
 
         $setProductCategory($this->product, $firstLevelCategory);
 
-        $this->get(route('products.show', [$this->product, QueryKey::FILTER->value => [ProductAllowedFilter::CURRENCY->name => Arr::first($this->settings->available_currencies)]]))->assertNotFound();
+        $this->get(route('products.show', $this->product))->assertNotFound();
         $this->assertFalse(ProductCategory::query()->where('product_categories.id', $firstLevelCategory->id)->visible()->exists());
 
         $setVisibility($firstLevelCategory, true);
 
-        $this->get(route('products.show', [$this->product, QueryKey::FILTER->value => [ProductAllowedFilter::CURRENCY->name => Arr::first($this->settings->available_currencies)]]))->assertNotFound();
+        $this->get(route('products.show', $this->product))->assertNotFound();
         $this->assertFalse(ProductCategory::query()->where('product_categories.id', $firstLevelCategory->id)->visible()->exists());
 
         $setVisibility($rootCategory, true);
 
-        $this->get(route('products.show', [$this->product, QueryKey::FILTER->value => [ProductAllowedFilter::CURRENCY->name => Arr::first($this->settings->available_currencies)]]))->assertOk();
+        $this->get(route('products.show', $this->product))->assertOk();
         $this->assertTrue(ProductCategory::query()->where('product_categories.id', $firstLevelCategory->id)->visible()->exists());
     }
 }

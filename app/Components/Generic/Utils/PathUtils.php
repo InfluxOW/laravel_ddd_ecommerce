@@ -6,6 +6,7 @@ final class PathUtils
 {
     /**
      * @param string[] $parts
+     *
      * @return string
      */
     public static function join(array $parts): string
@@ -15,6 +16,6 @@ final class PathUtils
 
     public static function getRootDirectoryPath(): string
     {
-        return dirname($_SERVER['DOCUMENT_ROOT'], 1);
+        return dirname(env('LARAVEL_SAIL') ? app_path() : $_SERVER['DOCUMENT_ROOT'], 1);
     }
 }

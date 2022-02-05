@@ -4,7 +4,6 @@ namespace App\Domains\Catalog\Http\Controllers\Api;
 
 use App\Components\Generic\Enums\Response\ResponseKey;
 use App\Components\Queryable\Enums\QueryKey;
-use App\Components\Queryable\Http\Resources\QueryServiceResource;
 use App\Domains\Catalog\Enums\Query\Filter\ProductAllowedFilter;
 use App\Domains\Catalog\Http\Requests\ProductIndexRequest;
 use App\Domains\Catalog\Http\Requests\ProductShowRequest;
@@ -32,25 +31,16 @@ final class ProductController extends Controller
     public function index(ProductIndexRequest $request, ProductFilterService $filterService, ProductSortService $sortService): AnonymousResourceCollection
     {
         $validated = $request->validated();
-
         $currency = $validated[QueryKey::FILTER->value][ProductAllowedFilter::CURRENCY->name];
-        $filterService->setCurrency($currency);
-
-        $allowedSorts = $sortService->getAllowed();
-        $appliedSort = $sortService->getApplied($request) ?? $allowedSorts->first();
-        $sortQueryServiceResource = new QueryServiceResource(QueryKey::SORT, false, [$appliedSort->toArray()], $allowedSorts->map->toArray()->toArray());
 
         $allowedQuerySorts = $sortService->getAllowedSortsForQuery($currency);
 
-        $productsQueryBase = QueryBuilder::for($this->getBaseProductsQuery($currency)->with(['image.model']));
-        $productsQuery = $productsQueryBase->clone()
+        $productsQuery = QueryBuilder::for($this->getBaseProductsQuery($currency)->with(['image.model']))
             ->allowedFilters($filterService->getAllowedFiltersForQuery($currency, $validated))
             ->allowedSorts($allowedQuerySorts)
             ->defaultSort(Arr::first($allowedQuerySorts));
 
-        $allowedFilters = $filterService->setProductsQuery($productsQuery->clone())->getAllowed();
-        $appliedFilters = $filterService->setProductsQuery($productsQueryBase->clone())->getApplied($request);
-        $filterQueryServiceResource = new QueryServiceResource(QueryKey::FILTER, true, $appliedFilters->map->toArray()->toArray(), $allowedFilters->map->toArray()->toArray());
+        $filterService->setCurrency($currency)->setProductsQuery($productsQuery->clone());
 
         $products = $productsQuery
             ->paginate($validated[QueryKey::PER_PAGE->value] ?? self::DEFAULT_ITEMS_PER_PAGE, ['*'], QueryKey::PAGE->value, $validated[QueryKey::PAGE->value] ?? 1)
@@ -58,8 +48,8 @@ final class ProductController extends Controller
 
         return $this->respondWithCollection(LightProductResource::class, $products, [
             ResponseKey::QUERY->value => [
-                QueryKey::SORT->value => $sortQueryServiceResource->toArray(),
-                QueryKey::FILTER->value => $filterQueryServiceResource->toArray(),
+                QueryKey::SORT->value => $sortService->toResource($request),
+                QueryKey::FILTER->value => $filterService->toResource($request),
             ],
         ]);
     }

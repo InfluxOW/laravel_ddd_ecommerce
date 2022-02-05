@@ -5,15 +5,21 @@ namespace App\Domains\Catalog\Services\Query\Sort;
 use App\Components\Queryable\Abstracts\QueryService;
 use App\Components\Queryable\Classes\Sort\Sort;
 use App\Components\Queryable\Enums\QueryKey;
+use App\Domains\Catalog\Classes\Query\Sort\ProductSortQuery;
 use App\Domains\Catalog\Enums\Query\Sort\ProductAllowedSort;
+use App\Domains\Catalog\Http\Resources\Query\Sort\ProductSortQueryResource;
 use App\Domains\Catalog\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Collection;
 use Spatie\QueryBuilder\AllowedSort;
 
 final class ProductSortService implements QueryService
 {
+    /**
+     * @return Collection<Sort>
+     */
     public function getAllowed(): Collection
     {
         return collect([
@@ -49,5 +55,13 @@ final class ProductSortService implements QueryService
         $sortQuery = $request->query(QueryKey::SORT->value);
 
         return $this->getAllowed()->filter(static fn (Sort $sort): bool => ($sort->query === $sortQuery))->first();
+    }
+
+    public function toResource(Request $request): JsonResource
+    {
+        $allowedSorts = $this->getAllowed();
+        $appliedSort = $this->getApplied($request) ?? $allowedSorts->first();
+
+        return ProductSortQueryResource::make(new ProductSortQuery($allowedSorts, $appliedSort));
     }
 }

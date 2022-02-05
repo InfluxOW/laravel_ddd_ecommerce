@@ -46,7 +46,7 @@ final class MultiselectFilter extends Filter
     {
         return array_merge(parent::toArray(), [
             'is_nested' => $this->isNested,
-            'values' => $this->isNested ? $this->values->map->toArray()->toArray() : $this->values->toArray(),
+            'values' => $this->isNested ? $this->values->map(fn (MultiselectFilterNestedValues $values): array => $values->toArray())->toArray() : $this->values->toArray(),
         ]);
     }
 

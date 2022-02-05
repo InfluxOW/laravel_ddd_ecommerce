@@ -5,11 +5,14 @@ namespace App\Domains\Catalog\Services\Query\Filter;
 use App\Components\Queryable\Abstracts\QueryService;
 use App\Components\Queryable\Classes\Filter\Filter;
 use App\Components\Queryable\Enums\QueryKey;
+use App\Domains\Catalog\Classes\Query\Filter\ProductFilterQuery;
 use App\Domains\Catalog\Enums\Query\Filter\ProductAllowedFilter;
+use App\Domains\Catalog\Http\Resources\Query\Filter\ProductFilterQueryResource;
 use App\Domains\Catalog\Models\Product;
 use App\Domains\Catalog\Models\ProductCategory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Collection;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder as SpatieQueryBuilder;
@@ -37,6 +40,9 @@ final class ProductFilterService implements QueryService
         return $this;
     }
 
+    /**
+     * @return Collection<Filter>
+     */
     public function getAllowed(): Collection
     {
         return collect([
@@ -64,6 +70,11 @@ final class ProductFilterService implements QueryService
         ];
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return Collection<Filter>
+     */
     public function getApplied(Request $request): Collection
     {
         /** @var array $queryFilters */
@@ -86,5 +97,13 @@ final class ProductFilterService implements QueryService
         }
 
         return $appliedFilters;
+    }
+
+    public function toResource(Request $request): JsonResource
+    {
+        $allowedFilters = $this->getAllowed();
+        $appliedFilters = $this->getApplied($request);
+
+        return ProductFilterQueryResource::make(new ProductFilterQuery($allowedFilters, $appliedFilters));
     }
 }
