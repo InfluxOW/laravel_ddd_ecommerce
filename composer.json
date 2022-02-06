@@ -27,7 +27,7 @@
         "spatie/laravel-sluggable": "^3.1",
         "squirephp/countries-en": "^3.2",
         "squirephp/regions-en": "^3.2",
-        "zircote/swagger-php": "master"
+        "zircote/swagger-php": "^4.2"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.11",

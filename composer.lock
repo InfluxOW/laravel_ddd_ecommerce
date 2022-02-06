@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2b76875c86812b751223dc3d22e67691",
+    "content-hash": "69d3d753e4022ff5b8e6f488013f91f8",
     "packages": [
         {
             "name": "akaunting/laravel-money",
@@ -8554,16 +8554,16 @@
         },
         {
             "name": "zircote/swagger-php",
-            "version": "dev-master",
+            "version": "4.2.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zircote/swagger-php.git",
-                "reference": "2d12005ff3b8882e45ece835f0bb5cdccca19929"
+                "reference": "e87cec1ec79926e0de6e920a93fb6142f837a750"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zircote/swagger-php/zipball/2d12005ff3b8882e45ece835f0bb5cdccca19929",
-                "reference": "2d12005ff3b8882e45ece835f0bb5cdccca19929",
+                "url": "https://api.github.com/repos/zircote/swagger-php/zipball/e87cec1ec79926e0de6e920a93fb6142f837a750",
+                "reference": "e87cec1ec79926e0de6e920a93fb6142f837a750",
                 "shasum": ""
             },
             "require": {
@@ -8579,7 +8579,6 @@
                 "friendsofphp/php-cs-fixer": "^2.17 || ^3.0",
                 "phpunit/phpunit": ">=8"
             },
-            "default-branch": true,
             "bin": [
                 "bin/openapi"
             ],
@@ -8624,9 +8623,9 @@
             ],
             "support": {
                 "issues": "https://github.com/zircote/swagger-php/issues",
-                "source": "https://github.com/zircote/swagger-php/tree/master"
+                "source": "https://github.com/zircote/swagger-php/tree/4.2.5"
             },
-            "time": "2022-02-04T21:53:17+00:00"
+            "time": "2022-01-31T00:21:28+00:00"
         }
     ],
     "packages-dev": [
