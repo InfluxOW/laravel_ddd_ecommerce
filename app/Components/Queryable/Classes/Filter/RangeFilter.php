@@ -4,8 +4,8 @@ namespace App\Components\Queryable\Classes\Filter;
 
 use Akaunting\Money\Currency;
 use Akaunting\Money\Money;
-use App\Components\Generic\Utils\MathUtils;
 use App\Components\Queryable\Enums\QueryFilterType;
+use App\Domains\Generic\Utils\MathUtils;
 use BackedEnum;
 use JetBrains\PhpStorm\ArrayShape;
 

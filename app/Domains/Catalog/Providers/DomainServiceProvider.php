@@ -2,13 +2,13 @@
 
 namespace App\Domains\Catalog\Providers;
 
-use App\Components\Generic\Enums\ServiceProviderNamespace;
 use App\Domains\Catalog\Models\Pivot\ProductProductCategory;
 use App\Domains\Catalog\Models\Product;
 use App\Domains\Catalog\Models\ProductCategory;
 use App\Domains\Catalog\Observers\ProductCategoryObserver;
 use App\Domains\Catalog\Observers\ProductObserver;
 use App\Domains\Catalog\Observers\ProductProductCategoryObserver;
+use App\Domains\Generic\Enums\ServiceProviderNamespace;
 use App\Infrastructure\Abstracts\ServiceProvider;
 
 final class DomainServiceProvider extends ServiceProvider

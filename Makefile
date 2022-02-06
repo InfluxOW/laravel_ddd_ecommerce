@@ -19,7 +19,7 @@ analyse:
 	composer exec phpstan analyse --verbose -- --memory-limit=-1 2>/dev/null
 
 seed:
-	php artisan db:seed
+	php artisan db:seed --class=App\\Domains\\Generic\\Database\\Seeders\\DatabaseSeeder
 
 docs:
 	php artisan ide-helper:eloquent

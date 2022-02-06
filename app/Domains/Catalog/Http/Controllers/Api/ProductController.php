@@ -2,7 +2,6 @@
 
 namespace App\Domains\Catalog\Http\Controllers\Api;
 
-use App\Components\Generic\Enums\Response\ResponseKey;
 use App\Components\Queryable\Enums\QueryKey;
 use App\Domains\Catalog\Enums\Query\Filter\ProductAllowedFilter;
 use App\Domains\Catalog\Http\Requests\ProductIndexRequest;
@@ -13,6 +12,7 @@ use App\Domains\Catalog\Models\Product;
 use App\Domains\Catalog\Models\ProductCategory;
 use App\Domains\Catalog\Services\Query\Filter\ProductFilterService;
 use App\Domains\Catalog\Services\Query\Sort\ProductSortService;
+use App\Domains\Generic\Enums\Response\ResponseKey;
 use App\Interfaces\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;

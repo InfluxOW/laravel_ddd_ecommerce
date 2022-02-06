@@ -3,8 +3,6 @@
 namespace App\Domains\Catalog\Tests\Feature;
 
 use App\Application\Tests\TestCase;
-use App\Components\Generic\Enums\Response\ResponseKey;
-use App\Components\Generic\Utils\StringUtils;
 use App\Components\Queryable\Enums\QueryKey;
 use App\Domains\Catalog\Database\Seeders\ProductAttributeSeeder;
 use App\Domains\Catalog\Database\Seeders\ProductAttributeValueSeeder;
@@ -18,6 +16,8 @@ use App\Domains\Catalog\Models\ProductAttributeValue;
 use App\Domains\Catalog\Models\ProductCategory;
 use App\Domains\Catalog\Models\ProductPrice;
 use App\Domains\Catalog\Models\Settings\CatalogSettings;
+use App\Domains\Generic\Enums\Response\ResponseKey;
+use App\Domains\Generic\Utils\StringUtils;
 use Illuminate\Database\Eloquent\Builder;
 
 class ProductControllerTest extends TestCase

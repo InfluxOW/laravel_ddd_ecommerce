@@ -2,8 +2,8 @@
 
 namespace App\Components\Mediable\Services\Media;
 
-use App\Components\Generic\Utils\PathUtils;
-use App\Components\Generic\Utils\StringUtils;
+use App\Domains\Generic\Utils\PathUtils;
+use App\Domains\Generic\Utils\StringUtils;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\MediaLibrary\Support\PathGenerator\DefaultPathGenerator;

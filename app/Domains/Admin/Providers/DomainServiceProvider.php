@@ -2,8 +2,8 @@
 
 namespace App\Domains\Admin\Providers;
 
-use App\Components\Generic\Enums\ServiceProviderNamespace;
 use App\Domains\Admin\Admin\Components\Widgets\CustomersChartWidget;
+use App\Domains\Generic\Enums\ServiceProviderNamespace;
 use App\Infrastructure\Abstracts\ServiceProvider;
 
 final class DomainServiceProvider extends ServiceProvider

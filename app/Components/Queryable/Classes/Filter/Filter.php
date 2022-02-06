@@ -2,9 +2,9 @@
 
 namespace App\Components\Queryable\Classes\Filter;
 
-use App\Components\Generic\Utils\LangUtils;
 use App\Components\Queryable\Abstracts\Query;
 use App\Components\Queryable\Enums\QueryFilterType;
+use App\Domains\Generic\Utils\LangUtils;
 use BackedEnum;
 use JetBrains\PhpStorm\ArrayShape;
 

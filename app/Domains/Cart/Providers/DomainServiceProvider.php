@@ -2,7 +2,7 @@
 
 namespace App\Domains\Cart\Providers;
 
-use App\Components\Generic\Enums\ServiceProviderNamespace;
+use App\Domains\Generic\Enums\ServiceProviderNamespace;
 use App\Infrastructure\Abstracts\ServiceProvider;
 
 final class DomainServiceProvider extends ServiceProvider

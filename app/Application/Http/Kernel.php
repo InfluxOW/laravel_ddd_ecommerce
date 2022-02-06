@@ -2,10 +2,10 @@
 
 namespace App\Application\Http;
 
-use App\Application\Http\Middleware\AddTimestamp;
-use App\Application\Http\Middleware\ForceJsonResponse;
 use App\Application\Http\Middleware\TrimStrings;
 use App\Application\Http\Middleware\TrustProxies;
+use App\Domains\Generic\Http\Middleware\AddTimestamp;
+use App\Domains\Generic\Http\Middleware\ForceJsonResponse;
 use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Auth\Middleware\Authorize;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
