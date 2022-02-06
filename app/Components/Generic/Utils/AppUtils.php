@@ -41,7 +41,7 @@ final class AppUtils
             $subclassParts = $classParts
                 ->filter(fn (string $part, int $j): bool => $j < $i && $j > 0)
                 ->reverse();
-            $subclassDirectory = PathUtils::join([PathUtils::getRootDirectoryPath(), self::APP_DIRECTORY_BASENAME, ...$subclassParts]);
+            $subclassDirectory = PathUtils::join([base_path(), self::APP_DIRECTORY_BASENAME, ...$subclassParts]);
             $subclassDirectoryContent = FileUtils::getDirectoryContent($subclassDirectory);
             $possibleSubclassProvidersDirectory = collect($subclassDirectoryContent)
                 ->map(fn (string $basename): string => PathUtils::join([$subclassDirectory, $basename]))

@@ -13,9 +13,4 @@ final class PathUtils
     {
         return implode(DIRECTORY_SEPARATOR, $parts);
     }
-
-    public static function getRootDirectoryPath(): string
-    {
-        return dirname(env('LARAVEL_SAIL') ? app_path() : $_SERVER['DOCUMENT_ROOT'], 1);
-    }
 }
