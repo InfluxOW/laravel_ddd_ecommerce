@@ -2,7 +2,8 @@
 
 namespace App\Infrastructure\Abstracts;
 
-use App\Components\Generic\Enums\ServiceProviderNamespace;
+use App\Domains\Generic\Enums\ServiceProviderNamespace;
+use App\Domains\Generic\Utils\PathUtils;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 use Illuminate\Support\Str;
@@ -101,7 +102,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
     protected function registerMigrations(): void
     {
         if ($this->hasMigrations) {
-            $this->loadMigrationsFrom($this->domainPath('Database/Migrations'));
+            $this->loadMigrationsFrom($this->domainPath(PathUtils::join(['Database', 'Migrations'])));
         }
     }
 
@@ -111,7 +112,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
     protected function registerTranslations(): void
     {
         if ($this->hasTranslations) {
-            $this->loadTranslationsFrom($this->domainPath('Resources/Lang'), static::NAMESPACE->value);
+            $this->loadTranslationsFrom($this->domainPath(PathUtils::join(['Resources', 'Lang'])), static::NAMESPACE->value);
         }
     }
 

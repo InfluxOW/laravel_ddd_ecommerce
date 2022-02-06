@@ -2,8 +2,8 @@
 
 namespace App\Components\Queryable\Classes\Sort;
 
-use App\Components\Generic\Utils\LangUtils;
 use App\Components\Queryable\Abstracts\Query;
+use App\Domains\Generic\Utils\LangUtils;
 use BackedEnum;
 
 final class Sort extends Query

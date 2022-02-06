@@ -2,8 +2,8 @@
 
 namespace App\Components\Mediable\Classes;
 
-use App\Components\Generic\Utils\PathUtils;
 use App\Components\Mediable\Services\Media\UrlGenerator;
+use App\Domains\Generic\Utils\PathUtils;
 use DateTimeInterface;
 use Spatie\MediaLibrary\ResponsiveImages\ResponsiveImage as BaseResponsiveImage;
 use Spatie\MediaLibrary\Support\UrlGenerator\UrlGeneratorFactory;

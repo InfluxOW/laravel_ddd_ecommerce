@@ -12,8 +12,6 @@
 
     <file>app</file>
     <file>config</file>
-    <file>database</file>
-    <file>resources</file>
 
     <rule ref="PSR12"/>
 
@@ -21,7 +19,6 @@
     <exclude-pattern>*/Enums</exclude-pattern>
 
     <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
-        <exclude-pattern>*/migrations/*</exclude-pattern>
         <exclude-pattern>*/Migrations/*</exclude-pattern>
         <exclude-pattern>*/Settings/*</exclude-pattern>
     </rule>

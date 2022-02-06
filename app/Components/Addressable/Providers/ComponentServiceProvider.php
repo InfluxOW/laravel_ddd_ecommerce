@@ -2,7 +2,7 @@
 
 namespace App\Components\Addressable\Providers;
 
-use App\Components\Generic\Enums\ServiceProviderNamespace;
+use App\Domains\Generic\Enums\ServiceProviderNamespace;
 use App\Infrastructure\Abstracts\ServiceProvider;
 
 final class ComponentServiceProvider extends ServiceProvider

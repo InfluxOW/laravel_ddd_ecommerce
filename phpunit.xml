@@ -9,7 +9,6 @@
             <directory suffix="Test.php">./app/Domains/*/Tests/Unit</directory>
         </testsuite>
         <testsuite name="Feature">
-            <directory suffix="Test.php">./app/Application/Tests/Feature</directory>
             <directory suffix="Test.php">./app/Domains/*/Tests/Feature</directory>
         </testsuite>
         <testsuite name="Admin">

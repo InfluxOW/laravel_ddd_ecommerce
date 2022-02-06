@@ -2,13 +2,13 @@
 
 namespace App\Domains\Admin\Traits\Translation;
 
-use App\Components\Generic\Enums\Lang\TranslationFilename;
-use App\Components\Generic\Utils\AppUtils;
-use App\Components\Generic\Utils\LangUtils;
 use App\Domains\Admin\Enums\Translation\AdminPagePropertyTranslationKey;
 use App\Domains\Admin\Enums\Translation\AdminRelationPropertyTranslationKey;
 use App\Domains\Admin\Enums\Translation\AdminResourcePropertyTranslationKey;
 use App\Domains\Admin\Enums\Translation\AdminWidgetPropertyTranslationKey;
+use App\Domains\Generic\Enums\Lang\TranslationFilename;
+use App\Domains\Generic\Utils\AppUtils;
+use App\Domains\Generic\Utils\LangUtils;
 use Closure;
 use UnitEnum;
 
