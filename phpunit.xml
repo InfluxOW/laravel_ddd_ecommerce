@@ -18,12 +18,20 @@
     </testsuites>
     <coverage processUncoveredFiles="true">
         <exclude>
-            <directory>./app/Domains/*/Database/*</directory>
-            <directory>./app/Domains/*/Resources/Lang/*</directory>
-            <directory>./app/Domains/*/Tests/*</directory>
-            <directory>./app/Components/*/Database/*</directory>
-            <directory>./app/Components/*/Resources/Lang/*</directory>
-            <directory>./app/Components/*/Tests/*</directory>
+            <directory suffix=".php">./app/Domains/*/Database/*</directory>
+            <directory suffix=".php">./app/Domains/*/Resources/Lang/*</directory>
+            <directory suffix=".php">./app/Domains/*/Tests/*</directory>
+
+            <directory suffix=".php">./app/Components/*/Database/*</directory>
+            <directory suffix=".php">./app/Components/*/Resources/Lang/*</directory>
+            <directory suffix=".php">./app/Components/*/Tests/*</directory>
+
+            <directory suffix=".php">./app/*/*/*/Virtual</directory>
+            <directory suffix=".php">./app/*/*/*/Virtual/*</directory>
+            <directory suffix=".php">./app/*/*/*/*/Virtual</directory>
+            <directory suffix=".php">./app/*/*/*/*/Virtual/*</directory>
+            <directory suffix=".php">./app/*/*/*/*/*/Virtual</directory>
+            <directory suffix=".php">./app/*/*/*/*/*/Virtual/*</directory>
         </exclude>
         <include>
             <directory suffix=".php">./app</directory>
