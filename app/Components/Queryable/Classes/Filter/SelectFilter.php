@@ -13,7 +13,7 @@ final class SelectFilter extends Filter
 {
     public static QueryFilterType $type = QueryFilterType::SELECT;
 
-    public mixed $selectedValue;
+    public string|int|bool|float|null $selectedValue;
 
     public function __construct(
         BackedEnum $filter,
@@ -30,7 +30,7 @@ final class SelectFilter extends Filter
         ]);
     }
 
-    #[ArrayShape(['query' => "string", 'title' => "string", 'type' => "string", 'selected_value' => "mixed"])]
+    #[ArrayShape(['query' => "string", 'title' => "string", 'type' => "string", 'selected_value' => "string|int|bool|float|null"])]
     public function toAppliedArray(): array
     {
         return array_merge($this->toArray(), [
@@ -38,12 +38,12 @@ final class SelectFilter extends Filter
         ]);
     }
 
-    public function setSelectedValues(mixed ...$values): ?self
+    public function setSelectedValues(string|int|bool|float|array|null ...$values): ?self
     {
-        $selectedValue = Arr::first($values);
+        $selectedValue = Arr::first($values, static fn (string|int|bool|float|array|null $value) => ! is_array($value));
 
         $filter = clone($this);
-        $filter->selectedValue = $this->allowedValues->filter(fn (mixed $value): bool => $value === $selectedValue)->first();
+        $filter->selectedValue = $this->allowedValues->filter(fn (string|int|bool|float|array|null $value): bool => $value === $selectedValue)->first();
 
         return isset($filter->selectedValue) ? $filter : null;
     }

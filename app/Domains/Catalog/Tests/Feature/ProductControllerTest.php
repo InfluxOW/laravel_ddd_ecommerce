@@ -25,8 +25,6 @@ class ProductControllerTest extends TestCase
     private Product $product;
     private CatalogSettings $settings;
 
-    protected static bool $doNotRecreateDatabase = true;
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -209,8 +207,8 @@ class ProductControllerTest extends TestCase
         $firstProduct = Product::query()->with(['attributeValues.attribute'])->whereHas('attributeValues', null, '>', 1)->inRandomOrder()->first();
         $this->assertNotNull($firstProduct);
 
-        $originalValueToString = static fn (mixed $originalValue, ProductAttributeValuesType $valueType): string => match ($valueType) {
-            ProductAttributeValuesType::BOOLEAN => StringUtils::boolToString($originalValue),
+        $originalValueToString = static fn (string|int|bool|float $originalValue, ProductAttributeValuesType $valueType): string => match ($valueType) {
+            ProductAttributeValuesType::BOOLEAN => StringUtils::boolToString((bool) $originalValue),
             ProductAttributeValuesType::INTEGER, ProductAttributeValuesType::STRING, ProductAttributeValuesType::FLOAT => (string) $originalValue,
         };
 
@@ -222,6 +220,7 @@ class ProductControllerTest extends TestCase
 
         $firstAttribute = $firstAttributeValue->attribute;
         $firstAttributeFirstValueOriginal = $firstAttributeValue->value;
+        /** @var bool|float|int|string $firstAttributeSecondValueOriginal */
         $firstAttributeSecondValueOriginal = ProductAttributeValue::query()->whereBelongsTo($firstAttribute, 'attribute')->where(ProductAttributeValue::getDatabaseValueColumnByAttributeType($firstAttribute->values_type), '<>', $firstAttributeFirstValueOriginal)->inRandomOrder()->first()?->value;
 
         $firstAttributeFirstValue = $originalValueToString($firstAttributeFirstValueOriginal, $firstAttribute->values_type);

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Components\Queryable\Classes\Filter\Resources\Multiselect;
+namespace App\Components\Queryable\Classes\Filter\Resources\MultiselectFilter;
 
 use App\Components\Generic\Enums\Response\ResponseValueType;
 use JetBrains\PhpStorm\ArrayShape;
 
-final class MultiselectFilterNestedValuesAttribute
+final class NestedMultiselectFilterValuesAttribute
 {
     public function __construct(public readonly string $title, public readonly string $query, public readonly ResponseValueType $valuesType)
     {
@@ -17,7 +17,7 @@ final class MultiselectFilterNestedValuesAttribute
         return [
             'query' => $this->query,
             'title' => $this->title,
-            'values_type' => $this->valuesType->value,
+            'values_type' => $this->valuesType->name,
         ];
     }
 }

@@ -2,10 +2,10 @@
 
 namespace App\Components\Queryable\Enums;
 
-enum QueryFilterType: string
+enum QueryFilterType
 {
-    case INPUT = 'input';
-    case RANGE = 'range';
-    case SELECT = 'select';
-    case MULTISELECT = 'multiselect';
+    case INPUT;
+    case RANGE;
+    case SELECT;
+    case MULTISELECT;
 }

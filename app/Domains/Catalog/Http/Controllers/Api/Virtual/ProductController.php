@@ -128,13 +128,9 @@ final class ProductController
      *                type="object",
      *                @OA\Property(
      *                   property="applied",
-     *                   type="array",
-     *                   collectionFormat="multi",
-     *                   @OA\Items(
-     *                      type="object",
-     *                      @OA\Property(property="query", type="string", example="PRICE_DESC"),
-     *                      @OA\Property(property="title", type="string", example="Expensive First"),
-     *                   ),
+     *                   type="object",
+     *                   @OA\Property(property="query", ref="#/components/schemas/ProductAllowedSort"),
+     *                   @OA\Property(property="title", type="string", example="Title A-Z"),
      *                ),
      *                @OA\Property(
      *                   property="allowed",
@@ -142,8 +138,8 @@ final class ProductController
      *                   collectionFormat="multi",
      *                   @OA\Items(
      *                      type="object",
-     *                      @OA\Property(property="query", type="string", example="PRICE_DESC"),
-     *                      @OA\Property(property="title", type="string", example="Expensive First"),
+     *                      @OA\Property(property="query", ref="#/components/schemas/ProductAllowedSort"),
+     *                      @OA\Property(property="title", type="string", example="Title A-Z"),
      *                   ),
      *                ),
      *             ),
@@ -156,9 +152,13 @@ final class ProductController
      *                   collectionFormat="multi",
      *                   @OA\Items(
      *                      type="object",
-     *                      @OA\Property(property="query", type="string", example="TITLE"),
-     *                      @OA\Property(property="title", type="string", example="Title"),
-     *                      @OA\Property(property="type", type="string", example="input"),
+     *                      oneOf={
+     *                         @OA\Schema(ref="#/components/schemas/AppliedInputFilter"),
+     *                         @OA\Schema(ref="#/components/schemas/AppliedSelectFilter"),
+     *                         @OA\Schema(ref="#/components/schemas/AppliedRangeFilter"),
+     *                         @OA\Schema(ref="#/components/schemas/AppliedPlainMultiselectFilter"),
+     *                         @OA\Schema(ref="#/components/schemas/AppliedNestedMultiselectFilter"),
+     *                      }
      *                   ),
      *                ),
      *                @OA\Property(
@@ -167,9 +167,13 @@ final class ProductController
      *                   collectionFormat="multi",
      *                   @OA\Items(
      *                      type="object",
-     *                      @OA\Property(property="query", type="string", example="TITLE"),
-     *                      @OA\Property(property="title", type="string", example="Title"),
-     *                      @OA\Property(property="type", type="string", example="input"),
+     *                      oneOf={
+     *                         @OA\Schema(ref="#/components/schemas/AllowedInputFilter"),
+     *                         @OA\Schema(ref="#/components/schemas/AllowedSelectFilter"),
+     *                         @OA\Schema(ref="#/components/schemas/AllowedRangeFilter"),
+     *                         @OA\Schema(ref="#/components/schemas/AllowedPlainMultiselectFilter"),
+     *                         @OA\Schema(ref="#/components/schemas/AllowedNestedMultiselectFilter"),
+     *                      }
      *                   ),
      *                ),
      *             ),

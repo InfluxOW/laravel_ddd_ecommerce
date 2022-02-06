@@ -2,7 +2,7 @@
 
 namespace App\Components\Queryable\Classes\Filter;
 
-use App\Components\Queryable\Classes\Filter\Resources\Multiselect\MultiselectFilterNestedValues;
+use App\Components\Queryable\Classes\Filter\Resources\MultiselectFilter\NestedMultiselectFilterValues;
 use App\Components\Queryable\Enums\QueryFilterType;
 use BackedEnum;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
@@ -36,7 +36,7 @@ final class MultiselectFilter extends Filter
 
     /**
      * @param BackedEnum $filter
-     * @param Collection<MultiselectFilterNestedValues> $allowedValues
+     * @param Collection<NestedMultiselectFilterValues> $allowedValues
      *
      * @return self
      */
@@ -50,7 +50,7 @@ final class MultiselectFilter extends Filter
     {
         return array_merge($this->toArray(), [
             'is_nested' => $this->isNested,
-            'allowed_values' => $this->isNested ? $this->allowedValues->map(fn (MultiselectFilterNestedValues $values): array => $values->toArray())->toArray() : $this->allowedValues->toArray(),
+            'allowed_values' => $this->isNested ? $this->allowedValues->map(fn (NestedMultiselectFilterValues $values): array => $values->toArray())->toArray() : $this->allowedValues->toArray(),
         ]);
     }
 
@@ -59,11 +59,11 @@ final class MultiselectFilter extends Filter
     {
         return array_merge($this->toArray(), [
             'is_nested' => $this->isNested,
-            'selected_values' => $this->isNested ? $this->selectedValues->map(fn (MultiselectFilterNestedValues $values): array => $values->toArray())->toArray() : $this->selectedValues->toArray(),
+            'selected_values' => $this->isNested ? $this->selectedValues->map(fn (NestedMultiselectFilterValues $values): array => $values->toArray())->toArray() : $this->selectedValues->toArray(),
         ]);
     }
 
-    public function setSelectedValues(mixed ...$values): ?self
+    public function setSelectedValues(string|int|bool|float|array|null ...$values): ?self
     {
         $filter = clone($this);
 
@@ -71,8 +71,8 @@ final class MultiselectFilter extends Filter
             false => $this->allowedValues
                 ->filter(fn (string $value): bool => in_array($value, $values, true)),
             true => $this->allowedValues
-                ->filter(fn (MultiselectFilterNestedValues $attributeWithValues): bool => array_key_exists($attributeWithValues->attribute->query, $values))
-                ->map(fn (MultiselectFilterNestedValues $attributeWithValues): MultiselectFilterNestedValues => new MultiselectFilterNestedValues(
+                ->filter(fn (NestedMultiselectFilterValues $attributeWithValues): bool => array_key_exists($attributeWithValues->attribute->query, $values))
+                ->map(fn (NestedMultiselectFilterValues $attributeWithValues): NestedMultiselectFilterValues => new NestedMultiselectFilterValues(
                     $attributeWithValues->attribute,
                     collect($values[$attributeWithValues->attribute->query])->filter(fn (string $value): bool => $attributeWithValues->values->contains($attributeWithValues->adjustValueType($value)))
                 ))

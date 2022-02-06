@@ -23,7 +23,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Domains\Catalog\Models\ProductAttribute $attribute
  * @property-read string $readable_value
- * @property mixed|null $value
+ * @property string|int|float|bool $value
  * @property-read \App\Domains\Catalog\Models\Product $product
  * @method static \App\Domains\Catalog\Database\Factories\ProductAttributeValueFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|ProductAttributeValue newModelQuery()
@@ -80,7 +80,7 @@ final class ProductAttributeValue extends Model
      * Attributes
      * */
 
-    public function getValueAttribute(): mixed
+    public function getValueAttribute(): string|int|bool|float
     {
         return $this->{self::getDatabaseValueColumnByAttributeType($this->attribute->values_type)};
     }
@@ -96,7 +96,7 @@ final class ProductAttributeValue extends Model
         return $value;
     }
 
-    public function setValueAttribute(mixed $value): void
+    public function setValueAttribute(string|int|bool|float $value): void
     {
         foreach (self::VALUES_COLUMNS as $column) {
             $this->$column = null;
