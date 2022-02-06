@@ -5,10 +5,10 @@ namespace App\Components\Generic\Enums\Response;
 /**
  * @OA\Schema()
  */
-enum ResponseValueType: string
+enum ResponseValueType
 {
-    case INTEGER = 'integer';
-    case FLOAT = 'float';
-    case STRING = 'string';
-    case BOOLEAN = 'boolean';
+    case INTEGER;
+    case FLOAT;
+    case STRING;
+    case BOOLEAN;
 }

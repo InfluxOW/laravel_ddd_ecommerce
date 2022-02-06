@@ -2,8 +2,8 @@
 
 namespace App\Domains\Catalog\Services\Query\Filter;
 
-use App\Components\Queryable\Classes\Filter\Resources\Multiselect\MultiselectFilterNestedValues;
-use App\Components\Queryable\Classes\Filter\Resources\Multiselect\MultiselectFilterNestedValuesAttribute;
+use App\Components\Queryable\Classes\Filter\Resources\MultiselectFilter\NestedMultiselectFilterValues;
+use App\Components\Queryable\Classes\Filter\Resources\MultiselectFilter\NestedMultiselectFilterValuesAttribute;
 use App\Domains\Catalog\Models\ProductAttribute;
 use App\Domains\Catalog\Models\ProductAttributeValue;
 use App\Domains\Catalog\Models\ProductCategory;
@@ -35,12 +35,12 @@ final class ProductFilterBuilderRepository
             ->whereIn('id', $attributeIdsQuery)
             ->orderBy('title')
             ->get()
-            ->map(static function (ProductAttribute $attribute) use ($attributeValues): MultiselectFilterNestedValues {
+            ->map(static function (ProductAttribute $attribute) use ($attributeValues): NestedMultiselectFilterValues {
                 /** @var Collection $values */
                 $values = $attributeValues->get($attribute->id);
 
-                return new MultiselectFilterNestedValues(
-                    new MultiselectFilterNestedValuesAttribute($attribute->title, $attribute->slug, $attribute->values_type->responseValueType()),
+                return new NestedMultiselectFilterValues(
+                    new NestedMultiselectFilterValuesAttribute($attribute->title, $attribute->slug, $attribute->values_type->responseValueType()),
                     $values->pluck(ProductAttributeValue::getDatabaseValueColumnByAttributeType($attribute->values_type))->sort()->values()
                 );
             });

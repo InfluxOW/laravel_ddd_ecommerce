@@ -18,6 +18,7 @@ final class ProductAttributeValueFactory extends Factory
     public function configure(): self
     {
         return $this->afterMaking(function (ProductAttributeValue $productAttributeValue): void {
+            /** @var bool|float|int|string $value */
             $value = match ($productAttributeValue->attribute->values_type) {
                 ProductAttributeValuesType::BOOLEAN => $this->faker->boolean,
                 ProductAttributeValuesType::INTEGER => random_int(0, 1000),

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Domains\Catalog\Models\Virtual;
+namespace App\Components\Queryable\Classes\Filter\Virtual\SelectFilter;
 
 use OpenApi\Annotations as OA;
 
 /**
  * @OA\Schema()
  */
-final class ProductAttributeValue
+final class AppliedSelectFilter extends SelectFilter
 {
     /**
      * @OA\Property(oneOf={
@@ -17,13 +17,7 @@ final class ProductAttributeValue
      *    @OA\Schema(type="float"),
      * })
      * @var string|int|bool|float
-     * @example 35.4
+     * @example USD
      */
-    public $value;
-
-    /**
-     * @OA\Property(ref="#/components/schemas/ProductAttribute")
-     * @var ProductAttribute
-     */
-    public $attribute;
+    public $selected_value;
 }

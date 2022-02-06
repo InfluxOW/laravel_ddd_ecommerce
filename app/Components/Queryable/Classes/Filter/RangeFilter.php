@@ -48,7 +48,7 @@ final class RangeFilter extends Filter
         return $this->toArray();
     }
 
-    public function setSelectedValues(mixed ...$values): self
+    public function setSelectedValues(string|int|bool|float|array|null ...$values): self
     {
         [$selectedMinValue, $selectedMaxValue] = $values;
         if (isset($selectedMinValue, $selectedMaxValue) && $selectedMinValue > $selectedMaxValue) {
@@ -66,8 +66,8 @@ final class RangeFilter extends Filter
         $filter->maxValue = null;
 
         if (isset($minValue, $maxValue)) {
-            $filter->minValue = isset($selectedMinValue) ? MathUtils::clamp($selectedMinValue, $minValue, $maxValue) : $minValue;
-            $filter->maxValue = isset($selectedMaxValue) ? MathUtils::clamp($selectedMaxValue, $minValue, $maxValue) : $maxValue;
+            $filter->minValue = isset($selectedMinValue) ? MathUtils::clamp((float) $selectedMinValue, $minValue, $maxValue) : $minValue;
+            $filter->maxValue = isset($selectedMaxValue) ? MathUtils::clamp((float) $selectedMaxValue, $minValue, $maxValue) : $maxValue;
         }
 
         return $filter;

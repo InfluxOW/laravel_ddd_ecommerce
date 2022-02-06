@@ -15,7 +15,7 @@ final class FeedbackController
      *    tags={"Feedback"},
      *    @OA\RequestBody(
      *       required=true,
-     *       description="User data",
+     *       description="Feedback data",
      *       @OA\JsonContent(
      *          required={"text"},
      *          @OA\Property(property="username", type="string", example="John Doe"),

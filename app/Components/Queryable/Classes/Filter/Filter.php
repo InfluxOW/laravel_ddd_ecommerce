@@ -25,7 +25,7 @@ abstract class Filter extends Query
     public function toArray(): array
     {
         return array_merge(parent::toArray(), [
-            'type' => static::$type->value,
+            'type' => static::$type->name,
         ]);
     }
 
@@ -33,5 +33,5 @@ abstract class Filter extends Query
 
     abstract public function toAppliedArray(): array;
 
-    abstract public function setSelectedValues(mixed ...$values): ?self;
+    abstract public function setSelectedValues(string|int|bool|float|array|null ...$values): ?self;
 }

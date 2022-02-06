@@ -10,7 +10,7 @@ final class InputFilter extends Filter
 {
     public static QueryFilterType $type = QueryFilterType::INPUT;
 
-    public mixed $selectedValue;
+    public string|int|bool|float|null $selectedValue;
 
     #[ArrayShape(['query' => "string", 'title' => "string", 'type' => "string"])]
     public function toAllowedArray(): array
@@ -18,7 +18,7 @@ final class InputFilter extends Filter
         return $this->toArray();
     }
 
-    #[ArrayShape(['query' => "string", 'title' => "string", 'type' => "string", 'value' => "mixed"])]
+    #[ArrayShape(['query' => "string", 'title' => "string", 'type' => "string", 'value' => "string|int|bool|float|null"])]
     public function toAppliedArray(): array
     {
         return array_merge($this->toArray(), [
@@ -26,10 +26,10 @@ final class InputFilter extends Filter
         ]);
     }
 
-    public function setSelectedValues(mixed ...$values): self
+    public function setSelectedValues(string|int|bool|float|array|null ...$values): self
     {
         $filter = clone($this);
-        $filter->selectedValue = Arr::first($values);
+        $filter->selectedValue = Arr::first($values, static fn (string|int|bool|float|array|null $value) => ! is_array($value));
 
         return $filter;
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Components\Queryable\Classes\Filter\Resources\Multiselect;
+namespace App\Components\Queryable\Classes\Filter\Resources\MultiselectFilter;
 
 use App\Components\Generic\Enums\BooleanString;
 use App\Components\Generic\Enums\Response\ResponseValueType;
@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection;
 use JetBrains\PhpStorm\ArrayShape;
 
-final class MultiselectFilterNestedValues
+final class NestedMultiselectFilterValues
 {
-    public function __construct(public readonly MultiselectFilterNestedValuesAttribute $attribute, public readonly Collection|EloquentCollection $values)
+    public function __construct(public readonly NestedMultiselectFilterValuesAttribute $attribute, public readonly Collection|EloquentCollection $values)
     {
     }
 
@@ -23,7 +23,7 @@ final class MultiselectFilterNestedValues
         ];
     }
 
-    public function adjustValueType(string $value): mixed
+    public function adjustValueType(string $value): string|int|bool|float
     {
         return match ($this->attribute->valuesType) {
             ResponseValueType::STRING => $value,
