@@ -29,5 +29,9 @@ abstract class Filter extends Query
         ]);
     }
 
-    abstract public function ofValues(mixed ...$values): ?self;
+    abstract public function toAllowedArray(): array;
+
+    abstract public function toAppliedArray(): array;
+
+    abstract public function setSelectedValues(mixed ...$values): ?self;
 }

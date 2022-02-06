@@ -25,6 +25,8 @@ class ProductControllerTest extends TestCase
     private Product $product;
     private CatalogSettings $settings;
 
+    protected static bool $doNotRecreateDatabase = true;
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -122,7 +124,7 @@ class ProductControllerTest extends TestCase
                 $this->assertCount(count($filters) + 1, $appliedFilters);
                 $this->assertTrue($appliedFilters->pluck('query')->contains(ProductAllowedFilter::CATEGORY->name));
 
-                $categoryFilterValues = collect($appliedFilters->filter(fn (array $filter): bool => $filter['query'] === ProductAllowedFilter::CATEGORY->name)->first()['values']);
+                $categoryFilterValues = collect($appliedFilters->filter(fn (array $filter): bool => $filter['query'] === ProductAllowedFilter::CATEGORY->name)->first()['selected_values']);
                 if ($categoriesQuery === $category->slug) {
                     $this->assertTrue($categoryFilterValues->contains($category->slug));
                 } else {
@@ -271,7 +273,7 @@ class ProductControllerTest extends TestCase
         $this->assertCount(count($filters) + 1, $appliedFilters);
         $this->assertTrue($appliedFilters->pluck('query')->contains(ProductAllowedFilter::ATTRIBUTE_VALUE->name));
 
-        $attributeValuesFilterValues = collect($appliedFilters->filter(fn (array $filter): bool => $filter['query'] === ProductAllowedFilter::ATTRIBUTE_VALUE->name)->first()['values']);
+        $attributeValuesFilterValues = collect($appliedFilters->filter(fn (array $filter): bool => $filter['query'] === ProductAllowedFilter::ATTRIBUTE_VALUE->name)->first()['selected_values']);
         $this->assertEqualsCanonicalizing([$firstAttributeFirstValue, $firstAttributeSecondValue], $attributeValuesFilterValues->where('attribute.query', $firstAttribute->slug)->first()['values']);
         $this->assertEqualsCanonicalizing([$secondAttributeFirstValue], $attributeValuesFilterValues->where('attribute.query', $secondAttribute->slug)->first()['values']);
     }

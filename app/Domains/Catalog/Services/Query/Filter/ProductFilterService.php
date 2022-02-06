@@ -88,7 +88,7 @@ final class ProductFilterService implements QueryService
                 ->reduce(function (Collection $acc, array|string $values, string $filterQuery) use ($allowedFilters): Collection {
                     /** @var Filter $filter */
                     $filter = $allowedFilters->filter(static fn (Filter $filter): bool => ($filter->query === $filterQuery))->first();
-                    $acc->push($filter->ofValues(...(array) $values));
+                    $acc->push($filter->setSelectedValues(...(array) $values));
 
                     return $acc;
                 }, collect([]))

@@ -13,60 +13,73 @@ final class MultiselectFilter extends Filter
 {
     public static QueryFilterType $type = QueryFilterType::MULTISELECT;
 
+    public Collection|EloquentCollection $selectedValues;
+
     protected function __construct(
         BackedEnum $filter,
         public readonly bool $isNested,
-        public Collection|EloquentCollection $values
+        public Collection|EloquentCollection $allowedValues
     ) {
         parent::__construct($filter);
     }
 
     /**
      * @param BackedEnum $filter
-     * @param Collection<string>|EloquentCollection<string> $values
+     * @param Collection<string>|EloquentCollection<string> $allowedValues
+     *
      * @return self
      */
-    public static function createWithPlainValues(BackedEnum $filter, Collection|EloquentCollection $values): self
+    public static function createWithPlainValues(BackedEnum $filter, Collection|EloquentCollection $allowedValues): self
     {
-        return new self($filter, false, $values);
+        return new self($filter, false, $allowedValues);
     }
 
     /**
      * @param BackedEnum $filter
-     * @param Collection<MultiselectFilterNestedValues> $values
+     * @param Collection<MultiselectFilterNestedValues> $allowedValues
+     *
      * @return self
      */
-    public static function createWithNestedValues(BackedEnum $filter, Collection $values): self
+    public static function createWithNestedValues(BackedEnum $filter, Collection $allowedValues): self
     {
-        return new self($filter, true, $values);
+        return new self($filter, true, $allowedValues);
     }
 
     #[ArrayShape(['query' => "string", 'title' => "string", 'type' => "string", 'is_nested' => "boolean", 'values' => "array"])]
-    public function toArray(): array
+    public function toAllowedArray(): array
     {
-        return array_merge(parent::toArray(), [
+        return array_merge($this->toArray(), [
             'is_nested' => $this->isNested,
-            'values' => $this->isNested ? $this->values->map(fn (MultiselectFilterNestedValues $values): array => $values->toArray())->toArray() : $this->values->toArray(),
+            'allowed_values' => $this->isNested ? $this->allowedValues->map(fn (MultiselectFilterNestedValues $values): array => $values->toArray())->toArray() : $this->allowedValues->toArray(),
         ]);
     }
 
-    public function ofValues(mixed ...$values): ?self
+    #[ArrayShape(['query' => "string", 'title' => "string", 'type' => "string", 'is_nested' => "boolean", 'values' => "array"])]
+    public function toAppliedArray(): array
+    {
+        return array_merge($this->toArray(), [
+            'is_nested' => $this->isNested,
+            'selected_values' => $this->isNested ? $this->selectedValues->map(fn (MultiselectFilterNestedValues $values): array => $values->toArray())->toArray() : $this->selectedValues->toArray(),
+        ]);
+    }
+
+    public function setSelectedValues(mixed ...$values): ?self
     {
         $filter = clone($this);
 
         $correctValues = match ($filter->isNested) {
-            false => $this->values
+            false => $this->allowedValues
                 ->filter(fn (string $value): bool => in_array($value, $values, true)),
-            true => $this->values
+            true => $this->allowedValues
                 ->filter(fn (MultiselectFilterNestedValues $attributeWithValues): bool => array_key_exists($attributeWithValues->attribute->query, $values))
                 ->map(fn (MultiselectFilterNestedValues $attributeWithValues): MultiselectFilterNestedValues => new MultiselectFilterNestedValues(
                     $attributeWithValues->attribute,
-                    collect($values[$attributeWithValues->attribute->query])->filter(fn (string $value): bool => $attributeWithValues->values->contains($value))
+                    collect($values[$attributeWithValues->attribute->query])->filter(fn (string $value): bool => $attributeWithValues->values->contains($attributeWithValues->adjustValueType($value)))
                 ))
         };
 
-        $filter->values = $correctValues->values();
+        $filter->selectedValues = $correctValues->values();
 
-        return $filter->values->isEmpty() ? null : $filter;
+        return $filter->selectedValues->isEmpty() ? null : $filter;
     }
 }

@@ -36,7 +36,19 @@ final class RangeFilter extends Filter
         ]);
     }
 
-    public function ofValues(mixed ...$values): self
+    #[ArrayShape(['query' => "string", 'title' => "string", 'type' => "string", 'min_value' => "float", 'max_value' => "float"])]
+    public function toAllowedArray(): array
+    {
+        return $this->toArray();
+    }
+
+    #[ArrayShape(['query' => "string", 'title' => "string", 'type' => "string", 'min_value' => "float", 'max_value' => "float"])]
+    public function toAppliedArray(): array
+    {
+        return $this->toArray();
+    }
+
+    public function setSelectedValues(mixed ...$values): self
     {
         [$selectedMinValue, $selectedMaxValue] = $values;
         if (isset($selectedMinValue, $selectedMaxValue) && $selectedMinValue > $selectedMaxValue) {

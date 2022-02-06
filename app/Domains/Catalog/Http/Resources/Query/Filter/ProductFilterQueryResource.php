@@ -16,8 +16,8 @@ final class ProductFilterQueryResource extends JsonResource
         $filterQuery = $this->resource;
 
         return [
-            'applied' => $filterQuery->appliedFilters->map(fn (Filter $filter): array => $filter->toArray())->toArray(),
-            'allowed' => $filterQuery->allowedFilters->map(fn (Filter $filter): array => $filter->toArray())->toArray(),
+            'applied' => $filterQuery->appliedFilters->map(fn (Filter $filter): array => $filter->toAppliedArray())->toArray(),
+            'allowed' => $filterQuery->allowedFilters->map(fn (Filter $filter): array => $filter->toAllowedArray())->toArray(),
         ];
     }
 }

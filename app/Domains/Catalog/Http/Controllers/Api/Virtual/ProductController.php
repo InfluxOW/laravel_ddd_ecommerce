@@ -126,8 +126,6 @@ final class ProductController
      *             @OA\Property(
      *                property="sort",
      *                type="object",
-     *                @OA\Property(property="query", type="string", example="sort"),
-     *                @OA\Property(property="is_nested", type="boolean", example="false"),
      *                @OA\Property(
      *                   property="applied",
      *                   type="array",
@@ -152,8 +150,6 @@ final class ProductController
      *             @OA\Property(
      *                property="filter",
      *                type="object",
-     *                @OA\Property(property="query", type="string", example="filter"),
-     *                @OA\Property(property="is_nested", type="boolean", example="true"),
      *                @OA\Property(
      *                   property="applied",
      *                   type="array",
