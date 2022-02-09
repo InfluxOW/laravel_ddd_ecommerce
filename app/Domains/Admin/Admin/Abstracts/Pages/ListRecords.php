@@ -8,9 +8,9 @@ use Filament\Tables\Actions\Action;
 
 abstract class ListRecords extends BaseListRecords
 {
-    protected function getViewTableAction(): Action
+    protected function getViewAction(): Action
     {
-        return parent::getViewTableAction()->color('success');
+        return parent::getViewAction()->color('success');
     }
 
     protected function getTableActions(): array
