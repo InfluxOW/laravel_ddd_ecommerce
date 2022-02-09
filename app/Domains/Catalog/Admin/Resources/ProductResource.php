@@ -89,6 +89,7 @@ final class ProductResource extends Resource
                     ->maxFiles(10)
                     ->image()
                     ->preserveFilenames()
+                    ->enableReordering()
                     ->columnSpan(3),
             ]))
             ->columns(3);
