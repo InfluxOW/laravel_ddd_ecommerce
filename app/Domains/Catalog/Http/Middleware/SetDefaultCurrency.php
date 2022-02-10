@@ -15,11 +15,10 @@ final class SetDefaultCurrency
     {
         /**
          * @var array $filters
-         * @phpstan-ignore-next-line
          */
-        $filters = $request->request->get(QueryKey::FILTER->value, []);
+        $filters = $request->offsetGet(QueryKey::FILTER->value) ?? [];
 
-        $request->request->set(QueryKey::FILTER->value, array_merge([
+        $request->offsetSet(QueryKey::FILTER->value, array_merge([
             ProductAllowedFilter::CURRENCY->name => app(CatalogSettings::class)->default_currency,
         ], $filters));
 

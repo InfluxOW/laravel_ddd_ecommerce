@@ -35,7 +35,9 @@ final class ProductCategoryChildrenRelationManager extends HasManyRelationManage
             ])
             ->pushActions([
                 LinkAction::make(' | '),
+                /* @phpstan-ignore-next-line */
                 ButtonAction::make('↑')->action(fn (ProductCategory $record): ProductCategory|Node => ($record->left === $record->parent?->children->min('left')) ? $record : $record->moveLeft()),
+                /* @phpstan-ignore-next-line */
                 ButtonAction::make('↓')->action(fn (ProductCategory $record): ProductCategory|Node => ($record->left === $record->parent?->children->max('left')) ? $record : $record->moveRight()),
             ])
             ->columns(self::setTranslatableLabels([

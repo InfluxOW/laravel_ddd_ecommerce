@@ -27,12 +27,12 @@ final class UserFactory extends Factory
 
     public function configure(): self
     {
-        return $this->afterCreating(fn (User $user) => $user->addresses()->saveMany(Address::factory()->count(app()->runningUnitTests() ? 1 : random_int(1, 3))->make()));
+        return $this->afterCreating(fn (User $user): iterable => $user->addresses()->saveMany(Address::factory()->count(app()->runningUnitTests() ? 1 : random_int(1, 3))->make()));
     }
 
     public function unverified(): self
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'email_verified_at' => null,
         ]);
     }

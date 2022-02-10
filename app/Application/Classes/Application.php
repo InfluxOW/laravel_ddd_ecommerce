@@ -7,8 +7,10 @@ use Illuminate\Foundation\Application as BaseApplication;
 
 final class Application extends BaseApplication
 {
-    public function langPath(): string
+    protected function bindPathsInContainer(): void
     {
-        return PathUtils::join([__DIR__, '..', '..', 'Domains', 'Generic', 'Resources', 'Lang']);
+        parent::bindPathsInContainer();
+
+        $this->useLangPath(PathUtils::join([__DIR__, '..', '..', 'Domains', 'Generic', 'Resources', 'Lang']));
     }
 }
