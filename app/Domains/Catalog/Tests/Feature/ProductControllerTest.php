@@ -19,6 +19,7 @@ use App\Domains\Catalog\Models\Settings\CatalogSettings;
 use App\Domains\Generic\Enums\Response\ResponseKey;
 use App\Domains\Generic\Utils\StringUtils;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Str;
 
 class ProductControllerTest extends TestCase
 {
@@ -58,40 +59,23 @@ class ProductControllerTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_filter_products_by_title(): void
+    public function a_user_can_search_products_by_title_or_description(): void
     {
-        $queries = [$this->product->title, trim(substr($this->product->title, 0, 5))];
+        $queries = [
+            $this->product->title, Str::words($this->product->title, 2, ''),
+            $this->product->description, Str::words($this->product->description, 2, ''),
+        ];
 
         foreach ($queries as $query) {
-            $filters = [ProductAllowedFilter::TITLE->name => $query];
+            $filters = [ProductAllowedFilter::SEARCH->name => $query];
             $response = $this->get(route('products.index', [QueryKey::FILTER->value => $filters]))->assertOk();
             $items = collect($response->json(ResponseKey::DATA->value));
             $appliedFilters = collect($response->json(sprintf('%s.%s.%s', ResponseKey::QUERY->value, QueryKey::FILTER->value, 'applied')));
 
             $this->assertNotEmpty($items);
-            $items->each(fn (array $item) => $this->assertTrue(str_contains($item['title'], $query)));
-
+            $this->assertContains($this->product->slug, $items->pluck('slug'));
             $this->assertCount(count($filters) + 1, $appliedFilters);
-            $this->assertTrue($appliedFilters->pluck('query')->contains(ProductAllowedFilter::TITLE->name));
-        }
-    }
-
-    /** @test */
-    public function a_user_can_filter_products_by_description(): void
-    {
-        $queries = [$this->product->description, trim(substr($this->product->description, 0, 5))];
-
-        foreach ($queries as $query) {
-            $filters = [ProductAllowedFilter::DESCRIPTION->name => $query];
-            $response = $this->get(route('products.index', [QueryKey::FILTER->value => $filters]))->assertOk();
-            $items = collect($response->json(ResponseKey::DATA->value));
-            $appliedFilters = collect($response->json(sprintf('%s.%s.%s', ResponseKey::QUERY->value, QueryKey::FILTER->value, 'applied')));
-
-            $this->assertNotEmpty($items);
-            $items->each(fn (array $item) => $this->assertTrue(str_contains($this->get($item['url'])->json(ResponseKey::DATA->value)['description'], $query)));
-
-            $this->assertCount(count($filters) + 1, $appliedFilters);
-            $this->assertTrue($appliedFilters->pluck('query')->contains(ProductAllowedFilter::DESCRIPTION->name));
+            $this->assertTrue($appliedFilters->pluck('query')->contains(ProductAllowedFilter::SEARCH->name));
         }
     }
 

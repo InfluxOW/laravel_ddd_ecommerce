@@ -49,6 +49,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Product newQuery()
  * @method static Builder|Product orderByCurrentPrice(string $currency, bool $descending)
  * @method static Builder|Product query()
+ * @method static Builder|Product search(string $searchable)
  * @method static Builder|Product whereCreatedAt($value)
  * @method static Builder|Product whereDescription($value)
  * @method static Builder|Product whereHasAttributeValue(array $attributesValuesByAttributeSlug)
@@ -133,6 +134,11 @@ final class Product extends Model implements Purchasable, HasMedia
     /*
      * Scopes
      * */
+
+    public function scopeSearch(Builder $query, string $searchable): void
+    {
+        $query->whereFullText(['title', 'description'], $searchable);
+    }
 
     public function scopeWhereInCategory(Builder $query, Collection $categories): void
     {

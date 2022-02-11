@@ -4,7 +4,7 @@ namespace App\Components\Queryable\Classes\Sort;
 
 use App\Components\Queryable\Abstracts\Query;
 use App\Domains\Generic\Utils\LangUtils;
-use BackedEnum;
+use UnitEnum;
 
 final class Sort extends Query
 {
@@ -12,7 +12,7 @@ final class Sort extends Query
     {
     }
 
-    public static function create(BackedEnum $sort): self
+    public static function create(UnitEnum $sort): self
     {
         /** @var string $translation */
         $translation = LangUtils::translateEnum($sort);

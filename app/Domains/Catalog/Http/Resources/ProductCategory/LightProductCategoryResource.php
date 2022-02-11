@@ -19,7 +19,7 @@ final class LightProductCategoryResource extends JsonResource
         return [
             'slug' => $category->slug,
             'title' => $category->title,
-            'url' => route('products.index', [QueryKey::FILTER->value => [ProductAllowedFilter::CATEGORY->value => $category->slug]]),
+            'url' => route('products.index', [QueryKey::FILTER->value => [ProductAllowedFilter::CATEGORY->name => $category->slug]]),
         ];
     }
 }
