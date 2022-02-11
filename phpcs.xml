@@ -58,7 +58,6 @@
         </properties>
     </rule>
 
-
     <rule ref="SlevomatCodingStandard.Arrays.DisallowImplicitArrayCreation"/>
     <rule ref="SlevomatCodingStandard.Arrays.MultiLineArrayEndBracketPlacement"/>
     <rule ref="SlevomatCodingStandard.Arrays.TrailingArrayComma"/>

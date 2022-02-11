@@ -85,6 +85,15 @@ final class ProductAttributeValue extends Model
         return $this->{self::getDatabaseValueColumnByAttributeType($this->attribute->values_type)};
     }
 
+    public function setValueAttribute(string|int|bool|float $value): void
+    {
+        foreach (self::VALUES_COLUMNS as $column) {
+            $this->$column = null;
+        }
+
+        $this->{self::getDatabaseValueColumnByAttributeType($this->attribute->values_type)} = $value;
+    }
+
     public function getReadableValueAttribute(): string
     {
         $value = $this->{self::getDatabaseValueColumnByAttributeType($this->attribute->values_type)};
@@ -94,15 +103,6 @@ final class ProductAttributeValue extends Model
         }
 
         return $value;
-    }
-
-    public function setValueAttribute(string|int|bool|float $value): void
-    {
-        foreach (self::VALUES_COLUMNS as $column) {
-            $this->$column = null;
-        }
-
-        $this->{self::getDatabaseValueColumnByAttributeType($this->attribute->values_type)} = $value;
     }
 
     /*

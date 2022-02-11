@@ -6,8 +6,8 @@ use Akaunting\Money\Currency;
 use Akaunting\Money\Money;
 use App\Components\Queryable\Enums\QueryFilterType;
 use App\Domains\Generic\Utils\MathUtils;
-use BackedEnum;
 use JetBrains\PhpStorm\ArrayShape;
+use UnitEnum;
 
 final class RangeFilter extends Filter
 {
@@ -17,7 +17,7 @@ final class RangeFilter extends Filter
     public Money|int|float|null $maxValue;
     public readonly ?Currency $currency;
 
-    public function __construct(BackedEnum $filter, ?float $minValue, ?float $maxValue, ?string $currency)
+    public function __construct(UnitEnum $filter, ?float $minValue, ?float $maxValue, ?string $currency)
     {
         parent::__construct($filter);
 

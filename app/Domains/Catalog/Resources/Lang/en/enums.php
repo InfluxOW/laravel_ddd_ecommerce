@@ -1,6 +1,5 @@
 <?php
 
-use App\Components\Generic\Utils\EnumUtils;
 use App\Domains\Catalog\Enums\ProductAttributeValuesType;
 use App\Domains\Catalog\Enums\Query\Filter\ProductAllowedFilter;
 use App\Domains\Catalog\Enums\Query\Sort\ProductAllowedSort;
@@ -13,8 +12,7 @@ use App\Domains\Catalog\Enums\Translation\ProductResourceTranslationKey;
 
 return [
     ProductAllowedFilter::class => [
-        ProductAllowedFilter::TITLE->name => 'Title',
-        ProductAllowedFilter::DESCRIPTION->name => 'Description',
+        ProductAllowedFilter::SEARCH->name => 'Search',
         ProductAllowedFilter::PRICE_BETWEEN->name => 'Price',
         ProductAllowedFilter::CATEGORY->name => 'Category',
         ProductAllowedFilter::ATTRIBUTE_VALUE->name => 'Attribute',

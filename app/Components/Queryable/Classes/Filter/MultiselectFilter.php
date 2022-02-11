@@ -4,10 +4,10 @@ namespace App\Components\Queryable\Classes\Filter;
 
 use App\Components\Queryable\Classes\Filter\Resources\MultiselectFilter\NestedMultiselectFilterValues;
 use App\Components\Queryable\Enums\QueryFilterType;
-use BackedEnum;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection;
 use JetBrains\PhpStorm\ArrayShape;
+use UnitEnum;
 
 final class MultiselectFilter extends Filter
 {
@@ -16,7 +16,7 @@ final class MultiselectFilter extends Filter
     public Collection|EloquentCollection $selectedValues;
 
     protected function __construct(
-        BackedEnum $filter,
+        UnitEnum $filter,
         public readonly bool $isNested,
         public Collection|EloquentCollection $allowedValues
     ) {
@@ -24,23 +24,23 @@ final class MultiselectFilter extends Filter
     }
 
     /**
-     * @param BackedEnum $filter
+     * @param UnitEnum $filter
      * @param Collection<string>|EloquentCollection<string> $allowedValues
      *
      * @return self
      */
-    public static function createWithPlainValues(BackedEnum $filter, Collection|EloquentCollection $allowedValues): self
+    public static function createWithPlainValues(UnitEnum $filter, Collection|EloquentCollection $allowedValues): self
     {
         return new self($filter, false, $allowedValues);
     }
 
     /**
-     * @param BackedEnum $filter
+     * @param UnitEnum $filter
      * @param Collection<NestedMultiselectFilterValues> $allowedValues
      *
      * @return self
      */
-    public static function createWithNestedValues(BackedEnum $filter, Collection $allowedValues): self
+    public static function createWithNestedValues(UnitEnum $filter, Collection $allowedValues): self
     {
         return new self($filter, true, $allowedValues);
     }

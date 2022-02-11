@@ -46,8 +46,7 @@ final class ProductFilterService implements QueryService
     public function getAllowed(): Collection
     {
         return collect([
-            $this->filterBuilder->buildTitleFilter(),
-            $this->filterBuilder->buildDescriptionFilter(),
+            $this->filterBuilder->buildSearchFilter(),
             $this->filterBuilder->buildCurrencyFilter($this->productsQuery),
             $this->filterBuilder->buildPriceBetweenFilter($this->productsQuery, $this->currency),
             $this->filterBuilder->buildCategoryFilter($this->productsQuery),
@@ -61,8 +60,8 @@ final class ProductFilterService implements QueryService
     public function getAllowedFiltersForQuery(string $currency, array $validated): array
     {
         return [
-            AllowedFilter::partial(ProductAllowedFilter::TITLE->name, ProductAllowedFilter::TITLE->value),
-            AllowedFilter::partial(ProductAllowedFilter::DESCRIPTION->name, ProductAllowedFilter::DESCRIPTION->value),
+            /** @phpstan-ignore-next-line */
+            AllowedFilter::callback(ProductAllowedFilter::SEARCH->name, static fn (Builder|Product $query, string $searchable): Builder => $query->search($searchable)),
             AllowedFilter::callback(ProductAllowedFilter::CURRENCY->name, static fn (Builder|Product $query): Builder => $query->whereHasPriceCurrency($currency)),
             AllowedFilter::callback(ProductAllowedFilter::CATEGORY->name, static fn (Builder|Product $query): Builder => $query->whereInCategory(ProductCategory::query()->visible()->hasLimitedDepth()->whereIn('slug', $validated[QueryKey::FILTER->value][ProductAllowedFilter::CATEGORY->name])->get())),
             AllowedFilter::callback(ProductAllowedFilter::PRICE_BETWEEN->name, static fn (Builder|Product $query): Builder => $query->wherePriceBetween($currency, ...$validated[QueryKey::FILTER->value][ProductAllowedFilter::PRICE_BETWEEN->name])),

@@ -15,8 +15,7 @@ final class ProductIndexRequest extends FormRequest
         return [
             QueryKey::PAGE->value => ['nullable', 'int', 'min:1'],
             QueryKey::PER_PAGE->value => ['nullable', 'int', 'min:1', 'max:100'],
-            sprintf('%s.%s', QueryKey::FILTER->value, ProductAllowedFilter::TITLE->name) => ['nullable', 'string'],
-            sprintf('%s.%s', QueryKey::FILTER->value, ProductAllowedFilter::DESCRIPTION->name) => ['nullable', 'string'],
+            sprintf('%s.%s', QueryKey::FILTER->value, ProductAllowedFilter::SEARCH->name) => ['nullable', 'string'],
             sprintf('%s.%s', QueryKey::FILTER->value, ProductAllowedFilter::CATEGORY->name) => ['nullable', 'array'],
             sprintf('%s.%s.*', QueryKey::FILTER->value, ProductAllowedFilter::CATEGORY->name) => ['required', 'string'],
             sprintf('%s.%s', QueryKey::FILTER->value, ProductAllowedFilter::CURRENCY->name) => ['nullable', 'string', Rule::in(app(CatalogSettings::class)->available_currencies)],

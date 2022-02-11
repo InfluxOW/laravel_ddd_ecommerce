@@ -16,14 +16,9 @@ final class ProductFilterBuilder
     {
     }
 
-    public function buildTitleFilter(): Filter
+    public function buildSearchFilter(): Filter
     {
-        return new InputFilter(ProductAllowedFilter::TITLE);
-    }
-
-    public function buildDescriptionFilter(): Filter
-    {
-        return new InputFilter(ProductAllowedFilter::DESCRIPTION);
+        return new InputFilter(ProductAllowedFilter::SEARCH);
     }
 
     public function buildCurrencyFilter(SpatieQueryBuilder $productsQuery): Filter
