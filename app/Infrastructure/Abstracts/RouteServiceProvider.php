@@ -2,11 +2,8 @@
 
 namespace App\Infrastructure\Abstracts;
 
-use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as BaseRouteServiceProvider;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
-use Illuminate\Support\Facades\RateLimiter;
 
 abstract class RouteServiceProvider extends BaseRouteServiceProvider
 {
@@ -34,6 +31,6 @@ abstract class RouteServiceProvider extends BaseRouteServiceProvider
      */
     protected function configureRateLimiting(): void
     {
-        RateLimiter::for('api', static fn (Request $request) => Limit::perMinute(config('app.rate_limits.api'))->by($request->user()?->id ?? $request->ip()));
+        //
     }
 }
