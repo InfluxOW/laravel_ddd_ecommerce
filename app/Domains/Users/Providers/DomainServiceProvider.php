@@ -18,11 +18,4 @@ final class DomainServiceProvider extends ServiceProvider
         RouteServiceProvider::class,
         EventServiceProvider::class,
     ];
-
-    public function boot(): void
-    {
-        parent::boot();
-
-        User::observe([UserObserver::class]);
-    }
 }

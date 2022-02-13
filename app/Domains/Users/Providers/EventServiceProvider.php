@@ -2,6 +2,8 @@
 
 namespace App\Domains\Users\Providers;
 
+use App\Domains\Users\Models\User;
+use App\Domains\Users\Observers\UserObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as BaseEventServiceProvider;
@@ -26,6 +28,6 @@ final class EventServiceProvider extends BaseEventServiceProvider
      */
     public function boot()
     {
-        //
+        User::observe([UserObserver::class]);
     }
 }
