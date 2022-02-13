@@ -2,7 +2,7 @@
 
 namespace App\Domains\Generic\Providers;
 
-use App\Infrastructure\Abstracts\RouteServiceProvider as BaseRouteServiceProvider;
+use App\Infrastructure\Abstracts\Providers\RouteServiceProvider as BaseRouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Router;
 

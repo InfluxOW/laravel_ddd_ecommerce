@@ -2,7 +2,7 @@
 
 namespace App\Domains\Users\Http\Requests;
 
-use App\Infrastructure\Abstracts\FormRequest;
+use App\Infrastructure\Abstracts\Http\FormRequest;
 
 final class RegisterRequest extends FormRequest
 {

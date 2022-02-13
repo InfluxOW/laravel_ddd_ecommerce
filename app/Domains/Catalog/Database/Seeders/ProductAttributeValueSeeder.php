@@ -5,7 +5,7 @@ namespace App\Domains\Catalog\Database\Seeders;
 use App\Domains\Catalog\Models\Product;
 use App\Domains\Catalog\Models\ProductAttribute;
 use App\Domains\Catalog\Models\ProductAttributeValue;
-use App\Infrastructure\Abstracts\Seeder;
+use App\Infrastructure\Abstracts\Database\Seeder;
 use Exception;
 
 final class ProductAttributeValueSeeder extends Seeder

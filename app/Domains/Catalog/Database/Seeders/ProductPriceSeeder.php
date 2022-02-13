@@ -5,7 +5,7 @@ namespace App\Domains\Catalog\Database\Seeders;
 use App\Domains\Catalog\Models\Product;
 use App\Domains\Catalog\Models\ProductPrice;
 use App\Domains\Catalog\Models\Settings\CatalogSettings;
-use App\Infrastructure\Abstracts\Seeder;
+use App\Infrastructure\Abstracts\Database\Seeder;
 
 final class ProductPriceSeeder extends Seeder
 {

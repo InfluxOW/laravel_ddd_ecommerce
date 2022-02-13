@@ -4,7 +4,7 @@ namespace App\Domains\Generic\Utils;
 
 use App\Domains\Generic\Enums\EnvironmentVariable;
 use App\Domains\Generic\Enums\ServiceProviderNamespace;
-use App\Infrastructure\Abstracts\ServiceProvider;
+use App\Infrastructure\Abstracts\Providers\ServiceProvider;
 use Illuminate\Support\Str;
 
 final class AppUtils

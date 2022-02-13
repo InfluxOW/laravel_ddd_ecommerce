@@ -2,7 +2,7 @@
 
 namespace App\Domains\Feedback\Http\Requests;
 
-use App\Infrastructure\Abstracts\FormRequest;
+use App\Infrastructure\Abstracts\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 final class FeedbackRequest extends FormRequest

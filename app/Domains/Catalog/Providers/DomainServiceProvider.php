@@ -3,7 +3,7 @@
 namespace App\Domains\Catalog\Providers;
 
 use App\Domains\Generic\Enums\ServiceProviderNamespace;
-use App\Infrastructure\Abstracts\ServiceProvider;
+use App\Infrastructure\Abstracts\Providers\ServiceProvider;
 
 final class DomainServiceProvider extends ServiceProvider
 {

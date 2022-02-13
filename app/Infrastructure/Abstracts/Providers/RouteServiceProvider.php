@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\Abstracts;
+namespace App\Infrastructure\Abstracts\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as BaseRouteServiceProvider;
 use Illuminate\Routing\Router;
@@ -22,9 +22,25 @@ abstract class RouteServiceProvider extends BaseRouteServiceProvider
             ], function (Router $router): void {
                 $this->mapApiRoutes($router);
             });
+
+        $router
+            ->group([
+                'namespace' => $this->namespace,
+                'middleware' => ['web'],
+            ], function (Router $router): void {
+                $this->mapWebRoutes($router);
+            });
     }
 
-    abstract protected function mapApiRoutes(Router $router): void;
+    protected function mapApiRoutes(Router $router): void
+    {
+        //
+    }
+
+    protected function mapWebRoutes(Router $router): void
+    {
+        //
+    }
 
     /**
      * Configure the rate limiters for the application.

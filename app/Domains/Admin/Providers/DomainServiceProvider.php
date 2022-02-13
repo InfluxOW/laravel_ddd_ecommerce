@@ -4,7 +4,7 @@ namespace App\Domains\Admin\Providers;
 
 use App\Domains\Admin\Admin\Components\Widgets\CustomersChartWidget;
 use App\Domains\Generic\Enums\ServiceProviderNamespace;
-use App\Infrastructure\Abstracts\ServiceProvider;
+use App\Infrastructure\Abstracts\Providers\ServiceProvider;
 
 final class DomainServiceProvider extends ServiceProvider
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\Abstracts;
+namespace App\Infrastructure\Abstracts\Database;
 
 use App\Domains\Generic\Enums\EnvironmentVariable;
 use Illuminate\Database\Seeder as BaseSeeder;

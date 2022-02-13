@@ -5,7 +5,7 @@ namespace App\Domains\Feedback\Providers;
 use App\Domains\Feedback\Models\Feedback;
 use App\Domains\Feedback\Policies\FeedbackPolicy;
 use App\Domains\Generic\Enums\ServiceProviderNamespace;
-use App\Infrastructure\Abstracts\ServiceProvider;
+use App\Infrastructure\Abstracts\Providers\ServiceProvider;
 
 final class DomainServiceProvider extends ServiceProvider
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\Abstracts;
+namespace App\Infrastructure\Abstracts\Providers;
 
 use App\Domains\Generic\Enums\ServiceProviderNamespace;
 use App\Domains\Generic\Utils\PathUtils;

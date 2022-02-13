@@ -11,7 +11,7 @@ use App\Domains\Catalog\Database\Seeders\ProductSeeder;
 use App\Domains\Catalog\Models\ProductCategory;
 use App\Domains\Feedback\Database\Seeders\FeedbackSeeder;
 use App\Domains\Users\Database\Seeders\UserSeeder;
-use App\Infrastructure\Abstracts\Seeder;
+use App\Infrastructure\Abstracts\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
