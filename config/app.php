@@ -202,11 +202,13 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // ...
+        'Agent' => Jenssegers\Agent\Facades\Agent::class,
+        'GeoIP' => \Torann\GeoIP\Facades\GeoIP::class,
     ])->toArray(),
 
     'rate_limits' => [
         'api' => env('API_RATE_LIMIT', 60),
+        'hard' => env('HARD_RATE_LIMIT', 1),
     ],
 
 ];
