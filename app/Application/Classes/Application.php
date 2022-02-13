@@ -9,8 +9,17 @@ final class Application extends BaseApplication
 {
     protected function bindPathsInContainer(): void
     {
+        $this->databasePath = PathUtils::join([__DIR__, '..', '..', 'Domains', 'Generic', 'Database']);
+
         parent::bindPathsInContainer();
 
-        $this->useLangPath(PathUtils::join([__DIR__, '..', '..', 'Domains', 'Generic', 'Resources', 'Lang']));
+        $this->useLangPath($this->resourcePath('Lang'));
+    }
+
+    public function resourcePath($path = ''): string
+    {
+        $resourcePath = PathUtils::join([__DIR__, '..', '..', 'Domains', 'Generic', 'Resources']);
+
+        return ($path === '') ? $resourcePath : PathUtils::join([$resourcePath, $path]);
     }
 }
