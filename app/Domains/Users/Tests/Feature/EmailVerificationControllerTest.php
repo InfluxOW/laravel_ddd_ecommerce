@@ -69,6 +69,7 @@ final class EmailVerificationControllerTest extends TestCase
 
         // Previous token
         $previousToken = $token;
+        $this->travelTo($now->addMinute());
         $token = $this->getConfirmationToken();
         $this->post(route('user.verify.email', ['token' => $previousToken->token, 'email' => $this->user->email]))->assertStatus(Response::HTTP_NOT_FOUND);
 
