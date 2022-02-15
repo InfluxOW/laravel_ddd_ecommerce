@@ -17,11 +17,9 @@ final class LogoutController
      *      {"sanctum": {}},
      *    },
      *    @OA\Response(
-     *       response=200,
+     *       response=204,
      *       description="Successful logout",
-     *       @OA\JsonContent(
-     *          @OA\Property(property="message", type="string", example="You are successfully logged out."),
-     *       ),
+     *       @OA\JsonContent(),
      *    ),
      * )
      */

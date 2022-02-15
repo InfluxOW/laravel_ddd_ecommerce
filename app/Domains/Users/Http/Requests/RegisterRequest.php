@@ -14,4 +14,11 @@ final class RegisterRequest extends FormRequest
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'email.unique' => 'This email address is already taken',
+        ];
+    }
 }

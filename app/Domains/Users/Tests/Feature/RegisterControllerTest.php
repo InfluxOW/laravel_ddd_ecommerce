@@ -4,9 +4,11 @@ namespace App\Domains\Users\Tests\Feature;
 
 use App\Application\Tests\TestCase;
 use App\Domains\Users\Models\User;
+use App\Domains\Users\Notifications\EmailVerificationNotification;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Notification;
 
-class RegisterControllerTest extends TestCase
+final class RegisterControllerTest extends TestCase
 {
     protected array $validData;
 
@@ -20,26 +22,36 @@ class RegisterControllerTest extends TestCase
             Arr::only(User::factory()->make()->attributesToArray(), ['name', 'email']),
             ['password' => $password, 'password_confirmation' => $password],
         );
+
+        Notification::fake();
     }
 
     /** @test */
     public function a_user_can_register_with_valid_data(): void
     {
-        $this->assertDatabaseMissing('users', Arr::only($this->validData, ['name', 'email']));
+        $userData = Arr::only($this->validData, ['name', 'email']);
 
+        $this->assertDatabaseMissing('users', $userData);
         $this->post(route('register'), $this->validData)
-            ->assertOk()
-            ->assertJsonStructure(['user', 'access_token']);
+            ->assertCreated()
+            ->assertJsonStructure(['message']);
+        $this->assertDatabaseHas('users', $userData);
 
-        $this->assertDatabaseHas('users', Arr::only($this->validData, ['name', 'email']));
+        $user = User::query()->where('email', $userData['email'])->first();
+        $this->assertNotNull($user);
+
+        Notification::assertSentTo($user, EmailVerificationNotification::class);
     }
 
     /** @test */
     public function a_user_cannot_register_twice(): void
     {
-        $this->post(route('register'), $this->validData);
+        $this->post(route('register'), $this->validData)->assertCreated();
+        $this->post(route('register'), $this->validData)->assertUnprocessable();
 
-        $this->post(route('register'), $this->validData)
-            ->assertUnprocessable();
+        $user = User::query()->where('email', $this->validData['email'])->first();
+        $this->assertNotNull($user);
+
+        Notification::assertSentToTimes($user, EmailVerificationNotification::class);
     }
 }

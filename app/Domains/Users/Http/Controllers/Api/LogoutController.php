@@ -2,6 +2,7 @@
 
 namespace App\Domains\Users\Http\Controllers\Api;
 
+use App\Domains\Users\Events\Logout;
 use App\Domains\Users\Models\User;
 use App\Interfaces\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
@@ -16,6 +17,8 @@ final class LogoutController extends Controller
 
         $user->tokens()->delete();
 
-        return $this->respondWithMessage('You are successfully logged out.');
+        Logout::dispatch($user);
+
+        return $this->respondSuccess();
     }
 }

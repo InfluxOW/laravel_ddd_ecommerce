@@ -3,9 +3,13 @@
 namespace App\Domains\Users\Tests\Feature;
 
 use App\Application\Tests\TestCase;
+use App\Domains\Users\Events\EmailVerificationSucceeded;
 use App\Domains\Users\Models\User;
+use App\Domains\Users\Notifications\EmailVerificationNotification;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Notification;
 
-class LoginControllerTest extends TestCase
+final class LoginControllerTest extends TestCase
 {
     public User $user;
     public string $password;
@@ -20,31 +24,43 @@ class LoginControllerTest extends TestCase
 
         $this->password = $password;
         $this->user = $user;
+
+        Notification::fake();
     }
 
     /** @test */
     public function a_user_cannot_login_with_wrong_credentials(): void
     {
-        $this->post(route('login'), ['email' => $this->user->email, 'password' => 'wrong_password', 'remember' => false])
-            ->assertUnprocessable();
+        $this->post(route('login'), ['email' => $this->user->email, 'password' => 'wrong_password'])->assertUnprocessable();
     }
 
     /** @test */
-    public function a_user_can_login_with_correct_credentials(): void
+    public function a_user_can_login_with_correct_credentials_and_confirmed_email(): void
     {
-        $this->post(route('login'), ['email' => $this->user->email, 'password' => $this->password, 'remember' => false])
+        $this->user->email_verified_at = null;
+        $this->user->save();
+
+        $this->post(route('login'), ['email' => $this->user->email, 'password' => $this->password])->assertForbidden();
+
+        Notification::assertSentTo($this->user, EmailVerificationNotification::class, function (EmailVerificationNotification $notification): bool {
+            Event::fake();
+            $this->post(route('user.verify.email', ['token' => $notification->getTokenString(), 'email' => $this->user->email]))->assertNoContent();
+            Event::assertDispatched(EmailVerificationSucceeded::class);
+
+            return true;
+        });
+
+        $loginResponse = $this->post(route('login'), ['email' => $this->user->email, 'password' => $this->password])
             ->assertOk()
-            ->assertJsonStructure(['user', 'access_token']);
+            ->assertJsonStructure(['access_token']);
+        $accessToken = $loginResponse->json('access_token');
 
-        $this->assertAuthenticatedAs($this->user);
-    }
+        /*
+         * You should call any endpoint while being authenticated to
+         * have your guard's user set.
+         * */
+        $this->withHeader('Authorization', "Bearer {$accessToken}")->get('products.index');
 
-    /** @test */
-    public function a_user_is_considered_authenticated_via_using_bearer_token(): void
-    {
-        $token = $this->user->createToken('access_token')->plainTextToken;
-
-        $this->post(route('logout'), [], ['Authorization' => "Bearer {$token}"])
-            ->assertOk();
+        $this->assertAuthenticatedAs($this->user, 'sanctum');
     }
 }

@@ -15,6 +15,9 @@ parameters:
         - '#Access to an undefined property Squire\\Models#'
         - '#Model::make\(\)#'
         - '#\(Akaunting\\Money\\Money\) does not accept int#'
+        - '#\(Illuminate\\Support\\Carbon\|null\) does not accept Carbon\\Carbon#'
+
+        # Laravel 9 issues
         - '#Unable to resolve the template type TValue in call to function collect#'
         - '#Unable to resolve the template type TKey in call to function collect#'
         - '#Return type of call to function collect contains unresolvable type#'

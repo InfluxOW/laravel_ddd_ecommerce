@@ -3,6 +3,7 @@
 use App\Components\Mediable\Models\Media;
 use App\Components\Mediable\Services\Media\PathGenerator;
 use App\Components\Mediable\Services\Media\UrlGenerator;
+use App\Domains\Generic\Enums\QueueName;
 
 return [
 
@@ -22,7 +23,7 @@ return [
      * This queue will be used to generate derived and responsive images.
      * Leave empty to use the default queue.
      */
-    'queue_name' => 'resizer',
+    'queue_name' => QueueName::RESIZER->value,
 
     /*
      * By default all conversions will be performed on a queue.
