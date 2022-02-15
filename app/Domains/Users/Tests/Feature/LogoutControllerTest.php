@@ -4,8 +4,9 @@ namespace App\Domains\Users\Tests\Feature;
 
 use App\Application\Tests\TestCase;
 use App\Domains\Users\Models\User;
+use Illuminate\Support\Facades\Event;
 
-class LogoutControllerTest extends TestCase
+final class LogoutControllerTest extends TestCase
 {
     public User $user;
     public string $password;
@@ -20,6 +21,8 @@ class LogoutControllerTest extends TestCase
 
         $this->password = $password;
         $this->user = $user;
+
+        Event::fake();
     }
 
     /** @test */
@@ -30,11 +33,8 @@ class LogoutControllerTest extends TestCase
 
     /** @test
      */
-    public function an_unauthenticated_user_can_logout(): void
+    public function an_authenticated_user_can_logout(): void
     {
-        $this->post(route('login'), ['email' => $this->user->email, 'password' => $this->password, 'remember' => false]);
-
-        $this->post(route('logout'))
-            ->assertOk();
+        $this->actingAs($this->user)->post(route('logout'))->assertNoContent();
     }
 }

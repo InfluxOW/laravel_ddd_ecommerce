@@ -5,7 +5,9 @@ namespace App\Domains\Users\Models;
 use App\Components\Addressable\Models\Address;
 use App\Domains\Cart\Models\Cart;
 use App\Domains\Feedback\Models\Feedback;
+use App\Domains\Generic\Models\ConfirmationToken;
 use App\Domains\Users\Database\Factories\UserFactory;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -29,6 +31,8 @@ use Laravel\Sanctum\HasApiTokens;
  * @property-read int|null $addresses_count
  * @property-read \Illuminate\Database\Eloquent\Collection|Cart[] $carts
  * @property-read int|null $carts_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|ConfirmationToken[] $confirmationTokens
+ * @property-read int|null $confirmation_tokens_count
  * @property-read \Illuminate\Database\Eloquent\Collection|Feedback[] $feedback
  * @property-read int|null $feedback_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
@@ -50,7 +54,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-final class User extends Authenticatable
+final class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens;
     use HasFactory;
@@ -104,6 +108,11 @@ final class User extends Authenticatable
     public function feedback(): HasMany
     {
         return $this->hasMany(Feedback::class);
+    }
+
+    public function confirmationTokens(): HasMany
+    {
+        return $this->hasMany(ConfirmationToken::class);
     }
 
     /*

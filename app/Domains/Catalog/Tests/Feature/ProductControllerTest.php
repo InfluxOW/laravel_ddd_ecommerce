@@ -66,9 +66,10 @@ class ProductControllerTest extends TestCase
             $this->product->description, Str::words($this->product->description, 2, ''),
         ];
 
+        $productsCount = Product::query()->count();
         foreach ($queries as $query) {
             $filters = [ProductAllowedFilter::SEARCH->name => $query];
-            $response = $this->get(route('products.index', [QueryKey::FILTER->value => $filters]))->assertOk();
+            $response = $this->get(route('products.index', [QueryKey::FILTER->value => $filters, QueryKey::PER_PAGE->value => $productsCount]))->assertOk();
             $items = collect($response->json(ResponseKey::DATA->value));
             $appliedFilters = collect($response->json(sprintf('%s.%s.%s', ResponseKey::QUERY->value, QueryKey::FILTER->value, 'applied')));
 

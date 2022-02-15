@@ -11,10 +11,6 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "git@github.com:InfluxOW/L5-Swagger.git"
-        },
-        {
-            "type": "vcs",
             "url": "git@github.com:InfluxOW/baum.git"
         }
     ],
@@ -22,7 +18,7 @@
         "php": "^8.1",
         "akaunting/laravel-money": "^2.0",
         "baum/baum": "dev-add_laravel_9_support",
-        "darkaonline/l5-swagger": "dev-add_laravel_9_support",
+        "darkaonline/l5-swagger": "^8.3.0",
         "fakerphp/faker": "^1.9.1",
         "filament/filament": "^2.10",
         "filament/spatie-laravel-media-library-plugin": "^2.10",
