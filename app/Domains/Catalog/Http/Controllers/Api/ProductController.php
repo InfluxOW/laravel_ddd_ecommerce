@@ -22,7 +22,6 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Arr;
 use Spatie\QueryBuilder\QueryBuilder;
-use Symfony\Component\HttpFoundation\Response;
 
 final class ProductController extends Controller
 {
@@ -61,11 +60,7 @@ final class ProductController extends Controller
             ->where('slug', $slug)
             ->first();
 
-        if ($product === null) {
-            return $this->respondWithMessage("Product '{$slug}' was not found.", Response::HTTP_NOT_FOUND);
-        }
-
-        return $this->respondWithItem(HeavyProductResource::class, $product);
+        return ($product === null) ? $this->respondNotFound() : $this->respondWithItem(HeavyProductResource::class, $product);
     }
 
     private function getBaseProductsQuery(string $currency): Builder

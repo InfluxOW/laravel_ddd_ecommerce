@@ -13,19 +13,29 @@ use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 trait ResponseTrait
 {
-    protected function respondWithMessage(string $message, int $status = SymfonyResponse::HTTP_OK): JsonResponse
-    {
-        return response()->json([ResponseKey::MESSAGE->value => $message], $status);
-    }
-
     protected function respondWithCustomData(array $data, int $status = SymfonyResponse::HTTP_OK): JsonResponse
     {
         return response()->json($data, $status);
     }
 
+    protected function respondWithMessage(string $message, int $status = SymfonyResponse::HTTP_OK): JsonResponse
+    {
+        return $this->respondWithCustomData([ResponseKey::MESSAGE->value => $message], $status);
+    }
+
+    protected function respondWithStatus(int $status): JsonResponse
+    {
+        return $this->respondWithCustomData([], $status);
+    }
+
     protected function respondSuccess(): JsonResponse
     {
-        return response()->json([], SymfonyResponse::HTTP_NO_CONTENT);
+        return $this->respondWithStatus(SymfonyResponse::HTTP_NO_CONTENT);
+    }
+
+    protected function respondNotFound(): JsonResponse
+    {
+        return $this->respondWithStatus(SymfonyResponse::HTTP_NOT_FOUND);
     }
 
     /**

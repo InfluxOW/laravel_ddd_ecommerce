@@ -31,7 +31,7 @@ final class LoginController
      *    ),
      *    @OA\Response(
      *       response=403,
-     *       description="Forbidden",
+     *       description="Email verification required",
      *       @OA\JsonContent(
      *          @OA\Property(property="message", type="string", example="We sent a confirmation email to john_doe@mail.com. Please, follow the instructions to complete your registration."),
      *       ),
@@ -40,14 +40,28 @@ final class LoginController
      *       response=422,
      *       description="Validation Error",
      *       @OA\JsonContent(
-     *          @OA\Property(property="message", type="string", example="Sorry, wrong email address or password. Please, try again!"),
+     *          @OA\Property(property="message", type="string", example="The given data was invalid."),
+     *          @OA\Property(
+     *          nullable=true,
+     *          property="errors",
+     *          type="object",
+     *             @OA\Property(
+     *                property="email",
+     *                type="array",
+     *                collectionFormat="multi",
+     *                @OA\Items(
+     *                   type="string",
+     *                   example="The email must be a valid email address.",
+     *                ),
+     *             ),
+     *          ),
      *       ),
      *    ),
      *    @OA\Response(
      *       response=500,
      *       description="Login failed",
      *       @OA\JsonContent(
-     *          @OA\Property(property="message", type="string", example="Sorry, something went wrong. Please, try again later!"),
+     *          @OA\Property(property="message", type="string", enum={"Sorry, something went wrong. Please, try again later!"}),
      *       ),
      *    ),
      * )

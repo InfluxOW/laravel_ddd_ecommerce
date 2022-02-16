@@ -14,18 +14,9 @@ final class ProductController
      *    operationId="productsIndex",
      *    tags={"Products"},
      *    @OA\Parameter(
-     *       name="filter[TITLE]",
+     *       name="filter[SEARCH]",
      *       in="query",
-     *       description="Filter products by specific title",
-     *       required=false,
-     *       @OA\Schema(
-     *          type="string"
-     *       ),
-     *    ),
-     *    @OA\Parameter(
-     *       name="filter[DESCRIPTION]",
-     *       in="query",
-     *       description="Filter products by specific source",
+     *       description="Search products by custom query",
      *       required=false,
      *       @OA\Schema(
      *          type="string"
@@ -106,8 +97,8 @@ final class ProductController
      *             type="array",
      *             collectionFormat="multi",
      *             @OA\Items(
-     *               type="object",
-     *               ref="#/components/schemas/LightProduct",
+     *                type="object",
+     *                ref="#/components/schemas/LightProduct",
      *             ),
      *          ),
      *          @OA\Property(
@@ -194,7 +185,7 @@ final class ProductController
      *             collectionFormat="multi",
      *             @OA\Items(
      *                type="string",
-     *                example={"The filter.PRICE_BETWEEN must contain 2 items."},
+     *                example="The filter.PRICE_BETWEEN must contain 2 items.",
      *             ),
      *          ),
      *       ),
@@ -232,9 +223,7 @@ final class ProductController
      *    @OA\Response(
      *       response=404,
      *       description="Specified product has not been found",
-     *       @OA\JsonContent(
-     *          @OA\Property(property="message", type="string", example="Product 'test' was not found."),
-     *       ),
+     *       @OA\JsonContent(),
      *    ),
      * )
      */

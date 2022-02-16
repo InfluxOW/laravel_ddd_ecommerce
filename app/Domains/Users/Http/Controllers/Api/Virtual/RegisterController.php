@@ -32,24 +32,24 @@ final class RegisterController
      *       ),
      *    ),
      *    @OA\Response(
-     *    response=422,
-     *    description="Validation Error",
-     *    @OA\JsonContent(
-     *       @OA\Property(property="message", type="string", example="The given data was invalid."),
-     *       @OA\Property(
-     *       property="errors",
-     *       type="object",
+     *       response=422,
+     *       description="Validation Error",
+     *       @OA\JsonContent(
+     *          @OA\Property(property="message", type="string", example="The given data was invalid."),
      *          @OA\Property(
-     *             property="email",
-     *             type="array",
-     *             collectionFormat="multi",
-     *             @OA\Items(
-     *                type="string",
-     *                example={"The email must be a valid email address."},
+     *          property="errors",
+     *          type="object",
+     *             @OA\Property(
+     *                property="email",
+     *                type="array",
+     *                collectionFormat="multi",
+     *                @OA\Items(
+     *                   type="string",
+     *                   example="The email must be a valid email address.",
+     *                ),
      *             ),
      *          ),
      *       ),
-     *    ),
      *    ),
      * )
      */

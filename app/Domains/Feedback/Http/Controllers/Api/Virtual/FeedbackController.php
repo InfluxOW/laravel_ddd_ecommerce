@@ -43,7 +43,7 @@ final class FeedbackController
      *             collectionFormat="multi",
      *             @OA\Items(
      *                type="string",
-     *                example={"The email must be a valid email address."},
+     *                example="The email must be a valid email address.",
      *             ),
      *          ),
      *       ),

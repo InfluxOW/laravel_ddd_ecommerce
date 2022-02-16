@@ -10,7 +10,6 @@ use App\Domains\Users\Http\Requests\EmailVerificationRequest;
 use App\Domains\Users\Models\User;
 use App\Interfaces\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 
 final class EmailVerificationController extends Controller
 {
@@ -18,13 +17,13 @@ final class EmailVerificationController extends Controller
     {
         $user = User::query()->where('email', 'ILIKE', $request->email)->first();
         if ($user === null || $user->hasVerifiedEmail()) {
-            abort(Response::HTTP_NOT_FOUND);
+            return $this->respondNotFound();
         }
 
         try {
             $repository->consume($user, ConfirmationTokenType::EMAIL_VERIFICATION, $request->token);
         } catch (InvalidConfirmationTokenException) {
-            abort(Response::HTTP_NOT_FOUND);
+            return $this->respondNotFound();
         }
 
         $user->markEmailAsVerified();
