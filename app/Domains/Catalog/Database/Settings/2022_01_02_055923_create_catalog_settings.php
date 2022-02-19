@@ -3,7 +3,7 @@
 use App\Domains\Catalog\Providers\DomainServiceProvider;
 use Spatie\LaravelSettings\Migrations\SettingsMigration;
 
-class CreateCatalogSettings extends SettingsMigration
+return new class extends SettingsMigration
 {
     public function up(): void
     {
@@ -12,4 +12,4 @@ class CreateCatalogSettings extends SettingsMigration
         $this->migrator->add($getPropertyName('default_currency'), 'USD');
         $this->migrator->add($getPropertyName('available_currencies'), ['USD']);
     }
-}
+};

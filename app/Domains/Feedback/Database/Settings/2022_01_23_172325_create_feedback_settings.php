@@ -3,7 +3,7 @@
 use App\Domains\Feedback\Providers\DomainServiceProvider;
 use Spatie\LaravelSettings\Migrations\SettingsMigration;
 
-class CreateFeedbackSettings extends SettingsMigration
+return new class extends SettingsMigration
 {
     public function up(): void
     {
@@ -11,4 +11,4 @@ class CreateFeedbackSettings extends SettingsMigration
 
         $this->migrator->add($getPropertyName('feedback_limit_per_hour'), 1);
     }
-}
+};

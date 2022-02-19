@@ -11,7 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Arr;
 
-class FeedbackControllerTest extends TestCase
+final class FeedbackControllerTest extends TestCase
 {
     use WithFaker;
 

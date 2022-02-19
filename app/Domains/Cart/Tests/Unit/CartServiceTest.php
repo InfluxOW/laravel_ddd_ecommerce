@@ -11,7 +11,7 @@ use App\Domains\Catalog\Database\Seeders\ProductSeeder;
 use App\Domains\Catalog\Models\Product;
 use App\Domains\Catalog\Models\Settings\CatalogSettings;
 
-class CartServiceTest extends TestCase
+final class CartServiceTest extends TestCase
 {
     private CatalogSettings $settings;
     private CartService $service;

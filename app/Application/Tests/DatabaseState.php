@@ -2,7 +2,7 @@
 
 namespace App\Application\Tests;
 
-class DatabaseState
+final class DatabaseState
 {
     /**
      * Indicates if the suit's `setUpOnce` method should be executed.

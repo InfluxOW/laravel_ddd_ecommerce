@@ -160,7 +160,7 @@ final class ProductCategory extends Model
         return self::getHierarchy();
     }
 
-    public static function findInHierarchy(int $id, Collection $hierarchy): ?static
+    public static function findInHierarchy(int $id, Collection $hierarchy): ?self
     {
         $category = null;
         while ($hierarchy->isNotEmpty() && $category === null) {

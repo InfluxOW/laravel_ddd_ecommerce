@@ -21,7 +21,7 @@ use App\Domains\Generic\Utils\StringUtils;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 
-class ProductControllerTest extends TestCase
+final class ProductControllerTest extends TestCase
 {
     private Product $product;
     private CatalogSettings $settings;

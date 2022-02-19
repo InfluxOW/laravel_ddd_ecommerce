@@ -4,7 +4,7 @@ namespace App\Domains\Admin\Tests\Admin;
 
 use App\Application\Tests\Admin\AdminTestCase;
 
-class AdminPagesTest extends AdminTestCase
+final class AdminPagesTest extends AdminTestCase
 {
     /** @test */
     public function it_has_pages(): void

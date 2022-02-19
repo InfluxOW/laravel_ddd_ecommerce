@@ -10,7 +10,7 @@ use App\Domains\Users\Database\Seeders\UserSeeder;
 use App\Domains\Users\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
-class UserResourceTest extends AdminCrudTestCase
+final class UserResourceTest extends AdminCrudTestCase
 {
     protected ?string $listRecords = ListUsers::class;
     protected ?string $viewRecord = ViewUser::class;

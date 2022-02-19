@@ -6,7 +6,7 @@ use App\Application\Tests\TestCase;
 use App\Domains\Catalog\Database\Seeders\ProductCategorySeeder;
 use App\Domains\Catalog\Database\Seeders\ProductSeeder;
 
-class ProductCategoryControllerTest extends TestCase
+final class ProductCategoryControllerTest extends TestCase
 {
     protected function setUpOnce(): void
     {

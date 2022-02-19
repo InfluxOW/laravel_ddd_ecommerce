@@ -10,7 +10,7 @@ use App\Domains\Feedback\Models\Feedback;
 use App\Domains\Users\Database\Seeders\UserSeeder;
 use Illuminate\Database\Eloquent\Model;
 
-class FeedbackResourceTest extends AdminCrudTestCase
+final class FeedbackResourceTest extends AdminCrudTestCase
 {
     protected ?string $listRecords = ListFeedback::class;
     protected ?string $viewRecord = ViewFeedback::class;

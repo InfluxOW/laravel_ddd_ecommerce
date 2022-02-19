@@ -15,7 +15,7 @@ use App\Domains\Catalog\Database\Seeders\ProductSeeder;
 use App\Domains\Catalog\Models\Product;
 use Illuminate\Database\Eloquent\Model;
 
-class ProductResourceTest extends AdminCrudTestCase
+final class ProductResourceTest extends AdminCrudTestCase
 {
     protected ?string $listRecords = ListProducts::class;
     protected ?string $createRecord = CreateProduct::class;

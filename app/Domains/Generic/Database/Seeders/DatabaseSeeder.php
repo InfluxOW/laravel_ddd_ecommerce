@@ -13,7 +13,7 @@ use App\Domains\Feedback\Database\Seeders\FeedbackSeeder;
 use App\Domains\Users\Database\Seeders\UserSeeder;
 use App\Infrastructure\Abstracts\Database\Seeder;
 
-class DatabaseSeeder extends Seeder
+final class DatabaseSeeder extends Seeder
 {
     /**
      * Seed the application's database.
