@@ -17,6 +17,15 @@ final class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        Model::preventLazyLoading(! app()->isProduction());
+        $this->preventLazyLoading();
+    }
+
+    private function preventLazyLoading(): void
+    {
+        if (app()->isProduction()) {
+            return;
+        }
+
+        Model::preventLazyLoading();
     }
 }

@@ -14,7 +14,15 @@ final class ProductSeeder extends Seeder
      */
     public function run()
     {
-        $count = app()->runningUnitTests() ? 50 : 1000;
+        $count = 500;
+
+        if (app()->isLocal()) {
+            $count = 1000;
+        }
+
+        if (app()->runningUnitTests()) {
+            $count = 50;
+        }
 
         Product::factory()->count($count)->create();
     }

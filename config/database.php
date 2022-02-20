@@ -2,6 +2,18 @@
 
 use Illuminate\Support\Str;
 
+$dbUrl = (env('DATABASE_URL') === null) ? null : parse_url(env('DATABASE_URL'));
+$dbHost = isset($dbUrl) ? $dbUrl['host'] : env('DB_HOST', '127.0.0.1');
+$dbPort = isset($dbUrl) ? $dbUrl['port'] : env('DB_PORT', '5432');
+$dbDatabase = isset($dbUrl) ? ltrim($dbUrl['path'], '/') : env('DB_DATABASE', 'forge');
+$dbUsername = isset($dbUrl) ? $dbUrl['user'] : env('DB_USERNAME', 'forge');
+$dbPassword = isset($dbUrl) ? $dbUrl['pass'] : env('DB_PASSWORD', '');
+
+$redisUrl = (env('REDIS_URL') === null) ? null : parse_url(env('REDIS_URL'));
+$redisHost = isset($redisUrl) ? $redisUrl['host'] : env('REDIS_HOST', '127.0.0.1');
+$redisPassword = isset($redisUrl) ? $redisUrl['pass'] : env('REDIS_PASSWORD');
+$redisPort = isset($redisUrl) ? $redisUrl['port'] : env('REDIS_PORT', '6379');
+
 return [
 
     /*
@@ -46,11 +58,11 @@ return [
         'mysql' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+            'host' => $dbHost,
+            'port' => $dbPort,
+            'database' => $dbDatabase,
+            'username' => $dbUsername,
+            'password' => $dbPassword,
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
@@ -66,11 +78,11 @@ return [
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '5432'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+            'host' => $dbHost,
+            'port' => $dbPort,
+            'database' => $dbDatabase,
+            'username' => $dbUsername,
+            'password' => $dbPassword,
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
@@ -143,9 +155,9 @@ return [
 
         'default' => [
             'url' => env('REDIS_URL'),
-            'host' => env('REDIS_HOST', '127.0.0.1'),
-            'password' => env('REDIS_PASSWORD', null),
-            'port' => env('REDIS_PORT', '6379'),
+            'host' => $redisHost,
+            'password' => $redisPassword,
+            'port' => $redisPort,
             'database' => env('REDIS_DB', '0'),
             'options' => [
                 'serializer' => Redis::SERIALIZER_IGBINARY,
@@ -156,9 +168,9 @@ return [
 
         'cache' => [
             'url' => env('REDIS_URL'),
-            'host' => env('REDIS_HOST', '127.0.0.1'),
-            'password' => env('REDIS_PASSWORD', null),
-            'port' => env('REDIS_PORT', '6379'),
+            'host' => $redisHost,
+            'password' => $redisPassword,
+            'port' => $redisPort,
             'database' => env('REDIS_CACHE_DB', '1'),
             'options' => [
                 'serializer' => Redis::SERIALIZER_IGBINARY,

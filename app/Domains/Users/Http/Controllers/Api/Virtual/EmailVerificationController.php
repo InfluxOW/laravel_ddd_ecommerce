@@ -8,7 +8,7 @@ final class EmailVerificationController
 {
     /**
      * @OA\Post(
-     *    path="/user/email/verify",
+     *    path="/user/verify/email",
      *    summary="Verify Email",
      *    description="Confirm registration by verifying email",
      *    operationId="veryfyEmail",

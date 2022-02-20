@@ -211,4 +211,8 @@ return [
         'hard' => env('HARD_RATE_LIMIT', 1),
     ],
 
+    'admin' => [
+        'email' => env('ADMIN_EMAIL', 'admin@admin.com'),
+        'password' => env('ADMIN_PASSWORD', 'password'),
+    ],
 ];

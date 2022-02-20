@@ -14,9 +14,9 @@ final class AdminSeeder extends Seeder
      */
     public function run()
     {
-        $email = 'admin@admin.com';
+        $email = config('app.admin.email');
         if (Admin::query()->where('email', $email)->doesntExist()) {
-            Admin::factory()->create(['email' => $email]);
+            Admin::factory()->create(['email' => $email, 'password' => bcrypt(config('app.admin.password'))]);
         }
     }
 }

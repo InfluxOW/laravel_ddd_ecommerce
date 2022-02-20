@@ -1,6 +1,7 @@
 <?php
 
 use App\Domains\Admin\Admin\Components\Widgets\CustomersChartWidget;
+use App\Domains\Admin\Admin\Pages\Login;
 use App\Domains\Catalog\Admin\Pages\ManageCatalogSettings;
 use App\Domains\Catalog\Admin\Resources\ProductAttributeResource;
 use App\Domains\Catalog\Admin\Resources\ProductCategoryResource;
@@ -83,7 +84,7 @@ return [
     'auth' => [
         'guard' => env('FILAMENT_AUTH_GUARD', 'admin'),
         'pages' => [
-            'login' => \Filament\Http\Livewire\Auth\Login::class,
+            'login' => Login::class,
         ],
     ],
 

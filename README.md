@@ -1,6 +1,4 @@
-# WIP: Laravel DDD e-Commerce
-
-*<when I deploy the site, here will be a link>*
+# WIP: [Laravel DDD e-Commerce](http://laravel-ddd-ecommerce.herokuapp.com)
 
 <div align="center">
     <p>
@@ -40,8 +38,8 @@ idea or a team agreement than exact project structure. And that's why I've imple
 
 ### Generic Features
 
-- Swagger Documentation
-- Amazing [Filament](https://filamentadmin.com/) Admin Panel
+- [Swagger Documentation](http://laravel-ddd-ecommerce.herokuapp.com/api/documentation)
+- Amazing [Filament](https://filamentadmin.com/) [Admin Panel](http://laravel-ddd-ecommerce.herokuapp.com/admin/login)
 - RESTful API
 - High Test Coverage
 

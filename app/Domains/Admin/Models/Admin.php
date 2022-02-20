@@ -3,6 +3,7 @@
 namespace App\Domains\Admin\Models;
 
 use App\Domains\Admin\Database\Factories\AdminFactory;
+use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -32,7 +33,7 @@ use Illuminate\Notifications\Notifiable;
  * @method static \Illuminate\Database\Eloquent\Builder|Admin whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-final class Admin extends Authenticatable
+final class Admin extends Authenticatable implements FilamentUser
 {
     use HasFactory;
     use Notifiable;
@@ -65,5 +66,10 @@ final class Admin extends Authenticatable
     protected static function newFactory(): AdminFactory
     {
         return AdminFactory::new();
+    }
+
+    public function canAccessFilament(): bool
+    {
+        return true;
     }
 }
