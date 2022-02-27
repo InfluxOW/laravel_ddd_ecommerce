@@ -3,14 +3,19 @@
 namespace App\Domains\Catalog\Models;
 
 use App\Domains\Catalog\Database\Factories\ProductCategoryFactory;
+use App\Domains\Catalog\Enums\Media\ProductCategoryMediaCollectionKey;
 use Baum\NestedSet\Node;
 use Closure;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Redis;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -28,13 +33,20 @@ use Spatie\Sluggable\SlugOptions;
  * @property int|null $depth
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|\App\Components\Mediable\Models\Media[] $baseMedia
+ * @property-read int|null $base_media_count
  * @property-read \Illuminate\Database\Eloquent\Collection|ProductCategory[] $children
  * @property-read int|null $children_count
  * @property-read int $overall_products_count
  * @property-read string $path
  * @property-read int|null $products_count
+ * @property-read \App\Components\Mediable\Models\Media|null $image
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|\App\Components\Mediable\Models\Media[] $images
+ * @property-read int|null $images_count
  * @property-read \Illuminate\Database\Eloquent\Collection|ProductCategory[] $immediateDescendants
  * @property-read int|null $immediate_descendants_count
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|\App\Components\Mediable\Models\Media[] $media
+ * @property-read int|null $media_count
  * @property-read ProductCategory|null $parent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Domains\Catalog\Models\Product[] $products
  * @method static \App\Domains\Catalog\Database\Factories\ProductCategoryFactory factory(...$parameters)
@@ -60,11 +72,14 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|ProductCategory withoutSelf()
  * @mixin \Eloquent
  */
-final class ProductCategory extends Model
+final class ProductCategory extends Model implements HasMedia
 {
     use HasFactory;
     use HasSlug;
     use Node;
+    use InteractsWithMedia {
+        media as baseMedia;
+    }
 
     public const MAX_DEPTH = 3;
     protected const HIERARCHY_CACHE_KEY = 'hierarchy';
@@ -86,6 +101,21 @@ final class ProductCategory extends Model
     public function products(): BelongsToMany
     {
         return $this->belongsToMany(Product::class, 'product_categories_products', 'category_id', 'product_id')->withTimestamps();
+    }
+
+    public function media(): MorphMany
+    {
+        return $this->baseMedia()->orderBy('order_column');
+    }
+
+    public function images(): MorphMany
+    {
+        return $this->media()->where('collection_name', ProductCategoryMediaCollectionKey::IMAGES->value);
+    }
+
+    public function image(): MorphOne
+    {
+        return $this->morphOne(config('media-library.media_model'), 'model')->where('collection_name', ProductCategoryMediaCollectionKey::IMAGES->value);
     }
 
     /*
@@ -135,7 +165,15 @@ final class ProductCategory extends Model
 
     public static function loadHierarchy(): void
     {
-        $hierarchy = self::query()->hasLimitedDepth()->with(['parent', 'products' => fn (BelongsToMany $query): BelongsToMany => $query->select(['products.id'])])->get()->toHierarchy();
+        $hierarchy = self::query()
+            ->hasLimitedDepth()
+            ->with([
+                'parent',
+                'products' => fn (BelongsToMany $query): BelongsToMany => $query->select(['products.id']),
+                'images.model',
+            ])
+            ->get()
+            ->toHierarchy();
 
         Redis::set(self::getHierarchyCacheKey(), $hierarchy);
 

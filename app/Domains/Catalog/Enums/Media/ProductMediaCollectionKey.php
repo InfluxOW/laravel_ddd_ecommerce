@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Catalog\Enums;
+namespace App\Domains\Catalog\Enums\Media;
 
 enum ProductMediaCollectionKey: string
 {

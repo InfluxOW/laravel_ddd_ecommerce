@@ -2,9 +2,11 @@
 
 namespace App\Domains\Catalog\Admin\Resources;
 
+use App\Components\Mediable\Admin\Components\Fields\MediaLibraryFileUpload;
 use App\Domains\Admin\Admin\Abstracts\Resource;
 use App\Domains\Admin\Admin\Components\Cards\TimestampsCard;
 use App\Domains\Catalog\Admin\Resources\ProductCategoryResource\RelationManagers\ProductCategoryChildrenRelationManager;
+use App\Domains\Catalog\Enums\Media\ProductCategoryMediaCollectionKey;
 use App\Domains\Catalog\Enums\Translation\ProductCategoryResourceTranslationKey;
 use App\Domains\Catalog\Models\ProductCategory;
 use Filament\Forms\Components\BelongsToSelect;
@@ -22,6 +24,7 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Table;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
@@ -68,7 +71,16 @@ final class ProductCategoryResource extends Resource
                                     ->columnSpan(1),
                                 Placeholder::make(ProductCategoryResourceTranslationKey::PATH->value)
                                     ->content(fn (?ProductCategory $record): string => ($record === null || $record->path === '') ? '-' : $record->path)
-                                    ->columnSpan(2),
+                                    ->columnSpan(3),
+                                MediaLibraryFileUpload::make(ProductCategoryResourceTranslationKey::IMAGES->value)
+                                    ->collection(ProductCategoryMediaCollectionKey::IMAGES->value)
+                                    ->multiple()
+                                    ->minFiles(1)
+                                    ->maxFiles(3)
+                                    ->image()
+                                    ->preserveFilenames()
+                                    ->enableReordering()
+                                    ->columnSpan(3),
                             ])),
                         Tabs\Tab::make($statisticsTabTitle)
                             ->schema([
@@ -172,6 +184,11 @@ final class ProductCategoryResource extends Resource
             'edit' => \App\Domains\Catalog\Admin\Resources\ProductCategoryResource\Pages\EditProductCategory::route('/{record}/edit'),
             'view' => \App\Domains\Catalog\Admin\Resources\ProductCategoryResource\Pages\ViewProductCategory::route('/{record}'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->with(['media.model']);
     }
 
     /*

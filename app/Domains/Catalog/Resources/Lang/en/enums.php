@@ -38,6 +38,7 @@ return [
         ProductCategoryResourceTranslationKey::PARENT_TITLE->name => 'Parent',
         ProductCategoryResourceTranslationKey::LEFT->name => 'Position',
         ProductCategoryResourceTranslationKey::IS_VISIBLE->name => 'Is Visible',
+        ProductCategoryResourceTranslationKey::IMAGES->name => 'Images',
 
         ProductCategoryResourceTranslationKey::DEPTH->name => 'Depth',
     ],
