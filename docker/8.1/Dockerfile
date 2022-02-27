@@ -1,7 +1,5 @@
 FROM ubuntu:21.04
 
-LABEL maintainer="Taylor Otwell"
-
 ARG WWWGROUP
 
 WORKDIR /var/www/html
