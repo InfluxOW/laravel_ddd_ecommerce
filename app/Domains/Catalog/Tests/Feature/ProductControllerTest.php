@@ -17,8 +17,8 @@ use App\Domains\Catalog\Models\ProductCategory;
 use App\Domains\Catalog\Models\ProductPrice;
 use App\Domains\Catalog\Models\Settings\CatalogSettings;
 use App\Domains\Generic\Enums\Response\ResponseKey;
-use App\Domains\Generic\Utils\StringUtils;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
 final class ProductControllerTest extends TestCase
@@ -70,11 +70,11 @@ final class ProductControllerTest extends TestCase
         foreach ($queries as $query) {
             $filters = [ProductAllowedFilter::SEARCH->name => $query];
             $response = $this->get(route('products.index', [QueryKey::FILTER->value => $filters, QueryKey::PER_PAGE->value => $productsCount]))->assertOk();
-            $items = collect($response->json(ResponseKey::DATA->value));
+            $products = collect($response->json(ResponseKey::DATA->value));
             $appliedFilters = collect($response->json(sprintf('%s.%s.%s', ResponseKey::QUERY->value, QueryKey::FILTER->value, 'applied')));
 
-            $this->assertNotEmpty($items);
-            $this->assertContains($this->product->slug, $items->pluck('slug'));
+            $this->assertNotEmpty($products);
+            $this->assertContains($this->product->slug, $products->pluck('slug'));
             $this->assertCount(count($filters) + 1, $appliedFilters);
             $this->assertTrue($appliedFilters->pluck('query')->contains(ProductAllowedFilter::SEARCH->name));
         }
@@ -98,11 +98,11 @@ final class ProductControllerTest extends TestCase
             foreach ([$category->slug, implode(',', $query)] as $categoriesQuery) {
                 $filters = [ProductAllowedFilter::CATEGORY->name => $categoriesQuery];
                 $response = $this->get(route('products.index', [QueryKey::FILTER->value => $filters, QueryKey::PER_PAGE->value => $productsCount]))->assertOk();
-                $items = collect($response->json(ResponseKey::DATA->value));
+                $products = collect($response->json(ResponseKey::DATA->value));
                 $appliedFilters = collect($response->json(sprintf('%s.%s.%s', ResponseKey::QUERY->value, QueryKey::FILTER->value, 'applied')));
 
-                $this->assertNotEmpty($items);
-                $this->assertTrue($items->pluck('slug')->contains($product?->slug));
+                $this->assertNotEmpty($products);
+                $this->assertTrue($products->pluck('slug')->contains($product?->slug));
 
                 $this->assertCount(count($filters) + 1, $appliedFilters);
                 $this->assertTrue($appliedFilters->pluck('query')->contains(ProductAllowedFilter::CATEGORY->name));
@@ -140,7 +140,7 @@ final class ProductControllerTest extends TestCase
         foreach ($queries as [$minPrice, $maxPrice]) {
             $filters = [ProductAllowedFilter::PRICE_BETWEEN->name => "{$minPrice},{$maxPrice}"];
             $response = $this->get(route('products.index', [QueryKey::FILTER->value => $filters]))->assertOk();
-            $items = collect($response->json(ResponseKey::DATA->value));
+            $products = collect($response->json(ResponseKey::DATA->value));
             $appliedFilters = collect($response->json(sprintf('%s.%s.%s', ResponseKey::QUERY->value, QueryKey::FILTER->value, 'applied')));
 
             if (isset($minPrice, $maxPrice) && $maxPrice < $minPrice) {
@@ -160,9 +160,9 @@ final class ProductControllerTest extends TestCase
             $lowestAvailablePrice = money($minPriceQuery->min(ProductPrice::getDatabasePriceExpression()), $currency)->getValue();
             $highestAvailablePrice = money($maxPriceQuery->max(ProductPrice::getDatabasePriceExpression()), $currency)->getValue();
 
-            $this->assertNotEmpty($items);
-            $items->each(function (array $item) use ($minPrice, $maxPrice): void {
-                $actualPrice = $item['price_discounted']['value'] ?? $item['price']['value'];
+            $this->assertNotEmpty($products);
+            $products->each(function (array $product) use ($minPrice, $maxPrice): void {
+                $actualPrice = $product['price_discounted']['value'] ?? $product['price']['value'];
 
                 $result = true;
                 if (isset($minPrice)) {
@@ -188,78 +188,78 @@ final class ProductControllerTest extends TestCase
     /** @test */
     public function a_user_can_filter_products_by_attribute_values(): void
     {
-        /** @var Product $firstProduct */
-        $firstProduct = Product::query()->with(['attributeValues.attribute'])->whereHas('attributeValues', null, '>', 1)->inRandomOrder()->first();
-        $this->assertNotNull($firstProduct);
+        $nonBooleanAttributeValuesQuery = static fn (Builder|HasMany $query) => $query->whereHas('attribute', fn (Builder|HasMany $query) => $query->whereIn('values_type', [ProductAttributeValuesType::INTEGER, ProductAttributeValuesType::STRING, ProductAttributeValuesType::FLOAT]));
 
-        $originalValueToString = static fn (string|int|bool|float $originalValue, ProductAttributeValuesType $valueType): string => match ($valueType) {
-            ProductAttributeValuesType::BOOLEAN => StringUtils::boolToString((bool) $originalValue),
-            ProductAttributeValuesType::INTEGER, ProductAttributeValuesType::STRING, ProductAttributeValuesType::FLOAT => (string) $originalValue,
-        };
+        /** @var Product $teapot */
+        $teapot = Product::query()
+            ->with([
+                'attributeValues' => $nonBooleanAttributeValuesQuery,
+                'attributeValues.attribute',
+            ])
+            ->whereHas('attributeValues', $nonBooleanAttributeValuesQuery, '>', 1)
+            ->inRandomOrder()
+            ->first();
+        $this->assertNotNull($teapot);
 
         /**
-         * @var ProductAttributeValue $firstAttributeValue
-         * @var ProductAttributeValue $secondAttributeValue
+         * @var ProductAttributeValue $heightAttributeValue
+         * @var ProductAttributeValue $widthAttributeValue
          */
-        [$firstAttributeValue, $secondAttributeValue] = $firstProduct->attributeValues;
+        [$heightAttributeValue, $widthAttributeValue] = $teapot->attributeValues;
 
-        $firstAttribute = $firstAttributeValue->attribute;
-        $firstAttributeFirstValueOriginal = $firstAttributeValue->value;
-        /** @var bool|float|int|string $firstAttributeSecondValueOriginal */
-        $firstAttributeSecondValueOriginal = ProductAttributeValue::query()->whereBelongsTo($firstAttribute, 'attribute')->where(ProductAttributeValue::getDatabaseValueColumnByAttributeType($firstAttribute->values_type), '<>', $firstAttributeFirstValueOriginal)->inRandomOrder()->first()?->value;
+        $height = $heightAttributeValue->attribute;
+        $heightSmallValue = $heightAttributeValue->value;
+        /** @var float|int|string $heightGreatValue */
+        $heightGreatValue = ProductAttributeValue::query()
+            ->whereBelongsTo($height, 'attribute')
+            ->where(ProductAttributeValue::getDatabaseValueColumnByAttributeType($height->values_type), '<>', $heightSmallValue)
+            ->inRandomOrder()
+            ->first()
+            ?->value;
+        $this->assertNotNull($heightGreatValue);
 
-        $firstAttributeFirstValue = $originalValueToString($firstAttributeFirstValueOriginal, $firstAttribute->values_type);
-        $firstAttributeSecondValue = $originalValueToString($firstAttributeSecondValueOriginal, $firstAttribute->values_type);
+        $width = $widthAttributeValue->attribute;
+        $widthValue = $widthAttributeValue->value;
 
-        $secondAttribute = $secondAttributeValue->attribute;
-        $secondAttributeFirstValueOriginal = $secondAttributeValue->value;
-
-        /** @var Product $secondProduct */
-        $secondProduct = Product::query()
+        /** @var Product $tv */
+        $tv = Product::query()
             ->with(['attributeValues.attribute'])
-            ->whereHas('attributeValues', fn (Builder $query): Builder => $query->where(ProductAttributeValue::getDatabaseValueColumnByAttributeType($firstAttribute->values_type), $firstAttributeSecondValueOriginal))
+            ->whereHas('attributeValues', fn (Builder $query): Builder => $query->where(ProductAttributeValue::getDatabaseValueColumnByAttributeType($height->values_type), $heightGreatValue))
             ->first();
-        $this->assertNotNull($secondProduct);
+        $this->assertNotNull($tv);
 
-        /** @var ProductAttributeValue $attributeValueThatAddsSecondProductToTheSearch */
-        $attributeValueThatAddsSecondProductToTheSearch = $secondProduct->attributeValues->where('attribute.id', $secondAttribute->id)->isNotEmpty() ? $secondProduct->attributeValues->where('attribute.id', $secondAttribute->id)->first() : $secondProduct->attributeValues()->make();
-        $attributeValueThatAddsSecondProductToTheSearch->attribute()->associate($secondAttribute);
-        $attributeValueThatAddsSecondProductToTheSearch->value = $secondAttributeFirstValueOriginal;
-        $attributeValueThatAddsSecondProductToTheSearch->save();
+        /** @var ProductAttributeValue $tvWidthAttributeValue */
+        $tvWidthAttributeValue = $tv->attributeValues->where('attribute.id', $width->id)->isNotEmpty() ? $tv->attributeValues->where('attribute.id', $width->id)->first() : $tv->attributeValues()->make();
+        $tvWidthAttributeValue->attribute()->associate($width);
+        $tvWidthAttributeValue->value = $widthValue;
+        $tvWidthAttributeValue->save();
 
-        $secondAttributeFirstValue = $originalValueToString($secondAttributeFirstValueOriginal, $secondAttribute->values_type);
-
-        /*
-         * It should find products that both have first and second attributes,
-         * but first attribute may have one of 2 available values while second's
-         * attribute value is locked to 1 available value.
-         * */
         $query = [
-            $firstAttribute->slug => implode(',', [$firstAttributeFirstValue, $firstAttributeSecondValue]),
-            $secondAttribute->slug => $secondAttributeFirstValue,
+            $height->slug => implode(',', [$heightSmallValue, $heightGreatValue]),
+            $width->slug => $widthValue,
         ];
 
         $filters = [ProductAllowedFilter::ATTRIBUTE_VALUE->name => $query];
         $response = $this->get(route('products.index', [QueryKey::FILTER->value => $filters, QueryKey::PER_PAGE->value => Product::query()->count()]))->assertOk();
-        $items = collect($response->json(ResponseKey::DATA->value));
+        $products = collect($response->json(ResponseKey::DATA->value));
         $appliedFilters = collect($response->json(sprintf('%s.%s.%s', ResponseKey::QUERY->value, QueryKey::FILTER->value, 'applied')));
 
-        $this->assertNotEmpty($items);
-        $this->assertCount(2, $items);
-        $items->each(function (array $item) use ($firstAttribute, $secondAttribute, $firstAttributeFirstValueOriginal, $firstAttributeSecondValueOriginal, $secondAttributeFirstValueOriginal): void {
+        $this->assertNotEmpty($products);
+        $this->assertCount(2, $products);
+        $products->each(function (array $item) use ($height, $width, $heightSmallValue, $heightGreatValue, $widthValue): void {
             $item = $this->get($item['url'])->json(ResponseKey::DATA->value);
             $attributes = collect($item['attributes']);
 
-            $this->assertEquals($attributes->where('attribute.slug', $secondAttribute->slug)->first()['value'], $secondAttributeFirstValueOriginal);
-            $this->assertContains($attributes->where('attribute.slug', $firstAttribute->slug)->first()['value'], [$firstAttributeFirstValueOriginal, $firstAttributeSecondValueOriginal]);
+            $this->assertEquals($attributes->where('attribute.slug', $width->slug)->first()['value'], $widthValue);
+            $this->assertContains($attributes->where('attribute.slug', $height->slug)->first()['value'], [$heightSmallValue, $heightGreatValue]);
         });
 
         $this->assertCount(count($filters) + 1, $appliedFilters);
         $this->assertTrue($appliedFilters->pluck('query')->contains(ProductAllowedFilter::ATTRIBUTE_VALUE->name));
 
         $attributeValuesFilterValues = collect($appliedFilters->filter(fn (array $filter): bool => $filter['query'] === ProductAllowedFilter::ATTRIBUTE_VALUE->name)->first()['selected_values']);
-        $this->assertEqualsCanonicalizing([$firstAttributeFirstValue, $firstAttributeSecondValue], $attributeValuesFilterValues->where('attribute.query', $firstAttribute->slug)->first()['values']);
-        $this->assertEqualsCanonicalizing([$secondAttributeFirstValue], $attributeValuesFilterValues->where('attribute.query', $secondAttribute->slug)->first()['values']);
+        $this->assertEqualsCanonicalizing([$heightSmallValue, $heightGreatValue], $attributeValuesFilterValues->where('attribute.query', $height->slug)->first()['values']);
+        $this->assertEqualsCanonicalizing([$widthValue], $attributeValuesFilterValues->where('attribute.query', $width->slug)->first()['values']);
     }
 
     /** @test */
