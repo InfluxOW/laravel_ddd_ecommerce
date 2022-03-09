@@ -68,6 +68,8 @@ final class Media extends BaseMedia
 
     public function getTypeAttribute(): string
     {
-        return (MediaType::tryFrom(parent::getTypeAttribute()) ?? MediaType::OTHER)->name;
+        $parentGetType = $this->type()->get;
+
+        return (MediaType::tryFrom($parentGetType()) ?? MediaType::OTHER)->name;
     }
 }

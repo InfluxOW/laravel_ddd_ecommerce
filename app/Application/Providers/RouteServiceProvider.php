@@ -21,7 +21,7 @@ final class RouteServiceProvider extends BaseRouteServiceProvider
      */
     protected function configureRateLimiting(): void
     {
-        RateLimiter::for('api', static fn (Request $request) => Limit::perMinute(config('app.rate_limits.api'))->by($request->user()?->id ?? $request->ip()));
-        RateLimiter::for('hard', static fn (Request $request) => Limit::perMinute(config('app.rate_limits.hard'))->by($request->user()?->id ?? $request->ip()));
+        RateLimiter::for('api', static fn (Request $request) => Limit::perMinute(config('app.rate_limits.api'))->by((string) ($request->user()?->id ?? $request->ip())));
+        RateLimiter::for('hard', static fn (Request $request) => Limit::perMinute(config('app.rate_limits.hard'))->by((string) ($request->user()?->id ?? $request->ip())));
     }
 }
