@@ -13,7 +13,7 @@ sail-install:
 		--user "$(shell id -u):$(shell id -g)" \
 		--volume $(sail_dir):/var/www/html \
 		--workdir /var/www/html \
-		laravelsail/php80-composer:latest \
+		laravelsail/php81-composer:latest \
 		composer install --ignore-platform-reqs
 
 build:
