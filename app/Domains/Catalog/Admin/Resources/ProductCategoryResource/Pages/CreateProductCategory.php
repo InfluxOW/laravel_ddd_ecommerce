@@ -10,10 +10,10 @@ final class CreateProductCategory extends CreateRecord
 {
     protected static string $resource = ProductCategoryResource::class;
 
-    protected function getResourceForm(): Form
+    protected function getResourceForm(?int $columns = null): Form
     {
         if ($this->resourceForm === null) {
-            $this->resourceForm = ProductCategoryResource::form(Form::make()->columns(2))->schema(ProductCategoryResource::getCreationFormSchema());
+            $this->resourceForm = ProductCategoryResource::form(Form::make()->columns($columns))->schema(ProductCategoryResource::getCreationFormSchema());
         }
 
         return $this->resourceForm;

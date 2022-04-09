@@ -52,7 +52,7 @@ final class Admin extends Authenticatable implements FilamentUser
     /**
      * The attributes that should be hidden for serialization.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $hidden = [
         'password',
