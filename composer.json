@@ -72,7 +72,6 @@
         ],
         "post-install-cmd": [
             "@php -r \"copy('.githooks/pre-commit', '.git/hooks/pre-commit');\"",
-            "@php -r \"@mkdir('./vendor/spatie/laravel-package-tools/database/factories', 0777, true);\"",
             "@php artisan livewire:discover"
         ],
         "post-update-cmd": [
