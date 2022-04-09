@@ -18,7 +18,7 @@ services:
             - database_test
             - redis_test
     database_test:
-        image: 'postgres:14.1'
+        image: 'postgres:14.2'
         ports:
             - '${FORWARD_TEST_DB_PORT:-5433}:5432'
         environment:

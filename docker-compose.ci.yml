@@ -24,7 +24,7 @@ services:
             - redis_ci
         command: [ "make", "install", "lint", "analyse", "test-coverage" ]
     database_ci:
-        image: 'postgres:14.1-alpine'
+        image: 'postgres:14.2-alpine'
         environment:
             POSTGRES_HOST_AUTH_METHOD: trust
         healthcheck:
