@@ -1,6 +1,4 @@
 # For more information: https://laravel.com/docs/sail
-version: '3.8'
-
 services:
     application:
         build:
@@ -9,8 +7,6 @@ services:
             args:
                 WWWGROUP: '${WWWGROUP}'
         image: laravel-ddd-ecommerce
-        extra_hosts:
-            - 'host.docker.internal:host-gateway'
         ports:
             - '${APP_PORT:-80}:80'
         environment:
