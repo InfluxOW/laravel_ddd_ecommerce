@@ -6,58 +6,13 @@
 #                       #
 #########################
 
-# Source the ".env" file so Laravel's environment variables are available
-if [ -f ./.env ]; then
-    source ./.env
-fi
-
 PHPCS_BIN=./vendor/bin/phpcs
 PHPCBF_BIN=./vendor/bin/phpcbf
 PHPSTAN_BIN=./vendor/bin/phpstan
 SAIL_BIN=./tools/laravel/sail/vendor/bin/sail
 
-# Check for Laravel Sail, PHPCS, PHPCBF and PHPStan
-if [ ! -x $PHPCS_BIN ] || [ ! -x $PHPCBF_BIN ] || [ ! -x $PHPSTAN_BIN ] || [ ! -x $SAIL_BIN ]; then
-    echo "[PRE-COMMIT] Please, run 'make setup' to install necessary packages."
-    exit 1
-fi
-
-WHITE='\033[1;37m'
-NC='\033[0m'
-
-# Ensure that Docker is running
-if ! docker info >/dev/null 2>&1; then
-    echo -e "${WHITE}Docker is not running.${NC}" >&2
-
-    exit 1
-fi
-
-# Determine if Sail is currently up
-PSRESULT="$(docker-compose ps -q)"
-APP_SERVICE=${APP_SERVICE:-"laravel.test"}
-
-if docker-compose ps | grep $APP_SERVICE | grep 'Exit'; then
-    echo -e "${WHITE}Shutting down old Sail processes...${NC}" >&2
-
-    docker-compose down >/dev/null 2>&1
-
-    EXEC="no"
-elif [ -n "$PSRESULT" ]; then
-    EXEC="yes"
-else
-    EXEC="no"
-fi
-
-if [ "$EXEC" == "no" ]; then
-    echo -e "${WHITE}Sail is not running.${NC}" >&2
-    echo "" >&2
-    echo -e "${WHITE}You may Sail using the following commands:${NC} './vendor/bin/sail up' or './vendor/bin/sail up -d'" >&2
-
-    exit 1
-fi
-
 function sail() {
-    docker-compose exec -u sail -T "$APP_SERVICE" "$@" >/dev/null 2>&1
+    $SAIL_BIN "$@" >/dev/null 2>&1
 }
 
 #########################
