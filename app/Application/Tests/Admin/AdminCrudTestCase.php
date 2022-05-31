@@ -24,14 +24,30 @@ abstract class AdminCrudTestCase extends AdminTestCase
     {
         $record = $this->getRecord();
 
+        $this->testRecordsList();
+        $this->testRecordCreation();
+        $this->testRecordView($record);
+        $this->testRecordEditing($record);
+    }
+
+    abstract protected function getRecord(): ?Model;
+
+    private function testRecordsList(): void
+    {
         if (isset($this->listRecords)) {
             $this->getResourceActionUrl($this->listRecords)->assertOk();
         }
+    }
 
+    private function testRecordCreation(): void
+    {
         if (isset($this->createRecord)) {
             $this->getResourceActionUrl($this->createRecord)->assertOk();
         }
+    }
 
+    private function testRecordView(?Model $record): void
+    {
         if (isset($this->viewRecord)) {
             $this->assertNotNull($record);
             /** @phpstan-ignore-next-line  */
@@ -43,7 +59,10 @@ abstract class AdminCrudTestCase extends AdminTestCase
                 $this->getResourceActionUrl($this->viewRecord, ['record' => $record?->getKey(), 'activeRelationManager' => $relation])->assertOk();
             }
         }
+    }
 
+    private function testRecordEditing(?Model $record): void
+    {
         if (isset($this->editRecord)) {
             $this->assertNotNull($record);
             /** @phpstan-ignore-next-line  */
@@ -56,6 +75,4 @@ abstract class AdminCrudTestCase extends AdminTestCase
             }
         }
     }
-
-    abstract protected function getRecord(): ?Model;
 }
