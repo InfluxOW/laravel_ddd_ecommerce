@@ -3,7 +3,7 @@
 namespace App\Domains\Admin\Traits\Translation;
 
 use App\Domains\Admin\Enums\Translation\AdminModalTranslationKey;
-use Filament\Tables\Actions\Concerns\CanOpenModal;
+use Filament\Support\Actions\Concerns\CanOpenModal;
 use UnitEnum;
 
 trait HasTranslatableAdminActionsModals
