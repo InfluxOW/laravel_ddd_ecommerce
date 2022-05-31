@@ -58,7 +58,7 @@ final class ProductController
      *       in="query",
      *       description="Filter products by having one of the specific attribute values. Multiple values can be provided with comma separated strings.",
      *       required=false,
-     *       example={"filter[attribute][width]": "20,30,50", "filter[attribute][height]": "50,60,70"},
+     *       example={"filter[ATTRIBUTE][width]": "20,30,50", "filter[ATTRIBUTE][height]": "50,60,70"},
      *       @OA\Schema(
      *          type="object",
      *       ),

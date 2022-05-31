@@ -5,13 +5,18 @@ namespace App\Domains\Catalog\Enums\Query\Sort;
 /**
  * @OA\Schema()
  */
-enum ProductAllowedSort: string
+enum ProductAllowedSort
 {
-    case TITLE = 'title';
-    case PRICE = 'price';
-    case CREATED_AT = 'created_at';
+    case TITLE;
+    case PRICE;
+    case CREATED_AT;
 
-    case TITLE_DESC = '-title';
-    case PRICE_DESC = '-price';
-    case CREATED_AT_DESC = '-created_at';
+    case TITLE_DESC;
+    case PRICE_DESC;
+    case CREATED_AT_DESC;
+
+    public function getDatabaseField(): string
+    {
+        return str($this->name)->replaceLast('_DESC', '')->lower()->value();
+    }
 }
