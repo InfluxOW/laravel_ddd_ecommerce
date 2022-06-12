@@ -43,7 +43,7 @@ services:
         ports:
             - '${FORWARD_REDIS_PORT:-6379}:6379'
         volumes:
-            - 'sailredis:/data'
+            - 'redis:/data'
         networks:
             - sail
         healthcheck:
@@ -65,5 +65,5 @@ networks:
 volumes:
     database:
         driver: local
-    sailredis:
+    redis:
         driver: local
