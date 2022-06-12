@@ -7,9 +7,9 @@ install:
 	php artisan migrate:fresh
 
 test:
-	php artisan test -vvv
+	php artisan test --parallel -vvv
 test-coverage:
-	XDEBUG_MODE=coverage php artisan test --coverage-clover storage/logs/clover.xml
+	XDEBUG_MODE=coverage php artisan test --parallel --coverage-clover storage/logs/clover.xml
 
 lint:
 	composer exec phpcs --verbose 2>/dev/null
