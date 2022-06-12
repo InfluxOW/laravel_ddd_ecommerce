@@ -2,13 +2,14 @@
 services:
     application_ci:
         build:
-            context: ./docker/php/8.1
+            context: './docker/php/${PHP_VERSION}'
             dockerfile: Dockerfile
             args:
                 WWWGROUP: '${WWWGROUP}'
         image: laravel-ddd-ecommerce
         environment:
             WWWUSER: '${WWWUSER}'
+            PHP_VERSION: '${PHP_VERSION}'
             LARAVEL_SAIL: 1
             DB_CONNECTION: pgsql
             DB_DATABASE: postgres
@@ -24,9 +25,10 @@ services:
             - redis_ci
         command: [ "make", "install", "lint", "analyse", "test-coverage" ]
     database_ci:
-        image: 'postgres:14.2-alpine'
+        image: 'postgres:${POSTGRES_VERSION}-alpine'
         environment:
             POSTGRES_HOST_AUTH_METHOD: trust
+            POSTGRES_VERSION: '${POSTGRES_VERSION}'
         healthcheck:
             test: [ "CMD", "pg_isready", "-q", "-d", "${DB_DATABASE}", "-U", "${DB_USERNAME}" ]
             retries: 3
@@ -34,7 +36,9 @@ services:
         networks:
             - sail_ci
     redis_ci:
-        image: 'redis:6.2.6-alpine'
+        image: 'redis:${REDIS_VERSION}-alpine'
+        environment:
+            REDIS_VERSION: '${REDIS_VERSION}'
         healthcheck:
             test: [ "CMD", "redis-cli", "ping" ]
             retries: 3

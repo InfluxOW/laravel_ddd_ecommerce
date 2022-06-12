@@ -2,7 +2,7 @@
 services:
     application:
         build:
-            context: ./docker/php/8.1
+            context: './docker/php/${PHP_VERSION}'
             dockerfile: Dockerfile
             args:
                 WWWGROUP: '${WWWGROUP}'
@@ -11,6 +11,7 @@ services:
             - '${APP_PORT:-80}:80'
         environment:
             WWWUSER: '${WWWUSER}'
+            PHP_VERSION: '${PHP_VERSION}'
             LARAVEL_SAIL: 1
             XDEBUG_MODE: '${SAIL_XDEBUG_MODE:-off}'
             XDEBUG_CONFIG: '${SAIL_XDEBUG_CONFIG:-client_host=host.docker.internal}'
@@ -22,7 +23,7 @@ services:
             - database
             - redis
     database:
-        image: 'postgres:14.2'
+        image: 'postgres:${POSTGRES_VERSION}'
         ports:
             - '${FORWARD_DB_PORT:-5432}:5432'
         environment:
@@ -30,6 +31,7 @@ services:
             POSTGRES_DB: '${DB_DATABASE}'
             POSTGRES_USER: '${DB_USERNAME}'
             POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
+            POSTGRES_VERSION: '${POSTGRES_VERSION}'
         volumes:
             - 'database:/var/lib/postgresql/data'
         networks:
@@ -39,9 +41,11 @@ services:
             retries: 3
             timeout: 5s
     redis:
-        image: 'redis:6.2.6-alpine'
+        image: 'redis:${REDIS_VERSION}'
         ports:
             - '${FORWARD_REDIS_PORT:-6379}:6379'
+        environment:
+            REDIS_VERSION: '${REDIS_VERSION}'
         volumes:
             - 'redis:/data'
         networks:
