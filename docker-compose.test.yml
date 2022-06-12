@@ -11,6 +11,7 @@ services:
             WWWUSER: '${WWWUSER}'
             PHP_VERSION: '${PHP_VERSION}'
             LARAVEL_SAIL: 1
+            XDEBUG_MODE: '${SAIL_XDEBUG_MODE:-off}'
         volumes:
             - '.:/var/www/html'
         networks:
