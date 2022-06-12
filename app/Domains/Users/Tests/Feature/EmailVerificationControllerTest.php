@@ -15,8 +15,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class EmailVerificationControllerTest extends TestCase
 {
-    public User $user;
-    public string $password;
+    private User $user;
+    private string $password;
 
     protected function setUp(): void
     {

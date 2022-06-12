@@ -11,8 +11,8 @@ use Illuminate\Support\Facades\Notification;
 
 final class LoginControllerTest extends TestCase
 {
-    public User $user;
-    public string $password;
+    private User $user;
+    private string $password;
 
     protected function setUp(): void
     {

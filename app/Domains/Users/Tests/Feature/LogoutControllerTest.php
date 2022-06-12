@@ -8,8 +8,7 @@ use Illuminate\Support\Facades\Event;
 
 final class LogoutControllerTest extends TestCase
 {
-    public User $user;
-    public string $password;
+    private User $user;
 
     protected function setUp(): void
     {
@@ -19,7 +18,6 @@ final class LogoutControllerTest extends TestCase
         /** @var User $user */
         $user = User::factory()->create(['password' => bcrypt($password)]);
 
-        $this->password = $password;
         $this->user = $user;
 
         Event::fake();
