@@ -16,17 +16,28 @@ jobs:
                 uses: satackey/action-docker-layer-caching@main-release
                 continue-on-error: true
 
-            -   name: Get Composer cache directory
+                # https://help.github.com/en/actions/configuring-and-managing-workflows/caching-dependencies-to-speed-up-workflows
+
+            -   name: Get Composer Cache Directory
                 id: composer-cache
                 run: echo "::set-output name=dir::$(composer config cache-files-dir)"
 
-                # https://help.github.com/en/actions/configuring-and-managing-workflows/caching-dependencies-to-speed-up-workflows
-            -   name: Cache Composer dependencies
+            -   name: Cache Composer Dependencies
                 uses: actions/cache@main
                 with:
                     path: ${{ steps.composer-cache.outputs.dir }}
                     key: composer-${{ hashFiles('**/composer.lock') }}
                     restore-keys: composer-
+
+            -   name: Get NPM Cache Directory
+                id: npm-cache-dir
+                run: echo "::set-output name=dir::$(npm config get cache)"
+
+            -   uses: actions/cache@main
+                with:
+                    path: ${{ steps.npm-cache-dir.outputs.dir }}
+                    key: node-${{ hashFiles('**/package-lock.json') }}
+                    restore-keys: node-
 
             -   name: Cache PHPStan analysis
                 uses: actions/cache@main

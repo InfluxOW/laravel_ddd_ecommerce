@@ -79,7 +79,6 @@ final class Kernel extends HttpKernel
 
     protected $middlewarePriority = [
         ForceJsonResponse::class,
-        AddTimestamp::class,
         Authenticate::class,
         SubstituteBindings::class,
         Authorize::class,
@@ -88,5 +87,6 @@ final class Kernel extends HttpKernel
         ConvertEmptyStringsToNull::class,
         TrustProxies::class,
         SetCacheHeaders::class,
+        AddTimestamp::class,
     ];
 }

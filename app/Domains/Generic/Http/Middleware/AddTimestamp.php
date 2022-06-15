@@ -9,11 +9,13 @@ use Illuminate\Http\Request;
 
 final class AddTimestamp
 {
-    public function handle(Request $request, Closure $next): JsonResponse
+    public function handle(Request $request, Closure $next): mixed
     {
-        /** @var JsonResponse $response */
         $response = $next($request);
-        $response->setData(array_merge_recursive($response->getData(assoc: true), ['meta' => ['timestamp' => intdiv((int) Carbon::now()->format('Uu'), 1000)]]));
+
+        if ($response instanceof JsonResponse) {
+            $response->setData(array_merge_recursive($response->getData(assoc: true), ['meta' => ['timestamp' => intdiv((int) Carbon::now()->format('Uu'), 1000)]]));
+        }
 
         return $response;
     }

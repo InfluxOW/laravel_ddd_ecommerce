@@ -55,6 +55,7 @@
         "jenssegers/agent": "^2.6",
         "laravel/framework": "^9.0",
         "laravel/horizon": "^5.9",
+        "laravel/octane": "^1.2",
         "laravel/sanctum": "^2.14",
         "laravel/tinker": "^2.7",
         "league/flysystem-aws-s3-v3": "^3.0",

@@ -6,12 +6,11 @@ use App\Components\Queryable\Enums\QueryKey;
 use App\Domains\Catalog\Enums\Query\Filter\ProductAllowedFilter;
 use App\Domains\Catalog\Models\Settings\CatalogSettings;
 use Closure;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 final class SetDefaultCurrency
 {
-    public function handle(Request $request, Closure $next): JsonResponse
+    public function handle(Request $request, Closure $next): mixed
     {
         /**
          * @var array $filters

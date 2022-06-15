@@ -102,7 +102,7 @@ return [
             'enabled' => env('CLOCKWORK_ROUTES_ENABLED', false),
 
             // Collect only routes from particular namespaces (only application routes by default)
-            'only_namespaces' => [ 'App' ],
+            'only_namespaces' => ['App'],
         ],
 
         // Rendered views
@@ -180,8 +180,9 @@ return [
 
         // List of URIs that should be collected, any other URI will not be collected if not empty
         'only' => [
-             '/api/.*',
-             '/admin/.*',
+            // TODO: For some reason not working with Laravel Octane server
+            // '/api/.*',
+            // '/admin/.*',
         ],
 
         // Don't collect OPTIONS requests, mostly used in the CSRF pre-flight requests and are rarely of interest
@@ -297,7 +298,7 @@ return [
     // SQL database to use, can be a name of database configured in database.php or a path to a SQLite file
     'storage_sql_database' => env('CLOCKWORK_STORAGE_SQL_DATABASE', storage_path('clockwork.sqlite')),
 
-    // SQL table name to use, the table is automatically created and udpated when needed
+    // SQL table name to use, the table is automatically created and updated when needed
     'storage_sql_table' => env('CLOCKWORK_STORAGE_SQL_TABLE', 'clockwork'),
 
     // Maximum lifetime of collected metadata in minutes, older requests will automatically be deleted, false to disable
