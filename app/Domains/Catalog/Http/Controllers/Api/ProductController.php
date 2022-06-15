@@ -66,6 +66,7 @@ final class ProductController extends Controller
     private function getBaseProductsQuery(string $currency): Builder
     {
         return Product::query()
+            ->select(['products.*'])
             /** @phpstan-ignore-next-line */
             ->whereHas('categories', fn (Builder|ProductCategory $query): Builder => $query->visible())
             ->with([
