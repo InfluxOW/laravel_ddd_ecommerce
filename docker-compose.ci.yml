@@ -11,11 +11,11 @@ services:
             WWWUSER: '${WWWUSER}'
             PHP_VERSION: '${PHP_VERSION}'
             LARAVEL_SAIL: 1
-            DB_CONNECTION: pgsql
             DB_DATABASE: postgres
             DB_USERNAME: postgres
             DB_HOST: database_ci
             REDIS_HOST: redis_ci
+            XDEBUG_MODE: '${SAIL_XDEBUG_MODE:-off}'
         volumes:
             - '.:/var/www/html'
         networks:
@@ -24,6 +24,7 @@ services:
             - database_ci
             - redis_ci
         command: [ "make", "install", "lint", "analyse", "test-coverage" ]
+
     database_ci:
         image: 'postgres:${POSTGRES_VERSION}-alpine'
         environment:
@@ -35,6 +36,7 @@ services:
             timeout: 5s
         networks:
             - sail_ci
+
     redis_ci:
         image: 'redis:${REDIS_VERSION}-alpine'
         environment:

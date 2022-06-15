@@ -22,6 +22,7 @@ services:
         depends_on:
             - database
             - redis
+
     database:
         image: 'postgres:${POSTGRES_VERSION}'
         ports:
@@ -40,6 +41,7 @@ services:
             test: [ "CMD", "pg_isready", "-q", "-d", "${DB_DATABASE}", "-U", "${DB_USERNAME}" ]
             retries: 3
             timeout: 5s
+
     redis:
         image: 'redis:${REDIS_VERSION}'
         ports:
@@ -54,6 +56,7 @@ services:
             test: [ "CMD", "redis-cli", "ping" ]
             retries: 3
             timeout: 5s
+
     mailhog:
         image: 'mailhog/mailhog:latest'
         ports:

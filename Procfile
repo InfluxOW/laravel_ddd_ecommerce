@@ -1,4 +1,4 @@
-web: vendor/bin/heroku-php-apache2 public/
+web: php artisan octane:start --server=swoole --host=0.0.0.0 --port=$PORT
 release: ./release.sh
 
 queues: php artisan queue:work --name=queues --queue=default,resizer,notifications --timeout=1800 --tries=5

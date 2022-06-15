@@ -40,3 +40,16 @@ ci: sail-install
 	$(sail) -f docker-compose.ci.yml build
 	$(sail) -f docker-compose.ci.yml up --abort-on-container-exit
 	$(sail) -f docker-compose.ci.yml down --volumes --remove-orphans
+
+# Tests
+
+tests:
+	$(sail) -f docker-compose.test.yml run application_test bash -c "make test"
+
+# Misc
+
+fix-rights:
+	sudo chown -R $(shell whoami) .
+	sudo chmod -R 777 storage/
+	$(sail) php artisan cache:clear
+	$(sail) composer dump-autoload
