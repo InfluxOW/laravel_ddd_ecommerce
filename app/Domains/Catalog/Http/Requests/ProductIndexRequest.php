@@ -33,7 +33,7 @@ final class ProductIndexRequest extends FormRequest
             $this->merge([
                 QueryKey::FILTER->value => array_merge(
                     $filter,
-                    array_key_exists(ProductAllowedFilter::CATEGORY->name, $filter) ? [ProductAllowedFilter::CATEGORY->name => explode(',', $filter[ProductAllowedFilter::CATEGORY->name])] : [],
+                    array_key_exists(ProductAllowedFilter::CATEGORY->name, $filter) ? [ProductAllowedFilter::CATEGORY->name => explode(',', is_array($filter[ProductAllowedFilter::CATEGORY->name]) ? implode(',', $filter[ProductAllowedFilter::CATEGORY->name]) : $filter[ProductAllowedFilter::CATEGORY->name])] : [],
                     array_key_exists(ProductAllowedFilter::PRICE_BETWEEN->name, $filter) ? [ProductAllowedFilter::PRICE_BETWEEN->name => array_map(static fn (string $value): ?int => ($value === '') ? null : (int) money($value, $filter[ProductAllowedFilter::CURRENCY->name], true)->getAmount(), explode(',', $filter[ProductAllowedFilter::PRICE_BETWEEN->name]))] : [],
                     array_key_exists(ProductAllowedFilter::ATTRIBUTE_VALUE->name, $filter) ? [ProductAllowedFilter::ATTRIBUTE_VALUE->name => array_map(static fn (string $value): array => explode(',', $value), (array) $filter[ProductAllowedFilter::ATTRIBUTE_VALUE->name])] : [],
                 ),
