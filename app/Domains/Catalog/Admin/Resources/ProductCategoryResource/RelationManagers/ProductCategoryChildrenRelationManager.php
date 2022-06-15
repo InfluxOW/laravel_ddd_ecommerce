@@ -10,8 +10,7 @@ use App\Domains\Catalog\Models\ProductCategory;
 use Baum\Node;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
-use Filament\Tables\Actions\ButtonAction;
-use Filament\Tables\Actions\LinkAction;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -33,12 +32,12 @@ final class ProductCategoryChildrenRelationManager extends HasManyRelationManage
             ->prependActions([
                 ViewAction::create()->url(fn (ProductCategory $record): string => route('filament.resources.catalog/categories.view', $record)),
             ])
-            ->pushActions([
-                LinkAction::make(' | '),
+            ->appendActions([
+                Action::make(' | '),
                 /* @phpstan-ignore-next-line */
-                ButtonAction::make('↑')->action(fn (ProductCategory $record): ProductCategory|Node => ($record->left === $record->parent?->children->min('left')) ? $record : $record->moveLeft()),
+                Action::make('↑')->button()->action(fn (ProductCategory $record): ProductCategory|Node => ($record->left === $record->parent?->children->min('left')) ? $record : $record->moveLeft()),
                 /* @phpstan-ignore-next-line */
-                ButtonAction::make('↓')->action(fn (ProductCategory $record): ProductCategory|Node => ($record->left === $record->parent?->children->max('left')) ? $record : $record->moveRight()),
+                Action::make('↓')->button()->action(fn (ProductCategory $record): ProductCategory|Node => ($record->left === $record->parent?->children->max('left')) ? $record : $record->moveRight()),
             ])
             ->columns(self::setTranslatableLabels([
                 TextColumn::make(ProductCategoryResourceTranslationKey::LEFT->value),
@@ -52,6 +51,7 @@ final class ProductCategoryChildrenRelationManager extends HasManyRelationManage
 
     protected function getTableQuery(): Builder
     {
+        /* @phpstan-ignore-next-line */
         return parent::getTableQuery()->orderBy('left');
     }
 
