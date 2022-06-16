@@ -6,7 +6,7 @@ services:
             dockerfile: Dockerfile
             args:
                 WWWGROUP: '${WWWGROUP}'
-        image: laravel-ddd-ecommerce
+        image: '${APPLICATION_IMAGE}'
         ports:
             - '${APP_PORT:-80}:80'
         environment:

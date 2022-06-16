@@ -6,7 +6,7 @@ services:
             dockerfile: Dockerfile
             args:
                 WWWGROUP: '${WWWGROUP}'
-        image: laravel-ddd-ecommerce
+        image: '${APPLICATION_IMAGE}'
         environment:
             WWWUSER: '${WWWUSER}'
             PHP_VERSION: '${PHP_VERSION}'
