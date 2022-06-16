@@ -37,7 +37,7 @@ restart: stop start
 
 ci: sail-install
 	cp --no-clobber .env.example .env || true
-	$(sail) -f docker-compose.ci.yml build
+	$(sail) -f docker-compose.ci.yml pull --ignore-pull-failures
 	$(sail) -f docker-compose.ci.yml up --abort-on-container-exit
 	$(sail) -f docker-compose.ci.yml down --volumes --remove-orphans
 

@@ -12,9 +12,25 @@ jobs:
         steps:
             -   uses: actions/checkout@main
 
-            -   name: Cache Docker images
-                uses: satackey/action-docker-layer-caching@main-release
-                continue-on-error: true
+            -   name: Set Up Docker Buildx
+                uses: docker/setup-buildx-action@master
+
+            -   name: Login to Docker Hub
+                uses: docker/login-action@master
+                with:
+                    username: ${{ secrets.DOCKER_HUB_USERNAME }}
+                    password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+            -   name: Docker Build && Push
+                uses: docker/build-push-action@master
+                with:
+                    context: ./docker/php/${{ secrets.PHP_VERSION }}/
+                    builder: ${{ steps.buildx.outputs.name }}
+                    push: true
+                    tags: ${{ secrets.APPLICATION_IMAGE }}
+                    cache-from: type=gha
+                    cache-to: type=gha,mode=max
+                    build-args: WWWGROUP=1000
 
                 # https://help.github.com/en/actions/configuring-and-managing-workflows/caching-dependencies-to-speed-up-workflows
 
@@ -40,7 +56,7 @@ jobs:
                     key: node-${{ hashFiles('**/package-lock.json') }}
                     restore-keys: node-
 
-            -   name: Cache PHPStan analysis
+            -   name: Cache PHPStan Analysis
                 uses: actions/cache@main
                 with:
                     path: storage/phpstan
@@ -49,6 +65,8 @@ jobs:
 
             -   name: Run CI
                 run: make ci
+                env:
+                    APPLICATION_IMAGE: ${{ secrets.APPLICATION_IMAGE }}
 
             -   name: Upload Coverage to CodeCov.io
                 uses: codecov/codecov-action@master
