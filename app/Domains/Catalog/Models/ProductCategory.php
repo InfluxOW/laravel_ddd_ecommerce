@@ -227,6 +227,7 @@ final class ProductCategory extends Model implements HasMedia
     public static function mapHierarchy(Closure $map, Collection $hierarchy): Collection
     {
         return $hierarchy
+            ->filter()
             ->map(fn (self $item): Collection => collect($map($item))->merge(self::mapHierarchy($map, $item->children)))
             ->flatten();
     }
