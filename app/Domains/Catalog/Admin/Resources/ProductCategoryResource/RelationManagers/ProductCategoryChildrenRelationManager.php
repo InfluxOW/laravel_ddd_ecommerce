@@ -9,6 +9,8 @@ use App\Domains\Catalog\Enums\Translation\ProductCategoryResourceTranslationKey;
 use App\Domains\Catalog\Models\ProductCategory;
 use Baum\Node;
 use Filament\Resources\Form;
+use Filament\Resources\Pages\Page;
+use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Table;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
@@ -33,11 +35,12 @@ final class ProductCategoryChildrenRelationManager extends HasManyRelationManage
                 ViewAction::create()->url(fn (ProductCategory $record): string => route('filament.resources.catalog/categories.view', $record)),
             ])
             ->appendActions([
-                Action::make(' | '),
                 /* @phpstan-ignore-next-line */
-                Action::make('↑')->button()->action(fn (ProductCategory $record): ProductCategory|Node => ($record->left === $record->parent?->children->min('left')) ? $record : $record->moveLeft()),
+                Action::make(' | ')->visible(fn (Page|RelationManager $livewire, ProductCategory $record) => $livewire->canEdit($record)),
                 /* @phpstan-ignore-next-line */
-                Action::make('↓')->button()->action(fn (ProductCategory $record): ProductCategory|Node => ($record->left === $record->parent?->children->max('left')) ? $record : $record->moveRight()),
+                Action::make('↑')->button()->action(fn (ProductCategory $record): ProductCategory|Node => ($record->left === $record->parent?->children->min('left')) ? $record : $record->moveLeft())->visible(fn (Page|RelationManager $livewire, ProductCategory $record) => $livewire->canEdit($record)),
+                /* @phpstan-ignore-next-line */
+                Action::make('↓')->button()->action(fn (ProductCategory $record): ProductCategory|Node => ($record->left === $record->parent?->children->max('left')) ? $record : $record->moveRight())->visible(fn (Page|RelationManager $livewire, ProductCategory $record) => $livewire->canEdit($record)),
             ])
             ->columns(self::setTranslatableLabels([
                 TextColumn::make(ProductCategoryResourceTranslationKey::LEFT->value),
