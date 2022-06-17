@@ -17,7 +17,7 @@ use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Tables\Columns\BooleanColumn;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\TernaryFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -64,7 +64,6 @@ final class FeedbackResource extends Resource
 
     public static function form(Form $form): Form
     {
-
         return $form
             ->schema([
                 Card::make()
@@ -105,12 +104,12 @@ final class FeedbackResource extends Resource
                 TextColumn::make(FeedbackResourceTranslationKey::CREATED_AT->value)->sortable()->dateTime(),
             ]))
             ->filters(self::setTranslatableLabels([
-                Filter::make(FeedbackResourceTranslationKey::IS_REVIEWED->value)
-                    ->form(self::setTranslatableLabels([
-                        Toggle::make(FeedbackResourceTranslationKey::IS_REVIEWED->value)->required(),
-                    ]))
-                    ->query(fn (Builder $query, array $data): Builder => $query->where('is_reviewed', $data[FeedbackResourceTranslationKey::IS_REVIEWED->value])),
-            ]))->pushBulkActions([
+                TernaryFilter::make(FeedbackResourceTranslationKey::IS_REVIEWED->value)
+                    ->queries(
+                        true: fn (Builder $query): Builder => $query->where('is_reviewed', true),
+                        false: fn (Builder $query): Builder => $query->where('is_reviewed', false),
+                    ),
+            ]))->appendBulkActions([
                 BulkUpdateAction::create()
                     ->action(function (Collection $records, array $data): void {
                         $records->each(function (Feedback $feedback) use ($data): void {
