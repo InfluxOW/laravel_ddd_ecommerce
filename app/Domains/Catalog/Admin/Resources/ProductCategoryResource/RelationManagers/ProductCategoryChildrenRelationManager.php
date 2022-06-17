@@ -16,7 +16,6 @@ use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Request;
 
 final class ProductCategoryChildrenRelationManager extends HasManyRelationManager
 {
@@ -87,12 +86,14 @@ final class ProductCategoryChildrenRelationManager extends HasManyRelationManage
         return $this->shouldBeDisplayed();
     }
 
-    private function shouldBeDisplayed(): bool
+    protected function getParentResource(): string
     {
-        return collect([
-            ProductCategoryResource::getUrl('view', $this->ownerRecord->getKey()),
-            route('livewire.message', ['catalog.admin.resources.product-category-resource.pages.view-product-category']),
-        ])->doesntContain(Request::url());
+        return ProductCategoryResource::class;
+    }
+
+    protected function getViewPage(): string
+    {
+        return ProductCategoryResource\Pages\ViewProductCategory::class;
     }
 
     /*

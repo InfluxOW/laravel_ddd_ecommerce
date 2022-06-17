@@ -14,7 +14,6 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Table;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Request;
 
 final class ProductPricesRelationManager extends HasManyRelationManager
 {
@@ -103,12 +102,14 @@ final class ProductPricesRelationManager extends HasManyRelationManager
         return $this->shouldBeDisplayed();
     }
 
-    private function shouldBeDisplayed(): bool
+    protected function getParentResource(): string
     {
-        return collect([
-            ProductResource::getUrl('view', $this->ownerRecord->getKey()),
-            route('livewire.message', ['catalog.admin.resources.product-resource.pages.view-product']),
-        ])->doesntContain(Request::url());
+        return ProductResource::class;
+    }
+
+    protected function getViewPage(): string
+    {
+        return ProductResource\Pages\ViewProduct::class;
     }
 
     /*
