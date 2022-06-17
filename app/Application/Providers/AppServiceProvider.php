@@ -16,6 +16,7 @@ final class AppServiceProvider extends ServiceProvider
     {
         $this->app->register(RouteServiceProvider::class);
         $this->app->register(HorizonServiceProvider::class);
+        $this->app->register(TelescopeServiceProvider::class);
     }
 
     public function boot(): void
