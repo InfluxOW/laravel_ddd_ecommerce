@@ -26,18 +26,43 @@ final class ProductIndexRequest extends FormRequest
         ];
     }
 
-    protected function prepareForValidation()
+    protected function prepareForValidation(): void
     {
-        $filter = $this->filter;
+        $filter = $this->{QueryKey::FILTER->value};
         if (isset($filter)) {
+            $filters = $filter;
+
+            $this->prepareCategoryFilterData($filters);
+            $this->preparePriceBetweenFilterData($filters);
+            $this->prepareAttributeValueFilterData($filters);
+
             $this->merge([
-                QueryKey::FILTER->value => array_merge(
-                    $filter,
-                    array_key_exists(ProductAllowedFilter::CATEGORY->name, $filter) ? [ProductAllowedFilter::CATEGORY->name => explode(',', is_array($filter[ProductAllowedFilter::CATEGORY->name]) ? implode(',', $filter[ProductAllowedFilter::CATEGORY->name]) : $filter[ProductAllowedFilter::CATEGORY->name])] : [],
-                    array_key_exists(ProductAllowedFilter::PRICE_BETWEEN->name, $filter) ? [ProductAllowedFilter::PRICE_BETWEEN->name => array_map(static fn (string $value): ?int => ($value === '') ? null : (int) money($value, $filter[ProductAllowedFilter::CURRENCY->name], true)->getAmount(), explode(',', $filter[ProductAllowedFilter::PRICE_BETWEEN->name]))] : [],
-                    array_key_exists(ProductAllowedFilter::ATTRIBUTE_VALUE->name, $filter) ? [ProductAllowedFilter::ATTRIBUTE_VALUE->name => array_map(static fn (string $value): array => explode(',', $value), (array) $filter[ProductAllowedFilter::ATTRIBUTE_VALUE->name])] : [],
-                ),
+                QueryKey::FILTER->value => $filters,
             ]);
+        }
+    }
+
+    private function prepareCategoryFilterData(array &$filters): void
+    {
+        if (array_key_exists(ProductAllowedFilter::CATEGORY->name, $filters)) {
+            $categories = is_array($filters[ProductAllowedFilter::CATEGORY->name]) ? implode(',', $filters[ProductAllowedFilter::CATEGORY->name]) : $filters[ProductAllowedFilter::CATEGORY->name];
+            $filters[ProductAllowedFilter::CATEGORY->name] = explode(',', $categories);
+        }
+    }
+
+    private function preparePriceBetweenFilterData(array &$filters): void
+    {
+        if (array_key_exists(ProductAllowedFilter::PRICE_BETWEEN->name, $filters)) {
+            [$from, $to] = explode(',', $filters[ProductAllowedFilter::PRICE_BETWEEN->name]);
+            $getPriceAmount = static fn (string $value): ?int => ($value === '') ? null : (int) money($value, $filters[ProductAllowedFilter::CURRENCY->name], true)->getAmount();
+            $filters[ProductAllowedFilter::PRICE_BETWEEN->name] = array_map($getPriceAmount, [$from, $to]);
+        }
+    }
+
+    private function prepareAttributeValueFilterData(array &$filters): void
+    {
+        if (array_key_exists(ProductAllowedFilter::ATTRIBUTE_VALUE->name, $filters)) {
+            $filters[ProductAllowedFilter::ATTRIBUTE_VALUE->name] = array_map(static fn (string $value): array => explode(',', $value), (array) $filters[ProductAllowedFilter::ATTRIBUTE_VALUE->name]);
         }
     }
 }
