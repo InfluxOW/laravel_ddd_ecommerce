@@ -44,8 +44,11 @@ final class ProductPricesRelationManager extends HasManyRelationManager
                     ->required()
                     ->integer()
                     ->disabled(fn (callable $get): bool => $get(ProductPriceResourceTranslationKey::CURRENCY->value) === null)
-                    ->afterStateHydrated(function (TextInput $component, array $state): void {
-                        $component->state($state['amount']);
+                    ->afterStateHydrated(function (TextInput $component, ?array $state): void {
+                        $amount = $state['amount'] ?? null;
+                        if (isset($amount)) {
+                            $component->state($amount);
+                        }
                     })
                     ->dehydrateStateUsing(fn (string $state): int => (int) $state),
                 TextInput::make(ProductPriceResourceTranslationKey::PRICE_DISCOUNTED->value)
