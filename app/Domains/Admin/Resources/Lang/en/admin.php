@@ -1,7 +1,7 @@
 <?php
 
-use App\Domains\Admin\Admin\Components\Actions\BulkUpdateAction;
-use App\Domains\Admin\Admin\Components\Actions\DeleteAction;
+use App\Domains\Admin\Admin\Components\Actions\Tables\BulkUpdateAction;
+use App\Domains\Admin\Admin\Components\Actions\Tables\DeleteAction;
 use App\Domains\Admin\Admin\Components\Widgets\CustomersChartWidget;
 use App\Domains\Admin\Enums\Translation\AdminModalTranslationKey;
 use App\Domains\Admin\Enums\Translation\AdminWidgetPropertyTranslationKey;

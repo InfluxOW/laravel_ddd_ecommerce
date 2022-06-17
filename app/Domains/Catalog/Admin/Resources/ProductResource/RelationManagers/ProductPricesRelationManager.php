@@ -2,7 +2,7 @@
 
 namespace App\Domains\Catalog\Admin\Resources\ProductResource\RelationManagers;
 
-use App\Domains\Admin\Admin\Abstracts\RelationManagers\HasManyRelationManager;
+use App\Domains\Admin\Admin\Abstracts\RelationManager;
 use App\Domains\Catalog\Admin\Resources\ProductResource;
 use App\Domains\Catalog\Enums\Translation\ProductPriceResourceTranslationKey;
 use App\Domains\Catalog\Models\Product;
@@ -10,12 +10,11 @@ use App\Domains\Catalog\Models\Settings\CatalogSettings;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
-use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Table;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
 
-final class ProductPricesRelationManager extends HasManyRelationManager
+final class ProductPricesRelationManager extends RelationManager
 {
     protected static string $relationship = 'prices';
 
@@ -105,14 +104,9 @@ final class ProductPricesRelationManager extends HasManyRelationManager
         return $this->shouldBeDisplayed();
     }
 
-    protected function getParentResource(): string
+    protected function getViewableResourcesMap(): array
     {
-        return ProductResource::class;
-    }
-
-    protected function getViewPage(): string
-    {
-        return ProductResource\Pages\ViewProduct::class;
+        return [ProductResource::class => ProductResource\Pages\ViewProduct::class];
     }
 
     /*

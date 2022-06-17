@@ -4,7 +4,7 @@ namespace App\Components\Addressable\Admin\RelationManagers;
 
 use App\Components\Addressable\Enums\Translation\AddressesRelationManagerTranslationKey;
 use App\Components\Addressable\Models\Address;
-use App\Domains\Admin\Admin\Abstracts\RelationManagers\MorphManyRelationManager;
+use App\Domains\Admin\Admin\Abstracts\RelationManager;
 use App\Domains\Users\Admin\Resources\UserResource;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -12,11 +12,10 @@ use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Request;
 use Squire\Models\Country;
 use Squire\Models\Region;
 
-final class AddressesRelationManager extends MorphManyRelationManager
+final class AddressesRelationManager extends RelationManager
 {
     protected static ?string $recordTitleAttribute = 'string_representation';
     protected static string $relationship = 'addresses';
@@ -97,12 +96,9 @@ final class AddressesRelationManager extends MorphManyRelationManager
         return $this->shouldBeDisplayed();
     }
 
-    private function shouldBeDisplayed(): bool
+    protected function getViewableResourcesMap(): array
     {
-        return collect([
-            UserResource::getUrl('view', $this->ownerRecord->getKey()),
-            route('livewire.message', ['generic.admin.resources.user-resource.pages.view-user']),
-        ])->doesntContain(Request::url());
+        return [UserResource::class => UserResource\Pages\ViewUser::class];
     }
 
     /*

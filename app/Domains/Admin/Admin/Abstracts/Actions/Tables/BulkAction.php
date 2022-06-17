@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Admin\Admin\Abstracts\Actions;
+namespace App\Domains\Admin\Admin\Abstracts\Actions\Tables;
 
 use App\Domains\Admin\Traits\Translation\HasTranslatableAdminActionsModals;
 use App\Domains\Admin\Traits\Translation\HasTranslatableAdminLabels;

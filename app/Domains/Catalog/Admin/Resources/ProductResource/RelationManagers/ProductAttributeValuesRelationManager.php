@@ -2,7 +2,7 @@
 
 namespace App\Domains\Catalog\Admin\Resources\ProductResource\RelationManagers;
 
-use App\Domains\Admin\Admin\Abstracts\RelationManagers\HasManyRelationManager;
+use App\Domains\Admin\Admin\Abstracts\RelationManager;
 use App\Domains\Catalog\Admin\Resources\ProductResource;
 use App\Domains\Catalog\Enums\ProductAttributeValuesType;
 use App\Domains\Catalog\Enums\Translation\ProductAttributeValueResourceTranslationKey;
@@ -17,7 +17,7 @@ use Filament\Resources\Table;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
 
-final class ProductAttributeValuesRelationManager extends HasManyRelationManager
+final class ProductAttributeValuesRelationManager extends RelationManager
 {
     protected static string $relationship = 'attributeValues';
 
@@ -27,14 +27,14 @@ final class ProductAttributeValuesRelationManager extends HasManyRelationManager
             ->schema(self::setTranslatableLabels([
                 BelongsToSelect::make(ProductAttributeValueResourceTranslationKey::ATTRIBUTE->value)
                     ->required()
-                    ->id(function (HasManyRelationManager $livewire): string {
+                    ->id(function (RelationManager $livewire): string {
                         /** @var Product $product */
                         $product = $livewire->ownerRecord;
 
                         return $product->attributeValues->pluck('attribute_id')->implode('|');
                     })
                     ->relationship('attribute', 'title')
-                    ->options(function (?ProductAttributeValue $record, HasManyRelationManager $livewire): array {
+                    ->options(function (?ProductAttributeValue $record, RelationManager $livewire): array {
                         if ($livewire->canCreate()) {
                             /** @var Product $product */
                             $product = $livewire->ownerRecord;
@@ -53,7 +53,7 @@ final class ProductAttributeValuesRelationManager extends HasManyRelationManager
                         return [$record->attribute->id => $record->attribute->title];
                     })
                     ->reactive()
-                    ->searchable(fn (HasManyRelationManager $livewire): bool => $livewire->canCreate()),
+                    ->searchable(fn (RelationManager $livewire): bool => $livewire->canCreate()),
                 TextInput::make(ProductAttributeValueResourceTranslationKey::VALUE_STRING->value)
                     ->required()
                     ->hidden(fn (callable $get): bool => $get(ProductAttributeValueResourceTranslationKey::ATTRIBUTE->value) === null)
@@ -117,14 +117,9 @@ final class ProductAttributeValuesRelationManager extends HasManyRelationManager
         return $this->shouldBeDisplayed();
     }
 
-    protected function getParentResource(): string
+    protected function getViewableResourcesMap(): array
     {
-        return ProductResource::class;
-    }
-
-    protected function getViewPage(): string
-    {
-        return ProductResource\Pages\ViewProduct::class;
+        return [ProductResource::class => ProductResource\Pages\ViewProduct::class];
     }
 
     /*
