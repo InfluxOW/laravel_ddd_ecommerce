@@ -16,6 +16,11 @@ final class Application extends BaseApplication
         $this->useLangPath($this->resourcePath('Lang'));
     }
 
+    public function databasePath($path = ''): string
+    {
+        return str_replace('migrations', 'Migrations', parent::databasePath($path));
+    }
+
     public function resourcePath($path = ''): string
     {
         $resourcePath = PathUtils::join([__DIR__, '..', '..', 'Domains', 'Generic', 'Resources']);
