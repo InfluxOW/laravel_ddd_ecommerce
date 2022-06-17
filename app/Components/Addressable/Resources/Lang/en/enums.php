@@ -5,8 +5,8 @@ use App\Components\Addressable\Enums\Translation\AddressesRelationManagerTransla
 return [
     AddressesRelationManagerTranslationKey::class => [
         AddressesRelationManagerTranslationKey::ZIP->name => 'Zip / Postal Code',
-        AddressesRelationManagerTranslationKey::REGION->name => 'Country',
-        AddressesRelationManagerTranslationKey::COUNTRY->name => 'Region',
+        AddressesRelationManagerTranslationKey::REGION->name => 'Region',
+        AddressesRelationManagerTranslationKey::COUNTRY->name => 'Country',
         AddressesRelationManagerTranslationKey::CITY->name => 'City',
         AddressesRelationManagerTranslationKey::STREET->name => 'Street Address',
     ],

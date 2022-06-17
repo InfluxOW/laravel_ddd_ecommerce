@@ -25,23 +25,36 @@ final class AddressesRelationManager extends MorphManyRelationManager
     {
         return $form
             ->schema(self::setTranslatableLabels([
-                TextInput::make(AddressesRelationManagerTranslationKey::ZIP->value)->columnSpan(2),
                 Select::make(AddressesRelationManagerTranslationKey::COUNTRY->value)
                     ->searchable()
                     ->options(Country::query()->pluck('name', 'id')->toArray())
                     ->getSearchResultsUsing(fn (string $query): array => Country::query()->where('name', 'LIKE', "%{$query}%")->pluck('name', 'id')->toArray())
                     ->getOptionLabelUsing(fn (?string $value): ?string => ($value === null) ? null : Country::query()->find($value)?->name)
-                    ->afterStateUpdated(fn (callable $set) => $set(AddressesRelationManagerTranslationKey::REGION->value, null))
-                    ->reactive(),
+                    ->afterStateUpdated(function (callable $set): void {
+                        $set(AddressesRelationManagerTranslationKey::REGION->value, null);
+                        $set(AddressesRelationManagerTranslationKey::CITY->value, null);
+                        $set(AddressesRelationManagerTranslationKey::STREET->value, null);
+                        $set(AddressesRelationManagerTranslationKey::ZIP->value, null);
+                    })
+                    ->reactive()
+                    ->columnSpan(1),
                 Select::make(AddressesRelationManagerTranslationKey::REGION->value)
                     ->id(fn (callable $get, self $livewire) => sprintf('%s|%s|%s', $livewire->ownerRecord->getKey(), $get(AddressesRelationManagerTranslationKey::COUNTRY->value), $get(AddressesRelationManagerTranslationKey::REGION->value)))
                     ->disabled(fn (callable $get): bool => $get(AddressesRelationManagerTranslationKey::COUNTRY->value) === null)
                     ->searchable()
                     ->options(fn (callable $get): array => Region::query()->where('country_id', $get(AddressesRelationManagerTranslationKey::COUNTRY->value))->pluck('name', 'id')->toArray())
                     ->getSearchResultsUsing(fn (string $query, callable $get): array => Region::query()->where('country_id', $get(AddressesRelationManagerTranslationKey::COUNTRY->value))->where('name', 'LIKE', "%{$query}%")->pluck('name', 'id')->toArray())
-                    ->getOptionLabelUsing(fn (?string $value): ?string => ($value === null) ? null : Region::query()->find($value)?->name),
-                TextInput::make(AddressesRelationManagerTranslationKey::CITY->value),
-                TextInput::make(AddressesRelationManagerTranslationKey::STREET->value),
+                    ->getOptionLabelUsing(fn (?string $value): ?string => ($value === null) ? null : Region::query()->find($value)?->name)
+                    ->afterStateUpdated(function (callable $set): void {
+                        $set(AddressesRelationManagerTranslationKey::CITY->value, null);
+                        $set(AddressesRelationManagerTranslationKey::STREET->value, null);
+                        $set(AddressesRelationManagerTranslationKey::ZIP->value, null);
+                    })
+                    ->reactive()
+                    ->columnSpan(1),
+                TextInput::make(AddressesRelationManagerTranslationKey::CITY->value)->columnSpan(1),
+                TextInput::make(AddressesRelationManagerTranslationKey::STREET->value)->columnSpan(1),
+                TextInput::make(AddressesRelationManagerTranslationKey::ZIP->value)->columnSpan(2),
             ]));
     }
 
@@ -49,11 +62,11 @@ final class AddressesRelationManager extends MorphManyRelationManager
     {
         return $table
             ->columns(self::setTranslatableLabels([
-                TextColumn::make(AddressesRelationManagerTranslationKey::ZIP->value)->sortable()->searchable(),
-                TextColumn::make(AddressesRelationManagerTranslationKey::REGION->value)->sortable()->searchable()->formatStateUsing(fn (Address $record) => $record->getCountry()?->name),
-                TextColumn::make(AddressesRelationManagerTranslationKey::COUNTRY->value)->sortable()->searchable()->formatStateUsing(fn (Address $record) => $record->getRegion()?->name),
+                TextColumn::make(AddressesRelationManagerTranslationKey::COUNTRY->value)->sortable()->searchable()->formatStateUsing(fn (Address $record) => $record->getCountry()?->name),
+                TextColumn::make(AddressesRelationManagerTranslationKey::REGION->value)->sortable()->searchable()->formatStateUsing(fn (Address $record) => $record->getRegion()?->name),
                 TextColumn::make(AddressesRelationManagerTranslationKey::CITY->value)->sortable()->searchable(),
                 TextColumn::make(AddressesRelationManagerTranslationKey::STREET->value)->sortable()->searchable(),
+                TextColumn::make(AddressesRelationManagerTranslationKey::ZIP->value)->sortable()->searchable(),
             ]))
             ->filters([
                 //
