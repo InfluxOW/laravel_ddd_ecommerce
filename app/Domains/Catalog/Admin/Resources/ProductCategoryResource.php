@@ -72,15 +72,6 @@ final class ProductCategoryResource extends Resource
                                 Placeholder::make(ProductCategoryResourceTranslationKey::PATH->value)
                                     ->content(fn (?ProductCategory $record): string => ($record === null || $record->path === '') ? '-' : $record->path)
                                     ->columnSpan(3),
-                                MediaLibraryFileUpload::make(ProductCategoryResourceTranslationKey::IMAGES->value)
-                                    ->collection(ProductCategoryMediaCollectionKey::IMAGES->value)
-                                    ->multiple()
-                                    ->minFiles(1)
-                                    ->maxFiles(3)
-                                    ->image()
-                                    ->preserveFilenames()
-                                    ->enableReordering()
-                                    ->columnSpan(3),
                             ])),
                         Tabs\Tab::make($statisticsTabTitle)
                             ->schema([
@@ -151,6 +142,15 @@ final class ProductCategoryResource extends Resource
                 ->disabled()
                 ->default(fn (Page|RelationManager $livewire): ?int => ($livewire instanceof RelationManager && isset($livewire->ownerRecord->depth)) ? (int) ($livewire->ownerRecord->depth + 1) : null)
                 ->lte((string) ProductCategory::MAX_DEPTH, true),
+            MediaLibraryFileUpload::make(ProductCategoryResourceTranslationKey::IMAGES->value)
+                ->collection(ProductCategoryMediaCollectionKey::IMAGES->value)
+                ->multiple()
+                ->minFiles(1)
+                ->maxFiles(3)
+                ->image()
+                ->preserveFilenames()
+                ->enableReordering()
+                ->columnSpan(2),
         ]);
     }
 
@@ -197,6 +197,7 @@ final class ProductCategoryResource extends Resource
 
     /**
      * @param ProductCategory $record
+     *
      * @return bool
      */
     public static function canDelete(Model $record): bool
