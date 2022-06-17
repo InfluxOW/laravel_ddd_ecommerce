@@ -2,22 +2,21 @@
 
 namespace App\Domains\Catalog\Admin\Resources\ProductCategoryResource\RelationManagers;
 
-use App\Domains\Admin\Admin\Abstracts\RelationManagers\HasManyRelationManager;
-use App\Domains\Admin\Admin\Components\Actions\ViewAction;
+use App\Domains\Admin\Admin\Abstracts\RelationManager;
+use App\Domains\Admin\Admin\Components\Actions\Tables\ViewAction;
 use App\Domains\Catalog\Admin\Resources\ProductCategoryResource;
 use App\Domains\Catalog\Enums\Translation\ProductCategoryResourceTranslationKey;
 use App\Domains\Catalog\Models\ProductCategory;
 use Baum\Node;
 use Filament\Resources\Form;
 use Filament\Resources\Pages\Page;
-use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Table;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
-final class ProductCategoryChildrenRelationManager extends HasManyRelationManager
+final class ProductCategoryChildrenRelationManager extends RelationManager
 {
     protected static string $relationship = 'children';
     protected static ?string $recordTitleAttribute = 'title';
@@ -86,14 +85,9 @@ final class ProductCategoryChildrenRelationManager extends HasManyRelationManage
         return $this->shouldBeDisplayed();
     }
 
-    protected function getParentResource(): string
+    protected function getViewableResourcesMap(): array
     {
-        return ProductCategoryResource::class;
-    }
-
-    protected function getViewPage(): string
-    {
-        return ProductCategoryResource\Pages\ViewProductCategory::class;
+        return [ProductCategoryResource::class => ProductCategoryResource\Pages\ViewProductCategory::class];
     }
 
     /*

@@ -1,15 +1,19 @@
 <?php
 
-namespace App\Domains\Admin\Admin\Components\Actions;
+namespace App\Domains\Admin\Admin\Components\Actions\Tables;
 
-use App\Domains\Admin\Admin\Abstracts\Actions\LinkAction;
 use App\Domains\Admin\Enums\Translation\Components\AdminActionTranslationKey;
+use App\Domains\Admin\Traits\Translation\HasTranslatableAdminActionsModals;
+use App\Domains\Admin\Traits\Translation\HasTranslatableAdminLabels;
 use Filament\Resources\Pages\Page;
 use Filament\Resources\RelationManagers\RelationManager;
 use Illuminate\Database\Eloquent\Model;
 
-final class ViewAction extends LinkAction
+final class ViewAction extends \Filament\Tables\Actions\ViewAction
 {
+    use HasTranslatableAdminLabels;
+    use HasTranslatableAdminActionsModals;
+
     public static function create(): self
     {
         /** @var self $action */

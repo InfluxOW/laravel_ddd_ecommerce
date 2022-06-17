@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Domains\Admin\Admin\Components\Actions;
+namespace App\Domains\Admin\Admin\Components\Actions\Tables;
 
-use App\Domains\Admin\Admin\Abstracts\Actions\BulkAction;
+use App\Domains\Admin\Admin\Abstracts\Actions\Tables\BulkAction;
 use App\Domains\Admin\Enums\Translation\Components\AdminActionTranslationKey;
 
 final class BulkUpdateAction extends BulkAction
