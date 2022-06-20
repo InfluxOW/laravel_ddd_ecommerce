@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "048bb768a74d01862297bcbcc7400c64",
+    "content-hash": "884cdab1dd32bc4ad29dc767ab4939ef",
     "packages": [
         {
             "name": "akaunting/laravel-money",
@@ -5817,6 +5817,74 @@
                 }
             ],
             "time": "2022-06-19T12:14:25+00:00"
+        },
+        {
+            "name": "protoqol/prequel",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/InfluxOW/Prequel.git",
+                "reference": "b5c934fc29eebecb6bd8a05e657085c873ca44a8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/InfluxOW/Prequel/zipball/b5c934fc29eebecb6bd8a05e657085c873ca44a8",
+                "reference": "b5c934fc29eebecb6bd8a05e657085c873ca44a8",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "ext-pdo": "*",
+                "laravel/framework": "^6.0|^7.0|^8.0|^9.0",
+                "php": "^7.2.5|^8.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^3.7",
+                "phpmd/phpmd": "^2.6"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Protoqol\\Prequel\\PrequelServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Protoqol\\Prequel\\": "src"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Protoqol\\Prequel\\Tests\\": "tests/"
+                }
+            },
+            "scripts": {
+                "phpins": [
+                    "./vendor/bin/phpinsights"
+                ],
+                "phpmd": [
+                    "phpmd src html cleancode,codesize,controversial,design,naming,unusedcode > public/phpmd.html"
+                ],
+                "test": [
+                    "phpunit"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Quinten Schorsij",
+                    "email": "quinten@protoqol.xyz"
+                }
+            ],
+            "description": "Clear and concise database management.",
+            "support": {
+                "source": "https://github.com/InfluxOW/Prequel/tree/add_laravel_octane_support"
+            },
+            "time": "2022-06-20T12:26:22+00:00"
         },
         {
             "name": "psr/cache",
@@ -13614,6 +13682,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "baum/baum": 20,
+        "protoqol/prequel": 20,
         "studio/laravel-totem": 20,
         "roave/security-advisories": 20
     },
