@@ -37,12 +37,6 @@ final class CartService
         return $this->getFromCache($user, $key);
     }
 
-    /**
-     * @param Cart $cart
-     * @param Model&Purchasable $purchasable
-     * @param int $quantity
-     * @return Cart
-     */
     public function add(Cart $cart, Model&Purchasable $purchasable, int $quantity): Cart
     {
         $item = $cart->items->where('purchasable_id', $purchasable->getKey())->where('purchasable_type', $purchasable::class)->first();
@@ -64,12 +58,6 @@ final class CartService
         return $cart;
     }
 
-    /**
-     * @param Cart $cart
-     * @param Model&Purchasable $purchasable
-     * @param int $quantity
-     * @return Cart
-     */
     public function update(Cart $cart, Model&Purchasable $purchasable, int $quantity): Cart
     {
         $item = $cart->items->where('purchasable_id', $purchasable->getKey())->where('purchasable_type', $purchasable::class)->first();
