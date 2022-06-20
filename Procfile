@@ -1,4 +1,4 @@
-web: php artisan octane:start --server=swoole --host=0.0.0.0 --port=$PORT
+web: php artisan octane:start --server=swoole --host=0.0.0.0 --port=$PORT --watch
 release: ./release.sh
 
 queues: php artisan queue:work --name=queues --queue=default,resizer,notifications --timeout=1800 --tries=5
