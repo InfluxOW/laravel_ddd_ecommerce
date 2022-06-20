@@ -62,6 +62,7 @@
         "laravel/tinker": "^2.7",
         "league/flysystem-aws-s3-v3": "^3.0",
         "phpunit/phpunit": "^9.5.10",
+        "studio/laravel-totem": "dev-feature/laravel-9",
         "spatie/laravel-query-builder": "^5.0",
         "spatie/laravel-sluggable": "^3.3",
         "squirephp/countries-en": "^3.3",
