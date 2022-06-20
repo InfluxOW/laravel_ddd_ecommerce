@@ -12,7 +12,8 @@ final class Kernel extends ConsoleKernel
     /**
      * Define the application's command schedule.
      *
-     * @param  Schedule  $schedule
+     * @param Schedule $schedule
+     *
      * @return void
      */
     protected function schedule(Schedule $schedule)
@@ -34,6 +35,6 @@ final class Kernel extends ConsoleKernel
             $this->call('migrate:fresh');
             Redis::flushall();
             $this->call('db:seed', ['--class' => DatabaseSeeder::class]);
-        })->daily()->runInBackground();
+        })->daily();
     }
 }
