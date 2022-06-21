@@ -13,7 +13,7 @@
         <a href="https://docker.com"><img src="https://img.shields.io/badge/Docker-20.10.x-0db7ed?style=for-the-badge&logo=docker" alt="Docker 19.03.0"></a>
         <a href="https://postgresql.org"><img src="https://img.shields.io/badge/Postgresql-14.X-0064a5?style=for-the-badge&logo=postgresql" alt="PostgreSQL 14.X"></a>
         <a href="https://swagger.io"><img src="https://img.shields.io/badge/Swagger-3.0-a9f06b?style=for-the-badge&logo=swagger" alt="Swagger 3.0"></a>
-        <a href="https://redis.io/"><img src="https://img.shields.io/badge/Redis-7.x-D82C20?style=for-the-badge&logo=redis" alt="Redis 6.2.x"></a>
+        <a href="https://redis.io/"><img src="https://img.shields.io/badge/Redis-7.x-D82C20?style=for-the-badge&logo=redis" alt="Redis 7.x"></a>
     </p>
 </div>
 
@@ -47,6 +47,7 @@ idea or a team agreement than exact project structure. And that's why I've imple
 - Amazing [Admin Panel](http://laravel-ddd-ecommerce.herokuapp.com/admin) - [Filament](https://filamentadmin.com/)
 - RESTful API
 - Instant Parallel Tests
+- Redis Cache
 
 ### Infrastructural Features
 
