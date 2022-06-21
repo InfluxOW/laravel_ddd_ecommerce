@@ -15,9 +15,7 @@ final class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->register(RouteServiceProvider::class);
-        $this->app->register(HorizonServiceProvider::class);
-        $this->app->register(TelescopeServiceProvider::class);
-        $this->app->register(TotemServiceProvider::class);
+        $this->registerVendorServiceProviders();
     }
 
     public function boot(): void
@@ -34,5 +32,32 @@ final class AppServiceProvider extends ServiceProvider
         }
 
         Model::preventLazyLoading();
+
+        foreach ($this->getVendorServiceProviders() as $provider) {
+            if (method_exists($provider, 'preventLazyLoading')) {
+                $provider->preventLazyLoading();
+            }
+        }
+    }
+
+    /**
+     * @return ServiceProvider[]
+     */
+    private function registerVendorServiceProviders(): array
+    {
+        $providers = [];
+        $providers[] = $this->app->register(HorizonServiceProvider::class);
+        $providers[] = $this->app->register(TelescopeServiceProvider::class);
+        $providers[] = $this->app->register(TotemServiceProvider::class);
+
+        return $providers;
+    }
+
+    /**
+     * @return ServiceProvider[]
+     */
+    private function getVendorServiceProviders(): array
+    {
+        return $this->registerVendorServiceProviders();
     }
 }

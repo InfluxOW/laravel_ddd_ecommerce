@@ -5,6 +5,7 @@ namespace App\Application\Providers;
 use Illuminate\Support\Facades\Auth;
 use Studio\Totem\Providers\TotemServiceProvider as BaseTotemServiceProvider;
 use Studio\Totem\Totem;
+use Studio\Totem\TotemModel;
 
 class TotemServiceProvider extends BaseTotemServiceProvider
 {
@@ -13,5 +14,10 @@ class TotemServiceProvider extends BaseTotemServiceProvider
         parent::boot();
 
         Totem::auth(static fn (): bool => Auth::guard('admin')->check());
+    }
+
+    public function preventLazyLoading(): void
+    {
+        TotemModel::preventLazyLoading(false);
     }
 }
