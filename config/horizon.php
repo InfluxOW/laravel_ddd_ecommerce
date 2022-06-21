@@ -1,6 +1,12 @@
 <?php
 
+use App\Domains\Generic\Enums\QueueName;
 use Illuminate\Support\Str;
+
+$queues = [];
+foreach (QueueName::cases() as $queue) {
+    $queues[] = $queue->value;
+}
 
 return [
 
@@ -165,9 +171,9 @@ return [
     */
 
     'defaults' => [
-        'supervisor-1' => [
-            'connection' => 'redis',
-            'queue' => ['default'],
+        'supervisor' => [
+            'connection' => env('HORIZON_SUPERVISOR_CONNECTION', 'redis'),
+            'queue' => $queues,
             'balance' => 'auto',
             'maxProcesses' => 1,
             'maxTime' => 0,
@@ -181,7 +187,7 @@ return [
 
     'environments' => [
         'production' => [
-            'supervisor-1' => [
+            'supervisor' => [
                 'maxProcesses' => 10,
                 'balanceMaxShift' => 1,
                 'balanceCooldown' => 3,
@@ -189,7 +195,7 @@ return [
         ],
 
         'staging' => [
-            'supervisor-1' => [
+            'supervisor' => [
                 'maxProcesses' => 10,
                 'balanceMaxShift' => 1,
                 'balanceCooldown' => 3,
@@ -197,7 +203,7 @@ return [
         ],
 
         'local' => [
-            'supervisor-1' => [
+            'supervisor' => [
                 'maxProcesses' => 3,
             ],
         ],

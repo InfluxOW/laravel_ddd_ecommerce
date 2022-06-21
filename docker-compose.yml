@@ -22,6 +22,7 @@ services:
         depends_on:
             - database
             - redis
+            - rabbitmq
 
     database:
         image: 'postgres:${POSTGRES_VERSION}'
@@ -57,6 +58,24 @@ services:
             retries: 3
             timeout: 5s
 
+    rabbitmq:
+        image: 'rabbitmq:${RABBITMQ_VERSION}-management'
+        ports:
+            - '${FORWARD_RABBITMQ_HTTP_PORT:-15672}:15672'
+            - '${FORWARD_RABBITMQ_AMQP_PORT:-5672}:5672'
+        volumes:
+            - 'rabbitmq:/var/lib/rabbitmq/'
+        environment:
+            RABBITMQ_DEFAULT_USER: '${RABBITMQ_USER}'
+            RABBITMQ_DEFAULT_PASS: '${RABBITMQ_PASSWORD}'
+            RABBITMQ_DEFAULT_VHOST: '${RABBITMQ_VHOST}'
+        healthcheck:
+            test: [ "CMD", "rabbitmq-diagnostics", "-q", "ping" ]
+            retries: 3
+            timeout: 5s
+        networks:
+            - sail
+
     mailhog:
         image: 'mailhog/mailhog:latest'
         ports:
@@ -73,4 +92,6 @@ volumes:
     database:
         driver: local
     redis:
+        driver: local
+    rabbitmq:
         driver: local
