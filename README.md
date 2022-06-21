@@ -13,7 +13,7 @@
         <a href="https://docker.com"><img src="https://img.shields.io/badge/Docker-20.10.x-0db7ed?style=for-the-badge&logo=docker" alt="Docker 19.03.0"></a>
         <a href="https://postgresql.org"><img src="https://img.shields.io/badge/Postgresql-14.X-0064a5?style=for-the-badge&logo=postgresql" alt="PostgreSQL 14.X"></a>
         <a href="https://swagger.io"><img src="https://img.shields.io/badge/Swagger-3.0-a9f06b?style=for-the-badge&logo=swagger" alt="Swagger 3.0"></a>
-        <a href="https://redis.io/"><img src="https://img.shields.io/badge/Redis-6.2.x-D82C20?style=for-the-badge&logo=redis" alt="Redis 6.2.x"></a>
+        <a href="https://redis.io/"><img src="https://img.shields.io/badge/Redis-7.x-D82C20?style=for-the-badge&logo=redis" alt="Redis 6.2.x"></a>
     </p>
 </div>
 
@@ -38,25 +38,36 @@ idea or a team agreement than exact project structure. And that's why I've imple
 
 ### Generic Features
 
+- [Laravel Octane](https://laravel.com/docs/9.x/octane) with Swoole as Server
+- [Laravel Horizon](https://laravel.com/docs/9.x/horizon) as Queue Dashboard
+- [Totem](https://github.com/codestudiohq/laravel-totem) as Schedule Dashboard
+- [Prequel](https://github.com/Protoqol/Prequel) as Database Dashboard
+- [Clockwork](https://underground.works/clockwork/) and [Laravel Telescope](https://laravel.com/docs/9.x/telescope) as Dev Toolkit
 - [Swagger Documentation](http://laravel-ddd-ecommerce.herokuapp.com/api/documentation)
-- Amazing [Filament](https://filamentadmin.com/) [Admin Panel](http://laravel-ddd-ecommerce.herokuapp.com/admin/login)
+- Amazing [Admin Panel](http://laravel-ddd-ecommerce.herokuapp.com/admin) - [Filament](https://filamentadmin.com/)
 - RESTful API
-- High Test Coverage
+- Instant Parallel Tests
 
 ### Infrastructural Features
 
-- DDD structure *(that I update almost every 10 commits, but anyway...)*
-- Separate infrastructure for local development, CI and tests (see `docker-compose` files)
-- Git hooks with code style and code quality analysis
-- CI at GitHub Actions with cached Docker images and other interesting stuff *(and it works pretty fast though)*
+- DDD structure
+- Separate [Development](https://github.com/InfluxOW/laravel_ddd_ecommerce/blob/master/docker-compose.yml), [Testing](https://github.com/InfluxOW/laravel_ddd_ecommerce/blob/master/docker-compose.test.yml) and [CI](https://github.com/InfluxOW/laravel_ddd_ecommerce/blob/master/docker-compose.ci.yml) Infrastructure
+- Git Hooks with Code Style ([PHPCS](https://github.com/squizlabs/PHP_CodeSniffer)) and Code Quality ([PHPStan](https://github.com/phpstan/phpstan)) analysis
+- Fast CI at GitHub Actions:
+    - caching dependencies and check's results
+    - building, caching and pushing Docker images to the Docker Hub
+    - building [code coverage report](https://about.codecov.io/)
 
 ### Project Features
 
-- Authentication with Laravel Sanctum *(Verification email sending included)* and other auth actions - [See [**Users**](https://github.com/InfluxOW/laravel_ddd_ecommerce/tree/master/app/Domains/Users) domain]
-- Catalog with different filters, full-text search, categories tree and other interesting stuff - [See [**Catalog**](https://github.com/InfluxOW/laravel_ddd_ecommerce/tree/master/app/Domains/Catalog) domain]
-- Ability to add feedback, but a limited number of times per hour *(because why not)* - [See [**Feedback**](https://github.com/InfluxOW/laravel_ddd_ecommerce/tree/master/app/Domains/Feedback) domain]
-- Carts with Redis *(there's still no API, and it still requires a lot of work but though)* - [See [**Cart**](https://github.com/InfluxOW/laravel_ddd_ecommerce/tree/master/app/Domains/Cart) domain]
-- Full usage of PHP 8.1 enums
+- Authentication with Laravel Sanctum, Email Verification - [[**Users**](https://github.com/InfluxOW/laravel_ddd_ecommerce/tree/master/app/Domains/Users)]
+- Catalog with different filters, full-text search, categories tree, etc. - [[**Catalog**](https://github.com/InfluxOW/laravel_ddd_ecommerce/tree/master/app/Domains/Catalog)]
+- Ability to add feedback, but a limited number of times per hour per IP - [[**Feedback**](https://github.com/InfluxOW/laravel_ddd_ecommerce/tree/master/app/Domains/Feedback)]
+- **[WIP]** Carts with Redis - [[**Cart**](https://github.com/InfluxOW/laravel_ddd_ecommerce/tree/master/app/Domains/Cart)]
+
+### Random Features
+
+- Full usage of PHP 8.1
 - Admin panel multilanguage support
 - AWS S3 disk for images, responsive images generation
 
