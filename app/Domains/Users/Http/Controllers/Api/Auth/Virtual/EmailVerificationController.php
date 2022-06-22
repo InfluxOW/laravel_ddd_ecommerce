@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Users\Http\Controllers\Api\Virtual;
+namespace App\Domains\Users\Http\Controllers\Api\Auth\Virtual;
 
 use OpenApi\Annotations as OA;
 

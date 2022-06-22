@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Users\Http\Controllers\Api;
+namespace App\Domains\Users\Http\Controllers\Api\Auth;
 
 use App\Domains\Users\Events\Logout;
 use App\Domains\Users\Models\User;

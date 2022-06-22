@@ -3,10 +3,10 @@
 namespace App\Domains\Users\Providers;
 
 use App\Domains\Generic\Utils\PathUtils;
-use App\Domains\Users\Http\Controllers\Api\EmailVerificationController;
-use App\Domains\Users\Http\Controllers\Api\LoginController;
-use App\Domains\Users\Http\Controllers\Api\LogoutController;
-use App\Domains\Users\Http\Controllers\Api\RegisterController;
+use App\Domains\Users\Http\Controllers\Api\Auth\EmailVerificationController;
+use App\Domains\Users\Http\Controllers\Api\Auth\LoginController;
+use App\Domains\Users\Http\Controllers\Api\Auth\LogoutController;
+use App\Domains\Users\Http\Controllers\Api\Auth\RegisterController;
 use App\Infrastructure\Abstracts\Providers\RouteServiceProvider as BaseRouteServiceProvider;
 use Illuminate\Routing\Router;
 

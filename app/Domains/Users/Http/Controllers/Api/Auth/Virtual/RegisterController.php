@@ -1,38 +1,33 @@
 <?php
 
-namespace App\Domains\Users\Http\Controllers\Api\Virtual;
+namespace App\Domains\Users\Http\Controllers\Api\Auth\Virtual;
 
 use OpenApi\Annotations as OA;
 
-final class LoginController
+final class RegisterController
 {
     /**
      * @OA\Post(
-     *    path="/login",
-     *    summary="Sign In",
-     *    description="Login by email and password",
-     *    operationId="authLogin",
+     *    path="/register",
+     *    summary="Register",
+     *    description="Register a new user",
+     *    operationId="authRegister",
      *    tags={"Authentication"},
      *    @OA\RequestBody(
      *       required=true,
-     *       description="User credentials",
+     *       description="User data",
      *       @OA\JsonContent(
-     *          required={"email","password"},
-     *          @OA\Property(property="email", type="string", format="email", example="user@mail.com"),
-     *          @OA\Property(property="password", type="string", format="password", example="password"),
+     *          required={"name", "email", "role", "password", "password_confirmation"},
+     *          @OA\Property(property="name", type="string", example="John Doe"),
+     *          @OA\Property(property="email", type="string", format="email", example="john_doe@mail.com"),
+     *          @OA\Property(property="password", type="string", example="password"),
+     *          @OA\Property(property="password_confirmation", type="string", format="password", example="password"),
      *          @OA\Property(property="g-recaptcha-response", type="string", example="captcha"),
      *       ),
      *    ),
      *    @OA\Response(
-     *       response=200,
-     *       description="Successful login",
-     *       @OA\JsonContent(
-     *          @OA\Property(property="access_token", type="string", example="1|rJpCvUMYDBPJObhURa6d7sLWX6TMhBykTxaE8tfz"),
-     *       ),
-     *    ),
-     *    @OA\Response(
-     *       response=403,
-     *       description="Email verification required",
+     *       response=201,
+     *       description="User has been registered",
      *       @OA\JsonContent(
      *          @OA\Property(property="message", type="string", example="We sent a confirmation email to john_doe@mail.com. Please, follow the instructions to complete your registration."),
      *       ),
@@ -43,7 +38,6 @@ final class LoginController
      *       @OA\JsonContent(
      *          @OA\Property(property="message", type="string", example="The given data was invalid."),
      *          @OA\Property(
-     *          nullable=true,
      *          property="errors",
      *          type="object",
      *             @OA\Property(
@@ -56,13 +50,6 @@ final class LoginController
      *                ),
      *             ),
      *          ),
-     *       ),
-     *    ),
-     *    @OA\Response(
-     *       response=500,
-     *       description="Login failed",
-     *       @OA\JsonContent(
-     *          @OA\Property(property="message", type="string", enum={"Sorry, something went wrong. Please, try again later!"}),
      *       ),
      *    ),
      * )

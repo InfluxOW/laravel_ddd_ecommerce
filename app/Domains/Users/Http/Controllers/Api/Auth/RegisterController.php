@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Users\Http\Controllers\Api;
+namespace App\Domains\Users\Http\Controllers\Api\Auth;
 
 use App\Domains\Users\Events\Registered;
 use App\Domains\Users\Http\Requests\RegisterRequest;
