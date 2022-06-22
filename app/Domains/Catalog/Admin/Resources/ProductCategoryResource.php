@@ -9,11 +9,11 @@ use App\Domains\Catalog\Admin\Resources\ProductCategoryResource\RelationManagers
 use App\Domains\Catalog\Enums\Media\ProductCategoryMediaCollectionKey;
 use App\Domains\Catalog\Enums\Translation\ProductCategoryResourceTranslationKey;
 use App\Domains\Catalog\Models\ProductCategory;
-use Filament\Forms\Components\BelongsToSelect;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Tabs;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -112,7 +112,7 @@ final class ProductCategoryResource extends Resource
                     'attachFiles',
                 ])
                 ->columnSpan(2),
-            BelongsToSelect::make(ProductCategoryResourceTranslationKey::PARENT_ID->value)
+            Select::make(ProductCategoryResourceTranslationKey::PARENT_ID->value)
                 ->relationship('parent', 'title')
                 ->options(function (?Model $record, Page|RelationManager $livewire): array {
                     if ($livewire instanceof CreateRecord) {

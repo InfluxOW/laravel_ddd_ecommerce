@@ -9,7 +9,7 @@ use App\Domains\Catalog\Enums\Translation\ProductAttributeValueResourceTranslati
 use App\Domains\Catalog\Models\Product;
 use App\Domains\Catalog\Models\ProductAttribute;
 use App\Domains\Catalog\Models\ProductAttributeValue;
-use Filament\Forms\Components\BelongsToSelect;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Form;
@@ -25,7 +25,7 @@ final class ProductAttributeValuesRelationManager extends RelationManager
     {
         return $form
             ->schema(self::setTranslatableLabels([
-                BelongsToSelect::make(ProductAttributeValueResourceTranslationKey::ATTRIBUTE->value)
+                Select::make(ProductAttributeValueResourceTranslationKey::ATTRIBUTE->value)
                     ->required()
                     ->id(function (RelationManager $livewire): string {
                         /** @var Product $product */

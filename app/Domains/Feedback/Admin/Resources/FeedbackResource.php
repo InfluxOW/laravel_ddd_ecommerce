@@ -7,9 +7,9 @@ use App\Domains\Admin\Admin\Components\Actions\Tables\BulkUpdateAction;
 use App\Domains\Admin\Admin\Components\Cards\TimestampsCard;
 use App\Domains\Feedback\Enums\Translation\FeedbackResourceTranslationKey;
 use App\Domains\Feedback\Models\Feedback;
-use Filament\Forms\Components\BelongsToSelect;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -82,7 +82,7 @@ final class FeedbackResource extends Resource
                                     ->disabled(),
                             ]))
                             ->columns(3),
-                        BelongsToSelect::make(FeedbackResourceTranslationKey::USER->value)
+                        Select::make(FeedbackResourceTranslationKey::USER->value)
                             ->relationship('user', 'name')
                             ->disabled(),
                         Textarea::make(FeedbackResourceTranslationKey::TEXT->value)
