@@ -4,7 +4,7 @@ namespace App\Application\Tests;
 
 use App\Domains\Generic\Http\Middleware\Recaptcha;
 use Illuminate\Contracts\Console\Kernel;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\RefreshDatabaseState;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Support\Facades\Http;
@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Redis;
 abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
-    use LazilyRefreshDatabase {
-        refreshDatabase as baseLazilyRefreshDatabase;
-    }
+    use RefreshDatabase;
 
     /**
      * Set to `true` if you don't want to recreate existing database.
