@@ -26,6 +26,8 @@ final class LoginControllerTest extends TestCase
         $this->user = $user;
 
         Notification::fake();
+
+        $this->withoutRecaptcha();
     }
 
     /** @test */

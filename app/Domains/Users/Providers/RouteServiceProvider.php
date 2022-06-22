@@ -15,8 +15,10 @@ final class RouteServiceProvider extends BaseRouteServiceProvider
     protected function mapApiRoutes(Router $router): void
     {
         $router->middleware(['guest'])->group(function () use ($router): void {
-            $router->post('login', LoginController::class)->name('login');
-            $router->post('register', RegisterController::class)->name('register');
+            $router->middleware(['recaptcha'])->group(function () use ($router): void {
+                $router->post('login', LoginController::class)->name('login');
+                $router->post('register', RegisterController::class)->name('register');
+            });
 
             $router->middleware(['throttle:hard'])->group(function () use ($router): void {
                 $router->post(PathUtils::join(['user', 'verify', 'email']), EmailVerificationController::class)->name('user.verify.email');

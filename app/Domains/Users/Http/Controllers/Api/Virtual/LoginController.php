@@ -20,6 +20,7 @@ final class LoginController
      *          required={"email","password"},
      *          @OA\Property(property="email", type="string", format="email", example="user@mail.com"),
      *          @OA\Property(property="password", type="string", format="password", example="password"),
+     *          @OA\Property(property="g-recaptcha-response", type="string", example="captcha"),
      *       ),
      *    ),
      *    @OA\Response(

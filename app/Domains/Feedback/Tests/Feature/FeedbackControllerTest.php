@@ -28,6 +28,8 @@ final class FeedbackControllerTest extends TestCase
 
         $this->validData = Arr::only(Feedback::factory()->make()->attributesToArray(), ['username', 'email', 'phone', 'text']);
         $this->user = $user;
+
+        $this->withoutRecaptcha();
     }
 
     protected function setUpOnce(): void

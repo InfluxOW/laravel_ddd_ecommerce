@@ -6,6 +6,7 @@ use App\Application\Http\Middleware\TrimStrings;
 use App\Application\Http\Middleware\TrustProxies;
 use App\Domains\Generic\Http\Middleware\AddTimestamp;
 use App\Domains\Generic\Http\Middleware\ForceJsonResponse;
+use App\Domains\Generic\Http\Middleware\Recaptcha;
 use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Auth\Middleware\Authorize;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
@@ -75,6 +76,7 @@ final class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequestsWithRedis::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'recaptcha' => Recaptcha::class,
     ];
 
     protected $middlewarePriority = [

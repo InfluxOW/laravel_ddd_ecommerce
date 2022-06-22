@@ -84,6 +84,7 @@ final class EmailVerificationControllerTest extends TestCase
 
     private function getConfirmationToken(): ConfirmationToken
     {
+        $this->withoutRecaptcha();
         $this->post(route('login'), ['email' => $this->user->email, 'password' => $this->password])->assertForbidden();
 
         $token = null;

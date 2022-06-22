@@ -10,6 +10,8 @@ final class RouteServiceProvider extends BaseRouteServiceProvider
 {
     protected function mapApiRoutes(Router $router): void
     {
-        $router->apiResource('feedback', FeedbackController::class)->only(['store']);
+        $router->middleware(['recaptcha'])->group(function () use ($router): void {
+            $router->apiResource('feedback', FeedbackController::class)->only(['store']);
+        });
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Application\Tests;
 
+use App\Domains\Generic\Http\Middleware\Recaptcha;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Foundation\Testing\RefreshDatabaseState;
@@ -56,13 +57,6 @@ abstract class TestCase extends BaseTestCase
         RefreshDatabaseState::$migrated = true;
     }
 
-    protected function setIp(string $ip): static
-    {
-        $this->serverVariables['REMOTE_ADDR'] = $ip;
-
-        return $this;
-    }
-
     /**
      * Define actions that should be executed once before the whole suit.
      */
@@ -77,5 +71,21 @@ abstract class TestCase extends BaseTestCase
         RefreshDatabaseState::$migrated = false;
 
         parent::tearDownAfterClass();
+    }
+
+    /*
+     * Helpers
+     * */
+
+    protected function setIp(string $ip): static
+    {
+        $this->serverVariables['REMOTE_ADDR'] = $ip;
+
+        return $this;
+    }
+
+    protected function withoutRecaptcha(): void
+    {
+        $this->withoutMiddleware([Recaptcha::class]);
     }
 }

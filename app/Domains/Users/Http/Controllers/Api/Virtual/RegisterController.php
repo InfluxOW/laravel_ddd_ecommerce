@@ -22,6 +22,7 @@ final class RegisterController
      *          @OA\Property(property="email", type="string", format="email", example="john_doe@mail.com"),
      *          @OA\Property(property="password", type="string", example="password"),
      *          @OA\Property(property="password_confirmation", type="string", format="password", example="password"),
+     *          @OA\Property(property="g-recaptcha-response", type="string", example="captcha"),
      *       ),
      *    ),
      *    @OA\Response(

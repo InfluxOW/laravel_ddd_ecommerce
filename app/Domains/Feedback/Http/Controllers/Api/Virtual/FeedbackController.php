@@ -22,6 +22,7 @@ final class FeedbackController
      *          @OA\Property(property="email", type="string", format="email", example="john_doe@mail.com"),
      *          @OA\Property(property="phone", type="string", pattern="/^\+[\d]{11}$/", example="+79999999999"),
      *          @OA\Property(property="text", type="string", example="I don't understand how can I place an order. Can you help me?"),
+     *          @OA\Property(property="g-recaptcha-response", type="string", example="captcha"),
      *       ),
      *    ),
      *    @OA\Response(

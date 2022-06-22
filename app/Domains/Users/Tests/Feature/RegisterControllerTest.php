@@ -24,6 +24,8 @@ final class RegisterControllerTest extends TestCase
         );
 
         Notification::fake();
+
+        $this->withoutRecaptcha();
     }
 
     /** @test */

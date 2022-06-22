@@ -44,7 +44,7 @@ ci: sail-install
 # Tests
 
 tests:
-	$(sail) -f docker-compose.test.yml run application_test bash -c "make test"
+	$(sail) -f docker-compose.test.yml run --rm application_test bash -c "make test"
 
 # Misc
 

@@ -46,6 +46,7 @@
         "ext-xml": "*",
         "ext-xmlwriter": "*",
         "akaunting/laravel-money": "^3.0",
+        "anhskohbo/no-captcha": "^3.4",
         "aws/aws-sdk-php": "^3.209",
         "baum/baum": "dev-add_laravel_9_support",
         "darkaonline/l5-swagger": "^8.3.0",
