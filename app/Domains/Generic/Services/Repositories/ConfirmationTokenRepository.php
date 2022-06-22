@@ -13,7 +13,7 @@ final class ConfirmationTokenRepository
 {
     public function create(ConfirmationTokenType $type, User $user, Carbon $expiresAt): ConfirmationToken
     {
-        return $user->confirmationTokens()->create(['type' => $type->name, 'token' => $this->createToken($user, $type), 'expires_at' => $expiresAt]);
+        return $user->confirmationTokens()->create(['type' => $type->name, 'token' => $this->createToken($type), 'expires_at' => $expiresAt]);
     }
 
     /**
@@ -34,23 +34,14 @@ final class ConfirmationTokenRepository
     {
         $latestToken = ConfirmationToken::query()->whereBelongsTo($user)->where('type', $type->name)->latest()->first();
 
-        return (isset($latestToken) && Str::of($latestToken->token)->lower()->is(Str::of($token)->lower())) ? $latestToken : null;
+        return (isset($latestToken) && strtolower($latestToken->token) === strtolower($token)) ? $latestToken : null;
     }
 
-    private function exists(User $user, ConfirmationTokenType $type, string $token): bool
+    private function createToken(ConfirmationTokenType $type): string
     {
-        return ConfirmationToken::query()->whereBelongsTo($user)->where('type', $type->name)->where('token', 'ILIKE', $token)->exists();
-    }
-
-    private function createToken(User $user, ConfirmationTokenType $type): string
-    {
-        do {
-            $token = match ($type) {
-                ConfirmationTokenType::EMAIL_VERIFICATION => $this->generateShortStringToken(),
-            };
-        } while ($this->exists($user, $type, $token));
-
-        return $token;
+        return match ($type) {
+            ConfirmationTokenType::EMAIL_VERIFICATION => $this->generateShortStringToken(),
+        };
     }
 
     private function generateShortStringToken(): string
