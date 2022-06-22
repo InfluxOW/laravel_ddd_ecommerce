@@ -165,6 +165,19 @@ return [
             ],
         ],
 
+        'queue' => [
+            'url' => env('REDIS_URL'),
+            'host' => $redisHost,
+            'password' => $redisPassword,
+            'port' => $redisPort,
+            'database' => env('REDIS_QUEUE_DB', '2'),
+            'options' => [
+                'serializer' => Redis::SERIALIZER_IGBINARY,
+                'compression' => Redis::COMPRESSION_LZ4,
+                'compression_level' => 12, // Max for LZ4
+            ],
+        ],
+
     ],
 
 ];
