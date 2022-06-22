@@ -115,6 +115,11 @@ final class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(ConfirmationToken::class);
     }
 
+    public function loginHistory(): HasMany
+    {
+        return $this->hasMany(LoginHistory::class);
+    }
+
     /*
      * Helpers
      * */

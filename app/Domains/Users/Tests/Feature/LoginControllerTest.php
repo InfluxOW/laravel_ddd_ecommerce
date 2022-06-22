@@ -6,11 +6,15 @@ use App\Application\Tests\TestCase;
 use App\Domains\Users\Events\EmailVerificationSucceeded;
 use App\Domains\Users\Models\User;
 use App\Domains\Users\Notifications\EmailVerificationNotification;
+use App\Domains\Users\Tests\MocksGeoIPRequests;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Testing\TestResponse;
 
 final class LoginControllerTest extends TestCase
 {
+    use MocksGeoIPRequests;
+
     private User $user;
     private string $password;
 
@@ -33,7 +37,7 @@ final class LoginControllerTest extends TestCase
     /** @test */
     public function a_user_cannot_login_with_wrong_credentials(): void
     {
-        $this->post(route('login'), ['email' => $this->user->email, 'password' => 'wrong_password'])->assertUnprocessable();
+        $this->login('wrong_password')->assertUnprocessable();
     }
 
     /** @test */
@@ -42,7 +46,7 @@ final class LoginControllerTest extends TestCase
         $this->user->email_verified_at = null;
         $this->user->save();
 
-        $this->post(route('login'), ['email' => $this->user->email, 'password' => $this->password])->assertForbidden();
+        $this->login()->assertForbidden();
 
         Notification::assertSentTo($this->user, EmailVerificationNotification::class, function (EmailVerificationNotification $notification): bool {
             Event::fake();
@@ -52,7 +56,9 @@ final class LoginControllerTest extends TestCase
             return true;
         });
 
-        $loginResponse = $this->post(route('login'), ['email' => $this->user->email, 'password' => $this->password])
+        $this->mockGeoIP();
+
+        $loginResponse = $this->login()
             ->assertOk()
             ->assertJsonStructure(['access_token']);
         $accessToken = $loginResponse->json('access_token');
@@ -64,5 +70,20 @@ final class LoginControllerTest extends TestCase
         $this->withHeader('Authorization', "Bearer {$accessToken}")->get('products.index');
 
         $this->assertAuthenticatedAs($this->user, 'sanctum');
+    }
+
+    /** @test */
+    public function user_login_history_is_updated_upon_login(): void
+    {
+        $this->mockGeoIP();
+
+        $this->assertEquals(0, $this->user->loginHistory()->count());
+        $this->login();
+        $this->assertEquals(1, $this->user->loginHistory()->count());
+    }
+
+    private function login(?string $password = null): TestResponse
+    {
+        return $this->post(route('login'), ['email' => $this->user->email, 'password' => $password ?? $this->password]);
     }
 }

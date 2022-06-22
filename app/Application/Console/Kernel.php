@@ -18,7 +18,6 @@ final class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('geoip:update')->daily()->runInBackground();
         $schedule->command('telescope:prune')->daily()->runInBackground();
 
         $this->refreshDatabase($schedule);

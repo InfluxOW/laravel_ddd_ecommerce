@@ -11,9 +11,12 @@ use App\Interfaces\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Jenssegers\Agent\Agent;
 use Laravel\Sanctum\NewAccessToken;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
+use Torann\GeoIP\Facades\GeoIP as GeoIPFacade;
+use Torann\GeoIP\Location;
 
 final class LoginController extends Controller
 {
@@ -23,7 +26,15 @@ final class LoginController extends Controller
             /* @phpstan-ignore-next-line */
             $user = $this->retrieveUserByCredentials($request->safe(['email', 'password']));
             $this->checkEmailVerification($user);
-            $accessToken = $this->createAccessToken($user);
+
+            // TODO: Remove HTTP request from transaction
+            $accessToken = DB::transaction(function () use ($user, $request): NewAccessToken {
+                $accessToken = $this->createAccessToken($user);
+
+                $this->processUserDevice($user, $request);
+
+                return $accessToken;
+            });
         } catch (HttpException $e) {
             return $this->respondWithMessage($e->getMessage(), $e->getCode());
         } catch (Throwable) {
@@ -67,5 +78,51 @@ final class LoginController extends Controller
 
             return $user->createToken('access_token');
         });
+    }
+
+    private function processUserDevice(User $user, LoginRequest $request): void
+    {
+        $agent = new Agent();
+        $agent->setUserAgent($request->userAgent());
+        $agent->setHttpHeaders($request->headers->all());
+
+        $location = GeoIPFacade::getLocation($request->ip());
+        $loginDetails = $this->getLoginDetails($agent, $location);
+
+        $user->loginHistory()->create($loginDetails);
+    }
+
+    private function getLoginDetails(Agent $agent, Location $location): array
+    {
+        if ($location->default) {
+            return [];
+        }
+
+        $platform = $agent->platform();
+        if (is_bool($platform)) {
+            $platform = null;
+        }
+
+        $browser = $agent->browser();
+        if (is_bool($browser)) {
+            $browser = null;
+        }
+
+        return [
+            'ip' => $location->ip,
+            'device' => $agent->device(),
+            'platform' => $platform,
+            'platform_version' => ($platform === null) ? null : $agent->version($platform),
+            'browser' => $browser,
+            'browser_version' => ($browser === null) ? null : $agent->version($browser),
+            'region_code' => $location->state,
+            'region_name' => $location->state_name,
+            'country_code' => $location->iso_code,
+            'country_name' => $location->country,
+            'city' => $location->city,
+            'latitude' => $location->lat,
+            'longitude' => $location->lon,
+            'zip' => $location->postal_code,
+        ];
     }
 }

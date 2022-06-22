@@ -34,11 +34,11 @@ return [
     | Here you may specify the default storage driver that should be used
     | by the framework.
     |
-    | Supported: "maxmind_database", "maxmind_api", "ipapi"
+    | Supported: "maxmind_database", "maxmind_api", "ipapi", "ipgeolocation", ipdata", "ipfinder"
     |
     */
 
-    'service' => 'maxmind_database',
+    'service' => env('GEOIP_STORAGE_DRIVER', 'ipapi'),
 
     /*
     |--------------------------------------------------------------------------
@@ -82,14 +82,14 @@ return [
         ],
 
         'ipdata' => [
-            'class'  => \Torann\GeoIP\Services\IPData::class,
-            'key'    => env('IPDATA_API_KEY'),
+            'class' => \Torann\GeoIP\Services\IPData::class,
+            'key' => env('IPDATA_API_KEY'),
             'secure' => true,
         ],
 
         'ipfinder' => [
-            'class'  => \Torann\GeoIP\Services\IPFinder::class,
-            'key'    => env('IPFINDER_API_KEY'),
+            'class' => \Torann\GeoIP\Services\IPFinder::class,
+            'key' => env('IPFINDER_API_KEY'),
             'secure' => true,
             'locales' => ['en'],
         ],
