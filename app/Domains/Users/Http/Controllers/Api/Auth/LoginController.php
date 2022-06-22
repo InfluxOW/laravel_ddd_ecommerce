@@ -94,24 +94,31 @@ final class LoginController extends Controller
 
     private function getLoginDetails(Agent $agent, Location $location): array
     {
-        $platform = $agent->platform();
-        if (is_bool($platform)) {
-            $platform = null;
-        }
+        return array_merge($this->getAgentInfo($agent), $this->getLocationInfo($location));
+    }
 
-        $browser = $agent->browser();
-        if (is_bool($browser)) {
-            $browser = null;
-        }
+    private function getAgentInfo(Agent $agent): array
+    {
+        $getStringOrNull = static fn (mixed $param): ?string => is_string($param) ? $param : null;
+
+        $platform = $getStringOrNull($agent->platform());
+        $browser = $getStringOrNull($agent->browser());
+        $device = $getStringOrNull($agent->device());
 
         return [
-            'ip' => $location->ip,
             'user_agent' => $agent->getUserAgent(),
-            'device' => $agent->device(),
+            'device' => $device,
             'platform' => $platform,
-            'platform_version' => ($platform === null) ? null : $agent->version($platform),
+            'platform_version' => $getStringOrNull($agent->version($platform)),
             'browser' => $browser,
-            'browser_version' => ($browser === null) ? null : $agent->version($browser),
+            'browser_version' => $getStringOrNull($agent->version($browser)),
+        ];
+    }
+
+    private function getLocationInfo(Location $location): array
+    {
+        return [
+            'ip' => $location->ip,
             'region_code' => $location->state,
             'region_name' => $location->state_name,
             'country_code' => $location->iso_code,
