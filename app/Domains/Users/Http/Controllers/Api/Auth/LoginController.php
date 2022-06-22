@@ -94,10 +94,6 @@ final class LoginController extends Controller
 
     private function getLoginDetails(Agent $agent, Location $location): array
     {
-        if ($location->default) {
-            return [];
-        }
-
         $platform = $agent->platform();
         if (is_bool($platform)) {
             $platform = null;
@@ -110,6 +106,7 @@ final class LoginController extends Controller
 
         return [
             'ip' => $location->ip,
+            'user_agent' => $agent->getUserAgent(),
             'device' => $agent->device(),
             'platform' => $platform,
             'platform_version' => ($platform === null) ? null : $agent->version($platform),

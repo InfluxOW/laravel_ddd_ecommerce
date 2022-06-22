@@ -56,6 +56,7 @@ final class LoginHistory extends Model
 
     protected $fillable = [
         'ip',
+        'user_agent',
         'device',
         'platform',
         'platform_version',
