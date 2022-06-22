@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read User $user
+ * @method static Builder|ConfirmationToken expired()
  * @method static Builder|ConfirmationToken newModelQuery()
  * @method static Builder|ConfirmationToken newQuery()
  * @method static Builder|ConfirmationToken query()
@@ -63,7 +64,12 @@ final class ConfirmationToken extends Model
 
     public function scopeUnexpired(Builder $query): void
     {
-        $query->where('expires_at', '<', Carbon::now());
+        $query->where('expires_at', '>', Carbon::now());
+    }
+
+    public function scopeExpired(Builder $query): void
+    {
+        $query->where('expires_at', '<=', Carbon::now());
     }
 
     public function scopeUnused(Builder $query): void
