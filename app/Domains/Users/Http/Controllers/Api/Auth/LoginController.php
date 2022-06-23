@@ -109,9 +109,9 @@ final class LoginController extends Controller
             'user_agent' => $agent->getUserAgent(),
             'device' => $device,
             'platform' => $platform,
-            'platform_version' => $getStringOrNull($agent->version($platform)),
+            'platform_version' => ($platform === null) ? null : $getStringOrNull($agent->version($platform)),
             'browser' => $browser,
-            'browser_version' => $getStringOrNull($agent->version($browser)),
+            'browser_version' => ($browser === null) ? null : $getStringOrNull($agent->version($browser)),
         ];
     }
 
