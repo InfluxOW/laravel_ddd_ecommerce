@@ -5,6 +5,7 @@ namespace App\Components\Queryable\Abstracts;
 abstract class Query
 {
     public string $query;
+
     public string $title;
 
     public function toArray(): array

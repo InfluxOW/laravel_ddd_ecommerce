@@ -14,7 +14,7 @@ use JetBrains\PhpStorm\ArrayShape;
 
 abstract class ProductResource extends JsonResource
 {
-    #[ArrayShape(['slug' => 'string', 'title' => "string", 'url' => "string", 'created_at' => "string|null", 'price' => 'string|optional', 'price_discounted' => "string|null|optional", 'currency' => "string"])]
+    #[ArrayShape(['slug' => 'string', 'title' => 'string', 'url' => 'string', 'created_at' => 'string|null', 'price' => 'string|optional', 'price_discounted' => 'string|null|optional', 'currency' => 'string'])]
     public function toArray($request): array
     {
         /** @var Product $product */

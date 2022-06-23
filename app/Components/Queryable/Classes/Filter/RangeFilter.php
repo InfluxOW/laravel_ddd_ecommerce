@@ -14,7 +14,9 @@ final class RangeFilter extends Filter
     public static QueryFilterType $type = QueryFilterType::RANGE;
 
     public Money|int|float|null $minValue;
+
     public Money|int|float|null $maxValue;
+
     public readonly ?Currency $currency;
 
     public function __construct(UnitEnum $filter, ?float $minValue, ?float $maxValue, ?string $currency)
@@ -27,7 +29,7 @@ final class RangeFilter extends Filter
         $this->maxValue = isset($this->currency, $maxValue) ? money($maxValue, $this->currency->getCurrency()) : $maxValue;
     }
 
-    #[ArrayShape(['query' => "string", 'title' => "string", 'type' => "string", 'min_value' => "float", 'max_value' => "float"])]
+    #[ArrayShape(['query' => 'string', 'title' => 'string', 'type' => 'string', 'min_value' => 'float', 'max_value' => 'float'])]
     public function toArray(): array
     {
         return array_merge(parent::toArray(), [
@@ -36,13 +38,13 @@ final class RangeFilter extends Filter
         ]);
     }
 
-    #[ArrayShape(['query' => "string", 'title' => "string", 'type' => "string", 'min_value' => "float", 'max_value' => "float"])]
+    #[ArrayShape(['query' => 'string', 'title' => 'string', 'type' => 'string', 'min_value' => 'float', 'max_value' => 'float'])]
     public function toAllowedArray(): array
     {
         return $this->toArray();
     }
 
-    #[ArrayShape(['query' => "string", 'title' => "string", 'type' => "string", 'min_value' => "float", 'max_value' => "float"])]
+    #[ArrayShape(['query' => 'string', 'title' => 'string', 'type' => 'string', 'min_value' => 'float', 'max_value' => 'float'])]
     public function toAppliedArray(): array
     {
         return $this->toArray();
@@ -61,7 +63,7 @@ final class RangeFilter extends Filter
         $minValue = ($this->minValue instanceof Money) ? $this->minValue->getValue() : $this->minValue;
         $maxValue = ($this->maxValue instanceof Money) ? $this->maxValue->getValue() : $this->maxValue;
 
-        $filter = clone($this);
+        $filter = clone $this;
         $filter->minValue = null;
         $filter->maxValue = null;
 

@@ -54,6 +54,7 @@ final class ProductAttributeValue extends Model
     protected $casts = [
         'value_float' => 'float',
     ];
+
     protected $fillable = [
         'value_string',
         'value_boolean',

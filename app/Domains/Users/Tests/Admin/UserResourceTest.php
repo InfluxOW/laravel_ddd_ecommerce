@@ -13,7 +13,9 @@ use Illuminate\Database\Eloquent\Model;
 final class UserResourceTest extends AdminCrudTestCase
 {
     protected ?string $listRecords = ListUsers::class;
+
     protected ?string $viewRecord = ViewUser::class;
+
     protected ?string $editRecord = EditUser::class;
 
     protected array $seeders = [

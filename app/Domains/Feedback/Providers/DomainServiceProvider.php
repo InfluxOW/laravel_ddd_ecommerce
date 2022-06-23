@@ -12,7 +12,9 @@ final class DomainServiceProvider extends ServiceProvider
     public const NAMESPACE = ServiceProviderNamespace::FEEDBACK;
 
     protected bool $hasMigrations = true;
+
     protected bool $hasTranslations = true;
+
     protected bool $hasPolicies = true;
 
     protected array $policies = [

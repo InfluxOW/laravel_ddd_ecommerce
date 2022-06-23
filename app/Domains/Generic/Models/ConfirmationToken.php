@@ -44,6 +44,7 @@ final class ConfirmationToken extends Model
         'expires_at',
         'used_at',
     ];
+
     protected $dates = [
         'expires_at',
         'used_at',

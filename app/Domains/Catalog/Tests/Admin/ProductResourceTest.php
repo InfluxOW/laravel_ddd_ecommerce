@@ -18,8 +18,11 @@ use Illuminate\Database\Eloquent\Model;
 final class ProductResourceTest extends AdminCrudTestCase
 {
     protected ?string $listRecords = ListProducts::class;
+
     protected ?string $createRecord = CreateProduct::class;
+
     protected ?string $viewRecord = ViewProduct::class;
+
     protected ?string $editRecord = EditProduct::class;
 
     protected array $seeders = [

@@ -12,9 +12,9 @@ test-coverage:
 	XDEBUG_MODE=coverage php artisan test --parallel --coverage-clover storage/logs/clover.xml
 
 lint:
-	composer exec phpcs --verbose 2>/dev/null
+	composer exec phpcs --verbose && composer exec pint -- --test 2>/dev/null
 lint-fix:
-	composer exec phpcbf --verbose 2>/dev/null
+	composer exec phpcbf --verbose && composer exec pint 2>/dev/null
 analyse:
 	composer exec phpstan analyse --verbose -- --memory-limit=-1 2>/dev/null
 

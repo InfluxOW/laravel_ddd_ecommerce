@@ -21,8 +21,11 @@ use Illuminate\Support\Str;
 final class ProductAttributeResource extends Resource
 {
     protected static ?string $model = ProductAttribute::class;
+
     protected static ?string $recordTitleAttribute = 'title';
+
     protected static ?string $slug = 'catalog/attributes';
+
     protected static ?string $navigationIcon = 'heroicon-o-document-duplicate';
 
     /*

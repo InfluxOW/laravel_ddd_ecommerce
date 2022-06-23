@@ -9,7 +9,7 @@ use JetBrains\PhpStorm\ArrayShape;
 
 final class ProductFilterQueryResource extends JsonResource
 {
-    #[ArrayShape(['applied' => "array", 'allowed' => "array"])]
+    #[ArrayShape(['applied' => 'array', 'allowed' => 'array'])]
     public function toArray($request): array
     {
         /** @var ProductFilterQuery $filterQuery */

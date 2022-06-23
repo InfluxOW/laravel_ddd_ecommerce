@@ -16,6 +16,7 @@ final class LoginControllerTest extends TestCase
     use MocksGeoIPRequests;
 
     private User $user;
+
     private string $password;
 
     protected function setUp(): void

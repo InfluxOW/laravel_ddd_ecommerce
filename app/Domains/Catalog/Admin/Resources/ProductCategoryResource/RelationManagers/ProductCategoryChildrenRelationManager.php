@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Model;
 final class ProductCategoryChildrenRelationManager extends RelationManager
 {
     protected static string $relationship = 'children';
+
     protected static ?string $recordTitleAttribute = 'title';
 
     public static function form(Form $form): Form

@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 final class AppUtils
 {
     private const PROVIDERS_DIRECTORY_BASENAME = 'Providers';
+
     private const APP_DIRECTORY_BASENAME = 'app';
 
     private const APP_NAMESPACE = 'App';

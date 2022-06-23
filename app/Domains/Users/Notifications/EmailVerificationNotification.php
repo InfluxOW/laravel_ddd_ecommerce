@@ -31,11 +31,12 @@ final class EmailVerificationNotification extends EmailNotification
                 $this->getTokenString(),
             ]);
 
-            /*
-             * You can also create web page that will automatically call the API to verify an email
-             * and use its url here like this.
-             * */
-            // ->action('Verify Email', route('web.users.verify.email', ['email' => $notifiable->email, 'token' => $this->getTokenString()]))
+        /*
+         * You can also create web page that will automatically call the API to verify an email
+         * and use its url here like this.
+         *
+         * ->action('Verify Email', route('web.users.verify.email', ['email' => $notifiable->email, 'token' => $this->getTokenString()]))
+         * */
     }
 
     public function getToken(): ConfirmationToken

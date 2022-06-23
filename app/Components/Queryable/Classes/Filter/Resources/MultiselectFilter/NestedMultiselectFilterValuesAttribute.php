@@ -11,7 +11,7 @@ final class NestedMultiselectFilterValuesAttribute
     {
     }
 
-    #[ArrayShape(['query' => "string", 'title' => "string", 'values_type' => "string"])]
+    #[ArrayShape(['query' => 'string', 'title' => 'string', 'values_type' => 'string'])]
     public function toArray(): array
     {
         return [

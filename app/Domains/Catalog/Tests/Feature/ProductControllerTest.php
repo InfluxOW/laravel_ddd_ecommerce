@@ -24,6 +24,7 @@ use Illuminate\Support\Str;
 final class ProductControllerTest extends TestCase
 {
     private Product $product;
+
     private CatalogSettings $settings;
 
     protected function setUp(): void

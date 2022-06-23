@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 final class FeedbackResourceTest extends AdminCrudTestCase
 {
     protected ?string $listRecords = ListFeedback::class;
+
     protected ?string $viewRecord = ViewFeedback::class;
 
     protected array $seeders = [

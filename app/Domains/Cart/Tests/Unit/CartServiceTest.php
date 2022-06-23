@@ -14,6 +14,7 @@ use App\Domains\Catalog\Models\Settings\CatalogSettings;
 final class CartServiceTest extends TestCase
 {
     private CatalogSettings $settings;
+
     private CartService $service;
 
     protected function setUp(): void

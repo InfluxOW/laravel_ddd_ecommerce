@@ -21,7 +21,7 @@ abstract class Filter extends Query
         $this->title = $translation;
     }
 
-    #[ArrayShape(['query' => "string", 'title' => "string", 'type' => "string"])]
+    #[ArrayShape(['query' => 'string', 'title' => 'string', 'type' => 'string'])]
     public function toArray(): array
     {
         return array_merge(parent::toArray(), [

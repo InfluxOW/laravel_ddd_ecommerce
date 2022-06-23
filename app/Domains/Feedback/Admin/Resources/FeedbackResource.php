@@ -26,7 +26,9 @@ use Illuminate\Support\Str;
 final class FeedbackResource extends Resource
 {
     protected static ?string $model = Feedback::class;
+
     protected static ?string $slug = 'feedback';
+
     protected static ?string $navigationIcon = 'heroicon-o-mail';
 
     /*

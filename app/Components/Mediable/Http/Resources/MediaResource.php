@@ -11,7 +11,7 @@ use JetBrains\PhpStorm\ArrayShape;
 
 final class MediaResource extends JsonResource
 {
-    #[ArrayShape(['type' => "string", 'url' => "string", 'responsive_images' => AnonymousResourceCollection::class])]
+    #[ArrayShape(['type' => 'string', 'url' => 'string', 'responsive_images' => AnonymousResourceCollection::class])]
     public function toArray($request): array
     {
         /** @var Media $media */

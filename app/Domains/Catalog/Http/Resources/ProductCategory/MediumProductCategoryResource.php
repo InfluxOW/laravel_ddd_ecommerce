@@ -8,7 +8,7 @@ use JetBrains\PhpStorm\ArrayShape;
 
 final class MediumProductCategoryResource extends JsonResource
 {
-    #[ArrayShape(['slug' => "string", 'title' => "string", 'url' => "string", 'description' => "string", 'parent' => self::class . '|' . 'optional', ])]
+    #[ArrayShape(['slug' => 'string', 'title' => 'string', 'url' => 'string', 'description' => 'string', 'parent' => self::class . '|' . 'optional'])]
     public function toArray($request): array
     {
         /** @var ProductCategory $category */

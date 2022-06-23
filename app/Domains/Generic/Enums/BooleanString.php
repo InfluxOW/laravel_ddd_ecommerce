@@ -4,6 +4,7 @@ namespace App\Domains\Generic\Enums;
 
 enum BooleanString: string
 {
-    case FALSE = 'false';
-    case TRUE = 'true';
+    // _ added to avoid Laravel Pint conflicts
+    case _FALSE = 'false';
+    case _TRUE = 'true';
 }

@@ -9,7 +9,7 @@ final class StringUtils
 {
     public static function boolToString(bool $bool): string
     {
-        return $bool ? BooleanString::TRUE->value : BooleanString::FALSE->value;
+        return $bool ? BooleanString::_TRUE->value : BooleanString::_FALSE->value;
     }
 
     public static function pluralBasename(string $class): string

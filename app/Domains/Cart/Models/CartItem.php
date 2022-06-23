@@ -52,6 +52,7 @@ final class CartItem extends Model
         'price_total_discounted' => MoneyCast::class,
         'purchasable_data' => 'array',
     ];
+
     protected $fillable = [
         'quantity',
         'price_item',

@@ -8,6 +8,7 @@ use Spatie\LaravelSettings\Settings;
 final class CatalogSettings extends Settings
 {
     public string $default_currency;
+
     public array $available_currencies;
 
     public static function group(): string

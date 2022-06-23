@@ -45,7 +45,7 @@ final class MultiselectFilter extends Filter
         return new self($filter, true, $allowedValues);
     }
 
-    #[ArrayShape(['query' => "string", 'title' => "string", 'type' => "string", 'is_nested' => "boolean", 'values' => "array"])]
+    #[ArrayShape(['query' => 'string', 'title' => 'string', 'type' => 'string', 'is_nested' => 'boolean', 'values' => 'array'])]
     public function toAllowedArray(): array
     {
         return array_merge($this->toArray(), [
@@ -54,7 +54,7 @@ final class MultiselectFilter extends Filter
         ]);
     }
 
-    #[ArrayShape(['query' => "string", 'title' => "string", 'type' => "string", 'is_nested' => "boolean", 'values' => "array"])]
+    #[ArrayShape(['query' => 'string', 'title' => 'string', 'type' => 'string', 'is_nested' => 'boolean', 'values' => 'array'])]
     public function toAppliedArray(): array
     {
         return array_merge($this->toArray(), [
@@ -65,7 +65,7 @@ final class MultiselectFilter extends Filter
 
     public function setSelectedValues(string|int|bool|float|array|null ...$values): ?self
     {
-        $filter = clone($this);
+        $filter = clone $this;
 
         $correctValues = match ($filter->isNested) {
             false => $this->allowedValues
