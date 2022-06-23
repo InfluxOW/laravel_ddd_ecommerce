@@ -86,7 +86,7 @@ final class LoginController extends Controller
         $agent->setUserAgent($request->userAgent());
         $agent->setHttpHeaders($request->headers->all());
 
-        $location = GeoIPFacade::getLocation($request->ip());
+        $location = GeoIPFacade::getLocation($request->getIp());
         $loginDetails = $this->getLoginDetails($agent, $location);
 
         $user->loginHistory()->create($loginDetails);
