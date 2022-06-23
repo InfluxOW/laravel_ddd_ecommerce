@@ -117,6 +117,10 @@ final class LoginController extends Controller
 
     private function getLocationInfo(Location $location): array
     {
+        if ($location->default) {
+            return [];
+        }
+
         return [
             'ip' => $location->ip,
             'region_code' => $location->state,
