@@ -35,6 +35,8 @@ use Laravel\Sanctum\HasApiTokens;
  * @property-read int|null $confirmation_tokens_count
  * @property-read \Illuminate\Database\Eloquent\Collection|Feedback[] $feedback
  * @property-read int|null $feedback_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Domains\Users\Models\LoginHistory[] $loginHistory
+ * @property-read int|null $login_history_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Sanctum\PersonalAccessToken[] $tokens
