@@ -12,10 +12,13 @@ abstract class AdminCrudTestCase extends AdminTestCase
 {
     /** @var class-string<ListRecords>|null */
     protected ?string $listRecords = null;
+
     /** @var class-string<CreateRecord>|null */
     protected ?string $createRecord = null;
+
     /** @var class-string<ViewRecord>|null */
     protected ?string $viewRecord = null;
+
     /** @var class-string<EditRecord>|null */
     protected ?string $editRecord = null;
 

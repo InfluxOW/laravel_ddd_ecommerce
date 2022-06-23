@@ -14,7 +14,7 @@ final class NestedMultiselectFilterValues
     {
     }
 
-    #[ArrayShape(['attribute' => "array", 'values' => "array"])]
+    #[ArrayShape(['attribute' => 'array', 'values' => 'array'])]
     public function toArray(): array
     {
         return [
@@ -29,7 +29,7 @@ final class NestedMultiselectFilterValues
             ResponseValueType::STRING => $value,
             ResponseValueType::INTEGER => (int) $value,
             ResponseValueType::FLOAT => (float) $value,
-            ResponseValueType::BOOLEAN => ($value === BooleanString::TRUE->value),
+            ResponseValueType::BOOLEAN => ($value === BooleanString::_TRUE->value),
         };
     }
 }

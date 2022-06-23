@@ -2,6 +2,7 @@
 
 namespace App\Domains\Admin\Admin\Abstracts;
 
+use App\Domains\Admin\Admin\Abstracts\Resource as BaseResource;
 use App\Domains\Admin\Admin\Components\Actions\Tables\DeleteAction;
 use App\Domains\Admin\Admin\Components\Actions\Tables\ViewAction;
 use App\Domains\Admin\Traits\HasNavigationSort;
@@ -80,7 +81,7 @@ abstract class RelationManager extends BaseRelationManager
     }
 
     /**
-     * @return array<class-string<Resource>, class-string<ViewRecord>>
+     * @return array<class-string<BaseResource>, class-string<ViewRecord>>
      */
     abstract protected function getViewableResourcesMap(): array;
 }

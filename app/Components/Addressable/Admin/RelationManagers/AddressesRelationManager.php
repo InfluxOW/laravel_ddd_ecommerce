@@ -18,6 +18,7 @@ use Squire\Models\Region;
 final class AddressesRelationManager extends RelationManager
 {
     protected static ?string $recordTitleAttribute = 'string_representation';
+
     protected static string $relationship = 'addresses';
 
     public static function form(Form $form): Form

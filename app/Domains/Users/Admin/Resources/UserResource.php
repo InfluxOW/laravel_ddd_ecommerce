@@ -23,8 +23,11 @@ use Illuminate\Database\Eloquent\Model;
 final class UserResource extends Resource
 {
     protected static ?string $model = User::class;
+
     protected static ?string $recordTitleAttribute = 'name';
+
     protected static ?string $slug = 'users';
+
     protected static ?string $navigationIcon = 'heroicon-o-users';
 
     /*

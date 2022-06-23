@@ -2,7 +2,6 @@
 
 namespace App\Components\Queryable\Classes\Filter\Virtual\MultiselectFilter\Nested\Resources;
 
-use App\Components\Queryable\Classes\Filter\Virtual\MultiselectFilter\Nested\Resources\NestedMultiselectFilterValuesAttribute;
 use OpenApi\Annotations as OA;
 
 /**

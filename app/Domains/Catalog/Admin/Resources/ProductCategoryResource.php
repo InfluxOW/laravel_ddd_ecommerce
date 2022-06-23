@@ -31,8 +31,11 @@ use Illuminate\Support\Str;
 final class ProductCategoryResource extends Resource
 {
     protected static ?string $model = ProductCategory::class;
+
     protected static ?string $recordTitleAttribute = 'title';
+
     protected static ?string $slug = 'catalog/categories';
+
     protected static ?string $navigationIcon = 'heroicon-o-collection';
 
     /*

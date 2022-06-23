@@ -10,6 +10,7 @@ final class DomainServiceProvider extends ServiceProvider
     public const NAMESPACE = ServiceProviderNamespace::GENERIC;
 
     protected bool $hasTranslations = true;
+
     protected bool $hasMigrations = true;
 
     protected array $providers = [

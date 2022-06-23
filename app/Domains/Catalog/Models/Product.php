@@ -166,7 +166,7 @@ final class Product extends Model implements Purchasable, HasMedia
             foreach ($attributes as $attribute) {
                 $values = (array) $attributesValuesByAttributeSlug[$attribute->slug];
                 if ($attribute->values_type === ProductAttributeValuesType::BOOLEAN) {
-                    $values = array_map(static fn (string|int|bool|float $value): bool => Str::of((string) $value)->lower()->toString() === BooleanString::TRUE->value, $values);
+                    $values = array_map(static fn (string|int|bool|float $value): bool => Str::of((string) $value)->lower()->toString() === BooleanString::_TRUE->value, $values);
                 }
 
                 $query->whereHas('attributeValues', function (Builder $query) use ($attribute, $values): void {

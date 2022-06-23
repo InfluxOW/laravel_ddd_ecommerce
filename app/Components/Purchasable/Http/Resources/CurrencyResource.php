@@ -8,7 +8,7 @@ use JetBrains\PhpStorm\ArrayShape;
 
 final class CurrencyResource extends JsonResource
 {
-    #[ArrayShape(['name' => "string", 'abbreviation' => "string", 'symbol' => "string"])]
+    #[ArrayShape(['name' => 'string', 'abbreviation' => 'string', 'symbol' => 'string'])]
     public function toArray($request): array
     {
         /** @var Currency $currency */

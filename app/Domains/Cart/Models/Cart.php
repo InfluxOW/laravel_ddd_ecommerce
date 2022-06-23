@@ -38,6 +38,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 final class Cart extends Model
 {
     protected $fillable = ['key', 'price_items', 'price_items_discounted', 'currency'];
+
     protected $casts = [
         'price_items' => MoneyCast::class,
         'price_items_discounted' => MoneyCast::class,

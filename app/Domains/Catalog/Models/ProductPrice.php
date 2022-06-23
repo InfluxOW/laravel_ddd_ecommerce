@@ -43,6 +43,7 @@ final class ProductPrice extends Model
         'price' => MoneyCast::class,
         'price_discounted' => MoneyCast::class,
     ];
+
     protected $fillable = [
         'currency',
         'price',

@@ -16,6 +16,7 @@ final class FeedbackControllerTest extends TestCase
     use WithFaker;
 
     protected array $validData;
+
     protected User $user;
 
     protected function setUp(): void

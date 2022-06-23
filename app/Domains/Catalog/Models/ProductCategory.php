@@ -82,9 +82,11 @@ final class ProductCategory extends Model implements HasMedia
     }
 
     public const MAX_DEPTH = 3;
+
     protected const HIERARCHY_CACHE_KEY = 'hierarchy';
 
     protected string $orderColumnName = 'title';
+
     protected $fillable = [
         'slug',
         'title',

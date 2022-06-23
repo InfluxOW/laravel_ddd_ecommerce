@@ -20,6 +20,7 @@ use Spatie\QueryBuilder\QueryBuilder as SpatieQueryBuilder;
 final class ProductFilterService implements QueryService
 {
     protected SpatieQueryBuilder $productsQuery;
+
     protected string $currency;
 
     public function __construct(private ProductFilterBuilder $filterBuilder)

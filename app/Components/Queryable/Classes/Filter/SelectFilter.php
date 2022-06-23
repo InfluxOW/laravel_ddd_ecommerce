@@ -22,7 +22,7 @@ final class SelectFilter extends Filter
         parent::__construct($filter);
     }
 
-    #[ArrayShape(['query' => "string", 'title' => "string", 'type' => "string", 'values' => "array"])]
+    #[ArrayShape(['query' => 'string', 'title' => 'string', 'type' => 'string', 'values' => 'array'])]
     public function toAllowedArray(): array
     {
         return array_merge($this->toArray(), [
@@ -30,7 +30,7 @@ final class SelectFilter extends Filter
         ]);
     }
 
-    #[ArrayShape(['query' => "string", 'title' => "string", 'type' => "string", 'selected_value' => "string|int|bool|float|null"])]
+    #[ArrayShape(['query' => 'string', 'title' => 'string', 'type' => 'string', 'selected_value' => 'string|int|bool|float|null'])]
     public function toAppliedArray(): array
     {
         return array_merge($this->toArray(), [
@@ -42,7 +42,7 @@ final class SelectFilter extends Filter
     {
         $selectedValue = Arr::first($values, static fn (string|int|bool|float|array|null $value) => ! is_array($value));
 
-        $filter = clone($this);
+        $filter = clone $this;
         $filter->selectedValue = $this->allowedValues->filter(fn (string|int|bool|float|array|null $value): bool => $value === $selectedValue)->first();
 
         return isset($filter->selectedValue) ? $filter : null;

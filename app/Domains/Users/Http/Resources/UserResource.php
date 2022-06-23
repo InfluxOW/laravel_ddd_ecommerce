@@ -9,7 +9,7 @@ use JetBrains\PhpStorm\ArrayShape;
 
 final class UserResource extends JsonResource
 {
-    #[ArrayShape(['name' => "string", 'email' => "string", 'phone' => "string|null", 'created_at' => "string|null"])]
+    #[ArrayShape(['name' => 'string', 'email' => 'string', 'phone' => 'string|null', 'created_at' => 'string|null'])]
     public function toArray($request): array
     {
         /** @var User $user */

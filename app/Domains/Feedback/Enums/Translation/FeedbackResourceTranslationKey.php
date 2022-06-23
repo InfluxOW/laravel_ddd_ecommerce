@@ -9,6 +9,6 @@ enum FeedbackResourceTranslationKey: string
     case PHONE = 'phone';
     case USER = 'user';
     case TEXT = 'text';
-    CASE IS_REVIEWED = 'is_reviewed';
-    CASE CREATED_AT = 'created_at';
+    case IS_REVIEWED = 'is_reviewed';
+    case CREATED_AT = 'created_at';
 }

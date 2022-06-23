@@ -24,8 +24,11 @@ use Illuminate\Support\Str;
 final class ProductResource extends Resource
 {
     protected static ?string $model = Product::class;
+
     protected static ?string $recordTitleAttribute = 'title';
+
     protected static ?string $slug = 'catalog/products';
+
     protected static ?string $navigationIcon = 'heroicon-o-currency-dollar';
 
     /*

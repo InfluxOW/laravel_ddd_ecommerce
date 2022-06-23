@@ -1,6 +1,5 @@
 <?php
 
-use App\Domains\Feedback\Enums\Translation\FeedbackActionTranslationKey;
 use App\Domains\Feedback\Enums\Translation\FeedbackResourceTranslationKey;
 use App\Domains\Feedback\Enums\Translation\FeedbackSettingsTranslationKey;
 
