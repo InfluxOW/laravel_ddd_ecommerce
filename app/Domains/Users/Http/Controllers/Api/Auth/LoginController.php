@@ -26,14 +26,12 @@ final class LoginController extends Controller
             /* @phpstan-ignore-next-line */
             $user = $this->retrieveUserByCredentials($request->safe(['email', 'password']));
             $this->checkEmailVerification($user);
+            $loginDetails = $this->getLoginDetails($request);
 
-            // TODO: Remove HTTP request from transaction
-            $accessToken = DB::transaction(function () use ($user, $request): NewAccessToken {
-                $accessToken = $this->createAccessToken($user);
+            $accessToken = DB::transaction(function () use ($user, $loginDetails): NewAccessToken {
+                $this->updateUserLoginHistory($user, $loginDetails);
 
-                $this->processUserDevice($user, $request);
-
-                return $accessToken;
+                return $this->receiveNewAccessToken($user);
             });
         } catch (HttpException $e) {
             return $this->respondWithMessage($e->getMessage(), $e->getCode());
@@ -71,29 +69,26 @@ final class LoginController extends Controller
         throw new HttpException("We sent a confirmation email to {$user->email}. Please, follow the instructions to complete your registration.", Response::HTTP_FORBIDDEN);
     }
 
-    private function createAccessToken(User $user): NewAccessToken
+    private function updateUserLoginHistory(User $user, array $loginDetails): void
     {
-        return DB::transaction(static function () use ($user): NewAccessToken {
-            $user->tokens()->delete();
-
-            return $user->createToken('access_token');
-        });
+        $user->loginHistory()->create($loginDetails);
     }
 
-    private function processUserDevice(User $user, LoginRequest $request): void
+    private function receiveNewAccessToken(User $user): NewAccessToken
     {
+        $user->tokens()->delete();
+
+        return $user->createToken('access_token');
+    }
+
+    private function getLoginDetails(LoginRequest $request): array
+    {
+        $location = GeoIPFacade::getLocation($request->getIp());
+
         $agent = new Agent();
         $agent->setUserAgent($request->userAgent());
         $agent->setHttpHeaders($request->headers->all());
 
-        $location = GeoIPFacade::getLocation($request->getIp());
-        $loginDetails = $this->getLoginDetails($agent, $location);
-
-        $user->loginHistory()->create($loginDetails);
-    }
-
-    private function getLoginDetails(Agent $agent, Location $location): array
-    {
         return array_merge($this->getAgentInfo($agent), $this->getLocationInfo($location));
     }
 
