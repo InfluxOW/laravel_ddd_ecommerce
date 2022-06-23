@@ -55,7 +55,7 @@ idea or a team agreement than exact project structure. And that's why I've imple
 
 - DDD structure
 - Separate [Development](https://github.com/InfluxOW/laravel_ddd_ecommerce/blob/master/docker-compose.yml), [Testing](https://github.com/InfluxOW/laravel_ddd_ecommerce/blob/master/docker-compose.test.yml) and [CI](https://github.com/InfluxOW/laravel_ddd_ecommerce/blob/master/docker-compose.ci.yml) Infrastructure
-- Git Hooks with Code Style ([PHPCS](https://github.com/squizlabs/PHP_CodeSniffer)) and Code Quality ([PHPStan](https://github.com/phpstan/phpstan)) analysis
+- Git Hooks with Code Style ([PHPCS](https://github.com/squizlabs/PHP_CodeSniffer), [Laravel Pint](https://github.com/laravel/pint)) and Code Quality ([PHPStan](https://github.com/phpstan/phpstan)) analysis
 - Fast CI at GitHub Actions:
     - caching dependencies and check's results
     - building, caching and pushing Docker images to the Docker Hub
@@ -63,7 +63,7 @@ idea or a team agreement than exact project structure. And that's why I've imple
 
 ### Project Features
 
-- Authentication with Laravel Sanctum, Email Verification - [[**Users**](https://github.com/InfluxOW/laravel_ddd_ecommerce/tree/master/app/Domains/Users)]
+- Authentication with [Laravel Sanctum](https://github.com/laravel/sanctum), Email Verification, Login History - [[**Users**](https://github.com/InfluxOW/laravel_ddd_ecommerce/tree/master/app/Domains/Users)]
 - Catalog with different filters, full-text search, categories tree, etc. - [[**Catalog**](https://github.com/InfluxOW/laravel_ddd_ecommerce/tree/master/app/Domains/Catalog)]
 - Ability to add feedback, but a limited number of times per hour per IP - [[**Feedback**](https://github.com/InfluxOW/laravel_ddd_ecommerce/tree/master/app/Domains/Feedback)]
 - **[WIP]** Carts with Redis - [[**Cart**](https://github.com/InfluxOW/laravel_ddd_ecommerce/tree/master/app/Domains/Cart)]
