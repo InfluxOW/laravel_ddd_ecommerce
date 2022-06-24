@@ -3,6 +3,7 @@
 namespace App\Domains\Users\Providers;
 
 use App\Domains\Generic\Enums\ServiceProviderNamespace;
+use App\Domains\Users\Admin\Components\Widgets\CustomersChartWidget;
 use App\Infrastructure\Abstracts\Providers\ServiceProvider;
 
 final class DomainServiceProvider extends ServiceProvider
@@ -12,6 +13,12 @@ final class DomainServiceProvider extends ServiceProvider
     protected bool $hasMigrations = true;
 
     protected bool $hasTranslations = true;
+
+    protected bool $hasLivewireComponents = true;
+
+    protected array $livewireComponents = [
+        CustomersChartWidget::class,
+    ];
 
     protected array $providers = [
         RouteServiceProvider::class,

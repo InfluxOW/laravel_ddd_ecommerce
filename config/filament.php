@@ -1,6 +1,5 @@
 <?php
 
-use App\Domains\Admin\Admin\Components\Widgets\CustomersChartWidget;
 use App\Domains\Admin\Admin\Pages\Login;
 use App\Domains\Catalog\Admin\Pages\ManageCatalogSettings;
 use App\Domains\Catalog\Admin\Resources\ProductAttributeResource;
@@ -8,6 +7,7 @@ use App\Domains\Catalog\Admin\Resources\ProductCategoryResource;
 use App\Domains\Catalog\Admin\Resources\ProductResource;
 use App\Domains\Feedback\Admin\Pages\ManageFeedbackSettings;
 use App\Domains\Feedback\Admin\Resources\FeedbackResource;
+use App\Domains\Users\Admin\Components\Widgets\CustomersChartWidget;
 use App\Domains\Users\Admin\Resources\UserResource;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;

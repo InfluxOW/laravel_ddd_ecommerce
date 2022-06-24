@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Admin\Admin\Components\Widgets;
+namespace App\Domains\Users\Admin\Components\Widgets;
 
 use App\Domains\Admin\Enums\Translation\Components\AdminDatasetTranslationKey;
 use App\Domains\Admin\Traits\Translation\TranslatableAdminWidget;
