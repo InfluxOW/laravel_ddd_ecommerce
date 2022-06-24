@@ -18,7 +18,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
     public const NAMESPACE = ServiceProviderNamespace::DEFAULT;
 
     /**
-     * @var array List of custom Artisan commands.
+     * @var array List of Artisan commands to load.
      */
     protected array $commands = [];
 
@@ -47,9 +47,6 @@ abstract class ServiceProvider extends LaravelServiceProvider
         }
     }
 
-    /**
-     * Boot required registering of views and translations.
-     */
     public function boot(): void
     {
         $this->registerPolicies();
@@ -61,9 +58,6 @@ abstract class ServiceProvider extends LaravelServiceProvider
         $this->afterBooting();
     }
 
-    /**
-     * Register the application's policies.
-     */
     protected function registerPolicies(): void
     {
         foreach ($this->policies as $key => $value) {
@@ -71,33 +65,21 @@ abstract class ServiceProvider extends LaravelServiceProvider
         }
     }
 
-    /**
-     * Register domain custom Artisan commands.
-     */
     protected function registerCommands(): void
     {
         $this->commands($this->commands);
     }
 
-    /**
-     * Register domain migrations.
-     */
     protected function registerMigrations(): void
     {
         $this->loadMigrationsFrom($this->domainPath(PathUtils::join(['Database', 'Migrations'])));
     }
 
-    /**
-     * Register domain translations.
-     */
     protected function registerTranslations(): void
     {
         $this->loadTranslationsFrom($this->domainPath(PathUtils::join(['Resources', 'Lang'])), static::NAMESPACE->value);
     }
 
-    /**
-     * Register Livewire components.
-     */
     protected function registerLivewireComponents(): void
     {
         foreach ($this->livewireComponents as $component) {
