@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\DB;
 use Jenssegers\Agent\Agent;
 use Laravel\Sanctum\NewAccessToken;
 use Symfony\Component\HttpFoundation\Response;
-use Throwable;
 use Torann\GeoIP\Facades\GeoIP as GeoIPFacade;
 use Torann\GeoIP\Location;
 
@@ -22,22 +21,16 @@ final class LoginController extends Controller
 {
     public function __invoke(LoginRequest $request): JsonResponse
     {
-        try {
-            /* @phpstan-ignore-next-line */
-            $user = $this->retrieveUserByCredentials($request->safe(['email', 'password']));
-            $this->checkEmailVerification($user);
-            $loginDetails = $this->getLoginDetails($request);
+        /* @phpstan-ignore-next-line */
+        $user = $this->retrieveUserByCredentials($request->safe(['email', 'password']));
+        $this->checkEmailVerification($user);
+        $loginDetails = $this->getLoginDetails($request);
 
-            $accessToken = DB::transaction(function () use ($user, $loginDetails): NewAccessToken {
-                $this->updateUserLoginHistory($user, $loginDetails);
+        $accessToken = DB::transaction(function () use ($user, $loginDetails): NewAccessToken {
+            $this->updateUserLoginHistory($user, $loginDetails);
 
-                return $this->receiveNewAccessToken($user);
-            });
-        } catch (HttpException $e) {
-            return $this->respondWithMessage($e->getMessage(), $e->getCode());
-        } catch (Throwable) {
-            return $this->respondWithMessage('Sorry, something went wrong. Please, try again later!', Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
+            return $this->receiveNewAccessToken($user);
+        });
 
         Login::dispatch($user);
 
