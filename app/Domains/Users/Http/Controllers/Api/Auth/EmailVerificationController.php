@@ -3,7 +3,6 @@
 namespace App\Domains\Users\Http\Controllers\Api\Auth;
 
 use App\Domains\Generic\Enums\ConfirmationTokenType;
-use App\Domains\Generic\Exceptions\InvalidConfirmationTokenException;
 use App\Domains\Generic\Services\Repositories\ConfirmationTokenRepository;
 use App\Domains\Users\Events\EmailVerificationSucceeded;
 use App\Domains\Users\Http\Requests\EmailVerificationRequest;
@@ -20,11 +19,7 @@ final class EmailVerificationController extends Controller
             return $this->respondNotFound();
         }
 
-        try {
-            $repository->consume($user, ConfirmationTokenType::EMAIL_VERIFICATION, $request->token);
-        } catch (InvalidConfirmationTokenException) {
-            return $this->respondNotFound();
-        }
+        $repository->consume($user, ConfirmationTokenType::EMAIL_VERIFICATION, $request->token);
 
         $user->markEmailAsVerified();
 

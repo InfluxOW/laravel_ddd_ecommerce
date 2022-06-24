@@ -208,7 +208,7 @@ return [
 
     'rate_limits' => [
         'api' => env('API_RATE_LIMIT', 60),
-        'hard' => env('HARD_RATE_LIMIT', 1),
+        'hard' => env('HARD_RATE_LIMIT', 5),
     ],
 
     'admin' => [

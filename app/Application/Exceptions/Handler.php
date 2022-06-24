@@ -39,10 +39,6 @@ final class Handler extends ExceptionHandler
      */
     public function register()
     {
-        $this->reportable(static function (Throwable $e) {
-            //
-        });
-
         $this->renderable(fn (HttpException $e): mixed => $this->respondWithMessage($e->getMessage(), $e->getCode()));
     }
 

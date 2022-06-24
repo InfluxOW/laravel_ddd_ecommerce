@@ -4,6 +4,9 @@ namespace App\Infrastructure\Abstracts\Providers;
 
 use App\Domains\Generic\Enums\ServiceProviderNamespace;
 use App\Domains\Generic\Utils\PathUtils;
+use Closure;
+use Illuminate\Contracts\Debug\ExceptionHandler;
+use Illuminate\Foundation\Exceptions\Handler;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 use Illuminate\Support\Str;
@@ -54,6 +57,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
         $this->registerMigrations();
         $this->registerTranslations();
         $this->registerLivewireComponents();
+        $this->registerExceptionHandlingCallbacks();
 
         $this->afterBooting();
     }
@@ -87,6 +91,37 @@ abstract class ServiceProvider extends LaravelServiceProvider
 
             Livewire::component($alias, $component);
         }
+    }
+
+    private function registerExceptionHandlingCallbacks(): void
+    {
+        $handler = $this->app->make(ExceptionHandler::class);
+
+        if ($handler instanceof Handler) {
+            foreach ($this->getCustomExceptionRenderers() as $renderer) {
+                $handler->renderable($renderer);
+            }
+
+            foreach ($this->getCustomExceptionReporters() as $reporter) {
+                $handler->reportable($reporter);
+            }
+        }
+    }
+
+    /**
+     * @return Closure[]
+     */
+    protected function getCustomExceptionRenderers(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return Closure[]
+     */
+    protected function getCustomExceptionReporters(): array
+    {
+        return [];
     }
 
     protected function afterBooting(): void

@@ -3,11 +3,15 @@
 namespace App\Domains\Users\Providers;
 
 use App\Domains\Generic\Enums\ServiceProviderNamespace;
+use App\Domains\Generic\Exceptions\InvalidConfirmationTokenException;
 use App\Domains\Users\Admin\Components\Widgets\CustomersChartWidget;
 use App\Infrastructure\Abstracts\Providers\ServiceProvider;
+use App\Interfaces\Http\Controllers\ResponseTrait;
 
 final class DomainServiceProvider extends ServiceProvider
 {
+    use ResponseTrait;
+
     public const NAMESPACE = ServiceProviderNamespace::USERS;
 
     protected array $livewireComponents = [
@@ -18,4 +22,11 @@ final class DomainServiceProvider extends ServiceProvider
         RouteServiceProvider::class,
         EventServiceProvider::class,
     ];
+
+    protected function getCustomExceptionRenderers(): array
+    {
+        return [
+            fn (InvalidConfirmationTokenException $e): mixed => $this->respondNotFound(),
+        ];
+    }
 }
