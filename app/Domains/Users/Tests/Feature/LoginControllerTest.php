@@ -51,7 +51,7 @@ final class LoginControllerTest extends TestCase
 
         Notification::assertSentTo($this->user, EmailVerificationNotification::class, function (EmailVerificationNotification $notification): bool {
             Event::fake();
-            $this->post(route('user.verify.email', ['token' => $notification->getTokenString(), 'email' => $this->user->email]))->assertNoContent();
+            $this->post(route('user.verify.email', ['token' => $notification->getTokenString(), 'email' => $this->user->email]))->assertOk();
             Event::assertDispatched(EmailVerificationSucceeded::class);
 
             return true;

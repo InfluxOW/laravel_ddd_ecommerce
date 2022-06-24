@@ -30,7 +30,7 @@ trait ResponseTrait
 
     protected function respondSuccess(): JsonResponse
     {
-        return $this->respondWithStatus(SymfonyResponse::HTTP_NO_CONTENT);
+        return $this->respondWithStatus(SymfonyResponse::HTTP_OK);
     }
 
     protected function respondNotFound(): JsonResponse

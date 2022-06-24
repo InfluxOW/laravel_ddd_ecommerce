@@ -45,7 +45,7 @@ final class EmailVerificationControllerTest extends TestCase
         $token = $this->getConfirmationToken();
 
         Event::fake();
-        $this->post(route('user.verify.email', ['token' => $token->token, 'email' => $this->user->email]))->assertNoContent();
+        $this->post(route('user.verify.email', ['token' => $token->token, 'email' => $this->user->email]))->assertOk();
         Event::assertDispatched(EmailVerificationSucceeded::class);
 
         $this->assertNotNull($this->user->refresh()->email_verified_at);

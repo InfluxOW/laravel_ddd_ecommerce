@@ -33,6 +33,6 @@ final class LogoutControllerTest extends TestCase
      */
     public function an_authenticated_user_can_logout(): void
     {
-        $this->actingAs($this->user)->post(route('logout'))->assertNoContent();
+        $this->actingAs($this->user)->post(route('logout'))->assertOk();
     }
 }

@@ -49,7 +49,7 @@ final class FeedbackControllerTest extends TestCase
     {
         $this->assertDatabaseMissing('feedback', $this->validData);
 
-        $this->post(route('feedback.store'), $this->validData)->assertNoContent();
+        $this->post(route('feedback.store'), $this->validData)->assertOk();
 
         $this->assertDatabaseHas('feedback', $this->validData);
     }
@@ -59,7 +59,7 @@ final class FeedbackControllerTest extends TestCase
     {
         $now = Carbon::now();
 
-        $this->post(route('feedback.store'), $this->validData)->assertNoContent();
+        $this->post(route('feedback.store'), $this->validData)->assertOk();
 
         $this->travelTo($now->addMinutes(30));
 
@@ -67,7 +67,7 @@ final class FeedbackControllerTest extends TestCase
 
         $this->travelTo($now->addMinutes(30));
 
-        $this->post(route('feedback.store'), $this->validData)->assertNoContent();
+        $this->post(route('feedback.store'), $this->validData)->assertOk();
     }
 
     /** @test */
@@ -75,21 +75,21 @@ final class FeedbackControllerTest extends TestCase
     {
         $now = Carbon::now();
 
-        $this->setIp($this->faker->unique()->ipv4)->post(route('feedback.store'), $this->validData)->assertNoContent();
+        $this->setIp($this->faker->unique()->ipv4)->post(route('feedback.store'), $this->validData)->assertOk();
 
         $this->travelTo($now->addMinutes(30));
 
-        $this->setIp($this->faker->unique()->ipv4)->post(route('feedback.store'), $this->validData)->assertNoContent();
+        $this->setIp($this->faker->unique()->ipv4)->post(route('feedback.store'), $this->validData)->assertOk();
 
         $this->travelTo($now->addMinutes(30));
 
-        $this->setIp($this->faker->unique()->ipv4)->post(route('feedback.store'), $this->validData)->assertNoContent();
+        $this->setIp($this->faker->unique()->ipv4)->post(route('feedback.store'), $this->validData)->assertOk();
     }
 
     /** @test */
     public function a_guest_cannot_post_feedback_and_then_authenticate_to_post_again(): void
     {
-        $this->post(route('feedback.store'), $this->validData)->assertNoContent();
+        $this->post(route('feedback.store'), $this->validData)->assertOk();
         $this->actingAs($this->user)->post(route('feedback.store'), $this->validData)->assertForbidden();
     }
 
@@ -112,7 +112,7 @@ final class FeedbackControllerTest extends TestCase
                 ->setIp($this->faker->unique()->ipv4)
                 ->actingAs($this->user)
                 ->post(route('feedback.store'), $validData)
-                ->assertNoContent();
+                ->assertOk();
 
             $this->assertDatabaseHas('feedback', $actualData);
 
@@ -129,7 +129,7 @@ final class FeedbackControllerTest extends TestCase
             ->setIp($this->faker->unique()->ipv4)
             ->actingAs($this->user)
             ->post(route('feedback.store'), $this->validData)
-            ->assertNoContent();
+            ->assertOk();
 
         $this->travelTo($now->addMinutes(30));
 
@@ -145,6 +145,6 @@ final class FeedbackControllerTest extends TestCase
             ->setIp($this->faker->unique()->ipv4)
             ->actingAs($this->user)
             ->post(route('feedback.store'), $this->validData)
-            ->assertNoContent();
+            ->assertOk();
     }
 }
