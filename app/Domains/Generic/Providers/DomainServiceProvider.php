@@ -14,12 +14,6 @@ final class DomainServiceProvider extends ServiceProvider
 {
     public const NAMESPACE = ServiceProviderNamespace::GENERIC;
 
-    protected bool $hasTranslations = true;
-
-    protected bool $hasMigrations = true;
-
-    protected bool $hasCommands = true;
-
     protected array $commands = [
         RefreshApplication::class,
     ];
@@ -28,10 +22,13 @@ final class DomainServiceProvider extends ServiceProvider
         RouteServiceProvider::class,
     ];
 
-    public function boot(): void
+    public function afterBooting(): void
     {
-        parent::boot();
+        $this->registerMacroses();
+    }
 
+    private function registerMacroses(): void
+    {
         /* @phpstan-ignore-next-line */
         SessionGuard::macro('retrieveUserByCredentials', fn (array $credentials): ?Authenticatable => $this->provider->retrieveByCredentials($credentials));
 

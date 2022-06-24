@@ -18,31 +18,6 @@ abstract class ServiceProvider extends LaravelServiceProvider
     public const NAMESPACE = ServiceProviderNamespace::DEFAULT;
 
     /**
-     * @var bool Set true if provider will load commands.
-     */
-    protected bool $hasCommands = false;
-
-    /**
-     * @var bool Set true if provider will load migrations.
-     */
-    protected bool $hasMigrations = false;
-
-    /**
-     * @var bool Set true if provider will load translations.
-     */
-    protected bool $hasTranslations = false;
-
-    /**
-     * @var bool Set true if provider will load policies.
-     */
-    protected bool $hasPolicies = false;
-
-    /**
-     * @var bool Set true if provider will load livewire components.
-     */
-    protected bool $hasLivewireComponents = false;
-
-    /**
      * @var array List of custom Artisan commands.
      */
     protected array $commands = [];
@@ -63,6 +38,16 @@ abstract class ServiceProvider extends LaravelServiceProvider
     protected array $livewireComponents = [];
 
     /**
+     * Register Domain ServiceProviders.
+     */
+    public function register(): void
+    {
+        foreach ($this->providers as $provider) {
+            $this->app->register($provider);
+        }
+    }
+
+    /**
      * Boot required registering of views and translations.
      */
     public function boot(): void
@@ -72,6 +57,8 @@ abstract class ServiceProvider extends LaravelServiceProvider
         $this->registerMigrations();
         $this->registerTranslations();
         $this->registerLivewireComponents();
+
+        $this->afterBooting();
     }
 
     /**
@@ -79,10 +66,8 @@ abstract class ServiceProvider extends LaravelServiceProvider
      */
     protected function registerPolicies(): void
     {
-        if ($this->hasPolicies) {
-            foreach ($this->policies as $key => $value) {
-                Gate::policy($key, $value);
-            }
+        foreach ($this->policies as $key => $value) {
+            Gate::policy($key, $value);
         }
     }
 
@@ -91,9 +76,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
      */
     protected function registerCommands(): void
     {
-        if ($this->hasCommands) {
-            $this->commands($this->commands);
-        }
+        $this->commands($this->commands);
     }
 
     /**
@@ -101,9 +84,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
      */
     protected function registerMigrations(): void
     {
-        if ($this->hasMigrations) {
-            $this->loadMigrationsFrom($this->domainPath(PathUtils::join(['Database', 'Migrations'])));
-        }
+        $this->loadMigrationsFrom($this->domainPath(PathUtils::join(['Database', 'Migrations'])));
     }
 
     /**
@@ -111,9 +92,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
      */
     protected function registerTranslations(): void
     {
-        if ($this->hasTranslations) {
-            $this->loadTranslationsFrom($this->domainPath(PathUtils::join(['Resources', 'Lang'])), static::NAMESPACE->value);
-        }
+        $this->loadTranslationsFrom($this->domainPath(PathUtils::join(['Resources', 'Lang'])), static::NAMESPACE->value);
     }
 
     /**
@@ -121,13 +100,16 @@ abstract class ServiceProvider extends LaravelServiceProvider
      */
     protected function registerLivewireComponents(): void
     {
-        if ($this->hasLivewireComponents) {
-            foreach ($this->livewireComponents as $component) {
-                $alias = sprintf('%s.%s', static::NAMESPACE->value, Str::of(Str::of($component)->explode('\\')->last())->kebab());
+        foreach ($this->livewireComponents as $component) {
+            $alias = sprintf('%s.%s', static::NAMESPACE->value, Str::of(Str::of($component)->explode('\\')->last())->kebab());
 
-                Livewire::component($alias, $component);
-            }
+            Livewire::component($alias, $component);
         }
+    }
+
+    protected function afterBooting(): void
+    {
+        //
     }
 
     /**
@@ -141,15 +123,5 @@ abstract class ServiceProvider extends LaravelServiceProvider
         $realPath = dirname($path, 2) . '/';
 
         return ($append === null) ? $realPath : "{$realPath}{$append}";
-    }
-
-    /**
-     * Register Domain ServiceProviders.
-     */
-    public function register(): void
-    {
-        foreach ($this->providers as $provider) {
-            $this->app->register($provider);
-        }
     }
 }

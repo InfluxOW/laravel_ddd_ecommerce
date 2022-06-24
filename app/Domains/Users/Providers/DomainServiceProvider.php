@@ -10,12 +10,6 @@ final class DomainServiceProvider extends ServiceProvider
 {
     public const NAMESPACE = ServiceProviderNamespace::USERS;
 
-    protected bool $hasMigrations = true;
-
-    protected bool $hasTranslations = true;
-
-    protected bool $hasLivewireComponents = true;
-
     protected array $livewireComponents = [
         CustomersChartWidget::class,
     ];
