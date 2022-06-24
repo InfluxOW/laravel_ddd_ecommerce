@@ -9,20 +9,25 @@ abstract class RangeFilter extends Filter
 {
     /**
      * @OA\Property(enum={"RANGE"})
+     *
      * @var string
      */
     public $type;
 
     /**
      * @OA\Property()
+     *
      * @var float|null
+     *
      * @example 5.0
      */
     public $min_value;
 
     /**
      * @OA\Property()
+     *
      * @var float|null
+     *
      * @example 50.0
      */
     public $max_value;

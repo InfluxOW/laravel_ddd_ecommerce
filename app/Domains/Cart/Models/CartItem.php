@@ -9,21 +9,22 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 /**
  * App\Domains\Cart\Models\CartItem
  *
- * @property int $id
- * @property int $cart_id
- * @property int $quantity
- * @property \Akaunting\Money\Money $price_item
- * @property \Akaunting\Money\Money $price_item_discounted
- * @property \Akaunting\Money\Money $price_total
- * @property \Akaunting\Money\Money $price_total_discounted
- * @property string $purchasable_type
- * @property int $purchasable_id
- * @property array $purchasable_data
+ * @property int                             $id
+ * @property int                             $cart_id
+ * @property int                             $quantity
+ * @property \Akaunting\Money\Money          $price_item
+ * @property \Akaunting\Money\Money          $price_item_discounted
+ * @property \Akaunting\Money\Money          $price_total
+ * @property \Akaunting\Money\Money          $price_total_discounted
+ * @property string                          $purchasable_type
+ * @property int                             $purchasable_id
+ * @property array                           $purchasable_data
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Domains\Cart\Models\Cart $cart
  * @property-read string $currency
  * @property-read Model|\Eloquent $purchasable
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|CartItem newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CartItem newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CartItem query()

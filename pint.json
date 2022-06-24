@@ -3,7 +3,9 @@
     "rules": {
         "concat_space": {
             "spacing": "one"
-        }
+        },
+        "phpdoc_separation": true,
+        "phpdoc_align": true
     },
     "exclude": [
     ]

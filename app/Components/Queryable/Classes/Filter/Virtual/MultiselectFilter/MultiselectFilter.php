@@ -9,6 +9,7 @@ abstract class MultiselectFilter extends Filter
 {
     /**
      * @OA\Property(enum={"MULTISELECT"})
+     *
      * @var string
      */
     public $type;

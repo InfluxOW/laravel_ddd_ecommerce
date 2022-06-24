@@ -15,6 +15,7 @@ interface QueryService
 
     /**
      * @param Request $request
+     *
      * @return Collection<Query>|Query|null
      */
     public function getApplied(Request $request): Collection|Query|null;

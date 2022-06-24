@@ -12,6 +12,7 @@ trait HasTranslatableAdminActionsModals
 
     /**
      * @param object[] $schema
+     *
      * @return array
      */
     protected static function setTranslatableModals(array $schema): array
@@ -38,6 +39,7 @@ trait HasTranslatableAdminActionsModals
 
     /**
      * @phpstan-ignore-next-line
+     *
      * @return string<UnitEnum>
      */
     abstract protected static function getTranslationKeyClass(): string;

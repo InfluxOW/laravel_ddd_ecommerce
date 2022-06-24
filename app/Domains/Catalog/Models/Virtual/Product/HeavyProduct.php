@@ -17,6 +17,7 @@ final class HeavyProduct extends LightProduct
      *     type="array",
      *     @OA\Items(ref="#/components/schemas/Media")
      * )
+     *
      * @var Media[]
      */
     public $images;
@@ -26,6 +27,7 @@ final class HeavyProduct extends LightProduct
      *     type="array",
      *     @OA\Items(ref="#/components/schemas/MediumProductCategory")
      * )
+     *
      * @var MediumProductCategory[]
      */
     public $categories;
@@ -35,13 +37,16 @@ final class HeavyProduct extends LightProduct
      *     type="array",
      *     @OA\Items(ref="#/components/schemas/ProductAttributeValue")
      * )
+     *
      * @var ProductAttributeValue[]
      */
     public $attributes;
 
     /**
      * @OA\Property()
+     *
      * @var string
+     *
      * @example Home video game console developed by Sony Computer Entertainment.
      */
     public $description;

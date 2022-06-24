@@ -111,6 +111,7 @@ final class ProductAttributeResource extends Resource
 
     /**
      * @param ProductAttribute $record
+     *
      * @return bool
      */
     public static function canDelete(Model $record): bool

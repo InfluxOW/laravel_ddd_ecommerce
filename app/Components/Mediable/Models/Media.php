@@ -9,26 +9,27 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
 /**
  * App\Components\Mediable\Models\Media
  *
- * @property int $id
- * @property string $model_type
- * @property int $model_id
- * @property string|null $uuid
- * @property string $collection_name
- * @property string $name
- * @property string $file_name
- * @property string|null $mime_type
- * @property string $disk
- * @property string|null $conversions_disk
- * @property int $size
- * @property array $manipulations
- * @property array $custom_properties
- * @property array $generated_conversions
- * @property array $responsive_images
- * @property int|null $order_column
+ * @property int                             $id
+ * @property string                          $model_type
+ * @property int                             $model_id
+ * @property string|null                     $uuid
+ * @property string                          $collection_name
+ * @property string                          $name
+ * @property string                          $file_name
+ * @property string|null                     $mime_type
+ * @property string                          $disk
+ * @property string|null                     $conversions_disk
+ * @property int                             $size
+ * @property array                           $manipulations
+ * @property array                           $custom_properties
+ * @property array                           $generated_conversions
+ * @property array                           $responsive_images
+ * @property int|null                        $order_column
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read string $type
  * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $model
+ *
  * @method static \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|static[] all($columns = ['*'])
  * @method static \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|static[] get($columns = ['*'])
  * @method static \Illuminate\Database\Eloquent\Builder|Media newModelQuery()

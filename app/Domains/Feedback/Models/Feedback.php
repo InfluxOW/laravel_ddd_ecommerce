@@ -13,17 +13,18 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 /**
  * App\Domains\Feedback\Models\Feedback
  *
- * @property int $id
- * @property int|null $user_id
- * @property string $username
- * @property string $email
- * @property string|null $phone
- * @property string $text
- * @property bool $is_reviewed
- * @property string|null $ip
+ * @property int                             $id
+ * @property int|null                        $user_id
+ * @property string                          $username
+ * @property string                          $email
+ * @property string|null                     $phone
+ * @property string                          $text
+ * @property bool                            $is_reviewed
+ * @property string|null                     $ip
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read User|null $user
+ *
  * @method static \App\Domains\Feedback\Database\Factories\FeedbackFactory factory(...$parameters)
  * @method static Builder|Feedback forUser(?string $ip, ?\App\Domains\Users\Models\User $user)
  * @method static Builder|Feedback inLastHour()

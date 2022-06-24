@@ -10,6 +10,7 @@ trait HasTranslatableAdminLabels
 
     /**
      * @param object[] $schema
+     *
      * @return array
      */
     protected static function setTranslatableLabels(array $schema): array
@@ -33,6 +34,7 @@ trait HasTranslatableAdminLabels
 
     /**
      * @phpstan-ignore-next-line
+     *
      * @return string<UnitEnum>
      */
     abstract protected static function getTranslationKeyClass(): string;

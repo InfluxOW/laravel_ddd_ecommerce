@@ -12,19 +12,20 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 /**
  * App\Domains\Catalog\Models\ProductAttributeValue
  *
- * @property int $id
- * @property int $product_id
- * @property int $attribute_id
- * @property string|null $value_string
- * @property int|null $value_integer
- * @property bool|null $value_boolean
- * @property float|null $value_float
+ * @property int                             $id
+ * @property int                             $product_id
+ * @property int                             $attribute_id
+ * @property string|null                     $value_string
+ * @property int|null                        $value_integer
+ * @property bool|null                       $value_boolean
+ * @property float|null                      $value_float
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Domains\Catalog\Models\ProductAttribute $attribute
  * @property-read string $readable_value
  * @property string|int|float|bool $value
  * @property-read \App\Domains\Catalog\Models\Product $product
+ *
  * @method static \App\Domains\Catalog\Database\Factories\ProductAttributeValueFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|ProductAttributeValue newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|ProductAttributeValue newQuery()

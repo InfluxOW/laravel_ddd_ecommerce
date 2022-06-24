@@ -8,26 +8,27 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 /**
  * App\Domains\Users\Models\LoginHistory
  *
- * @property int $id
- * @property int $user_id
- * @property string|null $ip
- * @property string|null $user_agent
- * @property string|null $device
- * @property string|null $platform
- * @property string|null $platform_version
- * @property string|null $browser
- * @property string|null $browser_version
- * @property string|null $region_code
- * @property string|null $region_name
- * @property string|null $country_code
- * @property string|null $country_name
- * @property string|null $city
- * @property string|null $latitude
- * @property string|null $longitude
- * @property string|null $zip
+ * @property int                             $id
+ * @property int                             $user_id
+ * @property string|null                     $ip
+ * @property string|null                     $user_agent
+ * @property string|null                     $device
+ * @property string|null                     $platform
+ * @property string|null                     $platform_version
+ * @property string|null                     $browser
+ * @property string|null                     $browser_version
+ * @property string|null                     $region_code
+ * @property string|null                     $region_name
+ * @property string|null                     $country_code
+ * @property string|null                     $country_name
+ * @property string|null                     $city
+ * @property string|null                     $latitude
+ * @property string|null                     $longitude
+ * @property string|null                     $zip
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Domains\Users\Models\User $user
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|LoginHistory newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|LoginHistory newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|LoginHistory query()

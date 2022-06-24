@@ -9,6 +9,7 @@ abstract class PlainMultiselectFilter extends MultiselectFilter
 {
     /**
      * @OA\Property(enum={false})
+     *
      * @var bool
      */
     public $is_nested;

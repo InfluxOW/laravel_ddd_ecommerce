@@ -16,6 +16,7 @@ final class AllowedSelectFilter extends SelectFilter
      *    @OA\Schema(type="boolean"),
      *    @OA\Schema(type="float"),
      * })))
+     *
      * @var array
      */
     public $allowed_values;

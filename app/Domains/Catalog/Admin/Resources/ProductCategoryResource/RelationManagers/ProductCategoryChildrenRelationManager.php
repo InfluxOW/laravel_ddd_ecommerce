@@ -74,13 +74,13 @@ final class ProductCategoryChildrenRelationManager extends RelationManager
         return $this->shouldBeDisplayed() && ProductCategoryResource::canDeleteAny();
     }
 
-    /** @param ProductCategory $record */
+    /** @param  ProductCategory  $record */
     protected function canDelete(Model $record): bool
     {
         return $this->shouldBeDisplayed() && ProductCategoryResource::canDelete($record);
     }
 
-    /** @param ProductCategory $record */
+    /** @param  ProductCategory  $record */
     protected function canEdit(Model $record): bool
     {
         return $this->shouldBeDisplayed();

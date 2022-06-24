@@ -32,6 +32,7 @@ final class AppUtils
 
     /**
      * @param string $class
+     *
      * @return class-string<ServiceProvider>|null
      */
     private static function guessDomainServiceProvider(string $class): ?string

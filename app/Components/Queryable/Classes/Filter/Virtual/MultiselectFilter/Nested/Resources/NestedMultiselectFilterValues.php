@@ -11,6 +11,7 @@ final class NestedMultiselectFilterValues
 {
     /**
      * @OA\Property(ref="#/components/schemas/NestedMultiselectFilterValuesAttribute")
+     *
      * @var NestedMultiselectFilterValuesAttribute
      */
     public $attribute;
@@ -22,6 +23,7 @@ final class NestedMultiselectFilterValues
      *    @OA\Schema(type="boolean"),
      *    @OA\Schema(type="float"),
      * })))
+     *
      * @var array
      */
     public $values;

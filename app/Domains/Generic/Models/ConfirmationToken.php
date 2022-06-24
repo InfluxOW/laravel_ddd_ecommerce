@@ -11,15 +11,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 /**
  * App\Domains\Generic\Models\ConfirmationToken
  *
- * @property int $id
- * @property int $user_id
- * @property string $type
- * @property string $token
- * @property \Illuminate\Support\Carbon $expires_at
+ * @property int                             $id
+ * @property int                             $user_id
+ * @property string                          $type
+ * @property string                          $token
+ * @property \Illuminate\Support\Carbon      $expires_at
  * @property \Illuminate\Support\Carbon|null $used_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read User $user
+ *
  * @method static Builder|ConfirmationToken expired()
  * @method static Builder|ConfirmationToken newModelQuery()
  * @method static Builder|ConfirmationToken newQuery()

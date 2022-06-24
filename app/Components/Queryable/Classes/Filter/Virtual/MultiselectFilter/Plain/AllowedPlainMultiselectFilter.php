@@ -16,6 +16,7 @@ final class AllowedPlainMultiselectFilter extends PlainMultiselectFilter
      *    @OA\Schema(type="boolean"),
      *    @OA\Schema(type="float"),
      * })))
+     *
      * @var array
      */
     public $allowed_values;

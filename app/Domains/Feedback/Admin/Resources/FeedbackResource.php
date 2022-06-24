@@ -40,13 +40,13 @@ final class FeedbackResource extends Resource
         return ['text', 'username', 'email', 'phone'];
     }
 
-    /** @param ?Feedback $record */
+    /** @param  ?Feedback  $record */
     public static function getRecordTitle(?Model $record): ?string
     {
         return ($record === null) ? null : Str::limit($record->text);
     }
 
-    /** @param Feedback $record */
+    /** @param  Feedback  $record */
     public static function getGlobalSearchResultDetails(Model $record): array
     {
         $result = [

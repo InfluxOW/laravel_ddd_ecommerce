@@ -12,18 +12,19 @@ use Squire\Models\Region;
 /**
  * App\Components\Addressable\Models\Address
  *
- * @property int $id
- * @property string $addressable_type
- * @property int $addressable_id
- * @property string $zip
- * @property string $country
- * @property string|null $region
- * @property string $city
- * @property string $street
+ * @property int                             $id
+ * @property string                          $addressable_type
+ * @property int                             $addressable_id
+ * @property string                          $zip
+ * @property string                          $country
+ * @property string|null                     $region
+ * @property string                          $city
+ * @property string                          $street
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read Model|\Eloquent $addressable
  * @property-read string $string_representation
+ *
  * @method static \App\Components\Addressable\Database\Factories\AddressFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Address newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Address newQuery()

@@ -26,10 +26,10 @@ use Spatie\Sluggable\SlugOptions;
 /**
  * App\Domains\Catalog\Models\Product
  *
- * @property int $id
- * @property string $title
- * @property string $slug
- * @property string $description
+ * @property int                             $id
+ * @property string                          $title
+ * @property string                          $slug
+ * @property string                          $description
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Domains\Catalog\Models\ProductAttributeValue[] $attributeValues
@@ -45,6 +45,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read int|null $media_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Domains\Catalog\Models\ProductPrice[] $prices
  * @property-read int|null $prices_count
+ *
  * @method static \App\Domains\Catalog\Database\Factories\ProductFactory factory(...$parameters)
  * @method static Builder|Product newModelQuery()
  * @method static Builder|Product newQuery()

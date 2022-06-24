@@ -11,7 +11,9 @@ final class AppliedInputFilter extends InputFilter
 {
     /**
      * @OA\Property()
+     *
      * @var string
+     *
      * @example test
      */
     public $selected_value;

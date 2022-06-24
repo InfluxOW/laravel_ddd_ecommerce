@@ -24,7 +24,7 @@ final class MultiselectFilter extends Filter
     }
 
     /**
-     * @param UnitEnum $filter
+     * @param UnitEnum                                      $filter
      * @param Collection<string>|EloquentCollection<string> $allowedValues
      *
      * @return self
@@ -35,7 +35,7 @@ final class MultiselectFilter extends Filter
     }
 
     /**
-     * @param UnitEnum $filter
+     * @param UnitEnum                                  $filter
      * @param Collection<NestedMultiselectFilterValues> $allowedValues
      *
      * @return self

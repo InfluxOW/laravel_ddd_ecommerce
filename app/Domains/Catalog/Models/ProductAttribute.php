@@ -13,14 +13,15 @@ use Spatie\Sluggable\SlugOptions;
 /**
  * App\Domains\Catalog\Models\ProductAttribute
  *
- * @property int $id
- * @property string $title
- * @property string $slug
- * @property ProductAttributeValuesType $values_type
+ * @property int                             $id
+ * @property string                          $title
+ * @property string                          $slug
+ * @property ProductAttributeValuesType      $values_type
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Domains\Catalog\Models\ProductAttributeValue[] $values
  * @property-read int|null $values_count
+ *
  * @method static \App\Domains\Catalog\Database\Factories\ProductAttributeFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|ProductAttribute newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|ProductAttribute newQuery()

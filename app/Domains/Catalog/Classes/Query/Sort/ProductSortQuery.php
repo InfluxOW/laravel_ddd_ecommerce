@@ -9,7 +9,7 @@ final class ProductSortQuery
 {
     /**
      * @param Collection<Sort> $allowedSorts
-     * @param Sort $appliedSort
+     * @param Sort             $appliedSort
      */
     public function __construct(public readonly Collection $allowedSorts, public readonly Sort $appliedSort)
     {

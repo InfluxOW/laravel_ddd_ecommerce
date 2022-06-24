@@ -14,14 +14,15 @@ use Illuminate\Support\Facades\DB;
 /**
  * App\Domains\Catalog\Models\ProductPrice
  *
- * @property int $id
- * @property int $product_id
- * @property Money $price
- * @property Money|null $price_discounted
- * @property string $currency
+ * @property int                             $id
+ * @property int                             $product_id
+ * @property Money                           $price
+ * @property Money|null                      $price_discounted
+ * @property string                          $currency
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Domains\Catalog\Models\Product $product
+ *
  * @method static \App\Domains\Catalog\Database\Factories\ProductPriceFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|ProductPrice newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|ProductPrice newQuery()
