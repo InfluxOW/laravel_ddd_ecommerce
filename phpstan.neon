@@ -16,6 +16,7 @@ parameters:
         - '#Model::make\(\)#'
         - '#\(Akaunting\\Money\\Money\) does not accept int#'
         - '#\(Illuminate\\Support\\Carbon\|null\) does not accept Carbon\\Carbon#'
+        - '#Call to an undefined method Illuminate\\Foundation\\Application#'
 
         # Laravel 9 issues
         - '#Unable to resolve the template type TValue in call to function collect#'

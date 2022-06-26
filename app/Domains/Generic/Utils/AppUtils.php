@@ -2,7 +2,6 @@
 
 namespace App\Domains\Generic\Utils;
 
-use App\Domains\Generic\Enums\EnvironmentVariable;
 use App\Domains\Generic\Enums\ServiceProviderNamespace;
 use App\Infrastructure\Abstracts\Providers\ServiceProvider;
 use Illuminate\Support\Str;
@@ -14,13 +13,6 @@ final class AppUtils
     private const APP_DIRECTORY_BASENAME = 'app';
 
     private const APP_NAMESPACE = 'App';
-
-    public static function runningSeeders(): bool
-    {
-        $runningSeeders = env(EnvironmentVariable::RUNNING_SEEDERS->name);
-
-        return is_string($runningSeeders) && $runningSeeders;
-    }
 
     public static function guessServiceProviderNamespace(string $class): ServiceProviderNamespace
     {

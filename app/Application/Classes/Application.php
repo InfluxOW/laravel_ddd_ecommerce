@@ -27,4 +27,9 @@ final class Application extends BaseApplication
 
         return ($path === '') ? $resourcePath : PathUtils::join([$resourcePath, $path]);
     }
+
+    public function isRunningSeeders(): bool
+    {
+        return ApplicationState::$isRunningSeeders;
+    }
 }

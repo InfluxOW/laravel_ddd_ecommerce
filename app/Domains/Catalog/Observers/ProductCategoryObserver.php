@@ -2,8 +2,8 @@
 
 namespace App\Domains\Catalog\Observers;
 
+use App\Application\Classes\Application;
 use App\Domains\Catalog\Models\ProductCategory;
-use App\Domains\Generic\Utils\AppUtils;
 
 final class ProductCategoryObserver
 {
@@ -16,7 +16,7 @@ final class ProductCategoryObserver
 
     public function saved(ProductCategory $category): void
     {
-        if (AppUtils::runningSeeders()) {
+        if (app()->isRunningSeeders()) {
             return;
         }
 

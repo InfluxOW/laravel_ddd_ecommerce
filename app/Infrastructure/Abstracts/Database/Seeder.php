@@ -2,18 +2,18 @@
 
 namespace App\Infrastructure\Abstracts\Database;
 
-use App\Domains\Generic\Enums\EnvironmentVariable;
+use App\Application\Classes\ApplicationState;
 use Illuminate\Database\Seeder as BaseSeeder;
 
 abstract class Seeder extends BaseSeeder
 {
     public function __invoke(array $parameters = [])
     {
-        putenv(sprintf('%s=1', EnvironmentVariable::RUNNING_SEEDERS->name));
+        ApplicationState::$isRunningSeeders = true;
 
         $result = parent::__invoke($parameters);
 
-        putenv(sprintf('%s=0', EnvironmentVariable::RUNNING_SEEDERS->name));
+        ApplicationState::$isRunningSeeders = false;
 
         return $result;
     }

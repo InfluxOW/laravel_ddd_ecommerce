@@ -4,13 +4,12 @@ namespace App\Domains\Catalog\Observers;
 
 use App\Domains\Catalog\Models\Pivot\ProductProductCategory;
 use App\Domains\Catalog\Models\ProductCategory;
-use App\Domains\Generic\Utils\AppUtils;
 
 final class ProductProductCategoryObserver
 {
     public function created(ProductProductCategory $model): void
     {
-        if (AppUtils::runningSeeders()) {
+        if (app()->isRunningSeeders()) {
             return;
         }
 
