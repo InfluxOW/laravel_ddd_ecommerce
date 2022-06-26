@@ -4,6 +4,7 @@ namespace App\Domains\Catalog\Models;
 
 use App\Domains\Catalog\Database\Factories\ProductAttributeFactory;
 use App\Domains\Catalog\Enums\ProductAttributeValuesType;
+use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -36,6 +37,7 @@ use Spatie\Sluggable\SlugOptions;
  */
 final class ProductAttribute extends Model
 {
+    use HasExtendedFunctionality;
     use HasFactory;
     use HasSlug;
 

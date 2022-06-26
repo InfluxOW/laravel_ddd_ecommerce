@@ -5,6 +5,7 @@ namespace App\Domains\Catalog\Models;
 use Akaunting\Money\Money;
 use App\Components\Purchasable\Casts\MoneyCast;
 use App\Domains\Catalog\Database\Factories\ProductPriceFactory;
+use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -38,6 +39,7 @@ use Illuminate\Support\Facades\DB;
  */
 final class ProductPrice extends Model
 {
+    use HasExtendedFunctionality;
     use HasFactory;
 
     protected $casts = [

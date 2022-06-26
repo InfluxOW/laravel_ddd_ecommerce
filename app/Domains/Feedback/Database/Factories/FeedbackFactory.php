@@ -4,26 +4,36 @@ namespace App\Domains\Feedback\Database\Factories;
 
 use App\Domains\Feedback\Models\Feedback;
 use App\Domains\Users\Models\User;
-use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Infrastructure\Abstracts\Database\Factory;
+use Illuminate\Support\Collection;
 
 final class FeedbackFactory extends Factory
 {
+    private const USERS_CACHE_KEY = 'USERS';
+
     protected $model = Feedback::class;
+
+    private Collection $users;
+
+    protected function setUp(): void
+    {
+        $this->users = $this->cache->getOrSet(self::USERS_CACHE_KEY, fn (): Collection => User::query()->get(['id', 'name', 'email', 'phone']));
+    }
 
     public function definition(): array
     {
-        return [
+        return self::addTimestamps([
             'ip' => $this->faker->boolean(10) ? null : $this->faker->ipv4,
             'text' => $this->faker->realTextBetween(200, 1000),
             'is_reviewed' => $this->faker->boolean(60),
             'created_at' => $this->faker->dateTimeBetween('-1 year'),
-        ];
+        ]);
     }
 
     public function configure(): self
     {
         return $this->afterMaking(function (Feedback $feedback): void {
-            $user = $this->faker->boolean ? null : User::query()->inRandomOrder()->first();
+            $user = $this->users->random();
 
             $username = $this->faker->name();
             $email = $this->faker->safeEmail();

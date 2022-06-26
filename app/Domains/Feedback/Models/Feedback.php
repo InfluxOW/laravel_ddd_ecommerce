@@ -3,12 +3,13 @@
 namespace App\Domains\Feedback\Models;
 
 use App\Domains\Feedback\Database\Factories\FeedbackFactory;
+use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
 use App\Domains\Users\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
  * App\Domains\Feedback\Models\Feedback
@@ -43,8 +44,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @method static Builder|Feedback whereUsername($value)
  * @mixin \Eloquent
  */
-final class Feedback extends Authenticatable
+final class Feedback extends Model
 {
+    use HasExtendedFunctionality;
     use HasFactory;
 
     protected $fillable = [

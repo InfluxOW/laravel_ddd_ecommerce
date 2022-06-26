@@ -3,7 +3,8 @@
 namespace App\Domains\Catalog\Database\Factories;
 
 use App\Domains\Catalog\Models\ProductCategory;
-use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Infrastructure\Abstracts\Database\Factory;
+use Illuminate\Support\Str;
 
 final class ProductCategoryFactory extends Factory
 {
@@ -11,12 +12,16 @@ final class ProductCategoryFactory extends Factory
 
     public function definition(): array
     {
-        return [
-            'title' => $this->faker->unique()->words(3, true),
+        /** @var string $title */
+        $title = $this->faker->unique()->words(3, true);
+
+        return self::addTimestamps([
+            'title' => $title,
+            'slug' => Str::of($title)->slug(),
             'description' => $this->faker->realText(300),
             'is_visible' => true,
             'created_at' => $this->faker->dateTimeBetween('-1 year'),
-        ];
+        ]);
     }
 
     public function configure(): self

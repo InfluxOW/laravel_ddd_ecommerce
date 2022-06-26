@@ -2,6 +2,7 @@
 
 namespace App\Domains\Catalog\Database\Seeders;
 
+use App\Domains\Catalog\Database\Factories\ProductFactory;
 use App\Domains\Catalog\Models\Product;
 use App\Infrastructure\Abstracts\Database\Seeder;
 
@@ -24,6 +25,13 @@ final class ProductSeeder extends Seeder
             $count = 50;
         }
 
-        Product::factory()->count($count)->create();
+        $productIds = $this->seedModelByChunks(Product::class, $count);
+
+        $this->seedBelongsToManyRelationByChunks(
+            Product::make()->categories(),
+            $productIds,
+            ProductFactory::getProductCategoriesIds()->toArray(),
+            fn (array $categoryIds): array => ProductFactory::getRandomCategoriesIds(collect($categoryIds))->toArray()
+        );
     }
 }

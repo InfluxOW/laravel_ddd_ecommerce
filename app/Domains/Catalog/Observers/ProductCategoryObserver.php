@@ -2,7 +2,6 @@
 
 namespace App\Domains\Catalog\Observers;
 
-use App\Application\Classes\Application;
 use App\Domains\Catalog\Models\ProductCategory;
 
 final class ProductCategoryObserver

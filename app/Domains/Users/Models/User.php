@@ -6,6 +6,7 @@ use App\Components\Addressable\Models\Address;
 use App\Domains\Cart\Models\Cart;
 use App\Domains\Feedback\Models\Feedback;
 use App\Domains\Generic\Models\ConfirmationToken;
+use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
 use App\Domains\Users\Database\Factories\UserFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -59,6 +60,7 @@ use Laravel\Sanctum\HasApiTokens;
  */
 final class User extends Authenticatable implements MustVerifyEmail
 {
+    use HasExtendedFunctionality;
     use HasApiTokens;
     use HasFactory;
     use Notifiable;
