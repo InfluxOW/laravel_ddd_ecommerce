@@ -6,6 +6,7 @@ use App\Domains\Catalog\Models\Product;
 use App\Domains\Catalog\Models\ProductPrice;
 use App\Domains\Catalog\Models\Settings\CatalogSettings;
 use App\Infrastructure\Abstracts\Database\Seeder;
+use Illuminate\Support\LazyCollection;
 
 final class ProductPriceSeeder extends Seeder
 {
@@ -19,10 +20,13 @@ final class ProductPriceSeeder extends Seeder
         $settings->available_currencies = app()->runningUnitTests() ? ['USD', 'RUB'] : ['USD', 'RUB', 'EUR', 'GBP'];
         $settings->save();
 
-        foreach (Product::query()->whereDoesntHave('prices')->get() as $product) {
+        $productPricesRows = [];
+        foreach (Product::query()->whereDoesntHave('prices')->get(['id']) as $product) {
             foreach ($settings->available_currencies as $currency) {
-                ProductPrice::factory()->for($product, 'product')->create(['currency' => $currency]);
+                $productPricesRows[] = ProductPrice::factory()->for($product, 'product')->make(['currency' => $currency])->getRawAttributes(['id']);
             }
         }
+
+        $this->insertByChunks((new ProductPrice())->getTable(), LazyCollection::make($productPricesRows), 50, 10);
     }
 }

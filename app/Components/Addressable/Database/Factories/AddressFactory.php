@@ -3,7 +3,7 @@
 namespace App\Components\Addressable\Database\Factories;
 
 use App\Components\Addressable\Models\Address;
-use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Infrastructure\Abstracts\Database\Factory;
 use Squire\Models\Country;
 
 final class AddressFactory extends Factory
@@ -12,15 +12,15 @@ final class AddressFactory extends Factory
 
     public function definition(): array
     {
-        $country = Country::query()->inRandomOrder()->first();
+        $country = Country::query()->inRandomOrder()->first(['id']);
         $region = $country?->regions->first();
 
-        return [
+        return self::addTimestamps([
             'zip' => $this->faker->postcode(),
             'country' => $country?->id,
             'region' => $region?->id,
             'city' => $this->faker->city(),
             'street' => $this->faker->streetAddress(),
-        ];
+        ]);
     }
 }

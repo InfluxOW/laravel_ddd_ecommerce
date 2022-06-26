@@ -2,6 +2,7 @@
 
 namespace App\Domains\Generic\Models;
 
+use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
 use App\Domains\Users\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -39,6 +40,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 final class ConfirmationToken extends Model
 {
+    use HasExtendedFunctionality;
+
     protected $fillable = [
         'type',
         'token',

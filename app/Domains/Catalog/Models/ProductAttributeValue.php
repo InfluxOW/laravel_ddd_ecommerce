@@ -4,6 +4,7 @@ namespace App\Domains\Catalog\Models;
 
 use App\Domains\Catalog\Database\Factories\ProductAttributeValueFactory;
 use App\Domains\Catalog\Enums\ProductAttributeValuesType;
+use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
 use App\Domains\Generic\Utils\StringUtils;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -43,6 +44,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 final class ProductAttributeValue extends Model
 {
+    use HasExtendedFunctionality;
     use HasFactory;
 
     protected const VALUES_COLUMNS = [

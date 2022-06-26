@@ -9,6 +9,7 @@ use App\Domains\Catalog\Enums\Media\ProductMediaCollectionKey;
 use App\Domains\Catalog\Enums\ProductAttributeValuesType;
 use App\Domains\Catalog\Models\Pivot\ProductProductCategory;
 use App\Domains\Generic\Enums\BooleanString;
+use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -68,6 +69,7 @@ use Spatie\Sluggable\SlugOptions;
  */
 final class Product extends Model implements Purchasable, HasMedia
 {
+    use HasExtendedFunctionality;
     use HasFactory;
     use HasSlug;
     use InteractsWithMedia {

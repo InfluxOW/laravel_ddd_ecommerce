@@ -3,7 +3,7 @@
 namespace App\Domains\Admin\Database\Factories;
 
 use App\Domains\Admin\Models\Admin;
-use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Infrastructure\Abstracts\Database\Factory;
 use Illuminate\Support\Str;
 
 final class AdminFactory extends Factory
@@ -12,11 +12,11 @@ final class AdminFactory extends Factory
 
     public function definition(): array
     {
-        return [
+        return self::addTimestamps([
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
-        ];
+        ]);
     }
 }

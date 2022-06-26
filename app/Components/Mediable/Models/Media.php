@@ -4,6 +4,7 @@ namespace App\Components\Mediable\Models;
 
 use App\Components\Mediable\Classes\RegisteredResponsiveImages;
 use App\Components\Mediable\Enums\MediaType;
+use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
 use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
 
 /**
@@ -58,6 +59,8 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
  */
 final class Media extends BaseMedia
 {
+    use HasExtendedFunctionality;
+
     public function responsiveImages(string $conversionName = ''): RegisteredResponsiveImages
     {
         return new RegisteredResponsiveImages($this, $conversionName);

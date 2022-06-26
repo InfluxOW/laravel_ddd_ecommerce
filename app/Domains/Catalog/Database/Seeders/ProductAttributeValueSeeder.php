@@ -7,6 +7,7 @@ use App\Domains\Catalog\Models\ProductAttribute;
 use App\Domains\Catalog\Models\ProductAttributeValue;
 use App\Infrastructure\Abstracts\Database\Seeder;
 use Exception;
+use Illuminate\Support\LazyCollection;
 
 final class ProductAttributeValueSeeder extends Seeder
 {
@@ -19,12 +20,15 @@ final class ProductAttributeValueSeeder extends Seeder
      */
     public function run()
     {
-        $attributes = ProductAttribute::query()->inRandomOrder()->get();
+        $attributes = ProductAttribute::query()->inRandomOrder()->get(['id', 'values_type']);
 
-        foreach (Product::query()->whereDoesntHave('attributeValues')->get() as $product) {
+        $attributeValuesRows = [];
+        foreach (Product::query()->whereDoesntHave('attributeValues')->get(['id']) as $product) {
             foreach ($attributes->take(app()->runningUnitTests() ? 4 : random_int(3, 8)) as $attribute) {
-                ProductAttributeValue::factory()->for($product, 'product')->for($attribute, 'attribute')->create();
+                $attributeValuesRows[] = ProductAttributeValue::factory()->for($product, 'product')->for($attribute, 'attribute')->make()->getRawAttributes(['id']);
             }
         }
+
+        $this->insertByChunks((new ProductAttributeValue())->getTable(), LazyCollection::make($attributeValuesRows));
     }
 }

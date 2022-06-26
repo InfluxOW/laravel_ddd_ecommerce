@@ -3,6 +3,7 @@
 namespace App\Domains\Cart\Models;
 
 use App\Components\Purchasable\Casts\MoneyCast;
+use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -44,6 +45,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 final class CartItem extends Model
 {
+    use HasExtendedFunctionality;
+
     public const MAX_QUANTITY = 99;
 
     protected $casts = [

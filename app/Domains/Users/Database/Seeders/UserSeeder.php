@@ -14,6 +14,6 @@ final class UserSeeder extends Seeder
      */
     public function run()
     {
-        User::factory()->count(100)->create();
+        $this->seedModelByChunks(User::class, app()->runningUnitTests() ? 10 : 100);
     }
 }

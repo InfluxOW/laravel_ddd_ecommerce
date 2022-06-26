@@ -2,6 +2,7 @@
 
 namespace App\Domains\Users\Models;
 
+use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -55,6 +56,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 final class LoginHistory extends Model
 {
+    use HasExtendedFunctionality;
+
     protected $table = 'login_history';
 
     protected $fillable = [

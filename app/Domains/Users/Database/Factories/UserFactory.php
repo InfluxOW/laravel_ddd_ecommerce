@@ -4,8 +4,8 @@ namespace App\Domains\Users\Database\Factories;
 
 use App\Components\Addressable\Models\Address;
 use App\Domains\Users\Models\User;
+use App\Infrastructure\Abstracts\Database\Factory;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
 final class UserFactory extends Factory
@@ -14,7 +14,7 @@ final class UserFactory extends Factory
 
     public function definition(): array
     {
-        return [
+        return self::addTimestamps([
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
             'phone' => $this->faker->boolean ? null : $this->faker->unique()->e164PhoneNumber(),
@@ -22,7 +22,7 @@ final class UserFactory extends Factory
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
             'created_at' => $this->faker->dateTimeBetween('-1 year'),
-        ];
+        ]);
     }
 
     public function configure(): self

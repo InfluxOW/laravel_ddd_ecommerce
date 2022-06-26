@@ -4,6 +4,7 @@ namespace App\Domains\Catalog\Models;
 
 use App\Domains\Catalog\Database\Factories\ProductCategoryFactory;
 use App\Domains\Catalog\Enums\Media\ProductCategoryMediaCollectionKey;
+use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
 use Baum\NestedSet\Node;
 use Closure;
 use Illuminate\Database\Eloquent\Builder;
@@ -75,6 +76,7 @@ use Spatie\Sluggable\SlugOptions;
  */
 final class ProductCategory extends Model implements HasMedia
 {
+    use HasExtendedFunctionality;
     use HasFactory;
     use HasSlug;
     use Node;

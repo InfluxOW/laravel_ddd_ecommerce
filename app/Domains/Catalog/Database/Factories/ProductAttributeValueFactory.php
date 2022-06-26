@@ -4,7 +4,7 @@ namespace App\Domains\Catalog\Database\Factories;
 
 use App\Domains\Catalog\Enums\ProductAttributeValuesType;
 use App\Domains\Catalog\Models\ProductAttributeValue;
-use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Infrastructure\Abstracts\Database\Factory;
 
 final class ProductAttributeValueFactory extends Factory
 {
@@ -12,7 +12,7 @@ final class ProductAttributeValueFactory extends Factory
 
     public function definition(): array
     {
-        return [];
+        return self::addTimestamps([]);
     }
 
     public function configure(): self

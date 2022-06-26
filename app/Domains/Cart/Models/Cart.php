@@ -3,6 +3,7 @@
 namespace App\Domains\Cart\Models;
 
 use App\Components\Purchasable\Casts\MoneyCast;
+use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
 use App\Domains\Users\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -38,6 +39,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 final class Cart extends Model
 {
+    use HasExtendedFunctionality;
+
     protected $fillable = ['key', 'price_items', 'price_items_discounted', 'currency'];
 
     protected $casts = [

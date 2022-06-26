@@ -3,6 +3,7 @@
 namespace App\Domains\Admin\Models;
 
 use App\Domains\Admin\Database\Factories\AdminFactory;
+use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
 use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -36,6 +37,7 @@ use Illuminate\Notifications\Notifiable;
  */
 final class Admin extends Authenticatable implements FilamentUser
 {
+    use HasExtendedFunctionality;
     use HasFactory;
     use Notifiable;
 
