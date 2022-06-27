@@ -21,13 +21,20 @@ jobs:
                     username: ${{ secrets.DOCKER_HUB_USERNAME }}
                     password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
+            -   name: Get Current Branch
+                id: current-branch
+                run: echo "::set-output name=branch::$(echo ${GITHUB_REF#refs/heads/})"
+
+            -   name: Set APPLICATION_IMAGE Env Variable
+                run: echo "APPLICATION_IMAGE=$(echo "${{ secrets.APPLICATION_IMAGE_REPOSITORY }}:${{ steps.current-branch.outputs.branch == 'master' && 'latest' || steps.current-branch.outputs.branch }}")" >> $GITHUB_ENV
+
             -   name: Docker Build && Push
                 uses: docker/build-push-action@master
                 with:
                     context: ./docker/php/${{ secrets.PHP_VERSION }}/
                     builder: ${{ steps.buildx.outputs.name }}
                     push: true
-                    tags: ${{ secrets.APPLICATION_IMAGE }}
+                    tags: ${{ env.APPLICATION_IMAGE }}
                     cache-from: type=gha
                     cache-to: type=gha,mode=max
                     build-args: WWWGROUP=1000
@@ -66,7 +73,7 @@ jobs:
             -   name: Run CI
                 run: make ci
                 env:
-                    APPLICATION_IMAGE: ${{ secrets.APPLICATION_IMAGE }}
+                    APPLICATION_IMAGE: ${{ env.APPLICATION_IMAGE }}
 
             -   name: Upload Coverage to CodeCov.io
                 uses: codecov/codecov-action@master
