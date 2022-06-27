@@ -11,14 +11,18 @@ use App\Domains\Catalog\Database\Seeders\ProductPriceSeeder;
 use App\Domains\Catalog\Database\Seeders\ProductSeeder;
 use App\Domains\Catalog\Enums\ProductAttributeValuesType;
 use App\Domains\Catalog\Enums\Query\Filter\ProductAllowedFilter;
+use App\Domains\Catalog\Enums\Query\Sort\ProductAllowedSort;
 use App\Domains\Catalog\Models\Product;
 use App\Domains\Catalog\Models\ProductAttributeValue;
 use App\Domains\Catalog\Models\ProductCategory;
 use App\Domains\Catalog\Models\ProductPrice;
 use App\Domains\Catalog\Models\Settings\CatalogSettings;
 use App\Domains\Generic\Enums\Response\ResponseKey;
+use Carbon\Carbon;
+use DateTime;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 final class ProductControllerTest extends TestCase
@@ -315,5 +319,81 @@ final class ProductControllerTest extends TestCase
 
         $this->get(route('products.show', $this->product))->assertOk();
         $this->assertTrue(ProductCategory::query()->where('product_categories.id', $firstLevelCategory->id)->visible()->exists());
+    }
+
+    /**
+     * @test
+     */
+    public function a_user_can_sort_products_by_title_a_to_z(): void
+    {
+        $this->checkProductsSort(ProductAllowedSort::TITLE);
+    }
+
+    /** @test */
+    public function a_user_can_sort_products_by_title_z_to_a(): void
+    {
+        $this->checkProductsSort(ProductAllowedSort::TITLE_DESC);
+    }
+
+    /** @test */
+    public function a_user_can_sort_products_by_newest_first(): void
+    {
+        $this->checkProductsSort(ProductAllowedSort::CREATED_AT);
+    }
+
+    /** @test */
+    public function a_user_can_sort_products_by_oldest_first(): void
+    {
+        $this->checkProductsSort(ProductAllowedSort::CREATED_AT_DESC);
+    }
+
+    /** @test */
+    public function a_user_can_sort_products_by_expensive_first(): void
+    {
+        $this->checkProductsSort(ProductAllowedSort::PRICE);
+    }
+
+    /** @test */
+    public function a_user_can_sort_products_by_cheapest_first(): void
+    {
+        $this->checkProductsSort(ProductAllowedSort::PRICE_DESC);
+    }
+
+    private function checkProductsSort(ProductAllowedSort $sort): void
+    {
+        $products = $this->getProductsSortedBy($sort);
+
+        $this->assertEquals(
+            $products->pluck($sort->getDatabaseField()),
+            $products->sortBy(...$this->getSortParametersByType($sort))->pluck($sort->getDatabaseField())
+        );
+    }
+
+    private function getProductsSortedBy(ProductAllowedSort $sort): Collection
+    {
+        $response = $this->get(route('products.index', [QueryKey::SORT->value => $sort->name, QueryKey::PER_PAGE->value => Product::query()->count()]))->assertOk();
+        $products = collect($response->json(ResponseKey::DATA->value));
+        $appliedSort = collect($response->json(sprintf('%s.%s.%s', ResponseKey::QUERY->value, QueryKey::SORT->value, 'applied')));
+
+        $this->assertEquals($appliedSort['query'], $sort->name);
+
+        return $products;
+    }
+
+    private function getSortParametersByType(ProductAllowedSort $sort): array
+    {
+        $titleSort = static fn (array $product): string => $product['title'];
+        /** @phpstan-ignore-next-line */
+        $createdAtSort = static fn (array $product): int => (int) Carbon::createFromFormat(DateTime::RFC3339, $product['created_at'])->timestamp;
+        $priceSort = static fn (array $product): int => $product['price_discounted']['amount'] ?? $product['price']['amount'];
+
+        return match ($sort) {
+            ProductAllowedSort::TITLE => [$titleSort, SORT_STRING, false],
+            ProductAllowedSort::TITLE_DESC => [$titleSort, SORT_STRING, true],
+            ProductAllowedSort::CREATED_AT => [$createdAtSort, SORT_NUMERIC, false],
+            ProductAllowedSort::CREATED_AT_DESC => [$createdAtSort, SORT_NUMERIC, true],
+            ProductAllowedSort::PRICE => [$priceSort, SORT_NUMERIC, false],
+            ProductAllowedSort::PRICE_DESC => [$priceSort, SORT_NUMERIC, true],
+        };
     }
 }
