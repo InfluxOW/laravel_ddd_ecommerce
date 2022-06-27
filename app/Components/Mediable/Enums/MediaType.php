@@ -2,6 +2,8 @@
 
 namespace App\Components\Mediable\Enums;
 
+use OpenApi\Annotations as OA;
+
 /**
  * @OA\Schema()
  */

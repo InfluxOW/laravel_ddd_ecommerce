@@ -2,6 +2,8 @@
 
 namespace App\Domains\Catalog\Enums\Query\Sort;
 
+use OpenApi\Annotations as OA;
+
 /**
  * @OA\Schema()
  */

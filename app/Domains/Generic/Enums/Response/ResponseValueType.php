@@ -2,6 +2,8 @@
 
 namespace App\Domains\Generic\Enums\Response;
 
+use OpenApi\Annotations as OA;
+
 /**
  * @OA\Schema()
  */

@@ -2,6 +2,8 @@
 
 namespace App\Components\Queryable\Classes\Filter\Virtual;
 
+use OpenApi\Annotations as OA;
+
 abstract class Filter
 {
     /**
