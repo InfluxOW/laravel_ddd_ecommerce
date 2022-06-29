@@ -38,10 +38,10 @@ final class ProductSortService implements QueryService
     public function getAllowedSortsForQuery(string $currency): array
     {
         return [
-            AllowedSort::callback(ProductAllowedSort::TITLE->name, static fn (Builder $query): Builder => $query->orderBy(strtolower(ProductAllowedSort::TITLE->getDatabaseField()))),
-            AllowedSort::callback(ProductAllowedSort::TITLE_DESC->name, static fn (Builder $query): Builder => $query->orderByDesc(strtolower(ProductAllowedSort::TITLE->getDatabaseField()))),
-            AllowedSort::callback(ProductAllowedSort::CREATED_AT->name, static fn (Builder $query): Builder => $query->orderBy(strtolower(ProductAllowedSort::CREATED_AT->getDatabaseField()))),
-            AllowedSort::callback(ProductAllowedSort::CREATED_AT_DESC->name, static fn (Builder $query): Builder => $query->orderByDesc(strtolower(ProductAllowedSort::CREATED_AT->getDatabaseField()))),
+            AllowedSort::callback(ProductAllowedSort::TITLE->name, static fn (Builder $query): Builder => $query->orderBy(ProductAllowedSort::TITLE->getDatabaseField())),
+            AllowedSort::callback(ProductAllowedSort::TITLE_DESC->name, static fn (Builder $query): Builder => $query->orderByDesc(ProductAllowedSort::TITLE->getDatabaseField())),
+            AllowedSort::callback(ProductAllowedSort::CREATED_AT->name, static fn (Builder $query): Builder => $query->orderBy(ProductAllowedSort::CREATED_AT->getDatabaseField())),
+            AllowedSort::callback(ProductAllowedSort::CREATED_AT_DESC->name, static fn (Builder $query): Builder => $query->orderByDesc(ProductAllowedSort::CREATED_AT->getDatabaseField())),
             /** @phpstan-ignore-next-line */
             AllowedSort::callback(ProductAllowedSort::PRICE->name, static fn (Builder|Product $query): Builder => $query->orderByCurrentPrice($currency, descending: false)),
             /** @phpstan-ignore-next-line */
