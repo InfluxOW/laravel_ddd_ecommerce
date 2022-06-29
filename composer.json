@@ -73,7 +73,7 @@
         "spatie/laravel-sluggable": "^3.3",
         "squirephp/countries-en": "^3.3",
         "squirephp/regions-en": "^3.3",
-        "studio/laravel-totem": "dev-feature/laravel-9",
+        "studio/laravel-totem": "^9.0",
         "symfony/http-client": "^6.0",
         "symfony/mailgun-mailer": "^6.0",
         "torann/geoip": "^3.0",
