@@ -68,6 +68,7 @@
         "league/flysystem-aws-s3-v3": "^3.0",
         "phpunit/phpunit": "^9.5.10",
         "protoqol/prequel": "dev-main",
+        "sentry/sentry-laravel": "^2.12",
         "spatie/laravel-query-builder": "^5.0",
         "spatie/laravel-sluggable": "^3.3",
         "squirephp/countries-en": "^3.3",

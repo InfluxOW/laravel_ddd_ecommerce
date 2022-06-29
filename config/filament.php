@@ -278,6 +278,7 @@ return [
             SubstituteBindings::class,
             DispatchServingFilamentEvent::class,
             MirrorConfigToSubpackages::class,
+            'sentry.user:admin',
         ],
     ],
 

@@ -5,6 +5,7 @@ namespace App\Application\Http;
 use App\Application\Http\Middleware\TrimStrings;
 use App\Application\Http\Middleware\TrustProxies;
 use App\Domains\Generic\Http\Middleware\AddTimestamp;
+use App\Domains\Generic\Http\Middleware\AddUserToSentryScope;
 use App\Domains\Generic\Http\Middleware\ForceJsonResponse;
 use App\Domains\Generic\Http\Middleware\Recaptcha;
 use Illuminate\Auth\Middleware\Authenticate;
@@ -48,6 +49,7 @@ final class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Application\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            'sentry.user:admin',
         ],
 
         'api' => [
@@ -56,6 +58,7 @@ final class Kernel extends HttpKernel
             ForceJsonResponse::class,
             AddTimestamp::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            'sentry.user:sanctum',
         ],
     ];
 
@@ -77,6 +80,7 @@ final class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequestsWithRedis::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'recaptcha' => Recaptcha::class,
+        'sentry.user' => AddUserToSentryScope::class,
     ];
 
     protected $middlewarePriority = [
@@ -90,5 +94,6 @@ final class Kernel extends HttpKernel
         TrustProxies::class,
         SetCacheHeaders::class,
         AddTimestamp::class,
+        AddUserToSentryScope::class,
     ];
 }
