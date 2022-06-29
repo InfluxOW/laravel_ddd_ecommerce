@@ -6,7 +6,7 @@ use App\Domains\Generic\Database\Seeders\DatabaseSeeder;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Redis;
 
-class RefreshApplication extends Command
+final class RefreshApplication extends Command
 {
     protected $signature = 'app:refresh';
 

@@ -7,7 +7,7 @@ use Studio\Totem\Providers\TotemServiceProvider as BaseTotemServiceProvider;
 use Studio\Totem\Totem;
 use Studio\Totem\TotemModel;
 
-class TotemServiceProvider extends BaseTotemServiceProvider
+final class TotemServiceProvider extends BaseTotemServiceProvider
 {
     public function boot()
     {
