@@ -21,9 +21,12 @@ services:
         networks:
             - sail
         depends_on:
-            - database
-            - redis
-            - rabbitmq
+            database:
+                condition: service_healthy
+            redis:
+                condition: service_healthy
+            rabbitmq:
+                condition: service_healthy
 
     database:
         image: 'postgres:${POSTGRES_VERSION}'

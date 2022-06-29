@@ -19,8 +19,10 @@ services:
         networks:
             - sail_test
         depends_on:
-            - database_test
-            - redis_test
+            database_test:
+                condition: service_healthy
+            redis_test:
+                condition: service_healthy
 
     database_test:
         image: 'postgres:${POSTGRES_VERSION}-alpine'
