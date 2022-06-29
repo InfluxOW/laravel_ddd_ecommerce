@@ -38,6 +38,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Filament Core Path
+    |--------------------------------------------------------------------------
+    |
+    | This is the path which Filament will use to load it's core routes and assets.
+    | You may change it if it conflicts with your other routes.
+    |
+    */
+
+    'core_path' => env('FILAMENT_CORE_PATH', 'filament'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Filament Domain
     |--------------------------------------------------------------------------
     |
@@ -173,17 +185,35 @@ return [
             'actions' => [
                 'alignment' => 'left',
             ],
+            'have_inline_labels' => false,
         ],
         'footer' => [
             'should_show_logo' => true,
         ],
-        'max_content_width' => '7xl',
-        'tables' => [
-            'actions' => [
-                'type' => \Filament\Tables\Actions\LinkAction::class,
+        'max_content_width' => 'full',
+        'notifications' => [
+            'vertical_alignment' => 'top',
+            'alignment' => 'center',
+        ],
+        'sidebar' => [
+            'is_collapsible_on_desktop' => false,
+            'groups' => [
+                'are_collapsible' => true,
             ],
+            'width' => null,
         ],
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Favicon
+    |--------------------------------------------------------------------------
+    |
+    | This is the path to the favicon used for pages in the admin panel.
+    |
+    */
+
+    'favicon' => null,
 
     /*
     |--------------------------------------------------------------------------
@@ -208,6 +238,21 @@ return [
     */
 
     'default_filesystem_disk' => env('FILAMENT_FILESYSTEM_DRIVER', 'public'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Google Fonts
+    |--------------------------------------------------------------------------
+    |
+    | This is the URL for Google Fonts that should be loaded. You may use any
+    | font, or set to `null` to prevent any Google Fonts from loading.
+    |
+    | When using a custom font, you should also set the font family in your
+    | custom theme's `tailwind.config.js` file.
+    |
+    */
+
+    'google_fonts' => 'https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap',
 
     /*
     |--------------------------------------------------------------------------
