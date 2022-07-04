@@ -20,6 +20,8 @@ parameters:
 
         - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Relations\\HasMany\<App\\Domains\\Users\\Models\\LoginHistory\>#'
 
+        - '#Cache::rememberInArray#'
+
         # Laravel 9 issues
         - '#Unable to resolve the template type TValue in call to function collect#'
         - '#Unable to resolve the template type TKey in call to function collect#'

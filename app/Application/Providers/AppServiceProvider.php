@@ -15,6 +15,9 @@ final class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->register(RouteServiceProvider::class);
+        $this->app->register(DatabaseServiceProvider::class);
+        $this->app->register(CacheServiceProvider::class);
+
         $this->registerVendorServiceProviders();
     }
 
