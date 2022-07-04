@@ -26,6 +26,6 @@ trait HasExtendedFunctionality
 
     private function getColumns(): array
     {
-        return $this->cache->getOrSet($this->columnsCacheKey, fn (): array => Schema::getColumnListing($this->getTable()));
+        return $this->cache->remember($this->columnsCacheKey, fn (): array => Schema::getColumnListing($this->getTable()));
     }
 }

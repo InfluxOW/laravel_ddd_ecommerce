@@ -3,34 +3,56 @@
 namespace App\Domains\Generic\Classes;
 
 use Closure;
+use Illuminate\Cache\Events\CacheHit;
+use Illuminate\Cache\Events\CacheMissed;
+use Illuminate\Cache\Events\KeyWritten;
 
 final class SimpleCache
 {
     protected array $data = [];
 
-    public function has(string $key): bool
+    private function has(string $key): bool
     {
         return isset($this->data[$key]);
     }
 
-    public function get(string $key): mixed
+    private function get(string $key): mixed
     {
         return $this->data[$key] ?? null;
     }
 
-    public function set(string $key, mixed $value): void
+    private function set(string $key, mixed $value): void
     {
         $this->data[$key] = $value;
     }
 
-    public function getOrSet(string $key, Closure $getValue): mixed
+    public function remember(string $key, Closure $callback): mixed
     {
         if ($this->has($key)) {
-            return $this->get($key);
+            $value = $this->get($key);
+
+            $this->event(CacheHit::class, $key, $value);
+
+            return $value;
         }
 
-        $this->set($key, $getValue());
+        $this->event(CacheMissed::class, $key);
 
-        return $this->getOrSet($key, $getValue);
+        $value = $callback();
+
+        $this->set($key, $value);
+
+        $this->event(KeyWritten::class, $key, $value);
+
+        return $value;
+    }
+
+    private function event(string $event, mixed ...$args): void
+    {
+        if (app()->isRunningSeeders()) {
+            return;
+        }
+
+        event(new $event(...$args));
     }
 }

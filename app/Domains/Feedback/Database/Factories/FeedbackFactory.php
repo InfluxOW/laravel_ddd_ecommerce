@@ -17,7 +17,7 @@ final class FeedbackFactory extends Factory
 
     protected function setUp(): void
     {
-        $this->users = $this->cache->getOrSet(self::USERS_CACHE_KEY, fn (): Collection => User::query()->get(['id', 'name', 'email', 'phone']));
+        $this->users = $this->cache->remember(self::USERS_CACHE_KEY, fn (): Collection => User::query()->get(['id', 'name', 'email', 'phone']));
     }
 
     public function definition(): array

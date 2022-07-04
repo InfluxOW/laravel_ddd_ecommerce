@@ -18,7 +18,7 @@ final class ProductFactory extends Factory
 
     protected function setUp(): void
     {
-        $this->categoriesIds = $this->cache->getOrSet(self::CATEGORIES_IDS_CACHE_KEY, fn (): Collection => self::getProductCategoriesIds());
+        $this->categoriesIds = $this->cache->remember(self::CATEGORIES_IDS_CACHE_KEY, fn (): Collection => self::getProductCategoriesIds());
     }
 
     public function definition(): array
