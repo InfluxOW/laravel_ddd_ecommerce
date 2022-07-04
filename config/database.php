@@ -1,5 +1,6 @@
 <?php
 
+use Doctrine\DBAL\Types\StringType;
 use Illuminate\Support\Str;
 
 $dbUrl = (env('DATABASE_URL') === null) ? null : parse_url(env('DATABASE_URL'));
@@ -173,6 +174,23 @@ return [
             'database' => env('REDIS_QUEUE_DB', '2'),
         ],
 
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Doctrine Settings
+    |--------------------------------------------------------------------------
+    |
+    | Here you may configure settings for DBAL/Doctrine, eg. for registering
+    | custom type mappings.
+    |
+    */
+    'dbal' => [
+        'types' => [
+            // See https://github.com/mstaack/laravel-postgis/issues/144
+            'geometry' => StringType::class,
+            'geography' => StringType::class,
+        ],
     ],
 
 ];

@@ -28,7 +28,7 @@ services:
         command: [ "make", "install", "lint", "analyse", "test-coverage" ]
 
     database_ci:
-        image: 'postgres:${POSTGRES_VERSION}-alpine'
+        image: 'postgis/postgis:${POSTGRES_VERSION}-alpine'
         environment:
             POSTGRES_HOST_AUTH_METHOD: trust
             POSTGRES_VERSION: '${POSTGRES_VERSION}'

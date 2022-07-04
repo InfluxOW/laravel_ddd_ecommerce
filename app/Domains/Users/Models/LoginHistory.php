@@ -5,58 +5,59 @@ namespace App\Domains\Users\Models;
 use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use MStaack\LaravelPostgis\Eloquent\PostgisTrait;
+use MStaack\LaravelPostgis\Geometries\Point;
 
 /**
  * App\Domains\Users\Models\LoginHistory
  *
- * @property int                             $id
- * @property int                             $user_id
- * @property string|null                     $ip
- * @property string|null                     $user_agent
- * @property string|null                     $device
- * @property string|null                     $platform
- * @property string|null                     $platform_version
- * @property string|null                     $browser
- * @property string|null                     $browser_version
- * @property string|null                     $region_code
- * @property string|null                     $region_name
- * @property string|null                     $country_code
- * @property string|null                     $country_name
- * @property string|null                     $city
- * @property string|null                     $latitude
- * @property string|null                     $longitude
- * @property string|null                     $zip
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int                                           $id
+ * @property int                                           $user_id
+ * @property string|null                                   $ip
+ * @property string|null                                   $user_agent
+ * @property string|null                                   $device
+ * @property string|null                                   $platform
+ * @property string|null                                   $platform_version
+ * @property string|null                                   $browser
+ * @property string|null                                   $browser_version
+ * @property string|null                                   $region_code
+ * @property string|null                                   $region_name
+ * @property string|null                                   $country_code
+ * @property string|null                                   $country_name
+ * @property string|null                                   $city
+ * @property \MStaack\LaravelPostgis\Geometries\Point|null $location
+ * @property string|null                                   $zip
+ * @property \Illuminate\Support\Carbon|null               $created_at
+ * @property \Illuminate\Support\Carbon|null               $updated_at
  * @property-read \App\Domains\Users\Models\User $user
  *
- * @method static \Illuminate\Database\Eloquent\Builder|LoginHistory newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|LoginHistory newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|LoginHistory query()
- * @method static \Illuminate\Database\Eloquent\Builder|LoginHistory whereBrowser($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LoginHistory whereBrowserVersion($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LoginHistory whereCity($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LoginHistory whereCountryCode($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LoginHistory whereCountryName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LoginHistory whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LoginHistory whereDevice($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LoginHistory whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LoginHistory whereIp($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LoginHistory whereLatitude($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LoginHistory whereLongitude($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LoginHistory wherePlatform($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LoginHistory wherePlatformVersion($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LoginHistory whereRegionCode($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LoginHistory whereRegionName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LoginHistory whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LoginHistory whereUserAgent($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LoginHistory whereUserId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|LoginHistory whereZip($value)
+ * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory newModelQuery()
+ * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory newQuery()
+ * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory query()
+ * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory whereBrowser($value)
+ * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory whereBrowserVersion($value)
+ * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory whereCity($value)
+ * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory whereCountryCode($value)
+ * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory whereCountryName($value)
+ * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory whereCreatedAt($value)
+ * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory whereDevice($value)
+ * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory whereId($value)
+ * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory whereIp($value)
+ * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory whereLocation($value)
+ * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory wherePlatform($value)
+ * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory wherePlatformVersion($value)
+ * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory whereRegionCode($value)
+ * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory whereRegionName($value)
+ * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory whereUpdatedAt($value)
+ * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory whereUserAgent($value)
+ * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory whereUserId($value)
+ * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory whereZip($value)
  * @mixin \Eloquent
  */
 final class LoginHistory extends Model
 {
     use HasExtendedFunctionality;
+    use PostgisTrait;
 
     protected $table = 'login_history';
 
@@ -73,13 +74,32 @@ final class LoginHistory extends Model
         'country_code',
         'country_name',
         'city',
-        'latitude',
-        'longitude',
+        'location',
         'zip',
     ];
+
+    protected array $postgisFields = [
+        'location',
+    ];
+
+    /*
+     * Relations
+     * */
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /*
+     * Helpers
+     * */
+
+    /**
+     * Workaround for IDE helper PHPDocs generation.
+     */
+    public function getLocationAttribute(): ?Point
+    {
+        return $this->location;
     }
 }

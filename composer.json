@@ -66,6 +66,7 @@
         "laravel/telescope": "^4.9",
         "laravel/tinker": "^2.7",
         "league/flysystem-aws-s3-v3": "^3.0",
+        "mstaack/laravel-postgis": "^5.4",
         "phpunit/phpunit": "^9.5.10",
         "protoqol/prequel": "dev-main",
         "sentry/sentry-laravel": "^2.12",

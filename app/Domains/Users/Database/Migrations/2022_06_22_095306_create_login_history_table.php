@@ -13,10 +13,12 @@ return new class extends Migration {
      */
     public function up()
     {
+        Schema::enablePostgisIfNotExists();
+
         Schema::create('login_history', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class, 'user_id')->constrained('users')->cascadeOnDelete();
-            $table->string('ip', 15)->nullable();
+            $table->ipAddress('ip')->nullable();
             $table->string('user_agent')->nullable();
             $table->string('device', 30)->nullable();
             $table->string('platform', 30)->nullable();
@@ -24,12 +26,11 @@ return new class extends Migration {
             $table->string('browser', 30)->nullable();
             $table->string('browser_version', 30)->nullable();
             $table->string('region_code', 5)->nullable();
-            $table->string('region_name', 30)->nullable();
+            $table->string('region_name', 50)->nullable();
             $table->string('country_code', 5)->nullable();
-            $table->string('country_name', 30)->nullable();
-            $table->string('city', 30)->nullable();
-            $table->string('latitude', 20)->nullable();
-            $table->string('longitude', 20)->nullable();
+            $table->string('country_name', 50)->nullable();
+            $table->string('city', 50)->nullable();
+            $table->point('location')->nullable();
             $table->string('zip', 20)->nullable();
             $table->timestamps();
         });
@@ -42,6 +43,8 @@ return new class extends Migration {
      */
     public function down()
     {
+        Schema::disablePostgisIfExists();
+
         Schema::dropIfExists('login_history');
     }
 };

@@ -33,7 +33,7 @@ services:
                 condition: service_healthy
 
     database:
-        image: 'postgres:${POSTGRES_VERSION}'
+        image: 'postgis/postgis:${POSTGRES_VERSION}'
         ports:
             - '${FORWARD_DB_PORT:-5432}:5432'
         environment:
