@@ -6,18 +6,20 @@ use App\Domains\Feedback\Models\Feedback;
 use App\Domains\Users\Models\User;
 use App\Infrastructure\Abstracts\Database\Factory;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 
 final class FeedbackFactory extends Factory
 {
-    private const USERS_CACHE_KEY = 'USERS';
-
     protected $model = Feedback::class;
 
     private Collection $users;
 
     protected function setUp(): void
     {
-        $this->users = $this->cache->remember(self::USERS_CACHE_KEY, fn (): Collection => User::query()->get(['id', 'name', 'email', 'phone']));
+        $this->users = Cache::rememberInArray(
+            json_encode([self::class => 'users'], JSON_THROW_ON_ERROR),
+            static fn (): Collection => User::query()->get(['id', 'name', 'email', 'phone'])
+        );
     }
 
     public function definition(): array

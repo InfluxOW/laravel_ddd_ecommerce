@@ -2,14 +2,11 @@
 
 namespace App\Domains\Generic\Traits\Models;
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Schema;
 
 trait HasExtendedFunctionality
 {
-    use HasSimpleCache;
-
-    protected string $columnsCacheKey = 'COLUMNS';
-
     public function getRawAttributes(array $except = []): array
     {
         $attributes = [];
@@ -26,6 +23,8 @@ trait HasExtendedFunctionality
 
     private function getColumns(): array
     {
-        return $this->cache->remember($this->columnsCacheKey, fn (): array => Schema::getColumnListing($this->getTable()));
+        $table = $this->getTable();
+
+        return Cache::rememberInArray("{$table}_columns", static fn (): array => Schema::getColumnListing($table));
     }
 }

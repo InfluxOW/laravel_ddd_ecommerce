@@ -6,19 +6,21 @@ use App\Domains\Catalog\Models\Product;
 use App\Domains\Catalog\Models\ProductCategory;
 use App\Infrastructure\Abstracts\Database\Factory;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
 final class ProductFactory extends Factory
 {
-    private const CATEGORIES_IDS_CACHE_KEY = 'CATEGORIES_IDS';
-
     protected $model = Product::class;
 
     public Collection $categoriesIds;
 
     protected function setUp(): void
     {
-        $this->categoriesIds = $this->cache->remember(self::CATEGORIES_IDS_CACHE_KEY, fn (): Collection => self::getProductCategoriesIds());
+        $this->categoriesIds = Cache::rememberInArray(
+            json_encode([self::class => 'categories_ids'], JSON_THROW_ON_ERROR),
+            static fn (): Collection => self::getProductCategoriesIds()
+        );
     }
 
     public function definition(): array
