@@ -8,4 +8,5 @@ enum AdminNavigationGroupTranslationKey
     case CATALOG;
     case SETTINGS;
     case FEEDBACK;
+    case DEVELOPMENT;
 }

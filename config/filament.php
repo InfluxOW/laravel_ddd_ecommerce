@@ -1,6 +1,12 @@
 <?php
 
 use App\Domains\Admin\Admin\Pages\Login;
+use App\Domains\Admin\Admin\Resources\Development\ClockworkLinkResource;
+use App\Domains\Admin\Admin\Resources\Development\HorizonLinkResource;
+use App\Domains\Admin\Admin\Resources\Development\PrequelLinkResource;
+use App\Domains\Admin\Admin\Resources\Development\SwaggerLinkResource;
+use App\Domains\Admin\Admin\Resources\Development\TelescopeLinkResource;
+use App\Domains\Admin\Admin\Resources\Development\TotemLinkResource;
 use App\Domains\Catalog\Admin\Pages\ManageCatalogSettings;
 use App\Domains\Catalog\Admin\Resources\ProductAttributeResource;
 use App\Domains\Catalog\Admin\Resources\ProductCategoryResource;
@@ -135,6 +141,12 @@ return [
             ProductAttributeResource::class,
             ProductResource::class,
             FeedbackResource::class,
+            SwaggerLinkResource::class,
+            ClockworkLinkResource::class,
+            TelescopeLinkResource::class,
+            TotemLinkResource::class,
+            PrequelLinkResource::class,
+            HorizonLinkResource::class,
         ],
     ],
 

@@ -12,7 +12,7 @@ final class RouteServiceProvider extends BaseRouteServiceProvider
     {
         parent::map($router);
 
-        $router->fallback(static fn (): RedirectResponse => redirect()->to(config('l5-swagger.documentations.default.routes.api')));
+        $router->fallback(static fn (): RedirectResponse => redirect()->route('l5-swagger.default.api'));
     }
 
     protected function mapApiRoutes(Router $router): void
