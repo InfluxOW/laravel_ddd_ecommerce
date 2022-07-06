@@ -2,6 +2,7 @@
 
 namespace App\Application\Providers;
 
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Telescope\IncomingEntry;
@@ -63,6 +64,6 @@ final class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
      */
     protected function gate()
     {
-        Gate::define('viewTelescope', static fn (): bool => Auth::guard('admin')->check());
+        Gate::define('viewTelescope', static fn (?Authenticatable $user = null): bool => Auth::guard('admin')->check());
     }
 }
