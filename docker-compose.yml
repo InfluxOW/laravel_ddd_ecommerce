@@ -104,6 +104,8 @@ services:
             - 'ES_JAVA_OPTS=-Xms${ELASTICSEARCH_HEAP_SIZE}m -Xmx${ELASTICSEARCH_HEAP_SIZE}m'
             - 'xpack.security.enabled=false'
             - 'discovery.type=single-node'
+            - 'http.cors.enabled=true'
+            - 'http.cors.allow-origin="*"'
         healthcheck:
             test: >
                 curl -s -f elasticsearch:9200/_cat/health >/dev/null || exit 1
