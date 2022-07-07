@@ -15,6 +15,7 @@
         <a href="https://swagger.io"><img src="https://img.shields.io/badge/Swagger-3.0-a9f06b?style=for-the-badge&logo=swagger" alt="Swagger 3.0"></a>
         <a href="https://redis.io/"><img src="https://img.shields.io/badge/Redis-7.x-D82C20?style=for-the-badge&logo=redis" alt="Redis 7.x"></a>
         <a href="https://rabbitmq.com/"><img src="https://img.shields.io/badge/RabbitMQ-3.10.x-FF6600?style=for-the-badge&logo=rabbitmq" alt="RabbitMQ 3.10.x"></a>
+        <a href="https://elastic.co/"><img src="https://img.shields.io/badge/ELK-8.3.x-7DE2D1?style=for-the-badge&logo=elastic" alt="ELK 8.3.x"></a>
     </p>
 </div>
 
@@ -50,6 +51,7 @@ idea or a team agreement than exact project structure. And that's why I've imple
 - Instant Parallel Tests
 - RabbitMQ Queues
 - Redis Cache
+- Elasticsearch Search
 
 ### Infrastructural Features
 

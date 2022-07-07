@@ -23,6 +23,8 @@ services:
                 condition: service_healthy
             redis_test:
                 condition: service_healthy
+            elasticsearch_test:
+                condition: service_healthy
 
     database_test:
         image: 'postgis/postgis:${POSTGRES_VERSION}-alpine'
@@ -53,6 +55,20 @@ services:
             test: [ "CMD", "redis-cli", "ping" ]
             retries: 3
             timeout: 5s
+
+    elasticsearch_test:
+        image: 'elasticsearch:${ELK_STACK_VERSION}'
+        environment:
+            - 'ES_JAVA_OPTS=-Xms${ELASTICSEARCH_HEAP_SIZE}m -Xmx${ELASTICSEARCH_HEAP_SIZE}m'
+            - 'xpack.security.enabled=false'
+            - 'discovery.type=single-node'
+        healthcheck:
+            test: >
+                curl -s -f elasticsearch_test:9200/_cat/health >/dev/null || exit 1
+            retries: 3
+            timeout: 5s
+        networks:
+            - sail_test
 
 networks:
     sail_test:

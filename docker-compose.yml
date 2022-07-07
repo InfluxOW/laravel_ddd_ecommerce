@@ -31,6 +31,8 @@ services:
                 condition: service_healthy
             rabbitmq:
                 condition: service_healthy
+            elasticsearch:
+                condition: service_healthy
 
     database:
         image: 'postgis/postgis:${POSTGRES_VERSION}'
@@ -92,6 +94,54 @@ services:
         networks:
             - sail
 
+    elasticsearch:
+        image: 'elasticsearch:${ELK_STACK_VERSION}'
+        ports:
+            - '${FORWARD_ELASTICSEARCH_HTTP_PORT:-9200}:9200'
+        volumes:
+            - 'elasticsearch:/usr/share/elasticsearch/data'
+        environment:
+            - 'ES_JAVA_OPTS=-Xms${ELASTICSEARCH_HEAP_SIZE}m -Xmx${ELASTICSEARCH_HEAP_SIZE}m'
+            - 'xpack.security.enabled=false'
+            - 'discovery.type=single-node'
+        healthcheck:
+            test: >
+                curl -s -f elasticsearch:9200/_cat/health >/dev/null || exit 1
+            retries: 3
+            timeout: 5s
+        networks:
+            - sail
+
+    elasticvue:
+        image: 'cars10/elasticvue:latest'
+        ports:
+            - '${FORWARD_ELASTICVUE_PORT:-8080}:8080'
+        depends_on:
+            elasticsearch:
+                condition: service_healthy
+        networks:
+            - sail
+
+    kibana:
+        image: 'kibana:${ELK_STACK_VERSION}'
+        ports:
+            - '${FORWARD_KIBANA_PORT:-5601}:5601'
+        volumes:
+            - 'kibana:/usr/share/kibana/data'
+        environment:
+            - 'ELASTICSEARCH_HOSTS=http://elasticsearch:9200'
+            - 'NODE_OPTIONS="--max-old-space-size=${KIBANA_MEMORY_LIMIT}"'
+        healthcheck:
+            test: >
+                curl -s -f kibana:5601 >/dev/null || exit 1
+            retries: 3
+            timeout: 5s
+        depends_on:
+            elasticsearch:
+                condition: service_healthy
+        networks:
+            - sail
+
 networks:
     sail:
         driver: bridge
@@ -102,4 +152,8 @@ volumes:
     redis:
         driver: local
     rabbitmq:
+        driver: local
+    elasticsearch:
+        driver: local
+    kibana:
         driver: local
