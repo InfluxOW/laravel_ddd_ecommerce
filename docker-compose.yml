@@ -2,177 +2,55 @@
 services:
     application:
         build:
-            context: './docker/php/${PHP_VERSION}'
+            context: ./docker/php/${PHP_VERSION}
             dockerfile: Dockerfile
             args:
-                WWWGROUP: '${WWWGROUP}'
-        image: '${APPLICATION_IMAGE:-laravel-ddd-ecommerce}'
-        ports:
-            - '${APP_PORT:-80}:80'
-            - '${APP_DEBUG_PORT:-8000}:8000'
-        extra_hosts:
-            - 'host.docker.internal:host-gateway'
+                WWWGROUP: ${WWWGROUP}
+        image: ${APPLICATION_IMAGE}
         environment:
-            WWWUSER: '${WWWUSER}'
-            PHP_VERSION: '${PHP_VERSION}'
+            WWWUSER: ${WWWUSER}
+            PHP_VERSION: ${PHP_VERSION}
             LARAVEL_SAIL: 1
-            XDEBUG_MODE: '${SAIL_XDEBUG_MODE:-off}'
-            XDEBUG_CONFIG: '${SAIL_XDEBUG_CONFIG:-client_host=host.docker.internal}'
-            PHP_IDE_CONFIG: 'serverName=${APP_NAME}' # https://github.com/laravel/sail/issues/385
         volumes:
-            - '.:/var/www/html'
-            - '${HOME}/.config/composer/auth.json:/home/sail/.config/composer/auth.json'
-        networks:
-            - sail
+            - .:/var/www/html
         healthcheck:
             test: >
-                curl -s -f application:80 >/dev/null || exit 1
+                curl --silent --fail 0.0.0.0:80 >/dev/null || exit 1
             retries: 3
             timeout: 5s
-        depends_on:
-            database:
-                condition: service_healthy
-            redis:
-                condition: service_healthy
-            rabbitmq:
-                condition: service_healthy
-            mailhog:
-                condition: service_healthy
-            elasticsearch:
-                condition: service_healthy
 
     database:
-        image: 'postgis/postgis:${POSTGRES_VERSION}'
-        ports:
-            - '${FORWARD_DB_PORT:-5432}:5432'
+        image: postgis/postgis:${POSTGRES_VERSION}
         environment:
-            PGPASSWORD: '${DB_PASSWORD:-secret}'
-            POSTGRES_DB: '${DB_DATABASE}'
-            POSTGRES_USER: '${DB_USERNAME}'
-            POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
-            POSTGRES_VERSION: '${POSTGRES_VERSION}'
-        volumes:
-            - 'database:/var/lib/postgresql/data'
-        networks:
-            - sail
+            PGPASSWORD: ${DB_PASSWORD}
+            POSTGRES_DB: ${DB_DATABASE}
+            POSTGRES_USER: ${DB_USERNAME}
+            POSTGRES_PASSWORD: ${DB_PASSWORD}
+            POSTGRES_VERSION: ${POSTGRES_VERSION}
         healthcheck:
-            test: [ "CMD", "pg_isready", "-q", "-d", "${DB_DATABASE}", "-U", "${DB_USERNAME}" ]
+            test: >
+                pg_isready --quiet --dbname=${DB_DATABASE} --username=${DB_USERNAME} || exit 1
             retries: 3
             timeout: 5s
 
     redis:
-        image: 'redis:${REDIS_VERSION}'
-        ports:
-            - '${FORWARD_REDIS_PORT:-6379}:6379'
+        image: redis:${REDIS_VERSION}
         environment:
-            REDIS_VERSION: '${REDIS_VERSION}'
-        volumes:
-            - 'redis:/data'
-        networks:
-            - sail
-        healthcheck:
-            test: [ "CMD", "redis-cli", "ping" ]
-            retries: 3
-            timeout: 5s
-
-    rabbitmq:
-        image: 'rabbitmq:${RABBITMQ_VERSION}-management'
-        ports:
-            - '${FORWARD_RABBITMQ_HTTP_PORT:-15672}:15672'
-            - '${FORWARD_RABBITMQ_AMQP_PORT:-5672}:5672'
-        volumes:
-            - 'rabbitmq:/var/lib/rabbitmq/'
-        environment:
-            RABBITMQ_DEFAULT_USER: '${RABBITMQ_USER}'
-            RABBITMQ_DEFAULT_PASS: '${RABBITMQ_PASSWORD}'
-            RABBITMQ_DEFAULT_VHOST: '${RABBITMQ_VHOST}'
-        healthcheck:
-            test: [ "CMD", "rabbitmq-diagnostics", "-q", "ping" ]
-            retries: 3
-            timeout: 5s
-        networks:
-            - sail
-
-    mailhog:
-        image: 'mailhog/mailhog:latest'
-        ports:
-            - '${FORWARD_MAILHOG_PORT:-1025}:1025'
-            - '${FORWARD_MAILHOG_DASHBOARD_PORT:-8025}:8025'
-        networks:
-            - sail
+            REDIS_VERSION: ${REDIS_VERSION}
         healthcheck:
             test: >
-                wget -S -q -O=- mailhog:8025 >/dev/null || exit 1
+                redis-cli ping || exit 1
             retries: 3
             timeout: 5s
 
     elasticsearch:
-        image: 'elasticsearch:${ELK_STACK_VERSION}'
-        ports:
-            - '${FORWARD_ELASTICSEARCH_HTTP_PORT:-9200}:9200'
-        volumes:
-            - 'elasticsearch:/usr/share/elasticsearch/data'
+        image: elasticsearch:${ELK_STACK_VERSION}
         environment:
-            ES_JAVA_OPTS: '-Xms${ELASTICSEARCH_HEAP_SIZE}m -Xmx${ELASTICSEARCH_HEAP_SIZE}m'
-            xpack.security.enabled: 'false'
-            discovery.type: 'single-node'
-            http.cors.enabled: 'true'
-            http.cors.allow-origin: '"*"'
+            ES_JAVA_OPTS: -Xms${ELASTICSEARCH_HEAP_SIZE}m -Xmx${ELASTICSEARCH_HEAP_SIZE}m
+            xpack.security.enabled: "false"
+            discovery.type: single-node
         healthcheck:
             test: >
-                curl -s -f elasticsearch:9200/_cat/health >/dev/null || exit 1
+                curl -s -f 0.0.0.0:9200/_cat/health >/dev/null || exit 1
             retries: 3
             timeout: 5s
-        networks:
-            - sail
-
-    elasticvue:
-        image: 'cars10/elasticvue:latest'
-        ports:
-            - '${FORWARD_ELASTICVUE_PORT:-8080}:8080'
-        depends_on:
-            elasticsearch:
-                condition: service_healthy
-        networks:
-            - sail
-        healthcheck:
-            test: >
-                wget -S -q -O=- elasticvue:8080 >/dev/null || exit 1
-            retries: 3
-            timeout: 5s
-
-    kibana:
-        image: 'kibana:${ELK_STACK_VERSION}'
-        ports:
-            - '${FORWARD_KIBANA_PORT:-5601}:5601'
-        volumes:
-            - 'kibana:/usr/share/kibana/data'
-        environment:
-            ELASTICSEARCH_HOSTS: '["http://elasticsearch:9200"]'
-            NODE_OPTIONS: '["--max-old-space-size=${KIBANA_MEMORY_LIMIT}"]'
-        healthcheck:
-            test: >
-                curl -s -f kibana:5601 >/dev/null || exit 1
-            retries: 3
-            timeout: 5s
-        depends_on:
-            elasticsearch:
-                condition: service_healthy
-        networks:
-            - sail
-
-networks:
-    sail:
-        driver: bridge
-
-volumes:
-    database:
-        driver: local
-    redis:
-        driver: local
-    rabbitmq:
-        driver: local
-    elasticsearch:
-        driver: local
-    kibana:
-        driver: local

@@ -1,23 +1,13 @@
 # For more information: https://laravel.com/docs/sail
 services:
     application_test:
-        build:
-            context: './docker/php/${PHP_VERSION}'
-            dockerfile: Dockerfile
-            args:
-                WWWGROUP: '${WWWGROUP}'
-        image: '${APPLICATION_IMAGE:-laravel-ddd-ecommerce}'
+        extends:
+            file: docker-compose.yml
+            service: application
         environment:
-            WWWUSER: '${WWWUSER}'
-            PHP_VERSION: '${PHP_VERSION}'
-            LARAVEL_SAIL: 1
             DB_HOST: database_test
             REDIS_HOST: redis_test
-            XDEBUG_MODE: '${SAIL_XDEBUG_MODE:-off}'
-        volumes:
-            - '.:/var/www/html'
-        networks:
-            - sail_test
+            XDEBUG_MODE: ${SAIL_XDEBUG_MODE}
         depends_on:
             database_test:
                 condition: service_healthy
@@ -25,48 +15,31 @@ services:
                 condition: service_healthy
             elasticsearch_test:
                 condition: service_healthy
+        networks:
+            - sail_test
 
     database_test:
-        image: 'postgis/postgis:${POSTGRES_VERSION}-alpine'
+        extends:
+            file: docker-compose.yml
+            service: database
+        image: postgis/postgis:${POSTGRES_VERSION}-alpine
         ports:
-            - '${FORWARD_TEST_DB_PORT:-5433}:5432'
-        environment:
-            PGPASSWORD: '${DB_PASSWORD:-secret}'
-            POSTGRES_DB: '${DB_DATABASE}'
-            POSTGRES_USER: '${DB_USERNAME}'
-            POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
-            POSTGRES_VERSION: '${POSTGRES_VERSION}'
+            - ${FORWARD_TEST_DB_PORT}:5432
         networks:
             - sail_test
-        healthcheck:
-            test: [ "CMD", "pg_isready", "-q", "-d", "${DB_DATABASE}", "-U", "${DB_USERNAME}" ]
-            retries: 3
-            timeout: 5s
 
     redis_test:
-        image: 'redis:${REDIS_VERSION}-alpine'
-        ports:
-            - '${FORWARD_TEST_REDIS_PORT:-6379}:6379'
-        environment:
-            REDIS_VERSION: '${REDIS_VERSION}'
+        extends:
+            file: docker-compose.yml
+            service: redis
+        image: redis:${REDIS_VERSION}-alpine
         networks:
             - sail_test
-        healthcheck:
-            test: [ "CMD", "redis-cli", "ping" ]
-            retries: 3
-            timeout: 5s
 
     elasticsearch_test:
-        image: 'elasticsearch:${ELK_STACK_VERSION}'
-        environment:
-            ES_JAVA_OPTS: '-Xms${ELASTICSEARCH_HEAP_SIZE}m -Xmx${ELASTICSEARCH_HEAP_SIZE}m'
-            xpack.security.enabled: 'false'
-            discovery.type: 'single-node'
-        healthcheck:
-            test: >
-                curl -s -f elasticsearch_test:9200/_cat/health >/dev/null || exit 1
-            retries: 3
-            timeout: 5s
+        extends:
+            file: docker-compose.yml
+            service: elasticsearch
         networks:
             - sail_test
 

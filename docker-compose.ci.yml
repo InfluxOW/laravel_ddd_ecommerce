@@ -1,25 +1,13 @@
 # For more information: https://laravel.com/docs/sail
 services:
     application_ci:
-        build:
-            context: './docker/php/${PHP_VERSION}'
-            dockerfile: Dockerfile
-            args:
-                WWWGROUP: '${WWWGROUP}'
-        image: '${APPLICATION_IMAGE:-laravel-ddd-ecommerce}'
+        extends:
+            file: docker-compose.yml
+            service: application
         environment:
-            WWWUSER: '${WWWUSER}'
-            PHP_VERSION: '${PHP_VERSION}'
-            LARAVEL_SAIL: 1
-            DB_DATABASE: postgres
-            DB_USERNAME: postgres
             DB_HOST: database_ci
             REDIS_HOST: redis_ci
-            XDEBUG_MODE: '${SAIL_XDEBUG_MODE:-off}'
-        volumes:
-            - '.:/var/www/html'
-        networks:
-            - sail_ci
+            XDEBUG_MODE: ${SAIL_XDEBUG_MODE}
         depends_on:
             database_ci:
                 condition: service_healthy
@@ -27,42 +15,31 @@ services:
                 condition: service_healthy
             elasticsearch_ci:
                 condition: service_healthy
-        command: [ "make", "install", "lint", "analyse", "test-coverage" ]
+        command: >
+            make install lint analyse test-coverage
+        networks:
+            - sail_ci
 
     database_ci:
-        image: 'postgis/postgis:${POSTGRES_VERSION}-alpine'
-        environment:
-            POSTGRES_HOST_AUTH_METHOD: trust
-            POSTGRES_VERSION: '${POSTGRES_VERSION}'
-        healthcheck:
-            test: [ "CMD", "pg_isready", "-q", "-d", "${DB_DATABASE}", "-U", "${DB_USERNAME}" ]
-            retries: 3
-            timeout: 5s
+        extends:
+            file: docker-compose.yml
+            service: database
+        image: postgis/postgis:${POSTGRES_VERSION}-alpine
         networks:
             - sail_ci
 
     redis_ci:
-        image: 'redis:${REDIS_VERSION}-alpine'
-        environment:
-            REDIS_VERSION: '${REDIS_VERSION}'
-        healthcheck:
-            test: [ "CMD", "redis-cli", "ping" ]
-            retries: 3
-            timeout: 5s
+        extends:
+            file: docker-compose.yml
+            service: redis
+        image: redis:${REDIS_VERSION}-alpine
         networks:
             - sail_ci
 
     elasticsearch_ci:
-        image: 'elasticsearch:${ELK_STACK_VERSION}'
-        environment:
-            ES_JAVA_OPTS: '-Xms${ELASTICSEARCH_HEAP_SIZE}m -Xmx${ELASTICSEARCH_HEAP_SIZE}m'
-            xpack.security.enabled: 'false'
-            discovery.type: 'single-node'
-        healthcheck:
-            test: >
-                curl -s -f elasticsearch_ci:9200/_cat/health >/dev/null || exit 1
-            retries: 3
-            timeout: 5s
+        extends:
+            file: docker-compose.yml
+            service: elasticsearch
         networks:
             - sail_ci
 
