@@ -55,9 +55,9 @@ services:
     elasticsearch_ci:
         image: 'elasticsearch:${ELK_STACK_VERSION}'
         environment:
-            - 'ES_JAVA_OPTS=-Xms${ELASTICSEARCH_HEAP_SIZE}m -Xmx${ELASTICSEARCH_HEAP_SIZE}m'
-            - 'xpack.security.enabled=false'
-            - 'discovery.type=single-node'
+            ES_JAVA_OPTS: '-Xms${ELASTICSEARCH_HEAP_SIZE}m -Xmx${ELASTICSEARCH_HEAP_SIZE}m'
+            xpack.security.enabled: 'false'
+            discovery.type: 'single-node'
         healthcheck:
             test: >
                 curl -s -f elasticsearch_ci:9200/_cat/health >/dev/null || exit 1

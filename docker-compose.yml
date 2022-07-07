@@ -101,11 +101,11 @@ services:
         volumes:
             - 'elasticsearch:/usr/share/elasticsearch/data'
         environment:
-            - 'ES_JAVA_OPTS=-Xms${ELASTICSEARCH_HEAP_SIZE}m -Xmx${ELASTICSEARCH_HEAP_SIZE}m'
-            - 'xpack.security.enabled=false'
-            - 'discovery.type=single-node'
-            - 'http.cors.enabled=true'
-            - 'http.cors.allow-origin="*"'
+            ES_JAVA_OPTS: '-Xms${ELASTICSEARCH_HEAP_SIZE}m -Xmx${ELASTICSEARCH_HEAP_SIZE}m'
+            xpack.security.enabled: 'false'
+            discovery.type: 'single-node'
+            http.cors.enabled: 'true'
+            http.cors.allow-origin: '"*"'
         healthcheck:
             test: >
                 curl -s -f elasticsearch:9200/_cat/health >/dev/null || exit 1
@@ -131,8 +131,8 @@ services:
         volumes:
             - 'kibana:/usr/share/kibana/data'
         environment:
-            - 'ELASTICSEARCH_HOSTS=http://elasticsearch:9200'
-            - 'NODE_OPTIONS="--max-old-space-size=${KIBANA_MEMORY_LIMIT}"'
+            ELASTICSEARCH_HOSTS: '["http://elasticsearch:9200"]'
+            NODE_OPTIONS: '["--max-old-space-size=${KIBANA_MEMORY_LIMIT}"]'
         healthcheck:
             test: >
                 curl -s -f kibana:5601 >/dev/null || exit 1
