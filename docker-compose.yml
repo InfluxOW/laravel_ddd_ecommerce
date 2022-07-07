@@ -24,12 +24,19 @@ services:
             - '${HOME}/.config/composer/auth.json:/home/sail/.config/composer/auth.json'
         networks:
             - sail
+        healthcheck:
+            test: >
+                curl -s -f application:80 >/dev/null || exit 1
+            retries: 3
+            timeout: 5s
         depends_on:
             database:
                 condition: service_healthy
             redis:
                 condition: service_healthy
             rabbitmq:
+                condition: service_healthy
+            mailhog:
                 condition: service_healthy
             elasticsearch:
                 condition: service_healthy
@@ -93,6 +100,11 @@ services:
             - '${FORWARD_MAILHOG_DASHBOARD_PORT:-8025}:8025'
         networks:
             - sail
+        healthcheck:
+            test: >
+                wget -S -q -O=- mailhog:8025 >/dev/null || exit 1
+            retries: 3
+            timeout: 5s
 
     elasticsearch:
         image: 'elasticsearch:${ELK_STACK_VERSION}'
@@ -123,6 +135,11 @@ services:
                 condition: service_healthy
         networks:
             - sail
+        healthcheck:
+            test: >
+                wget -S -q -O=- elasticvue:8080 >/dev/null || exit 1
+            retries: 3
+            timeout: 5s
 
     kibana:
         image: 'kibana:${ELK_STACK_VERSION}'
