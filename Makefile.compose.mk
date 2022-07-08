@@ -17,19 +17,19 @@ sail-install:
 		composer install --ignore-platform-reqs
 
 build:
-	$(sail) -f docker-compose.yml -f docker-compose.dev.yml build
+	$(sail) build
 
 dependencies-install:
-	$(sail) -f docker-compose.yml -f docker-compose.dev.yml exec application make install
+	$(sail) exec application make install
 
 destroy:
-	$(sail) -f docker-compose.yml -f docker-compose.dev.yml down --rmi all --volumes --remove-orphans
+	$(sail) down --rmi all --volumes --remove-orphans
 
 start:
-	$(sail) -f docker-compose.yml -f docker-compose.dev.yml up --detach
+	$(sail) up --detach
 
 stop:
-	$(sail) -f docker-compose.yml -f docker-compose.dev.yml stop
+	$(sail) stop
 
 restart: stop start
 
@@ -51,10 +51,10 @@ tests:
 fix-rights:
 	sudo chown -R $(shell whoami) .
 	sudo chmod -R 777 storage/
-	$(sail) -f docker-compose.yml -f docker-compose.dev.yml php artisan cache:clear
-	$(sail) -f docker-compose.yml -f docker-compose.dev.yml composer dump-autoload
+	$(sail) php artisan cache:clear
+	$(sail) composer dump-autoload
 
 stack:
-	$(sail) -f docker-compose.yml -f docker-compose.dev.yml config > docker-compose.dev.stack.yml
+	$(sail) config > docker-compose.dev.stack.yml
 	$(sail) -f docker-compose.test.yml config > docker-compose.test.stack.yml
 	$(sail) -f docker-compose.ci.yml config > docker-compose.ci.stack.yml
