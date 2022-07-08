@@ -9,6 +9,8 @@ use OpenApi\Annotations as OA;
  */
 enum ProductAllowedSort
 {
+    case DEFAULT;
+
     case TITLE;
     case PRICE;
     case CREATED_AT;

@@ -18,7 +18,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use JeroenG\Explorer\Application\Explored;
+use Laravel\Scout\Builder as ScoutBuilder;
+use Laravel\Scout\Searchable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Sluggable\HasSlug;
@@ -67,7 +71,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Product whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-final class Product extends Model implements Purchasable, HasMedia
+final class Product extends Model implements Purchasable, HasMedia, Explored
 {
     use HasExtendedFunctionality;
     use HasFactory;
@@ -75,11 +79,14 @@ final class Product extends Model implements Purchasable, HasMedia
     use InteractsWithMedia {
         media as baseMedia;
     }
+    use Searchable;
 
     protected $fillable = [
         'title',
         'description',
     ];
+
+    private const MAX_SEARCH_RESULTS_COUNT = 100;
 
     /*
      * Relations
@@ -141,7 +148,24 @@ final class Product extends Model implements Purchasable, HasMedia
 
     public function scopeSearch(Builder $query, string $searchable): void
     {
-        $query->whereFullText(['title', 'description'], $searchable);
+        /**
+         * @var ScoutBuilder $scoutSearchQuery
+         */
+        $scoutSearchQuery = self::search($searchable);
+        $ids = $scoutSearchQuery->take(self::MAX_SEARCH_RESULTS_COUNT)->get()->pluck('id');
+
+        $query->whereIntegerInRaw('products.id', $ids);
+
+        if (count($ids) > 1) {
+            // TODO: No comments
+            $orderByRaw = 'CASE' . PHP_EOL;
+            foreach ($ids as $i => $id) {
+                $orderByRaw = "{$orderByRaw} WHEN products.id={$id} THEN {$i}" . PHP_EOL;
+            }
+            $orderByRaw = "{$orderByRaw} END";
+
+            $query->orderByRaw(DB::raw($orderByRaw));
+        }
     }
 
     public function scopeWhereInCategory(Builder $query, Collection $categories): void
@@ -250,6 +274,26 @@ final class Product extends Model implements Purchasable, HasMedia
         return [
             'title' => $this->title,
             'description' => $this->description,
+        ];
+    }
+
+    /*
+     * Searchable
+     * */
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'title' => $this->title,
+            'description' => $this->description,
+        ];
+    }
+
+    public function mappableAs(): array
+    {
+        return [
+            'title' => 'text',
+            'description' => 'text',
         ];
     }
 }

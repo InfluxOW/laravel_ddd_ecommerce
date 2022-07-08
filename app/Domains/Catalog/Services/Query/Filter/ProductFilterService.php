@@ -58,8 +58,10 @@ final class ProductFilterService implements QueryService
     /**
      * @return AllowedFilter[]
      */
-    public function getAllowedFiltersForQuery(string $currency, array $validated): array
+    public function getAllowedFiltersForQuery(array $validated): array
     {
+        $currency = $validated[QueryKey::FILTER->value][ProductAllowedFilter::CURRENCY->name];
+
         return [
             /** @phpstan-ignore-next-line */
             AllowedFilter::callback(ProductAllowedFilter::SEARCH->name, static fn (Builder|Product $query, string $searchable): Builder => $query->search($searchable)),

@@ -20,6 +20,7 @@ use App\Domains\Catalog\Models\Settings\CatalogSettings;
 use App\Domains\Generic\Enums\Response\ResponseKey;
 use Carbon\Carbon;
 use DateTime;
+use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
@@ -63,9 +64,14 @@ final class ProductControllerTest extends TestCase
         $this->get(route('products.index'))->assertOk();
     }
 
-    /** @test */
+    /**
+     * @test
+     * @unstable
+     */
     public function a_user_can_search_products_by_title_or_description(): void
     {
+        $this->refreshModelIndex(Product::class);
+
         $queries = [
             $this->product->title, Str::words($this->product->title, 2, ''),
             $this->product->description, Str::words($this->product->description, 2, ''),
@@ -394,6 +400,7 @@ final class ProductControllerTest extends TestCase
             ProductAllowedSort::CREATED_AT_DESC => [$createdAtSort, SORT_NUMERIC, true],
             ProductAllowedSort::PRICE => [$priceSort, SORT_NUMERIC, false],
             ProductAllowedSort::PRICE_DESC => [$priceSort, SORT_NUMERIC, true],
+            ProductAllowedSort::DEFAULT => throw new Exception('To be implemented'),
         };
     }
 }

@@ -3,7 +3,9 @@
 namespace App\Application\Tests;
 
 use App\Domains\Generic\Http\Middleware\Recaptcha;
+use Elasticsearch\Common\Exceptions\Missing404Exception;
 use Illuminate\Contracts\Console\Kernel;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\RefreshDatabaseState;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
@@ -88,5 +90,20 @@ abstract class TestCase extends BaseTestCase
     protected function withoutRecaptcha(): void
     {
         $this->withoutMiddleware([Recaptcha::class]);
+    }
+
+    /**
+     * @param class-string<Model> $class
+     *
+     * @return void
+     */
+    protected function refreshModelIndex(string $class): void
+    {
+        try {
+            $this->artisan('scout:flush', ['model' => $class]);
+        } catch (Missing404Exception) {
+        }
+
+        $this->artisan('scout:import', ['model' => $class]);
     }
 }

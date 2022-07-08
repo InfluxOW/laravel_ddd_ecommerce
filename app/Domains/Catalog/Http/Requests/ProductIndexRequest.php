@@ -10,6 +10,8 @@ use Illuminate\Validation\Rule;
 
 final class ProductIndexRequest extends FormRequest
 {
+    private const DEFAULT_ITEMS_PER_PAGE = 20;
+
     public function rules(): array
     {
         return [
@@ -27,6 +29,12 @@ final class ProductIndexRequest extends FormRequest
     }
 
     protected function prepareForValidation(): void
+    {
+        $this->prepareFilters();
+        $this->preparePagination();
+    }
+
+    private function prepareFilters(): void
     {
         $filter = $this->{QueryKey::FILTER->value};
         if (isset($filter)) {
@@ -63,6 +71,23 @@ final class ProductIndexRequest extends FormRequest
     {
         if (array_key_exists(ProductAllowedFilter::ATTRIBUTE_VALUE->name, $filters)) {
             $filters[ProductAllowedFilter::ATTRIBUTE_VALUE->name] = array_map(static fn (string $value): array => explode(',', $value), (array) $filters[ProductAllowedFilter::ATTRIBUTE_VALUE->name]);
+        }
+    }
+
+    private function preparePagination(): void
+    {
+        $perPage = $this->{QueryKey::PER_PAGE->value};
+        if ($perPage === null) {
+            $this->merge([
+                QueryKey::PER_PAGE->value => self::DEFAULT_ITEMS_PER_PAGE,
+            ]);
+        }
+
+        $page = $this->{QueryKey::PAGE->value};
+        if ($page === null) {
+            $this->merge([
+                QueryKey::PAGE->value => 1,
+            ]);
         }
     }
 }

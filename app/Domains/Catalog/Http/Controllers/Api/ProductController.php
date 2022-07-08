@@ -25,8 +25,6 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 final class ProductController extends Controller
 {
-    private const DEFAULT_ITEMS_PER_PAGE = 20;
-
     public function index(ProductIndexRequest $request, ProductFilterService $filterService, ProductSortService $sortService): AnonymousResourceCollection
     {
         $validated = $request->validated();
@@ -35,14 +33,14 @@ final class ProductController extends Controller
         $allowedQuerySorts = $sortService->getAllowedSortsForQuery($currency);
 
         $productsQuery = QueryBuilder::for($this->getBaseProductsQuery($currency)->with(['image.model']))
-            ->allowedFilters($filterService->getAllowedFiltersForQuery($currency, $validated))
+            ->allowedFilters($filterService->getAllowedFiltersForQuery($validated))
             ->allowedSorts($allowedQuerySorts)
             ->defaultSort(Arr::first($allowedQuerySorts));
 
         $filterService->setCurrency($currency)->setProductsQuery($productsQuery->clone());
 
         $products = $productsQuery
-            ->paginate($validated[QueryKey::PER_PAGE->value] ?? self::DEFAULT_ITEMS_PER_PAGE, ['*'], QueryKey::PAGE->value, $validated[QueryKey::PAGE->value] ?? 1)
+            ->paginate($validated[QueryKey::PER_PAGE->value], ['*'], QueryKey::PAGE->value, $validated[QueryKey::PAGE->value])
             ->appends($request->query() ?? []);
 
         return $this->respondWithCollection(LightProductResource::class, $products, [

@@ -7,6 +7,7 @@ services:
         environment:
             DB_HOST: database_ci
             REDIS_HOST: redis_ci
+            ELASTICSEARCH_URL: http://elasticsearch_ci:9200
             XDEBUG_MODE: ${SAIL_XDEBUG_MODE}
         depends_on:
             database_ci:

@@ -7,6 +7,7 @@ services:
         environment:
             DB_HOST: database_test
             REDIS_HOST: redis_test
+            ELASTICSEARCH_URL: http://elasticsearch_test:9200
             XDEBUG_MODE: ${SAIL_XDEBUG_MODE}
         depends_on:
             database_test:
