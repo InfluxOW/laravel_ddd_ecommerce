@@ -19,6 +19,7 @@ return [
         ProductAllowedFilter::CURRENCY->name => 'Currency',
     ],
     ProductAllowedSort::class => [
+        ProductAllowedSort::DEFAULT->name => 'Default',
         ProductAllowedSort::TITLE->name => 'Title A-Z',
         ProductAllowedSort::PRICE->name => 'Cheap First',
         ProductAllowedSort::CREATED_AT->name => 'Oldest First',
