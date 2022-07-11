@@ -11,6 +11,8 @@ use Illuminate\Foundation\Testing\RefreshDatabaseState;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redis;
+use PHPUnit\Framework\ExpectationFailedException;
+use ReflectionClass;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -74,6 +76,29 @@ abstract class TestCase extends BaseTestCase
         RefreshDatabaseState::$migrated = false;
 
         parent::tearDownAfterClass();
+    }
+
+    protected function runTest(): mixed
+    {
+        try {
+            return parent::runTest();
+        } catch (ExpectationFailedException $e) {
+            $this->skipTestIfUnstable();
+
+            throw $e;
+        }
+    }
+
+    private function skipTestIfUnstable(): void
+    {
+        $reflection = new ReflectionClass($this);
+        $method = $reflection->getMethod($this->getName());
+        $docblock = $method->getDocComment();
+        $testIsUnstable = is_string($docblock) && str_contains($docblock, '@unstable');
+
+        if ($testIsUnstable) {
+            $this->markTestSkipped('Unstable test failed!');
+        }
     }
 
     /*
