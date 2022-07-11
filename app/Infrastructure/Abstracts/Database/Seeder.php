@@ -14,12 +14,19 @@ use Illuminate\Support\Enumerable;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\LazyCollection;
+use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Laravel\Octane\Facades\Octane;
+use Laravel\Scout\ModelObserver;
 
 abstract class Seeder extends BaseSeeder
 {
     private Dispatcher $cacheEventDispatcher;
+
+    /**
+     * @var class-string<Model>|null
+     */
+    private ?string $model;
 
     private function beforeInvoke(): void
     {
@@ -27,6 +34,7 @@ abstract class Seeder extends BaseSeeder
 
         $this->disableSimpleCacheEventsHandling();
         $this->disableDevTools();
+        $this->disableScoutObserver();
     }
 
     public function __invoke(array $parameters = [])
@@ -46,11 +54,11 @@ abstract class Seeder extends BaseSeeder
 
         $this->enableSimpleCacheEventsHandling();
         $this->enableDevTools();
+        $this->enableScoutObserver();
     }
 
     /**
      * @param class-string<Model> $class
-     * @param int                 $chunkSize
      *
      * @return int[]
      */
@@ -71,8 +79,6 @@ abstract class Seeder extends BaseSeeder
      * @param BelongsToMany $relation
      * @param int[]         $foreignIds
      * @param int[]         $relatedIds
-     *
-     * @return void
      */
     protected function seedBelongsToManyRelationByChunks(BelongsToMany $relation, array $foreignIds, array $relatedIds, Closure $takeRelatedIds): void
     {
@@ -148,5 +154,37 @@ abstract class Seeder extends BaseSeeder
     private function enableDevTools(): void
     {
         config(['telescope.enabled' => env('TELESCOPE_ENABLED', true), 'clockwork.enable' => env('CLOCKWORK_ENABLE')]);
+    }
+
+    private function disableScoutObserver(): void
+    {
+        $this->model = $this->guessRelatedModel();
+
+        if (isset($this->model)) {
+            ModelObserver::disableSyncingFor($this->model);
+        }
+    }
+
+    private function enableScoutObserver(): void
+    {
+        if (isset($this->model)) {
+            ModelObserver::enableSyncingFor($this->model);
+        }
+    }
+
+    /**
+     * @return class-string<Model>|null
+     */
+    private function guessRelatedModel(): ?string
+    {
+        $classnameParts = Str::of(static::class)->explode('\\');
+        $possibleBasename = Str::of((string) $classnameParts->pop())->replace('Seeder', '')->value();
+        $classnameParts->pop(2);
+        $classnameParts->push('Models');
+        $classnameParts->push($possibleBasename);
+        /** @var class-string<Model> $possibleModel */
+        $possibleModel = $classnameParts->implode('\\');
+
+        return class_exists($possibleModel) ? $possibleModel : null;
     }
 }

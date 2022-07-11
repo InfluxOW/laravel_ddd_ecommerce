@@ -7,7 +7,7 @@ use Illuminate\Console\Command;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Redis;
 
-final class RefreshApplication extends Command
+final class RefreshApplicationCommand extends Command
 {
     protected $signature = 'app:refresh';
 
@@ -19,6 +19,7 @@ final class RefreshApplication extends Command
             return self::INVALID;
         }
 
+        $this->call('horizon:terminate', ['--wait' => true]);
         try {
             $this->call('media-library:clear');
         } catch (QueryException) {

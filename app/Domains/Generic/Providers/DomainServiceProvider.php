@@ -2,7 +2,7 @@
 
 namespace App\Domains\Generic\Providers;
 
-use App\Domains\Generic\Console\Commands\RefreshApplication;
+use App\Domains\Generic\Console\Commands\RefreshApplicationCommand;
 use App\Domains\Generic\Enums\ServiceProviderNamespace;
 use App\Infrastructure\Abstracts\Providers\ServiceProvider;
 use Illuminate\Auth\SessionGuard;
@@ -15,7 +15,7 @@ final class DomainServiceProvider extends ServiceProvider
     public const NAMESPACE = ServiceProviderNamespace::GENERIC;
 
     protected array $commands = [
-        RefreshApplication::class,
+        RefreshApplicationCommand::class,
     ];
 
     protected array $providers = [
