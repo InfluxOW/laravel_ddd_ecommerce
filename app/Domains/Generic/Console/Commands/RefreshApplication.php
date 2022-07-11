@@ -4,6 +4,7 @@ namespace App\Domains\Generic\Console\Commands;
 
 use App\Domains\Generic\Database\Seeders\DatabaseSeeder;
 use Illuminate\Console\Command;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Redis;
 
 final class RefreshApplication extends Command
@@ -18,10 +19,14 @@ final class RefreshApplication extends Command
             return self::INVALID;
         }
 
-        $this->call('media-library:clear');
+        try {
+            $this->call('media-library:clear');
+        } catch (QueryException) {
+        }
         $this->call('migrate:fresh');
         Redis::flushall();
         $this->call('db:seed', ['--class' => DatabaseSeeder::class]);
+        $this->call('elastic:update');
 
         return self::SUCCESS;
     }
