@@ -58,10 +58,9 @@ if [ "$FILES" != "" ]; then
 	sail composer exec pint -- --test
 
 	if [ $? != 0 ]; then
-		# Don't believe Laravel Pint checks for a while.
-		echo "[PRE-COMMIT] Laravel Pint found problems."
-		echo "[PRE-COMMIT] Run Laravel Pint manually and fix existing errors."
-		exit 1
+		sail composer exec pint
+        echo "[PRE-COMMIT] All errors are fixed automatically."
+        git add $FILES
 	fi
 
     # Code Quality
