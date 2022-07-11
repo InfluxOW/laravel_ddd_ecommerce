@@ -25,6 +25,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Illuminate\Testing\TestResponse;
 
 final class ProductControllerTest extends TestCase
 {
@@ -79,25 +80,24 @@ final class ProductControllerTest extends TestCase
 
         $productsCount = Product::query()->count();
         foreach ($queries as $query) {
-            $filters = [ProductAllowedFilter::SEARCH->name => $query];
-            $response = $this->get(route('products.index', [QueryKey::FILTER->value => $filters, QueryKey::PER_PAGE->value => $productsCount]))->assertOk();
-            $products = collect($response->json(ResponseKey::DATA->value));
-            $appliedFilters = collect($response->json(sprintf('%s.%s.%s', ResponseKey::QUERY->value, QueryKey::FILTER->value, 'applied')));
+            $response = $this->get(
+                route('products.index', [QueryKey::FILTER->value => [ProductAllowedFilter::SEARCH->name => $query], QueryKey::PER_PAGE->value => $productsCount])
+            )->assertOk();
 
-            $this->assertNotEmpty($products);
-            $this->assertContains($this->product->slug, $products->pluck('slug'));
-            $this->assertCount(count($filters) + 1, $appliedFilters);
-            $this->assertTrue($appliedFilters->pluck('query')->contains(ProductAllowedFilter::SEARCH->name));
+            $this->assertContains($this->product->slug, $this->getResponseData($response)->pluck('slug'));
+            $this->assertContains(ProductAllowedFilter::SEARCH->name, $this->getResponseAppliedFilters($response)->pluck('query'));
         }
     }
 
     /** @test */
     public function a_user_can_filter_products_by_categories(): void
     {
+        /** @var ProductCategory $deepestCategory */
         $deepestCategory = ProductCategory::query()->visible()->hasLimitedDepth()->whereHas('products')->where('depth', ProductCategory::MAX_DEPTH)->first();
         $this->assertNotNull($deepestCategory);
 
-        $product = $deepestCategory?->products->first();
+        /** @var Product $product */
+        $product = $deepestCategory->products->first();
         $this->assertNotNull($product);
 
         $productsCount = Product::query()->count();
@@ -107,20 +107,17 @@ final class ProductControllerTest extends TestCase
             $query[] = $category->slug;
 
             foreach ([$category->slug, implode(',', $query)] as $categoriesQuery) {
-                $filters = [ProductAllowedFilter::CATEGORY->name => $categoriesQuery];
-                $response = $this->get(route('products.index', [QueryKey::FILTER->value => $filters, QueryKey::PER_PAGE->value => $productsCount]))->assertOk();
-                $products = collect($response->json(ResponseKey::DATA->value));
-                $appliedFilters = collect($response->json(sprintf('%s.%s.%s', ResponseKey::QUERY->value, QueryKey::FILTER->value, 'applied')));
+                $response = $this->get(
+                    route('products.index', [QueryKey::FILTER->value => [ProductAllowedFilter::CATEGORY->name => $categoriesQuery], QueryKey::PER_PAGE->value => $productsCount])
+                )->assertOk();
+                $appliedFilters = $this->getResponseAppliedFilters($response);
 
-                $this->assertNotEmpty($products);
-                $this->assertTrue($products->pluck('slug')->contains($product?->slug));
-
-                $this->assertCount(count($filters) + 1, $appliedFilters);
-                $this->assertTrue($appliedFilters->pluck('query')->contains(ProductAllowedFilter::CATEGORY->name));
+                $this->assertContains($product->slug, $this->getResponseData($response)->pluck('slug'));
+                $this->assertContains(ProductAllowedFilter::CATEGORY->name, $appliedFilters->pluck('query'));
 
                 $categoryFilterValues = collect($appliedFilters->filter(fn (array $filter): bool => $filter['query'] === ProductAllowedFilter::CATEGORY->name)->first()['selected_values']);
                 if ($categoriesQuery === $category->slug) {
-                    $this->assertTrue($categoryFilterValues->contains($category->slug));
+                    $this->assertContains($category->slug, $categoryFilterValues);
                 } else {
                     $this->assertEqualsCanonicalizing($query, $categoryFilterValues->toArray());
                 }
@@ -130,7 +127,10 @@ final class ProductControllerTest extends TestCase
         }
     }
 
-    /** @test */
+    /**
+     * @test
+     * @complicated
+     */
     public function a_user_can_filter_products_by_current_price(): void
     {
         $currency = $this->settings->default_currency;
@@ -149,10 +149,11 @@ final class ProductControllerTest extends TestCase
         ];
 
         foreach ($queries as [$minPrice, $maxPrice]) {
-            $filters = [ProductAllowedFilter::PRICE_BETWEEN->name => "{$minPrice},{$maxPrice}"];
-            $response = $this->get(route('products.index', [QueryKey::FILTER->value => $filters]))->assertOk();
-            $products = collect($response->json(ResponseKey::DATA->value));
-            $appliedFilters = collect($response->json(sprintf('%s.%s.%s', ResponseKey::QUERY->value, QueryKey::FILTER->value, 'applied')));
+            $response = $this->get(
+                route('products.index', [QueryKey::FILTER->value => [ProductAllowedFilter::PRICE_BETWEEN->name => "{$minPrice},{$maxPrice}"]])
+            )->assertOk();
+            $products = $this->getResponseData($response);
+            $appliedFilters = $this->getResponseAppliedFilters($response);
 
             if (isset($minPrice, $maxPrice) && $maxPrice < $minPrice) {
                 [$minPrice, $maxPrice] = [$maxPrice, $minPrice];
@@ -186,8 +187,7 @@ final class ProductControllerTest extends TestCase
                 $this->assertTrue($result);
             });
 
-            $this->assertCount(count($filters) + 1, $appliedFilters);
-            $this->assertTrue($appliedFilters->pluck('query')->contains(ProductAllowedFilter::PRICE_BETWEEN->name));
+            $this->assertContains(ProductAllowedFilter::PRICE_BETWEEN->name, $appliedFilters->pluck('query'));
 
             $priceBetweenFilter = $appliedFilters->filter(fn (array $filter): bool => $filter['query'] === ProductAllowedFilter::PRICE_BETWEEN->name)->first();
 
@@ -196,7 +196,11 @@ final class ProductControllerTest extends TestCase
         }
     }
 
-    /** @test */
+    /**
+     * @test
+     * @complicated
+     * @unstable
+     */
     public function a_user_can_filter_products_by_attribute_values(): void
     {
         $nonBooleanAttributeValuesQuery = static fn (Builder|HasMany $query) => $query->whereHas('attribute', fn (Builder|HasMany $query) => $query->whereIn('values_type', [ProductAttributeValuesType::INTEGER, ProductAttributeValuesType::STRING, ProductAttributeValuesType::FLOAT]));
@@ -252,21 +256,19 @@ final class ProductControllerTest extends TestCase
 
         $filters = [ProductAllowedFilter::ATTRIBUTE_VALUE->name => $query];
         $response = $this->get(route('products.index', [QueryKey::FILTER->value => $filters, QueryKey::PER_PAGE->value => Product::query()->count()]))->assertOk();
-        $products = collect($response->json(ResponseKey::DATA->value));
-        $appliedFilters = collect($response->json(sprintf('%s.%s.%s', ResponseKey::QUERY->value, QueryKey::FILTER->value, 'applied')));
+        $products = $this->getResponseData($response);
+        $appliedFilters = $this->getResponseAppliedFilters($response);
 
-        $this->assertNotEmpty($products);
         $this->assertCount(2, $products);
         $products->each(function (array $item) use ($height, $width, $heightSmallValue, $heightGreatValue, $widthValue): void {
-            $item = $this->get($item['url'])->json(ResponseKey::DATA->value);
+            $item = $this->getResponseData($this->get($item['url']));
             $attributes = collect($item['attributes']);
 
             $this->assertEquals($attributes->where('attribute.slug', $width->slug)->first()['value'], $widthValue);
             $this->assertContains($attributes->where('attribute.slug', $height->slug)->first()['value'], [$heightSmallValue, $heightGreatValue]);
         });
 
-        $this->assertCount(count($filters) + 1, $appliedFilters);
-        $this->assertTrue($appliedFilters->pluck('query')->contains(ProductAllowedFilter::ATTRIBUTE_VALUE->name));
+        $this->assertContains(ProductAllowedFilter::ATTRIBUTE_VALUE->name, $appliedFilters->pluck('query'));
 
         $attributeValuesFilterValues = collect($appliedFilters->filter(fn (array $filter): bool => $filter['query'] === ProductAllowedFilter::ATTRIBUTE_VALUE->name)->first()['selected_values']);
         $this->assertEqualsCanonicalizing([$heightSmallValue, $heightGreatValue], $attributeValuesFilterValues->where('attribute.query', $height->slug)->first()['values']);
@@ -377,8 +379,10 @@ final class ProductControllerTest extends TestCase
 
     private function getProductsSortedBy(ProductAllowedSort $sort): Collection
     {
-        $response = $this->get(route('products.index', [QueryKey::SORT->value => $sort->name, QueryKey::PER_PAGE->value => Product::query()->count()]))->assertOk();
-        $products = collect($response->json(ResponseKey::DATA->value));
+        $response = $this->get(
+            route('products.index', [QueryKey::SORT->value => $sort->name, QueryKey::PER_PAGE->value => Product::query()->count()])
+        )->assertOk();
+        $products = $this->getResponseData($response);
         $appliedSort = collect($response->json(sprintf('%s.%s.%s', ResponseKey::QUERY->value, QueryKey::SORT->value, 'applied')));
 
         $this->assertEquals($appliedSort['query'], $sort->name);
@@ -402,5 +406,15 @@ final class ProductControllerTest extends TestCase
             ProductAllowedSort::PRICE_DESC => [$priceSort, SORT_NUMERIC, true],
             ProductAllowedSort::DEFAULT => throw new Exception('To be implemented'),
         };
+    }
+
+    private function getResponseData(TestResponse $response): Collection
+    {
+        return collect($response->json(ResponseKey::DATA->value));
+    }
+
+    private function getResponseAppliedFilters(TestResponse $response): Collection
+    {
+        return collect($response->json(sprintf('%s.%s.%s', ResponseKey::QUERY->value, QueryKey::FILTER->value, 'applied')));
     }
 }
