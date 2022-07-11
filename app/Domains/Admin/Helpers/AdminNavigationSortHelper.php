@@ -3,8 +3,11 @@
 namespace App\Domains\Admin\Helpers;
 
 use App\Domains\Admin\Admin\Resources\Development\ClockworkLinkResource;
+use App\Domains\Admin\Admin\Resources\Development\ElasticvueLinkResource;
 use App\Domains\Admin\Admin\Resources\Development\HorizonLinkResource;
+use App\Domains\Admin\Admin\Resources\Development\KibanaLinkResource;
 use App\Domains\Admin\Admin\Resources\Development\PrequelLinkResource;
+use App\Domains\Admin\Admin\Resources\Development\RabbitMQLinkResource;
 use App\Domains\Admin\Admin\Resources\Development\SwaggerLinkResource;
 use App\Domains\Admin\Admin\Resources\Development\TelescopeLinkResource;
 use App\Domains\Admin\Admin\Resources\Development\TotemLinkResource;
@@ -32,5 +35,8 @@ final class AdminNavigationSortHelper
         PrequelLinkResource::class,
         TotemLinkResource::class,
         HorizonLinkResource::class,
+        RabbitMQLinkResource::class,
+        ElasticvueLinkResource::class,
+        KibanaLinkResource::class,
     ];
 }

@@ -3,8 +3,11 @@
 use App\Domains\Admin\Admin\Components\Actions\Tables\BulkUpdateAction;
 use App\Domains\Admin\Admin\Components\Actions\Tables\DeleteAction;
 use App\Domains\Admin\Admin\Resources\Development\ClockworkLinkResource;
+use App\Domains\Admin\Admin\Resources\Development\ElasticvueLinkResource;
 use App\Domains\Admin\Admin\Resources\Development\HorizonLinkResource;
+use App\Domains\Admin\Admin\Resources\Development\KibanaLinkResource;
 use App\Domains\Admin\Admin\Resources\Development\PrequelLinkResource;
+use App\Domains\Admin\Admin\Resources\Development\RabbitMQLinkResource;
 use App\Domains\Admin\Admin\Resources\Development\SwaggerLinkResource;
 use App\Domains\Admin\Admin\Resources\Development\TelescopeLinkResource;
 use App\Domains\Admin\Admin\Resources\Development\TotemLinkResource;
@@ -62,6 +65,24 @@ return [
         AdminResourcePropertyTranslationKey::LABEL->name => 'Horizon',
         AdminResourcePropertyTranslationKey::PLURAL_LABEL->name => 'Horizon',
         AdminResourcePropertyTranslationKey::NAVIGATION_LABEL->name => 'Horizon',
+        AdminResourcePropertyTranslationKey::NAVIGATION_GROUP->name => LangUtils::translateEnum(AdminNavigationGroupTranslationKey::DEVELOPMENT),
+    ],
+    RabbitMQLinkResource::class => [
+        AdminResourcePropertyTranslationKey::LABEL->name => 'RabbitMQ',
+        AdminResourcePropertyTranslationKey::PLURAL_LABEL->name => 'RabbitMQ',
+        AdminResourcePropertyTranslationKey::NAVIGATION_LABEL->name => 'RabbitMQ',
+        AdminResourcePropertyTranslationKey::NAVIGATION_GROUP->name => LangUtils::translateEnum(AdminNavigationGroupTranslationKey::DEVELOPMENT),
+    ],
+    ElasticvueLinkResource::class => [
+        AdminResourcePropertyTranslationKey::LABEL->name => 'Elasticvue',
+        AdminResourcePropertyTranslationKey::PLURAL_LABEL->name => 'Elasticvue',
+        AdminResourcePropertyTranslationKey::NAVIGATION_LABEL->name => 'Elasticvue',
+        AdminResourcePropertyTranslationKey::NAVIGATION_GROUP->name => LangUtils::translateEnum(AdminNavigationGroupTranslationKey::DEVELOPMENT),
+    ],
+    KibanaLinkResource::class => [
+        AdminResourcePropertyTranslationKey::LABEL->name => 'Kibana',
+        AdminResourcePropertyTranslationKey::PLURAL_LABEL->name => 'Kibana',
+        AdminResourcePropertyTranslationKey::NAVIGATION_LABEL->name => 'Kibana',
         AdminResourcePropertyTranslationKey::NAVIGATION_GROUP->name => LangUtils::translateEnum(AdminNavigationGroupTranslationKey::DEVELOPMENT),
     ],
 ];
