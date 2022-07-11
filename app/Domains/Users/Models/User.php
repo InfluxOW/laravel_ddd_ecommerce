@@ -7,6 +7,7 @@ use App\Domains\Cart\Models\Cart;
 use App\Domains\Feedback\Models\Feedback;
 use App\Domains\Generic\Models\ConfirmationToken;
 use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
+use App\Domains\Generic\Traits\Models\Searchable;
 use App\Domains\Users\Database\Factories\UserFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,6 +15,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use JeroenG\Explorer\Application\Explored;
 use Laravel\Sanctum\HasApiTokens;
 
 /**
@@ -47,6 +49,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User query()
+ * @method static \Illuminate\Database\Eloquent\Builder|User search(string $searchable, bool $orderByScore)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereEmailVerifiedAt($value)
@@ -58,12 +61,13 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-final class User extends Authenticatable implements MustVerifyEmail
+final class User extends Authenticatable implements MustVerifyEmail, Explored
 {
     use HasExtendedFunctionality;
     use HasApiTokens;
     use HasFactory;
     use Notifiable;
+    use Searchable;
 
     /**
      * The attributes that are mass assignable.
@@ -132,5 +136,27 @@ final class User extends Authenticatable implements MustVerifyEmail
     protected static function newFactory(): UserFactory
     {
         return UserFactory::new();
+    }
+
+    /*
+     * Searchable
+     * */
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'name' => $this->name,
+            'email' => $this->email,
+            'phone' => $this->phone,
+        ];
+    }
+
+    public function mappableAs(): array
+    {
+        return [
+            'name' => 'text',
+            'email' => 'text',
+            'phone' => 'text',
+        ];
     }
 }

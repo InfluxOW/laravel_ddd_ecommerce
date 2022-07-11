@@ -3,6 +3,10 @@
 declare(strict_types=1);
 
 use App\Domains\Catalog\Models\Product;
+use App\Domains\Catalog\Models\ProductAttribute;
+use App\Domains\Catalog\Models\ProductCategory;
+use App\Domains\Feedback\Models\Feedback;
+use App\Domains\Users\Models\User;
 
 return [
     /*
@@ -18,6 +22,10 @@ return [
      */
     'indexes' => [
         Product::class,
+        ProductAttribute::class,
+        ProductCategory::class,
+        Feedback::class,
+        User::class,
     ],
 
     /**

@@ -4,12 +4,14 @@ namespace App\Domains\Feedback\Models;
 
 use App\Domains\Feedback\Database\Factories\FeedbackFactory;
 use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
+use App\Domains\Generic\Traits\Models\Searchable;
 use App\Domains\Users\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use JeroenG\Explorer\Application\Explored;
 
 /**
  * App\Domains\Feedback\Models\Feedback
@@ -32,6 +34,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|Feedback newModelQuery()
  * @method static Builder|Feedback newQuery()
  * @method static Builder|Feedback query()
+ * @method static Builder|Feedback search(string $searchable, bool $orderByScore)
  * @method static Builder|Feedback whereCreatedAt($value)
  * @method static Builder|Feedback whereEmail($value)
  * @method static Builder|Feedback whereId($value)
@@ -44,10 +47,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|Feedback whereUsername($value)
  * @mixin \Eloquent
  */
-final class Feedback extends Model
+final class Feedback extends Model implements Explored
 {
     use HasExtendedFunctionality;
     use HasFactory;
+    use Searchable;
 
     protected $fillable = [
         'username',
@@ -118,5 +122,29 @@ final class Feedback extends Model
     public function scopeInLastHour(Builder $query): void
     {
         $query->where('created_at', '>', Carbon::now()->subHour());
+    }
+
+    /*
+     * Searchable
+     * */
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'text' => $this->text,
+            'username' => $this->username,
+            'email' => $this->email,
+            'phone' => $this->phone,
+        ];
+    }
+
+    public function mappableAs(): array
+    {
+        return [
+            'text' => 'text',
+            'username' => 'text',
+            'email' => 'text',
+            'phone' => 'text',
+        ];
     }
 }

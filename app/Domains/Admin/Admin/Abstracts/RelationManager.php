@@ -5,6 +5,7 @@ namespace App\Domains\Admin\Admin\Abstracts;
 use App\Domains\Admin\Admin\Abstracts\Resource as BaseResource;
 use App\Domains\Admin\Admin\Components\Actions\Tables\DeleteAction;
 use App\Domains\Admin\Admin\Components\Actions\Tables\ViewAction;
+use App\Domains\Admin\Admin\Traits\AppliesSearchToTableQuery;
 use App\Domains\Admin\Traits\HasNavigationSort;
 use App\Domains\Admin\Traits\Translation\HasTranslatableAdminLabels;
 use App\Domains\Admin\Traits\Translation\TranslatableAdminRelation;
@@ -25,6 +26,7 @@ abstract class RelationManager extends BaseRelationManager
     use TranslatableAdminRelation;
     use HasTranslatableAdminLabels;
     use HasNavigationSort;
+    use AppliesSearchToTableQuery;
 
     protected function getResourceTable(): Table
     {
@@ -78,6 +80,11 @@ abstract class RelationManager extends BaseRelationManager
         }
 
         return collect($urls)->doesntContain(Request::url());
+    }
+
+    protected function getModel(): string
+    {
+        return $this->getRelatedModel();
     }
 
     /**

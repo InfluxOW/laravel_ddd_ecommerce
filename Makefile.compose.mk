@@ -7,6 +7,7 @@ sail := $(sail_dir)/vendor/bin/sail
 # Application
 
 setup: sail-install build start dependencies-install
+	$(sail) php artisan app:refresh
 
 sail-install:
 	docker run --rm \

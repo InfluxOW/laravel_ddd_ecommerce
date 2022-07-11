@@ -10,6 +10,7 @@ use App\Domains\Catalog\Enums\ProductAttributeValuesType;
 use App\Domains\Catalog\Models\Pivot\ProductProductCategory;
 use App\Domains\Generic\Enums\BooleanString;
 use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
+use App\Domains\Generic\Traits\Models\Searchable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -18,11 +19,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use JeroenG\Explorer\Application\Explored;
-use Laravel\Scout\Builder as ScoutBuilder;
-use Laravel\Scout\Searchable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Sluggable\HasSlug;
@@ -56,7 +54,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Product newQuery()
  * @method static Builder|Product orderByCurrentPrice(string $currency, bool $descending)
  * @method static Builder|Product query()
- * @method static Builder|Product search(string $searchable)
+ * @method static Builder|Product search(string $searchable, bool $orderByScore)
  * @method static Builder|Product whereCreatedAt($value)
  * @method static Builder|Product whereDescription($value)
  * @method static Builder|Product whereHasAttributeValue(array $attributesValuesByAttributeSlug)
@@ -85,8 +83,6 @@ final class Product extends Model implements Purchasable, HasMedia, Explored
         'title',
         'description',
     ];
-
-    private const MAX_SEARCH_RESULTS_COUNT = 100;
 
     /*
      * Relations
@@ -145,28 +141,6 @@ final class Product extends Model implements Purchasable, HasMedia, Explored
     /*
      * Scopes
      * */
-
-    public function scopeSearch(Builder $query, string $searchable): void
-    {
-        /**
-         * @var ScoutBuilder $scoutSearchQuery
-         */
-        $scoutSearchQuery = self::search($searchable);
-        $ids = $scoutSearchQuery->take(self::MAX_SEARCH_RESULTS_COUNT)->get()->pluck('id');
-
-        $query->whereIntegerInRaw('products.id', $ids);
-
-        if (count($ids) > 1) {
-            // TODO: No comments
-            $orderByRaw = 'CASE' . PHP_EOL;
-            foreach ($ids as $i => $id) {
-                $orderByRaw = "{$orderByRaw} WHEN products.id={$id} THEN {$i}" . PHP_EOL;
-            }
-            $orderByRaw = "{$orderByRaw} END";
-
-            $query->orderByRaw(DB::raw($orderByRaw));
-        }
-    }
 
     public function scopeWhereInCategory(Builder $query, Collection $categories): void
     {
@@ -285,6 +259,7 @@ final class Product extends Model implements Purchasable, HasMedia, Explored
     {
         return [
             'title' => $this->title,
+            'slug' => $this->slug,
             'description' => $this->description,
         ];
     }
@@ -293,6 +268,7 @@ final class Product extends Model implements Purchasable, HasMedia, Explored
     {
         return [
             'title' => 'text',
+            'slug' => 'text',
             'description' => 'text',
         ];
     }

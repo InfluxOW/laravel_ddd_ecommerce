@@ -5,6 +5,7 @@ namespace App\Domains\Catalog\Models;
 use App\Domains\Catalog\Database\Factories\ProductCategoryFactory;
 use App\Domains\Catalog\Enums\Media\ProductCategoryMediaCollectionKey;
 use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
+use App\Domains\Generic\Traits\Models\Searchable;
 use Baum\NestedSet\Node;
 use Closure;
 use Illuminate\Database\Eloquent\Builder;
@@ -15,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Redis;
+use JeroenG\Explorer\Application\Explored;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Sluggable\HasSlug;
@@ -57,6 +59,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|ProductCategory newModelQuery()
  * @method static Builder|ProductCategory newQuery()
  * @method static Builder|ProductCategory query()
+ * @method static Builder|ProductCategory search(string $searchable, bool $orderByScore)
  * @method static Builder|ProductCategory visible()
  * @method static Builder|ProductCategory whereCreatedAt($value)
  * @method static Builder|ProductCategory whereDepth($value)
@@ -74,7 +77,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|ProductCategory withoutSelf()
  * @mixin \Eloquent
  */
-final class ProductCategory extends Model implements HasMedia
+final class ProductCategory extends Model implements HasMedia, Explored
 {
     use HasExtendedFunctionality;
     use HasFactory;
@@ -83,6 +86,7 @@ final class ProductCategory extends Model implements HasMedia
     use InteractsWithMedia {
         media as baseMedia;
     }
+    use Searchable;
 
     public const MAX_DEPTH = 3;
 
@@ -260,5 +264,25 @@ final class ProductCategory extends Model implements HasMedia
     public function scopeVisible(Builder $query): void
     {
         $query->whereIntegerInRaw('product_categories.id', self::mapHierarchy(static fn (self $category) => $category->id, self::getVisibleHierarchy()));
+    }
+
+    /*
+     * Searchable
+     * */
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'title' => $this->title,
+            'slug' => $this->slug,
+        ];
+    }
+
+    public function mappableAs(): array
+    {
+        return [
+            'title' => 'text',
+            'slug' => 'text',
+        ];
     }
 }
