@@ -65,8 +65,7 @@ final class ProductController extends Controller
     {
         return Product::query()
             ->select(['products.*'])
-            /** @phpstan-ignore-next-line */
-            ->whereHas('categories', fn (Builder|ProductCategory $query): Builder => $query->visible())
+            ->visible()
             ->with([
                 /** @phpstan-ignore-next-line */
                 'categories' => fn (BelongsToMany|ProductCategory $query): BelongsToMany => $query->visible(),

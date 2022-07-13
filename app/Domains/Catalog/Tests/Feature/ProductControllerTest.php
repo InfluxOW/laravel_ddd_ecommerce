@@ -38,7 +38,7 @@ final class ProductControllerTest extends TestCase
         parent::setUp();
 
         /** @var Product $product */
-        $product = Product::first();
+        $product = Product::query()->with(['prices'])->first();
 
         $this->product = $product;
         $this->settings = app(CatalogSettings::class);
@@ -327,6 +327,27 @@ final class ProductControllerTest extends TestCase
 
         $this->get(route('products.show', $this->product))->assertOk();
         $this->assertTrue(ProductCategory::query()->where('product_categories.id', $firstLevelCategory->id)->visible()->exists());
+    }
+
+    /** @test */
+    public function a_user_cannot_view_specific_product_if_it_doesnt_have_prices_with_all_required_currencies(): void
+    {
+        $this->get(route('products.show', $this->product))->assertOk();
+
+        /** @var ProductPrice $price */
+        $price = $this->product->prices->first();
+        $validCurrency = $price->currency;
+        $price->currency = (string) random_int(100, 999);
+        $price->save();
+
+        $this->get(route('products.show', $this->product))->assertNotFound();
+
+        /** @var ProductPrice $price */
+        $price = $this->product->prices->first();
+        $price->currency = $validCurrency;
+        $price->save();
+
+        $this->get(route('products.show', $this->product))->assertOk();
     }
 
     /**

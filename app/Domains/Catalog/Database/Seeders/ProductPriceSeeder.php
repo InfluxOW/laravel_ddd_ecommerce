@@ -2,6 +2,7 @@
 
 namespace App\Domains\Catalog\Database\Seeders;
 
+use Akaunting\Money\Currency;
 use App\Domains\Catalog\Models\Product;
 use App\Domains\Catalog\Models\ProductPrice;
 use App\Domains\Catalog\Models\Settings\CatalogSettings;
@@ -17,7 +18,11 @@ final class ProductPriceSeeder extends Seeder
      */
     public function run(CatalogSettings $settings)
     {
-        $settings->available_currencies = app()->runningUnitTests() ? ['USD', 'RUB'] : ['USD', 'RUB', 'EUR', 'GBP'];
+        $usd = Currency::USD()->getCurrency();
+        $rub = Currency::RUB()->getCurrency();
+
+        $settings->available_currencies = app()->runningUnitTests() ? [$usd, $rub] : [$usd, $rub, Currency::EUR()->getCurrency(), Currency::GBP()->getCurrency()];
+        $settings->required_currencies = $settings->available_currencies;
         $settings->save();
 
         $productPricesRows = [];

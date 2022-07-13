@@ -11,6 +11,8 @@ final class CatalogSettings extends Settings
 
     public array $available_currencies;
 
+    public array $required_currencies;
+
     public static function group(): string
     {
         return DomainServiceProvider::NAMESPACE->value;

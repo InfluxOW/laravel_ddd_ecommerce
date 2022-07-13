@@ -59,6 +59,7 @@ return [
     ],
     CatalogSettingsTranslationKey::class => [
         CatalogSettingsTranslationKey::AVAILABLE_CURRENCIES->name => 'Available Currencies',
+        CatalogSettingsTranslationKey::REQUIRED_CURRENCIES->name => 'Required Currencies',
         CatalogSettingsTranslationKey::DEFAULT_CURRENCY->name => 'Default Currency',
     ],
     ProductAttributeValuesType::class => [

@@ -8,6 +8,7 @@ use App\Domains\Catalog\Database\Factories\ProductFactory;
 use App\Domains\Catalog\Enums\Media\ProductMediaCollectionKey;
 use App\Domains\Catalog\Enums\ProductAttributeValuesType;
 use App\Domains\Catalog\Models\Pivot\ProductProductCategory;
+use App\Domains\Catalog\Models\Settings\CatalogSettings;
 use App\Domains\Generic\Enums\BooleanString;
 use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
 use App\Domains\Generic\Traits\Models\Searchable;
@@ -55,6 +56,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Product orderByCurrentPrice(string $currency, bool $descending)
  * @method static Builder|Product query()
  * @method static Builder|Product search(string $searchable, bool $orderByScore)
+ * @method static Builder|Product visible()
  * @method static Builder|Product whereCreatedAt($value)
  * @method static Builder|Product whereDescription($value)
  * @method static Builder|Product whereHasAttributeValue(array $attributesValuesByAttributeSlug)
@@ -209,6 +211,17 @@ final class Product extends Model implements Purchasable, HasMedia, Explored
             ->join('product_prices', 'product_prices.product_id', '=', 'products.id')
             ->where('product_prices.currency', $currency)
             ->orderBy(ProductPrice::getDatabasePriceExpression(), $descending ? 'DESC' : 'ASC');
+    }
+
+    public function scopeVisible(Builder $query): void
+    {
+        /** @phpstan-ignore-next-line */
+        $query->whereHas('categories', fn (Builder|ProductCategory $query): Builder => $query->visible());
+
+        foreach (app(CatalogSettings::class)->required_currencies as $currency) {
+            /** @phpstan-ignore-next-line */
+            $query->whereHas('prices', fn (Builder|ProductPrice $query): Builder => $query->where('currency', $currency));
+        }
     }
 
     /*

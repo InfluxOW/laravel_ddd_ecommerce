@@ -1,14 +1,17 @@
 <?php
 
-use App\Domains\Catalog\Providers\DomainServiceProvider;
+use Akaunting\Money\Currency;
+use App\Domains\Catalog\Models\Settings\CatalogSettings;
 use Spatie\LaravelSettings\Migrations\SettingsMigration;
 
 return new class extends SettingsMigration {
     public function up(): void
     {
-        $getPropertyName = fn (string $property): string => sprintf('%s.%s', DomainServiceProvider::NAMESPACE->value, $property);
+        $getPropertyName = static fn (string $property): string => sprintf('%s.%s', CatalogSettings::group(), $property);
+        $usd = Currency::USD()->getCurrency();
 
-        $this->migrator->add($getPropertyName('default_currency'), 'USD');
-        $this->migrator->add($getPropertyName('available_currencies'), ['USD']);
+        $this->migrator->add($getPropertyName('default_currency'), $usd);
+        $this->migrator->add($getPropertyName('available_currencies'), [$usd]);
+        $this->migrator->add($getPropertyName('required_currencies'), [$usd]);
     }
 };
