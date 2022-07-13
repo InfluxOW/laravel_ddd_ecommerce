@@ -15,6 +15,7 @@ use Filament\Forms\Components\Card;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\MultiSelect;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Tables\Columns\TextColumn;
@@ -50,18 +51,23 @@ final class ProductResource extends Resource
             ->schema(self::setTranslatableLabels([
                 Card::make()
                     ->schema(self::setTranslatableLabels([
+                        Toggle::make(ProductResourceTranslationKey::IS_DISPLAYABLE->value)
+                            ->disabled()
+                            ->columnSpan(2),
                         TextInput::make(ProductResourceTranslationKey::TITLE->value)
                             ->required()
                             ->reactive()
                             ->afterStateUpdated(fn (callable $set, $state): mixed => $set(ProductResourceTranslationKey::SLUG->value, Str::slug($state)))
                             ->minValue(2)
                             ->maxLength(255)
-                            ->placeholder('TV'),
+                            ->placeholder('TV')
+                            ->columnSpan(1),
                         TextInput::make(ProductResourceTranslationKey::SLUG->value)
                             ->required()
                             ->minValue(2)
                             ->maxLength(255)
-                            ->placeholder('tv'),
+                            ->placeholder('tv')
+                            ->columnSpan(1),
                         MarkdownEditor::make(ProductResourceTranslationKey::DESCRIPTION->value)
                             ->required()
                             ->disableToolbarButtons([

@@ -93,7 +93,7 @@ final class ProductControllerTest extends TestCase
     public function a_user_can_filter_products_by_categories(): void
     {
         /** @var ProductCategory $deepestCategory */
-        $deepestCategory = ProductCategory::query()->visible()->hasLimitedDepth()->whereHas('products')->where('depth', ProductCategory::MAX_DEPTH)->first();
+        $deepestCategory = ProductCategory::query()->displayable()->whereHas('products')->where('depth', ProductCategory::MAX_DEPTH)->first();
         $this->assertNotNull($deepestCategory);
 
         /** @var Product $product */
@@ -316,17 +316,14 @@ final class ProductControllerTest extends TestCase
         $setProductCategory($this->product, $firstLevelCategory);
 
         $this->get(route('products.show', $this->product))->assertNotFound();
-        $this->assertFalse(ProductCategory::query()->where('product_categories.id', $firstLevelCategory->id)->visible()->exists());
 
         $setVisibility($firstLevelCategory, true);
 
         $this->get(route('products.show', $this->product))->assertNotFound();
-        $this->assertFalse(ProductCategory::query()->where('product_categories.id', $firstLevelCategory->id)->visible()->exists());
 
         $setVisibility($rootCategory, true);
 
         $this->get(route('products.show', $this->product))->assertOk();
-        $this->assertTrue(ProductCategory::query()->where('product_categories.id', $firstLevelCategory->id)->visible()->exists());
     }
 
     /** @test */

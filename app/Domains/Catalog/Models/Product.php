@@ -42,6 +42,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read int|null $base_media_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Domains\Catalog\Models\ProductCategory[] $categories
  * @property-read int|null $categories_count
+ * @property-read bool $is_displayable
  * @property-read \App\Components\Mediable\Models\Media|null $image
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|\App\Components\Mediable\Models\Media[] $images
  * @property-read int|null $images_count
@@ -50,13 +51,13 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Domains\Catalog\Models\ProductPrice[] $prices
  * @property-read int|null $prices_count
  *
+ * @method static Builder|Product displayable()
  * @method static \App\Domains\Catalog\Database\Factories\ProductFactory factory(...$parameters)
  * @method static Builder|Product newModelQuery()
  * @method static Builder|Product newQuery()
  * @method static Builder|Product orderByCurrentPrice(string $currency, bool $descending)
  * @method static Builder|Product query()
  * @method static Builder|Product search(string $searchable, bool $orderByScore)
- * @method static Builder|Product visible()
  * @method static Builder|Product whereCreatedAt($value)
  * @method static Builder|Product whereDescription($value)
  * @method static Builder|Product whereHasAttributeValue(array $attributesValuesByAttributeSlug)
@@ -84,6 +85,10 @@ final class Product extends Model implements Purchasable, HasMedia, Explored
     protected $fillable = [
         'title',
         'description',
+    ];
+
+    protected $appends = [
+        'is_displayable',
     ];
 
     /*
@@ -129,6 +134,12 @@ final class Product extends Model implements Purchasable, HasMedia, Explored
         return SlugOptions::create()
             ->generateSlugsFrom('title')
             ->saveSlugsTo('slug');
+    }
+
+    public function getIsDisplayableAttribute(): bool
+    {
+        return $this->categories->filter->is_displayable->count() >= 1 &&
+            collect(app(CatalogSettings::class)->required_currencies)->diff($this->prices->pluck('currency'))->isEmpty();
     }
 
     /*
@@ -213,10 +224,10 @@ final class Product extends Model implements Purchasable, HasMedia, Explored
             ->orderBy(ProductPrice::getDatabasePriceExpression(), $descending ? 'DESC' : 'ASC');
     }
 
-    public function scopeVisible(Builder $query): void
+    public function scopeDisplayable(Builder $query): void
     {
         /** @phpstan-ignore-next-line */
-        $query->whereHas('categories', fn (Builder|ProductCategory $query): Builder => $query->visible());
+        $query->whereHas('categories', fn (Builder|ProductCategory $query): Builder => $query->displayable());
 
         foreach (app(CatalogSettings::class)->required_currencies as $currency) {
             /** @phpstan-ignore-next-line */

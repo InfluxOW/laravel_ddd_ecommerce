@@ -66,7 +66,7 @@ final class ProductFilterService implements QueryService
             /** @phpstan-ignore-next-line */
             AllowedFilter::callback(ProductAllowedFilter::SEARCH->name, static fn (Builder|Product $query, string $searchable): Builder => $query->search($searchable, orderByScore: true)),
             AllowedFilter::callback(ProductAllowedFilter::CURRENCY->name, static fn (Builder|Product $query): Builder => $query->whereHasPriceCurrency($currency)),
-            AllowedFilter::callback(ProductAllowedFilter::CATEGORY->name, static fn (Builder|Product $query): Builder => $query->whereInCategory(ProductCategory::query()->visible()->hasLimitedDepth()->whereIn('slug', $validated[QueryKey::FILTER->value][ProductAllowedFilter::CATEGORY->name])->get())),
+            AllowedFilter::callback(ProductAllowedFilter::CATEGORY->name, static fn (Builder|Product $query): Builder => $query->whereInCategory(ProductCategory::query()->displayable()->whereIn('slug', $validated[QueryKey::FILTER->value][ProductAllowedFilter::CATEGORY->name])->get())),
             AllowedFilter::callback(ProductAllowedFilter::PRICE_BETWEEN->name, static fn (Builder|Product $query): Builder => $query->wherePriceBetween($currency, ...$validated[QueryKey::FILTER->value][ProductAllowedFilter::PRICE_BETWEEN->name])),
             AllowedFilter::callback(ProductAllowedFilter::ATTRIBUTE_VALUE->name, static fn (Builder|Product $query): Builder => $query->whereHasAttributeValue($validated[QueryKey::FILTER->value][ProductAllowedFilter::ATTRIBUTE_VALUE->name])),
         ];

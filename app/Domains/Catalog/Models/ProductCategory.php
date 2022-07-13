@@ -25,21 +25,22 @@ use Spatie\Sluggable\SlugOptions;
 /**
  * App\Domains\Catalog\Models\ProductCategory
  *
- * @property int                             $id
- * @property string                          $title
- * @property string                          $slug
- * @property string|null                     $description
- * @property bool                            $is_visible
- * @property int|null                        $parent_id
- * @property int                             $left
- * @property int                             $right
- * @property int|null                        $depth
+ * @property int $id
+ * @property string $title
+ * @property string $slug
+ * @property string|null $description
+ * @property bool $is_visible
+ * @property int|null $parent_id
+ * @property int $left
+ * @property int $right
+ * @property int|null $depth
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|\App\Components\Mediable\Models\Media[] $baseMedia
  * @property-read int|null $base_media_count
  * @property-read \Illuminate\Database\Eloquent\Collection|ProductCategory[] $children
  * @property-read int|null $children_count
+ * @property-read bool $is_displayable
  * @property-read int $overall_products_count
  * @property-read string $path
  * @property-read int|null $products_count
@@ -53,6 +54,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read ProductCategory|null $parent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Domains\Catalog\Models\Product[] $products
  *
+ * @method static Builder|ProductCategory displayable()
  * @method static \App\Domains\Catalog\Database\Factories\ProductCategoryFactory factory(...$parameters)
  * @method static Builder|ProductCategory hasLimitedDepth()
  * @method static Builder|ProductCategory limitDepth($limit)
@@ -60,7 +62,6 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|ProductCategory newQuery()
  * @method static Builder|ProductCategory query()
  * @method static Builder|ProductCategory search(string $searchable, bool $orderByScore)
- * @method static Builder|ProductCategory visible()
  * @method static Builder|ProductCategory whereCreatedAt($value)
  * @method static Builder|ProductCategory whereDepth($value)
  * @method static Builder|ProductCategory whereDescription($value)
@@ -99,6 +100,10 @@ final class ProductCategory extends Model implements HasMedia, Explored
         'title',
         'description',
         'is_visible',
+    ];
+
+    protected $appends = [
+        'is_displayable',
     ];
 
     public static Collection $hierarchy;
@@ -161,6 +166,11 @@ final class ProductCategory extends Model implements HasMedia, Explored
         $path[] = $this->title;
 
         return implode(' — ', $path);
+    }
+
+    public function getIsDisplayableAttribute(): bool
+    {
+        return self::mapHierarchy(static fn (self $category) => $category->id, self::getVisibleHierarchy())->contains($this->id) && $this->depth <= self::MAX_DEPTH;
     }
 
     /*
@@ -261,9 +271,12 @@ final class ProductCategory extends Model implements HasMedia, Explored
         $query->limitDepth(self::MAX_DEPTH);
     }
 
-    public function scopeVisible(Builder $query): void
+    public function scopeDisplayable(Builder|Model $query): void
     {
-        $query->whereIntegerInRaw('product_categories.id', self::mapHierarchy(static fn (self $category) => $category->id, self::getVisibleHierarchy()));
+        /** @phpstan-ignore-next-line */
+        $query
+            ->whereIntegerInRaw('product_categories.id', self::mapHierarchy(static fn (self $category) => $category->id, self::getVisibleHierarchy()))
+            ->hasLimitedDepth();
     }
 
     /*

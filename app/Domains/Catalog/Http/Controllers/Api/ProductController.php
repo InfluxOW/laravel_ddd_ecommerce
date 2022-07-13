@@ -65,10 +65,10 @@ final class ProductController extends Controller
     {
         return Product::query()
             ->select(['products.*'])
-            ->visible()
+            ->displayable()
             ->with([
                 /** @phpstan-ignore-next-line */
-                'categories' => fn (BelongsToMany|ProductCategory $query): BelongsToMany => $query->visible(),
+                'categories' => fn (BelongsToMany|ProductCategory $query): BelongsToMany => $query->displayable(),
                 'prices' => fn (HasMany $query): HasMany => $query->where('currency', $currency),
             ]);
     }

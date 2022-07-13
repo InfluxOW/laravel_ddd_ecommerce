@@ -10,4 +10,6 @@ enum ProductResourceTranslationKey: string
 
     case CATEGORIES = 'categories';
     case IMAGES = 'images';
+
+    case IS_DISPLAYABLE = 'is_displayable';
 }

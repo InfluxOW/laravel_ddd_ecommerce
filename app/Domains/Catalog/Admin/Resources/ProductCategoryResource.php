@@ -97,19 +97,24 @@ final class ProductCategoryResource extends Resource
     {
         return self::setTranslatableLabels([
             Toggle::make(ProductCategoryResourceTranslationKey::IS_VISIBLE->value)
-                ->columnSpan(2),
+                ->columnSpan(1),
+            Toggle::make(ProductCategoryResourceTranslationKey::IS_DISPLAYABLE->value)
+                ->disabled()
+                ->columnSpan(1),
             TextInput::make(ProductCategoryResourceTranslationKey::TITLE->value)
                 ->required()
                 ->reactive()
                 ->afterStateUpdated(fn (callable $set, $state): mixed => $set(ProductCategoryResourceTranslationKey::SLUG->value, Str::slug($state)))
                 ->minValue(2)
                 ->maxLength(255)
-                ->placeholder('Electronics'),
+                ->placeholder('Electronics')
+                ->columnSpan(1),
             TextInput::make(ProductCategoryResourceTranslationKey::SLUG->value)
                 ->required()
                 ->minValue(2)
                 ->maxLength(255)
-                ->placeholder('electronics'),
+                ->placeholder('electronics')
+                ->columnSpan(1),
             MarkdownEditor::make(ProductCategoryResourceTranslationKey::DESCRIPTION->value)
                 ->disableToolbarButtons([
                     'attachFiles',
@@ -144,7 +149,8 @@ final class ProductCategoryResource extends Resource
             TextInput::make(ProductCategoryResourceTranslationKey::DEPTH->value)
                 ->disabled()
                 ->default(fn (Page|RelationManager $livewire): ?int => ($livewire instanceof RelationManager && isset($livewire->ownerRecord->depth)) ? (int) ($livewire->ownerRecord->depth + 1) : null)
-                ->lte((string) ProductCategory::MAX_DEPTH, true),
+                ->lte((string) ProductCategory::MAX_DEPTH, true)
+                ->columnSpan(2),
             MediaLibraryFileUpload::make(ProductCategoryResourceTranslationKey::IMAGES->value)
                 ->collection(ProductCategoryMediaCollectionKey::IMAGES->value)
                 ->multiple()

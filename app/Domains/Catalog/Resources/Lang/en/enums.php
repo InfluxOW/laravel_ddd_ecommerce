@@ -39,6 +39,7 @@ return [
         ProductCategoryResourceTranslationKey::PARENT_TITLE->name => 'Parent',
         ProductCategoryResourceTranslationKey::LEFT->name => 'Position',
         ProductCategoryResourceTranslationKey::IS_VISIBLE->name => 'Is Visible',
+        ProductCategoryResourceTranslationKey::IS_DISPLAYABLE->name => 'Is Displayable',
         ProductCategoryResourceTranslationKey::IMAGES->name => 'Images',
 
         ProductCategoryResourceTranslationKey::DEPTH->name => 'Depth',
@@ -74,6 +75,7 @@ return [
         ProductResourceTranslationKey::DESCRIPTION->name => 'Description',
         ProductResourceTranslationKey::CATEGORIES->name => 'Categories',
         ProductResourceTranslationKey::IMAGES->name => 'Images',
+        ProductResourceTranslationKey::IS_DISPLAYABLE->name => 'Is Displayable',
     ],
     ProductPriceResourceTranslationKey::class => [
         ProductPriceResourceTranslationKey::CURRENCY->name => 'Currency',
