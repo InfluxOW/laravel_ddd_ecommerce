@@ -11,9 +11,9 @@ use App\Domains\Catalog\Enums\Media\ProductMediaCollectionKey;
 use App\Domains\Catalog\Enums\Translation\ProductResourceTranslationKey;
 use App\Domains\Catalog\Models\Product;
 use App\Domains\Catalog\Models\ProductCategory;
-use Filament\Forms\Components\BelongsToManyMultiSelect;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\MarkdownEditor;
+use Filament\Forms\Components\MultiSelect;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
@@ -75,7 +75,7 @@ final class ProductResource extends Resource
                 Card::make()
                     ->columnSpan(3)
                     ->schema(self::setTranslatableLabels([
-                        BelongsToManyMultiSelect::make(ProductResourceTranslationKey::CATEGORIES->value)
+                        MultiSelect::make(ProductResourceTranslationKey::CATEGORIES->value)
                             ->relationship('categories', 'title')
                             ->options(fn (?Product $record, callable $get): array => ProductCategory::query()
                                 ->hasLimitedDepth()
