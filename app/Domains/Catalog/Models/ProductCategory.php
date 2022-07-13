@@ -25,15 +25,15 @@ use Spatie\Sluggable\SlugOptions;
 /**
  * App\Domains\Catalog\Models\ProductCategory
  *
- * @property int $id
- * @property string $title
- * @property string $slug
- * @property string|null $description
- * @property bool $is_visible
- * @property int|null $parent_id
- * @property int $left
- * @property int $right
- * @property int|null $depth
+ * @property int                             $id
+ * @property string                          $title
+ * @property string                          $slug
+ * @property string|null                     $description
+ * @property bool                            $is_visible
+ * @property int|null                        $parent_id
+ * @property int                             $left
+ * @property int                             $right
+ * @property int|null                        $depth
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|\App\Components\Mediable\Models\Media[] $baseMedia

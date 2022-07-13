@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->string('title');
             $table->string('slug')->unique();
             $table->string('description', 3000);
+            $table->boolean('is_visible');
             $table->timestamps();
         });
     }

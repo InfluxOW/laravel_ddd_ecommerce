@@ -30,10 +30,11 @@ use Spatie\Sluggable\SlugOptions;
 /**
  * App\Domains\Catalog\Models\Product
  *
- * @property int                             $id
- * @property string                          $title
- * @property string                          $slug
- * @property string                          $description
+ * @property int $id
+ * @property string $title
+ * @property string $slug
+ * @property string $description
+ * @property bool $is_visible
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Domains\Catalog\Models\ProductAttributeValue[] $attributeValues
@@ -64,6 +65,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Product whereHasPriceCurrency(string $currency)
  * @method static Builder|Product whereId($value)
  * @method static Builder|Product whereInCategory(\Illuminate\Support\Collection $categories)
+ * @method static Builder|Product whereIsVisible($value)
  * @method static Builder|Product wherePriceAbove(string $currency, int $minPrice)
  * @method static Builder|Product wherePriceBelow(string $currency, int $maxPrice)
  * @method static Builder|Product wherePriceBetween(string $currency, ?int $minPrice, ?int $maxPrice)
@@ -139,7 +141,8 @@ final class Product extends Model implements Purchasable, HasMedia, Explored
     public function getIsDisplayableAttribute(): bool
     {
         return $this->categories->filter->is_displayable->count() >= 1 &&
-            collect(app(CatalogSettings::class)->required_currencies)->diff($this->prices->pluck('currency'))->isEmpty();
+            collect(app(CatalogSettings::class)->required_currencies)->diff($this->prices->pluck('currency'))->isEmpty() &&
+            $this->is_visible;
     }
 
     /*
@@ -226,8 +229,10 @@ final class Product extends Model implements Purchasable, HasMedia, Explored
 
     public function scopeDisplayable(Builder $query): void
     {
-        /** @phpstan-ignore-next-line */
-        $query->whereHas('categories', fn (Builder|ProductCategory $query): Builder => $query->displayable());
+        $query
+            ->where('products.is_visible', true)
+            /** @phpstan-ignore-next-line */
+            ->whereHas('categories', fn (Builder|ProductCategory $query): Builder => $query->displayable());
 
         foreach (app(CatalogSettings::class)->required_currencies as $currency) {
             /** @phpstan-ignore-next-line */

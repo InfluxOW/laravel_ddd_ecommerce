@@ -51,9 +51,11 @@ final class ProductResource extends Resource
             ->schema(self::setTranslatableLabels([
                 Card::make()
                     ->schema(self::setTranslatableLabels([
+                        Toggle::make(ProductResourceTranslationKey::IS_VISIBLE->value)
+                            ->columnSpan(1),
                         Toggle::make(ProductResourceTranslationKey::IS_DISPLAYABLE->value)
                             ->disabled()
-                            ->columnSpan(2),
+                            ->columnSpan(1),
                         TextInput::make(ProductResourceTranslationKey::TITLE->value)
                             ->required()
                             ->reactive()

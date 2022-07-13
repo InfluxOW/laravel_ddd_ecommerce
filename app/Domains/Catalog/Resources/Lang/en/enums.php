@@ -75,6 +75,7 @@ return [
         ProductResourceTranslationKey::DESCRIPTION->name => 'Description',
         ProductResourceTranslationKey::CATEGORIES->name => 'Categories',
         ProductResourceTranslationKey::IMAGES->name => 'Images',
+        ProductResourceTranslationKey::IS_VISIBLE->name => 'Is Visible',
         ProductResourceTranslationKey::IS_DISPLAYABLE->name => 'Is Displayable',
     ],
     ProductPriceResourceTranslationKey::class => [

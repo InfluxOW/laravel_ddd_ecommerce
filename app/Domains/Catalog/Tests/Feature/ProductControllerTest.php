@@ -55,6 +55,7 @@ final class ProductControllerTest extends TestCase
         ]);
 
         ProductCategory::query()->update(['is_visible' => true]);
+        Product::query()->update(['is_visible' => true]);
 
         ProductCategory::loadHierarchy();
     }
@@ -343,6 +344,22 @@ final class ProductControllerTest extends TestCase
         $price = $this->product->prices->first();
         $price->currency = $validCurrency;
         $price->save();
+
+        $this->get(route('products.show', $this->product))->assertOk();
+    }
+
+    /** @test */
+    public function a_user_cannot_view_specific_product_if_it_isnt_marked_as_visible(): void
+    {
+        $this->get(route('products.show', $this->product))->assertOk();
+
+        $this->product->is_visible = false;
+        $this->product->save();
+
+        $this->get(route('products.show', $this->product))->assertNotFound();
+
+        $this->product->is_visible = true;
+        $this->product->save();
 
         $this->get(route('products.show', $this->product))->assertOk();
     }
