@@ -20,6 +20,7 @@ final class ProductCategoryFactory extends Factory
             'slug' => Str::of($title)->slug(),
             'description' => $this->faker->realText(300),
             'is_visible' => true,
+            'is_displayable' => false,
             'created_at' => $this->faker->dateTimeBetween('-1 year'),
         ]);
     }

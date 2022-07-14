@@ -30,6 +30,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property string                          $slug
  * @property string|null                     $description
  * @property bool                            $is_visible
+ * @property bool                            $is_displayable
  * @property int|null                        $parent_id
  * @property int                             $left
  * @property int                             $right
@@ -40,7 +41,6 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read int|null $base_media_count
  * @property-read \Illuminate\Database\Eloquent\Collection|ProductCategory[] $children
  * @property-read int|null $children_count
- * @property-read bool $is_displayable
  * @property-read int $overall_products_count
  * @property-read string $path
  * @property-read int|null $products_count
@@ -66,6 +66,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|ProductCategory whereDepth($value)
  * @method static Builder|ProductCategory whereDescription($value)
  * @method static Builder|ProductCategory whereId($value)
+ * @method static Builder|ProductCategory whereIsDisplayable($value)
  * @method static Builder|ProductCategory whereIsVisible($value)
  * @method static Builder|ProductCategory whereLeft($value)
  * @method static Builder|ProductCategory whereParentId($value)
@@ -100,10 +101,6 @@ final class ProductCategory extends Model implements HasMedia, Explored
         'title',
         'description',
         'is_visible',
-    ];
-
-    protected $appends = [
-        'is_displayable',
     ];
 
     public static Collection $hierarchy;
@@ -166,11 +163,6 @@ final class ProductCategory extends Model implements HasMedia, Explored
         $path[] = $this->title;
 
         return implode(' — ', $path);
-    }
-
-    public function getIsDisplayableAttribute(): bool
-    {
-        return self::mapHierarchy(static fn (self $category) => $category->id, self::getVisibleHierarchy())->contains($this->id) && $this->depth <= self::MAX_DEPTH;
     }
 
     /*
@@ -273,10 +265,7 @@ final class ProductCategory extends Model implements HasMedia, Explored
 
     public function scopeDisplayable(Builder|Model $query): void
     {
-        /** @phpstan-ignore-next-line */
-        $query
-            ->whereIntegerInRaw('product_categories.id', self::mapHierarchy(static fn (self $category) => $category->id, self::getVisibleHierarchy()))
-            ->hasLimitedDepth();
+        $query->where('product_categories.is_displayable', true);
     }
 
     /*

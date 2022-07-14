@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->string('slug')->unique();
             $table->string('description', 3000)->nullable();
             $table->boolean('is_visible');
+            $table->boolean('is_displayable');
             $table->foreignIdFor(ProductCategory::class, 'parent_id')->nullable()->constrained($table->getTable())->cascadeOnDelete();
             $table->unsignedInteger('left');
             $table->unsignedInteger('right');

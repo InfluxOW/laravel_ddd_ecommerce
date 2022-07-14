@@ -7,6 +7,7 @@ use App\Domains\Catalog\Models\ProductAttribute;
 use App\Domains\Catalog\Models\ProductAttributeValue;
 use App\Infrastructure\Abstracts\Database\Seeder;
 use Exception;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\LazyCollection;
 
 final class ProductAttributeValueSeeder extends Seeder
@@ -29,6 +30,6 @@ final class ProductAttributeValueSeeder extends Seeder
             }
         }
 
-        $this->insertByChunks((new ProductAttributeValue())->getTable(), LazyCollection::make($attributeValuesRows));
+        DB::insertByChunks((new ProductAttributeValue())->getTable(), LazyCollection::make($attributeValuesRows));
     }
 }

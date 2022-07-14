@@ -34,6 +34,7 @@ final class ProductFactory extends Factory
             'description' => $this->faker->words(50, true),
             'created_at' => $this->faker->dateTimeBetween('-2 years'),
             'is_visible' => $this->faker->boolean(90),
+            'is_displayable' => false,
         ]);
     }
 

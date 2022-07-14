@@ -4,6 +4,8 @@ namespace App\Domains\Catalog\Tests\Feature;
 
 use App\Application\Tests\TestCase;
 use App\Components\Queryable\Enums\QueryKey;
+use App\Domains\Catalog\Console\Commands\UpdateProductCategoriesDisplayability;
+use App\Domains\Catalog\Console\Commands\UpdateProductsDisplayability;
 use App\Domains\Catalog\Database\Seeders\ProductAttributeSeeder;
 use App\Domains\Catalog\Database\Seeders\ProductAttributeValueSeeder;
 use App\Domains\Catalog\Database\Seeders\ProductCategorySeeder;
@@ -54,8 +56,8 @@ final class ProductControllerTest extends TestCase
             ProductPriceSeeder::class,
         ]);
 
-        ProductCategory::query()->update(['is_visible' => true]);
-        Product::query()->update(['is_visible' => true]);
+        ProductCategory::query()->update(['is_visible' => true, 'is_displayable' => true]);
+        Product::query()->update(['is_visible' => true, 'is_displayable' => true]);
 
         ProductCategory::loadHierarchy();
     }
@@ -291,13 +293,19 @@ final class ProductControllerTest extends TestCase
     /** @test */
     public function a_user_cannot_view_specific_product_if_it_doesnt_have_at_least_one_visible_category(): void
     {
-        $setVisibility = static function (ProductCategory $category, bool $isVisible): void {
+        $setVisibility = function (ProductCategory $category, bool $isVisible): void {
             $category->is_visible = $isVisible;
             $category->save();
+
+            $this->artisan(UpdateProductCategoriesDisplayability::class);
+            $this->artisan(UpdateProductsDisplayability::class);
         };
 
-        $setProductCategory = static function (Product $product, ProductCategory $category): void {
+        $setProductCategory = function (Product $product, ProductCategory $category): void {
             $product->categories()->sync([$category->id]);
+
+            $this->artisan(UpdateProductCategoriesDisplayability::class);
+            $this->artisan(UpdateProductsDisplayability::class);
         };
 
         /** @var ProductCategory $rootCategory */
@@ -330,20 +338,24 @@ final class ProductControllerTest extends TestCase
     /** @test */
     public function a_user_cannot_view_specific_product_if_it_doesnt_have_prices_with_all_required_currencies(): void
     {
-        $this->get(route('products.show', $this->product))->assertOk();
-
         /** @var ProductPrice $price */
         $price = $this->product->prices->first();
         $validCurrency = $price->currency;
-        $price->currency = (string) random_int(100, 999);
-        $price->save();
+
+        $updateCurrency = function (string $currency) use ($price): void {
+            $price->currency = $currency;
+            $price->save();
+
+            $this->artisan(UpdateProductsDisplayability::class);
+        };
+
+        $this->get(route('products.show', $this->product))->assertOk();
+
+        $updateCurrency((string) random_int(100, 999));
 
         $this->get(route('products.show', $this->product))->assertNotFound();
 
-        /** @var ProductPrice $price */
-        $price = $this->product->prices->first();
-        $price->currency = $validCurrency;
-        $price->save();
+        $updateCurrency($validCurrency);
 
         $this->get(route('products.show', $this->product))->assertOk();
     }
@@ -351,15 +363,20 @@ final class ProductControllerTest extends TestCase
     /** @test */
     public function a_user_cannot_view_specific_product_if_it_isnt_marked_as_visible(): void
     {
+        $updateVisibility = function (bool $isVisible): void {
+            $this->product->is_visible = $isVisible;
+            $this->product->save();
+
+            $this->artisan(UpdateProductsDisplayability::class);
+        };
+
         $this->get(route('products.show', $this->product))->assertOk();
 
-        $this->product->is_visible = false;
-        $this->product->save();
+        $updateVisibility(false);
 
         $this->get(route('products.show', $this->product))->assertNotFound();
 
-        $this->product->is_visible = true;
-        $this->product->save();
+        $updateVisibility(true);
 
         $this->get(route('products.show', $this->product))->assertOk();
     }

@@ -10,13 +10,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Seeder as BaseSeeder;
 use Illuminate\Events\NullDispatcher;
-use Illuminate\Support\Enumerable;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\LazyCollection;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
-use Laravel\Octane\Facades\Octane;
 use Laravel\Scout\ModelObserver;
 
 abstract class Seeder extends BaseSeeder
@@ -69,7 +67,7 @@ abstract class Seeder extends BaseSeeder
             /** @phpstan-ignore-next-line */
             $rows = LazyCollection::make($class::factory()->count($count)->make()->map->getRawAttributes(['id']));
 
-            return $this->insertByChunks((new $class())->getTable(), $rows, $chunkSize, $chunkSliceSize);
+            return DB::insertByChunks((new $class())->getTable(), $rows, $chunkSize, $chunkSliceSize);
         }
 
         throw new InvalidArgumentException("Model `{$class}` should have `HasFactory` trait.");
@@ -87,7 +85,7 @@ abstract class Seeder extends BaseSeeder
             $rows[] = $this->getBelongsToManyRows($relation, $foreignId, $takeRelatedIds($relatedIds));
         }
 
-        $this->insertByChunks($relation->getTable(), collect($rows)->flatten(depth: 1));
+        DB::insertByChunks($relation->getTable(), collect($rows)->flatten(depth: 1));
     }
 
     /**
@@ -108,32 +106,6 @@ abstract class Seeder extends BaseSeeder
         }
 
         return $rows;
-    }
-
-    /**
-     * @return int[]
-     */
-    protected function insertByChunks(string $table, Enumerable $rows, int $chunkSize = 100, int $chunkSliceSize = 20): array
-    {
-        $maxId = DB::table($table)->max('id') ?? 0;
-
-        $rows
-            ->chunk($chunkSize)
-            ->each(function (Enumerable $chunk) use ($table, $chunkSize, $chunkSliceSize): void {
-                $insertsCount = ceil($chunkSize / $chunkSliceSize);
-
-                $inserts = [];
-                for ($i = 0; $i < $insertsCount; $i += 1) {
-                    $inserts[] = static fn () => DB::table($table)->insert($chunk->slice($i * $chunkSliceSize, $chunkSliceSize)->toArray()); // Unable to use Closures from out of function scope due to serialization issues.
-                }
-
-                Octane::concurrently($inserts, 30000);
-            });
-
-        return DB::table($table)
-            ->where('id', '>', $maxId)
-            ->pluck('id')
-            ->toArray();
     }
 
     private function disableSimpleCacheEventsHandling(): void

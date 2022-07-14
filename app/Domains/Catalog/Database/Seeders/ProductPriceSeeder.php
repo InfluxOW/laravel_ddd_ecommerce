@@ -3,10 +3,13 @@
 namespace App\Domains\Catalog\Database\Seeders;
 
 use Akaunting\Money\Currency;
+use App\Domains\Catalog\Console\Commands\UpdateProductsDisplayability;
 use App\Domains\Catalog\Models\Product;
 use App\Domains\Catalog\Models\ProductPrice;
 use App\Domains\Catalog\Models\Settings\CatalogSettings;
 use App\Infrastructure\Abstracts\Database\Seeder;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\LazyCollection;
 
 final class ProductPriceSeeder extends Seeder
@@ -32,6 +35,8 @@ final class ProductPriceSeeder extends Seeder
             }
         }
 
-        $this->insertByChunks((new ProductPrice())->getTable(), LazyCollection::make($productPricesRows), 50, 10);
+        DB::insertByChunks((new ProductPrice())->getTable(), LazyCollection::make($productPricesRows), 50, 10);
+
+        Artisan::call(UpdateProductsDisplayability::class);
     }
 }

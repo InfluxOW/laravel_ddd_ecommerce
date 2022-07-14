@@ -13,5 +13,7 @@ return new class extends SettingsMigration {
         $this->migrator->add($getPropertyName('default_currency'), $usd);
         $this->migrator->add($getPropertyName('available_currencies'), [$usd]);
         $this->migrator->add($getPropertyName('required_currencies'), [$usd]);
+        $this->migrator->add($getPropertyName('products_displayability_last_updated_at'));
+        $this->migrator->add($getPropertyName('product_categories_displayability_last_updated_at'));
     }
 };
