@@ -53,6 +53,7 @@ final class CartService
         $cart->setRelation('items', $cart->items->push($item));
 
         $cart = $this->recalculate($cart);
+
         $this->cache($cart);
 
         return $cart;
@@ -68,6 +69,7 @@ final class CartService
         $item->quantity = (int) MathUtils::clamp($quantity, 0, CartItem::MAX_QUANTITY);
 
         $cart = $this->recalculate($cart);
+
         $this->cache($cart);
 
         return $cart;

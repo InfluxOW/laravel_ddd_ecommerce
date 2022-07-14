@@ -206,7 +206,7 @@ final class ProductCategory extends Model implements HasMedia, Explored
             self::loadHierarchy();
         }
 
-        return self::getHierarchy();
+        return self::$hierarchy;
     }
 
     public static function findInHierarchy(int $id, Collection $hierarchy): ?self
