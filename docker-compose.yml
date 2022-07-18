@@ -13,11 +13,6 @@ services:
             LARAVEL_SAIL: 1
         volumes:
             - .:/var/www/html
-        healthcheck:
-            test: >
-                curl --silent --fail 0.0.0.0:80 >/dev/null || exit 1
-            retries: 3
-            timeout: 5s
 
     database:
         image: postgis/postgis:${POSTGRES_VERSION}

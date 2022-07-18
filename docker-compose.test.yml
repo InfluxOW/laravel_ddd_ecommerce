@@ -16,6 +16,8 @@ services:
                 condition: service_healthy
             elasticsearch_test:
                 condition: service_healthy
+        command: >
+            --no-supervisor
         networks:
             - sail_test
 
