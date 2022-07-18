@@ -2,9 +2,9 @@
 
 namespace App\Domains\Catalog\Console\Commands;
 
+use App\Components\Purchasable\Models\Price;
 use App\Domains\Catalog\Models\Product;
 use App\Domains\Catalog\Models\ProductCategory;
-use App\Domains\Catalog\Models\ProductPrice;
 use App\Domains\Catalog\Models\Settings\CatalogSettings;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
@@ -33,7 +33,7 @@ final class UpdateProductsDisplayability extends Command
             ->when(true, function (Builder $query): void {
                 foreach ($this->settings->required_currencies as $currency) {
                     /** @phpstan-ignore-next-line */
-                    $query->whereHas('prices', fn (Builder|ProductPrice $query): Builder => $query->where('currency', $currency));
+                    $query->whereHas('prices', fn (Builder|Price $query): Builder => $query->where('currency', $currency));
                 }
             })
             ->orderBy("{$table}.id");

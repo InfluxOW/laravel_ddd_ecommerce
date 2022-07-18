@@ -4,10 +4,10 @@ namespace App\Domains\Catalog\Http\Resources\Product;
 
 use App\Components\Purchasable\Http\Resources\CurrencyResource;
 use App\Components\Purchasable\Http\Resources\MoneyResource;
+use App\Components\Purchasable\Models\Price;
 use App\Components\Queryable\Enums\QueryKey;
 use App\Domains\Catalog\Enums\Query\Filter\ProductAllowedFilter;
 use App\Domains\Catalog\Models\Product;
-use App\Domains\Catalog\Models\ProductPrice;
 use DateTime;
 use Illuminate\Http\Resources\Json\JsonResource;
 use JetBrains\PhpStorm\ArrayShape;
@@ -21,7 +21,7 @@ abstract class ProductResource extends JsonResource
         $product = $this->resource;
 
         $currency = $request->get(QueryKey::FILTER->value)[ProductAllowedFilter::CURRENCY->name];
-        /** @var ProductPrice|null $priceModel */
+        /** @var Price|null $priceModel */
         $priceModel = $product->prices->where('currency', $currency)->first();
 
         return [

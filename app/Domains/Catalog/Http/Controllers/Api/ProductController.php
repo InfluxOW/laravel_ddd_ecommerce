@@ -16,7 +16,7 @@ use App\Domains\Generic\Enums\Response\ResponseKey;
 use App\Interfaces\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -69,7 +69,7 @@ final class ProductController extends Controller
             ->with([
                 /** @phpstan-ignore-next-line */
                 'categories' => fn (BelongsToMany|ProductCategory $query): BelongsToMany => $query->displayable(),
-                'prices' => fn (HasMany $query): HasMany => $query->where('currency', $currency),
+                'prices' => fn (MorphMany $query): MorphMany => $query->where('currency', $currency),
             ]);
     }
 }

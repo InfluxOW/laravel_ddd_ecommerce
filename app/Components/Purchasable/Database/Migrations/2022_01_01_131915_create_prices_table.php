@@ -1,6 +1,5 @@
 <?php
 
-use App\Domains\Catalog\Models\Product;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,15 +12,15 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('product_prices', function (Blueprint $table) {
+        Schema::create('prices', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Product::class, 'product_id')->constrained('products')->cascadeOnDelete();
+            $table->morphs('purchasable');
             $table->unsignedInteger('price');
             $table->unsignedInteger('price_discounted')->nullable();
             $table->string('currency', 3);
             $table->timestamps();
 
-            $table->unique(['product_id', 'currency']);
+            $table->unique(['purchasable_type', 'purchasable_id', 'currency']);
         });
     }
 
@@ -32,6 +31,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('product_prices');
+        Schema::dropIfExists('prices');
     }
 };

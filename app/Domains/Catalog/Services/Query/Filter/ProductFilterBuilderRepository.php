@@ -2,12 +2,13 @@
 
 namespace App\Domains\Catalog\Services\Query\Filter;
 
+use App\Components\Purchasable\Models\Price;
 use App\Components\Queryable\Classes\Filter\Resources\MultiselectFilter\NestedMultiselectFilterValues;
 use App\Components\Queryable\Classes\Filter\Resources\MultiselectFilter\NestedMultiselectFilterValuesAttribute;
+use App\Domains\Catalog\Models\Product;
 use App\Domains\Catalog\Models\ProductAttribute;
 use App\Domains\Catalog\Models\ProductAttributeValue;
 use App\Domains\Catalog\Models\ProductCategory;
-use App\Domains\Catalog\Models\ProductPrice;
 use App\Domains\Catalog\Models\Settings\CatalogSettings;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
@@ -76,25 +77,28 @@ final class ProductFilterBuilderRepository
 
     public function getMinPrice(SpatieQueryBuilder $productsQuery, string $currency): ?int
     {
-        return DB::table('product_prices')
-            ->whereIn('product_id', $productsQuery->getQuery()->select(['products.id']))
+        return DB::table('prices')
+            ->where('purchasable_type', Product::class)
+            ->whereIn('purchasable_id', $productsQuery->getQuery()->select(['products.id']))
             ->where('currency', $currency)
-            ->min(ProductPrice::getDatabasePriceExpression());
+            ->min(Price::getDatabasePriceExpression());
     }
 
     public function getMaxPrice(SpatieQueryBuilder $productsQuery, string $currency): ?int
     {
-        return DB::table('product_prices')
-            ->whereIn('product_id', $productsQuery->getQuery()->select(['products.id']))
+        return DB::table('prices')
+            ->where('purchasable_type', Product::class)
+            ->whereIn('purchasable_id', $productsQuery->getQuery()->select(['products.id']))
             ->where('currency', $currency)
-            ->max(ProductPrice::getDatabasePriceExpression());
+            ->max(Price::getDatabasePriceExpression());
     }
 
     public function getAvailableCurrencies(SpatieQueryBuilder $productsQuery): Collection
     {
-        return DB::table('product_prices')
+        return DB::table('prices')
             ->select(['currency'])
-            ->whereIn('product_id', $productsQuery->getQuery()->select(['products.id']))
+            ->where('purchasable_type', Product::class)
+            ->whereIn('purchasable_id', $productsQuery->getQuery()->select(['products.id']))
             ->whereIn('currency', $this->settings->available_currencies)
             ->distinct('currency')
             ->pluck('currency')

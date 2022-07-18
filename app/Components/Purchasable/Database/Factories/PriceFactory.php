@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Domains\Catalog\Database\Factories;
+namespace App\Components\Purchasable\Database\Factories;
 
-use App\Domains\Catalog\Models\ProductPrice;
+use App\Components\Purchasable\Models\Price;
 use App\Infrastructure\Abstracts\Database\Factory;
 
-final class ProductPriceFactory extends Factory
+final class PriceFactory extends Factory
 {
-    protected $model = ProductPrice::class;
+    protected $model = Price::class;
 
     public function definition(): array
     {

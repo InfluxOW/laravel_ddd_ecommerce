@@ -4,6 +4,7 @@ namespace App\Domains\Catalog\Models;
 
 use Akaunting\Money\Money;
 use App\Components\Purchasable\Abstracts\Purchasable;
+use App\Components\Purchasable\Models\Price;
 use App\Domains\Catalog\Database\Factories\ProductFactory;
 use App\Domains\Catalog\Enums\Media\ProductMediaCollectionKey;
 use App\Domains\Catalog\Enums\ProductAttributeValuesType;
@@ -48,7 +49,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read int|null $images_count
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|\App\Components\Mediable\Models\Media[] $media
  * @property-read int|null $media_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Domains\Catalog\Models\ProductPrice[] $prices
+ * @property-read \Illuminate\Database\Eloquent\Collection|Price[] $prices
  * @property-read int|null $prices_count
  *
  * @method static Builder|Product displayable()
@@ -103,9 +104,9 @@ final class Product extends Model implements Purchasable, HasMedia, Explored
         return $this->hasMany(ProductAttributeValue::class);
     }
 
-    public function prices(): HasMany
+    public function prices(): MorphMany
     {
-        return $this->hasMany(ProductPrice::class);
+        return $this->morphMany(Price::class, 'purchasable');
     }
 
     public function media(): MorphMany
@@ -189,18 +190,18 @@ final class Product extends Model implements Purchasable, HasMedia, Explored
 
     public function scopeWherePriceAbove(Builder $query, string $currency, int $minPrice): void
     {
-        $query->whereHas('prices', fn (Builder $query): Builder => $query->where('currency', $currency)->where(ProductPrice::getDatabasePriceExpression(), '>=', $minPrice));
+        $query->whereHas('prices', fn (Builder $query): Builder => $query->where('currency', $currency)->where(Price::getDatabasePriceExpression(), '>=', $minPrice));
     }
 
     public function scopeWherePriceBelow(Builder $query, string $currency, int $maxPrice): void
     {
-        $query->whereHas('prices', fn (Builder $query): Builder => $query->where('currency', $currency)->where(ProductPrice::getDatabasePriceExpression(), '<=', $maxPrice));
+        $query->whereHas('prices', fn (Builder $query): Builder => $query->where('currency', $currency)->where(Price::getDatabasePriceExpression(), '<=', $maxPrice));
     }
 
     public function scopeWherePriceBetween(Builder|Product $query, string $currency, ?int $minPrice, ?int $maxPrice): void
     {
         if (isset($minPrice, $maxPrice)) {
-            $query->whereHas('prices', fn (Builder $query): Builder => $query->where('currency', $currency)->whereBetween(ProductPrice::getDatabasePriceExpression(), $minPrice > $maxPrice ? [$maxPrice, $minPrice] : [$minPrice, $maxPrice]));
+            $query->whereHas('prices', fn (Builder $query): Builder => $query->where('currency', $currency)->whereBetween(Price::getDatabasePriceExpression(), $minPrice > $maxPrice ? [$maxPrice, $minPrice] : [$minPrice, $maxPrice]));
         } elseif (isset($minPrice)) {
             $query->wherePriceAbove($currency, $minPrice);
         } elseif (isset($maxPrice)) {
@@ -211,9 +212,10 @@ final class Product extends Model implements Purchasable, HasMedia, Explored
     public function scopeOrderByCurrentPrice(Builder $query, string $currency, bool $descending): void
     {
         $query
-            ->join('product_prices', 'product_prices.product_id', '=', 'products.id')
-            ->where('product_prices.currency', $currency)
-            ->orderBy(ProductPrice::getDatabasePriceExpression(), $descending ? 'DESC' : 'ASC');
+            ->join('prices', 'prices.purchasable_id', '=', 'products.id')
+            ->where('prices.purchasable_type', self::class)
+            ->where('prices.currency', $currency)
+            ->orderBy(Price::getDatabasePriceExpression(), $descending ? 'DESC' : 'ASC');
     }
 
     public function scopeDisplayable(Builder|Model $query): void
@@ -228,7 +230,7 @@ final class Product extends Model implements Purchasable, HasMedia, Explored
     public function getPurchasablePrice(string $currency): Money
     {
         /**
-         * @var ProductPrice $price
+         * @var Price $price
          *
          * Clone prevents some strange bug related to casts
          * that randomly nullifies the value
@@ -242,7 +244,7 @@ final class Product extends Model implements Purchasable, HasMedia, Explored
     public function getPurchasablePriceDiscounted(string $currency): ?Money
     {
         /**
-         * @var ProductPrice $price
+         * @var Price $price
          *
          * Clone prevents some strange bug related to casts
          * that randomly nullifies the value

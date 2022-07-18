@@ -3,9 +3,9 @@
 namespace App\Domains\Catalog\Database\Seeders;
 
 use Akaunting\Money\Currency;
+use App\Components\Purchasable\Models\Price;
 use App\Domains\Catalog\Console\Commands\UpdateProductsDisplayability;
 use App\Domains\Catalog\Models\Product;
-use App\Domains\Catalog\Models\ProductPrice;
 use App\Domains\Catalog\Models\Settings\CatalogSettings;
 use App\Infrastructure\Abstracts\Database\Seeder;
 use Illuminate\Support\Facades\Artisan;
@@ -31,11 +31,11 @@ final class ProductPriceSeeder extends Seeder
         $productPricesRows = [];
         foreach (Product::query()->whereDoesntHave('prices')->get(['id']) as $product) {
             foreach ($settings->available_currencies as $currency) {
-                $productPricesRows[] = ProductPrice::factory()->for($product, 'product')->make(['currency' => $currency])->getRawAttributes(['id']);
+                $productPricesRows[] = Price::factory()->for($product, 'purchasable')->make(['currency' => $currency])->getRawAttributes(['id']);
             }
         }
 
-        DB::insertByChunks((new ProductPrice())->getTable(), LazyCollection::make($productPricesRows), 50, 10);
+        DB::insertByChunks((new Price())->getTable(), LazyCollection::make($productPricesRows), 50, 10);
 
         Artisan::call(UpdateProductsDisplayability::class);
     }

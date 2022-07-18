@@ -3,6 +3,7 @@
 namespace App\Domains\Catalog\Tests\Feature;
 
 use App\Application\Tests\TestCase;
+use App\Components\Purchasable\Models\Price;
 use App\Components\Queryable\Enums\QueryKey;
 use App\Domains\Catalog\Console\Commands\UpdateProductCategoriesDisplayability;
 use App\Domains\Catalog\Console\Commands\UpdateProductsDisplayability;
@@ -17,7 +18,6 @@ use App\Domains\Catalog\Enums\Query\Sort\ProductAllowedSort;
 use App\Domains\Catalog\Models\Product;
 use App\Domains\Catalog\Models\ProductAttributeValue;
 use App\Domains\Catalog\Models\ProductCategory;
-use App\Domains\Catalog\Models\ProductPrice;
 use App\Domains\Catalog\Models\Settings\CatalogSettings;
 use App\Domains\Generic\Enums\Response\ResponseKey;
 use Carbon\Carbon;
@@ -137,7 +137,7 @@ final class ProductControllerTest extends TestCase
     public function a_user_can_filter_products_by_current_price(): void
     {
         $currency = $this->settings->default_currency;
-        /** @var ProductPrice $priceModel */
+        /** @var Price $priceModel */
         $priceModel = $this->product->prices->where('currency', $currency)->first();
         $this->assertNotNull($priceModel);
 
@@ -162,18 +162,18 @@ final class ProductControllerTest extends TestCase
                 [$minPrice, $maxPrice] = [$maxPrice, $minPrice];
             }
 
-            $priceQuery = ProductPrice::query()->where('currency', $currency);
+            $priceQuery = Price::query()->where('currency', $currency);
 
             $minPriceQuery = $priceQuery->clone();
             $maxPriceQuery = $priceQuery->clone();
             if (isset($minPrice)) {
-                $minPriceQuery->where(ProductPrice::getDatabasePriceExpression(), '>=', money($minPrice, $currency, true)->getAmount());
+                $minPriceQuery->where(Price::getDatabasePriceExpression(), '>=', money($minPrice, $currency, true)->getAmount());
             }
             if (isset($maxPrice)) {
-                $maxPriceQuery->where(ProductPrice::getDatabasePriceExpression(), '<=', money($maxPrice, $currency, true)->getAmount());
+                $maxPriceQuery->where(Price::getDatabasePriceExpression(), '<=', money($maxPrice, $currency, true)->getAmount());
             }
-            $lowestAvailablePrice = money($minPriceQuery->min(ProductPrice::getDatabasePriceExpression()), $currency)->getValue();
-            $highestAvailablePrice = money($maxPriceQuery->max(ProductPrice::getDatabasePriceExpression()), $currency)->getValue();
+            $lowestAvailablePrice = money($minPriceQuery->min(Price::getDatabasePriceExpression()), $currency)->getValue();
+            $highestAvailablePrice = money($maxPriceQuery->max(Price::getDatabasePriceExpression()), $currency)->getValue();
 
             $this->assertNotEmpty($products);
             $products->each(function (array $product) use ($minPrice, $maxPrice): void {
@@ -338,7 +338,7 @@ final class ProductControllerTest extends TestCase
     /** @test */
     public function a_user_cannot_view_specific_product_if_it_doesnt_have_prices_with_all_required_currencies(): void
     {
-        /** @var ProductPrice $price */
+        /** @var Price $price */
         $price = $this->product->prices->first();
         $validCurrency = $price->currency;
 
