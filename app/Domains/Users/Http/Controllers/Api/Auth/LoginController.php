@@ -40,7 +40,11 @@ final class LoginController extends Controller
     private function retrieveUserByCredentials(array $credentials): User
     {
         if (Auth::validate($credentials)) {
-            /** @var User $user */
+            /**
+             * @var User $user
+             *
+             * @phpstan-ignore-next-line
+             */
             $user = Auth::retrieveUserByCredentials($credentials);
 
             return $user;
