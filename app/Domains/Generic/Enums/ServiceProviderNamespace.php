@@ -9,6 +9,7 @@ enum ServiceProviderNamespace: string
     case CATALOG = 'catalog';
     case USERS = 'users';
     case ADDRESS = 'address';
+    case MEDIA = 'media';
     case CART = 'cart';
     case FEEDBACK = 'feedback';
     case GENERIC = 'generic';
