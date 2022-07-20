@@ -100,6 +100,6 @@ final class LoginHistory extends Model
      */
     public function getLocationAttribute(): ?Point
     {
-        return $this->location;
+        return $this->attributes['location'] ?? null;
     }
 }

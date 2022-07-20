@@ -5,6 +5,7 @@ namespace App\Domains\Users\Admin\Resources;
 use App\Components\Addressable\Admin\RelationManagers\AddressesRelationManager;
 use App\Domains\Admin\Admin\Abstracts\Resource;
 use App\Domains\Admin\Admin\Components\Cards\TimestampsCard;
+use App\Domains\Users\Admin\Resources\UserResource\RelationManagers\UserLoginHistoryRelationManager;
 use App\Domains\Users\Enums\Translation\UserResourceTranslationKey;
 use App\Domains\Users\Models\User;
 use Carbon\Carbon;
@@ -121,6 +122,7 @@ final class UserResource extends Resource
     {
         return [
             AddressesRelationManager::class,
+            UserLoginHistoryRelationManager::class,
         ];
     }
 
