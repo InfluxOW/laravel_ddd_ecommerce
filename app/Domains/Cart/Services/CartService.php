@@ -104,7 +104,7 @@ final class CartService
     {
         $cacheKey = $this->getCartCacheKey($cart->user, $cart->key);
         if (isset($cacheKey)) {
-            Redis::set($cacheKey, serialize($cart));
+            Redis::set($cacheKey, $cart);
         }
     }
 
@@ -115,9 +115,10 @@ final class CartService
             return null;
         }
 
+        /** @var ?Cart $cart */
         $cart = Redis::get($cacheKey);
 
-        return is_string($cart) ? unserialize($cart, [Cart::class]) : null;
+        return $cart;
     }
 
     protected function recalculate(Cart $cart): Cart
@@ -127,11 +128,6 @@ final class CartService
         $cart->items->map(function (CartItem $item) use ($cart, &$priceItems, &$priceItemsDiscounted): CartItem {
             /** @var Model&Purchasable $purchasable */
             $purchasable = $item->purchasable;
-
-            /*
-             * There is some strange bug related to casts: castable properties
-             * randomly become `null` on call.
-             * */
 
             $priceItem = (int) ($purchasable->getPurchasablePrice($cart->currency)->getAmount());
             $priceItemDiscounted = (int) ($purchasable->getPurchasablePriceDiscounted($cart->currency)?->getAmount() ?? $priceItem);

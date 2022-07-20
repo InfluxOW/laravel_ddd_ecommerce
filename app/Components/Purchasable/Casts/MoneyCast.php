@@ -28,7 +28,7 @@ final class MoneyCast implements CastsAttributes
             $currency = $model->currency;
         }
 
-        return is_int($value) ? money($value, $currency) : null;
+        return ($value === null) ? null : money($value, $currency);
     }
 
     /**
@@ -43,6 +43,6 @@ final class MoneyCast implements CastsAttributes
      */
     public function set($model, string $key, $value, array $attributes)
     {
-        return is_int($value) ? $value : null;
+        return $value;
     }
 }
