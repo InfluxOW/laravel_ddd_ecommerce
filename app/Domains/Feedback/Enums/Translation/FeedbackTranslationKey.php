@@ -2,7 +2,7 @@
 
 namespace App\Domains\Feedback\Enums\Translation;
 
-enum FeedbackResourceTranslationKey: string
+enum FeedbackTranslationKey: string
 {
     case USERNAME = 'username';
     case EMAIL = 'email';

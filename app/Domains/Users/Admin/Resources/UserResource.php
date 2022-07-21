@@ -6,7 +6,7 @@ use App\Components\Addressable\Admin\RelationManagers\AddressesRelationManager;
 use App\Domains\Admin\Admin\Abstracts\Resource;
 use App\Domains\Admin\Admin\Components\Cards\TimestampsCard;
 use App\Domains\Users\Admin\Resources\UserResource\RelationManagers\UserLoginHistoryRelationManager;
-use App\Domains\Users\Enums\Translation\UserResourceTranslationKey;
+use App\Domains\Users\Enums\Translation\UserTranslationKey;
 use App\Domains\Users\Models\User;
 use Carbon\Carbon;
 use Filament\Forms\Components\Card;
@@ -66,24 +66,24 @@ final class UserResource extends Resource
                     ->schema(self::setTranslatableLabels([
                         Grid::make()
                             ->schema(self::setTranslatableLabels([
-                                TextInput::make(UserResourceTranslationKey::NAME->value)
+                                TextInput::make(UserTranslationKey::NAME->value)
                                     ->required()
                                     ->minValue(2)
                                     ->maxLength(255)
                                     ->placeholder('John Doe'),
-                                TextInput::make(UserResourceTranslationKey::EMAIL->value)
+                                TextInput::make(UserTranslationKey::EMAIL->value)
                                     ->required()
                                     ->email()
                                     ->maxLength(255)
                                     ->placeholder('john_doe@gmail.com'),
-                                TextInput::make(UserResourceTranslationKey::PHONE->value)
+                                TextInput::make(UserTranslationKey::PHONE->value)
                                     ->nullable()
                                     ->maxLength(18)
                                     ->mask(fn (TextInput\Mask $mask): TextInput\Mask => $mask->pattern('+0 (000) 000-00-00'))
                                     ->tel(),
                             ]))
                             ->columns(3),
-                        TextInput::make(UserResourceTranslationKey::PASSWORD->value)
+                        TextInput::make(UserTranslationKey::PASSWORD->value)
                             ->required(fn (Page $livewire): bool => $livewire instanceof CreateRecord)
                             ->password()
                             ->hidden(fn (Page $livewire): bool => $livewire instanceof ViewRecord)
@@ -93,7 +93,7 @@ final class UserResource extends Resource
                             ->maxLength(255)
                             ->placeholder('Password')
                             ->columnSpan(2),
-                        DateTimePicker::make(UserResourceTranslationKey::EMAIL_VERIFIED_AT->value)
+                        DateTimePicker::make(UserTranslationKey::EMAIL_VERIFIED_AT->value)
                             ->nullable()
                             ->placeholder(Carbon::now())
                             ->columnSpan(2),
@@ -109,9 +109,9 @@ final class UserResource extends Resource
     {
         return $table
             ->columns(self::setTranslatableLabels([
-                TextColumn::make(UserResourceTranslationKey::NAME->value)->sortable()->searchable(),
-                TextColumn::make(UserResourceTranslationKey::EMAIL->value)->sortable()->searchable(),
-                TextColumn::make(UserResourceTranslationKey::PHONE->value)->sortable()->searchable(),
+                TextColumn::make(UserTranslationKey::NAME->value)->sortable()->searchable(),
+                TextColumn::make(UserTranslationKey::EMAIL->value)->sortable()->searchable(),
+                TextColumn::make(UserTranslationKey::PHONE->value)->sortable()->searchable(),
             ]))
             ->filters([
                 //
@@ -155,6 +155,6 @@ final class UserResource extends Resource
 
     protected static function getTranslationKeyClass(): string
     {
-        return UserResourceTranslationKey::class;
+        return UserTranslationKey::class;
     }
 }

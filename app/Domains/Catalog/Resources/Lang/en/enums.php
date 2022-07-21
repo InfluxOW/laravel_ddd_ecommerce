@@ -4,11 +4,11 @@ use App\Domains\Catalog\Enums\ProductAttributeValuesType;
 use App\Domains\Catalog\Enums\Query\Filter\ProductAllowedFilter;
 use App\Domains\Catalog\Enums\Query\Sort\ProductAllowedSort;
 use App\Domains\Catalog\Enums\Translation\CatalogSettingsTranslationKey;
-use App\Domains\Catalog\Enums\Translation\ProductAttributeResourceTranslationKey;
-use App\Domains\Catalog\Enums\Translation\ProductAttributeValueResourceTranslationKey;
-use App\Domains\Catalog\Enums\Translation\ProductCategoryResourceTranslationKey;
-use App\Domains\Catalog\Enums\Translation\ProductPriceResourceTranslationKey;
-use App\Domains\Catalog\Enums\Translation\ProductResourceTranslationKey;
+use App\Domains\Catalog\Enums\Translation\ProductAttributeTranslationKey;
+use App\Domains\Catalog\Enums\Translation\ProductAttributeValueTranslationKey;
+use App\Domains\Catalog\Enums\Translation\ProductCategoryTranslationKey;
+use App\Domains\Catalog\Enums\Translation\ProductPriceTranslationKey;
+use App\Domains\Catalog\Enums\Translation\ProductTranslationKey;
 
 return [
     ProductAllowedFilter::class => [
@@ -27,36 +27,36 @@ return [
         ProductAllowedSort::PRICE_DESC->name => 'Expensive First',
         ProductAllowedSort::CREATED_AT_DESC->name => 'Newest First',
     ],
-    ProductCategoryResourceTranslationKey::class => [
-        ProductCategoryResourceTranslationKey::MAIN->name => 'Main',
-        ProductCategoryResourceTranslationKey::STATISTICS->name => 'Statistics',
+    ProductCategoryTranslationKey::class => [
+        ProductCategoryTranslationKey::MAIN->name => 'Main',
+        ProductCategoryTranslationKey::STATISTICS->name => 'Statistics',
 
-        ProductCategoryResourceTranslationKey::PATH->name => 'Breadcrumbs',
-        ProductCategoryResourceTranslationKey::TITLE->name => 'Title',
-        ProductCategoryResourceTranslationKey::SLUG->name => 'Slug',
-        ProductCategoryResourceTranslationKey::DESCRIPTION->name => 'Description',
-        ProductCategoryResourceTranslationKey::PARENT_ID->name => 'Parent',
-        ProductCategoryResourceTranslationKey::PARENT_TITLE->name => 'Parent',
-        ProductCategoryResourceTranslationKey::LEFT->name => 'Position',
-        ProductCategoryResourceTranslationKey::IS_VISIBLE->name => 'Is Visible',
-        ProductCategoryResourceTranslationKey::IS_DISPLAYABLE->name => 'Is Displayable',
-        ProductCategoryResourceTranslationKey::IMAGES->name => 'Images',
+        ProductCategoryTranslationKey::PATH->name => 'Breadcrumbs',
+        ProductCategoryTranslationKey::TITLE->name => 'Title',
+        ProductCategoryTranslationKey::SLUG->name => 'Slug',
+        ProductCategoryTranslationKey::DESCRIPTION->name => 'Description',
+        ProductCategoryTranslationKey::PARENT_ID->name => 'Parent',
+        ProductCategoryTranslationKey::PARENT_TITLE->name => 'Parent',
+        ProductCategoryTranslationKey::LEFT->name => 'Position',
+        ProductCategoryTranslationKey::IS_VISIBLE->name => 'Is Visible',
+        ProductCategoryTranslationKey::IS_DISPLAYABLE->name => 'Is Displayable',
+        ProductCategoryTranslationKey::IMAGES->name => 'Images',
 
-        ProductCategoryResourceTranslationKey::DEPTH->name => 'Depth',
+        ProductCategoryTranslationKey::DEPTH->name => 'Depth',
     ],
-    ProductAttributeValueResourceTranslationKey::class => [
-        ProductAttributeValueResourceTranslationKey::ATTRIBUTE_TITLE->name => 'Attribute',
-        ProductAttributeValueResourceTranslationKey::ATTRIBUTE->name => 'Attribute',
-        ProductAttributeValueResourceTranslationKey::READABLE_VALUE->name => 'Value',
-        ProductAttributeValueResourceTranslationKey::VALUE_STRING->name => 'Value',
-        ProductAttributeValueResourceTranslationKey::VALUE_BOOLEAN->name => 'Value',
-        ProductAttributeValueResourceTranslationKey::VALUE_FLOAT->name => 'Value',
-        ProductAttributeValueResourceTranslationKey::VALUE_INTEGER->name => 'Value',
+    ProductAttributeValueTranslationKey::class => [
+        ProductAttributeValueTranslationKey::ATTRIBUTE_TITLE->name => 'Attribute',
+        ProductAttributeValueTranslationKey::ATTRIBUTE->name => 'Attribute',
+        ProductAttributeValueTranslationKey::READABLE_VALUE->name => 'Value',
+        ProductAttributeValueTranslationKey::VALUE_STRING->name => 'Value',
+        ProductAttributeValueTranslationKey::VALUE_BOOLEAN->name => 'Value',
+        ProductAttributeValueTranslationKey::VALUE_FLOAT->name => 'Value',
+        ProductAttributeValueTranslationKey::VALUE_INTEGER->name => 'Value',
     ],
-    ProductAttributeResourceTranslationKey::class => [
-        ProductAttributeResourceTranslationKey::TITLE->name => 'Title',
-        ProductAttributeResourceTranslationKey::SLUG->name => 'Slug',
-        ProductAttributeResourceTranslationKey::VALUES_TYPE->name => 'Type Of Values',
+    ProductAttributeTranslationKey::class => [
+        ProductAttributeTranslationKey::TITLE->name => 'Title',
+        ProductAttributeTranslationKey::SLUG->name => 'Slug',
+        ProductAttributeTranslationKey::VALUES_TYPE->name => 'Type Of Values',
     ],
     CatalogSettingsTranslationKey::class => [
         CatalogSettingsTranslationKey::AVAILABLE_CURRENCIES->name => 'Available Currencies',
@@ -69,18 +69,18 @@ return [
         ProductAttributeValuesType::FLOAT->name => 'Float',
         ProductAttributeValuesType::INTEGER->name => 'Integer',
     ],
-    ProductResourceTranslationKey::class => [
-        ProductResourceTranslationKey::TITLE->name => 'Title',
-        ProductResourceTranslationKey::SLUG->name => 'Slug',
-        ProductResourceTranslationKey::DESCRIPTION->name => 'Description',
-        ProductResourceTranslationKey::CATEGORIES->name => 'Categories',
-        ProductResourceTranslationKey::IMAGES->name => 'Images',
-        ProductResourceTranslationKey::IS_VISIBLE->name => 'Is Visible',
-        ProductResourceTranslationKey::IS_DISPLAYABLE->name => 'Is Displayable',
+    ProductTranslationKey::class => [
+        ProductTranslationKey::TITLE->name => 'Title',
+        ProductTranslationKey::SLUG->name => 'Slug',
+        ProductTranslationKey::DESCRIPTION->name => 'Description',
+        ProductTranslationKey::CATEGORIES->name => 'Categories',
+        ProductTranslationKey::IMAGES->name => 'Images',
+        ProductTranslationKey::IS_VISIBLE->name => 'Is Visible',
+        ProductTranslationKey::IS_DISPLAYABLE->name => 'Is Displayable',
     ],
-    ProductPriceResourceTranslationKey::class => [
-        ProductPriceResourceTranslationKey::CURRENCY->name => 'Currency',
-        ProductPriceResourceTranslationKey::PRICE->name => 'Price',
-        ProductPriceResourceTranslationKey::PRICE_DISCOUNTED->name => 'Price Discounted',
+    ProductPriceTranslationKey::class => [
+        ProductPriceTranslationKey::CURRENCY->name => 'Currency',
+        ProductPriceTranslationKey::PRICE->name => 'Price',
+        ProductPriceTranslationKey::PRICE_DISCOUNTED->name => 'Price Discounted',
     ],
 ];

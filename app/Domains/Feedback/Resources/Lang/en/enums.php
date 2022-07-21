@@ -1,17 +1,17 @@
 <?php
 
-use App\Domains\Feedback\Enums\Translation\FeedbackResourceTranslationKey;
 use App\Domains\Feedback\Enums\Translation\FeedbackSettingsTranslationKey;
+use App\Domains\Feedback\Enums\Translation\FeedbackTranslationKey;
 
 return [
-    FeedbackResourceTranslationKey::class => [
-        FeedbackResourceTranslationKey::USERNAME->name => 'Username',
-        FeedbackResourceTranslationKey::EMAIL->name => 'Email',
-        FeedbackResourceTranslationKey::PHONE->name => 'Phone',
-        FeedbackResourceTranslationKey::USER->name => 'User',
-        FeedbackResourceTranslationKey::TEXT->name => 'Text',
-        FeedbackResourceTranslationKey::IS_REVIEWED->name => 'Is Reviewed',
-        FeedbackResourceTranslationKey::CREATED_AT->name => 'Created At',
+    FeedbackTranslationKey::class => [
+        FeedbackTranslationKey::USERNAME->name => 'Username',
+        FeedbackTranslationKey::EMAIL->name => 'Email',
+        FeedbackTranslationKey::PHONE->name => 'Phone',
+        FeedbackTranslationKey::USER->name => 'User',
+        FeedbackTranslationKey::TEXT->name => 'Text',
+        FeedbackTranslationKey::IS_REVIEWED->name => 'Is Reviewed',
+        FeedbackTranslationKey::CREATED_AT->name => 'Created At',
     ],
     FeedbackSettingsTranslationKey::class => [
         FeedbackSettingsTranslationKey::FEEDBACK_LIMIT_PER_HOUR->name => 'Feedback Limit Per Hour',

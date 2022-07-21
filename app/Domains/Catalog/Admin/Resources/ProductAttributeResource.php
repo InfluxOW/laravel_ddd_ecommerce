@@ -5,7 +5,7 @@ namespace App\Domains\Catalog\Admin\Resources;
 use App\Domains\Admin\Admin\Abstracts\Resource;
 use App\Domains\Admin\Admin\Components\Cards\TimestampsCard;
 use App\Domains\Catalog\Enums\ProductAttributeValuesType;
-use App\Domains\Catalog\Enums\Translation\ProductAttributeResourceTranslationKey;
+use App\Domains\Catalog\Enums\Translation\ProductAttributeTranslationKey;
 use App\Domains\Catalog\Models\ProductAttribute;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Select;
@@ -47,19 +47,19 @@ final class ProductAttributeResource extends Resource
             ->schema(self::setTranslatableLabels([
                 Card::make()
                     ->schema(self::setTranslatableLabels([
-                        TextInput::make(ProductAttributeResourceTranslationKey::TITLE->value)
+                        TextInput::make(ProductAttributeTranslationKey::TITLE->value)
                             ->required()
                             ->reactive()
-                            ->afterStateUpdated(fn (callable $set, $state): mixed => $set(ProductAttributeResourceTranslationKey::SLUG->value, Str::slug($state)))
+                            ->afterStateUpdated(fn (callable $set, $state): mixed => $set(ProductAttributeTranslationKey::SLUG->value, Str::slug($state)))
                             ->minValue(2)
                             ->maxLength(255)
                             ->placeholder('Width'),
-                        TextInput::make(ProductAttributeResourceTranslationKey::SLUG->value)
+                        TextInput::make(ProductAttributeTranslationKey::SLUG->value)
                             ->required()
                             ->minValue(2)
                             ->maxLength(255)
                             ->placeholder('width'),
-                        Select::make(ProductAttributeResourceTranslationKey::VALUES_TYPE->value)
+                        Select::make(ProductAttributeTranslationKey::VALUES_TYPE->value)
                             ->required()
                             ->options(collect(ProductAttributeValuesType::cases())->reduce(fn (Collection $acc, ProductAttributeValuesType $valuesType): Collection => tap($acc, static fn () => $acc->offsetSet($valuesType->value, self::translateEnum($valuesType))), collect([])))
                             ->searchable(),
@@ -75,8 +75,8 @@ final class ProductAttributeResource extends Resource
     {
         return $table
             ->columns(self::setTranslatableLabels([
-                TextColumn::make(ProductAttributeResourceTranslationKey::TITLE->value)->sortable()->searchable(),
-                TextColumn::make(ProductAttributeResourceTranslationKey::SLUG->value)->searchable(),
+                TextColumn::make(ProductAttributeTranslationKey::TITLE->value)->sortable()->searchable(),
+                TextColumn::make(ProductAttributeTranslationKey::SLUG->value)->searchable(),
             ]))
             ->filters([
                 //
@@ -130,6 +130,6 @@ final class ProductAttributeResource extends Resource
 
     protected static function getTranslationKeyClass(): string
     {
-        return ProductAttributeResourceTranslationKey::class;
+        return ProductAttributeTranslationKey::class;
     }
 }

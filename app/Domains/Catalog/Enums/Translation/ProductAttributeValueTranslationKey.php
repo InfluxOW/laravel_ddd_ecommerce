@@ -2,7 +2,7 @@
 
 namespace App\Domains\Catalog\Enums\Translation;
 
-enum ProductAttributeValueResourceTranslationKey: string
+enum ProductAttributeValueTranslationKey: string
 {
     case ATTRIBUTE_TITLE = 'attribute.title';
     case READABLE_VALUE = 'readable_value';

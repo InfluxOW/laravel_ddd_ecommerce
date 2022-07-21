@@ -2,7 +2,7 @@
 
 namespace App\Domains\Catalog\Enums\Translation;
 
-enum ProductAttributeResourceTranslationKey: string
+enum ProductAttributeTranslationKey: string
 {
     case TITLE = 'title';
     case SLUG = 'slug';

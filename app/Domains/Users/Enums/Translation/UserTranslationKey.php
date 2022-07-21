@@ -2,7 +2,7 @@
 
 namespace App\Domains\Users\Enums\Translation;
 
-enum UserResourceTranslationKey: string
+enum UserTranslationKey: string
 {
     case NAME = 'name';
     case EMAIL = 'email';

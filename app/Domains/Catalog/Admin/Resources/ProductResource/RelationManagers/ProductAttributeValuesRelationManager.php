@@ -5,7 +5,7 @@ namespace App\Domains\Catalog\Admin\Resources\ProductResource\RelationManagers;
 use App\Domains\Admin\Admin\Abstracts\RelationManager;
 use App\Domains\Catalog\Admin\Resources\ProductResource;
 use App\Domains\Catalog\Enums\ProductAttributeValuesType;
-use App\Domains\Catalog\Enums\Translation\ProductAttributeValueResourceTranslationKey;
+use App\Domains\Catalog\Enums\Translation\ProductAttributeValueTranslationKey;
 use App\Domains\Catalog\Models\Product;
 use App\Domains\Catalog\Models\ProductAttribute;
 use App\Domains\Catalog\Models\ProductAttributeValue;
@@ -25,7 +25,7 @@ final class ProductAttributeValuesRelationManager extends RelationManager
     {
         return $form
             ->schema(self::setTranslatableLabels([
-                Select::make(ProductAttributeValueResourceTranslationKey::ATTRIBUTE->value)
+                Select::make(ProductAttributeValueTranslationKey::ATTRIBUTE->value)
                     ->required()
                     ->id(function (RelationManager $livewire): string {
                         /** @var Product $product */
@@ -54,25 +54,25 @@ final class ProductAttributeValuesRelationManager extends RelationManager
                     })
                     ->reactive()
                     ->searchable(fn (RelationManager $livewire): bool => $livewire->canCreate()),
-                TextInput::make(ProductAttributeValueResourceTranslationKey::VALUE_STRING->value)
+                TextInput::make(ProductAttributeValueTranslationKey::VALUE_STRING->value)
                     ->required()
-                    ->hidden(fn (callable $get): bool => $get(ProductAttributeValueResourceTranslationKey::ATTRIBUTE->value) === null)
-                    ->visible(fn (callable $get): bool => ProductAttribute::query()->where('id', $get(ProductAttributeValueResourceTranslationKey::ATTRIBUTE->value))->first()?->values_type === ProductAttributeValuesType::STRING),
-                TextInput::make(ProductAttributeValueResourceTranslationKey::VALUE_INTEGER->value)
+                    ->hidden(fn (callable $get): bool => $get(ProductAttributeValueTranslationKey::ATTRIBUTE->value) === null)
+                    ->visible(fn (callable $get): bool => ProductAttribute::query()->where('id', $get(ProductAttributeValueTranslationKey::ATTRIBUTE->value))->first()?->values_type === ProductAttributeValuesType::STRING),
+                TextInput::make(ProductAttributeValueTranslationKey::VALUE_INTEGER->value)
                     ->required()
                     ->integer()
-                    ->hidden(fn (callable $get): bool => $get(ProductAttributeValueResourceTranslationKey::ATTRIBUTE->value) === null)
-                    ->visible(fn (callable $get): bool => ProductAttribute::query()->where('id', $get(ProductAttributeValueResourceTranslationKey::ATTRIBUTE->value))->first()?->values_type === ProductAttributeValuesType::INTEGER),
-                TextInput::make(ProductAttributeValueResourceTranslationKey::VALUE_FLOAT->value)
+                    ->hidden(fn (callable $get): bool => $get(ProductAttributeValueTranslationKey::ATTRIBUTE->value) === null)
+                    ->visible(fn (callable $get): bool => ProductAttribute::query()->where('id', $get(ProductAttributeValueTranslationKey::ATTRIBUTE->value))->first()?->values_type === ProductAttributeValuesType::INTEGER),
+                TextInput::make(ProductAttributeValueTranslationKey::VALUE_FLOAT->value)
                     ->required()
                     ->numeric()
-                    ->hidden(fn (callable $get): bool => $get(ProductAttributeValueResourceTranslationKey::ATTRIBUTE->value) === null)
-                    ->visible(fn (callable $get): bool => ProductAttribute::query()->where('id', $get(ProductAttributeValueResourceTranslationKey::ATTRIBUTE->value))->first()?->values_type === ProductAttributeValuesType::FLOAT),
-                Toggle::make(ProductAttributeValueResourceTranslationKey::VALUE_BOOLEAN->value)
+                    ->hidden(fn (callable $get): bool => $get(ProductAttributeValueTranslationKey::ATTRIBUTE->value) === null)
+                    ->visible(fn (callable $get): bool => ProductAttribute::query()->where('id', $get(ProductAttributeValueTranslationKey::ATTRIBUTE->value))->first()?->values_type === ProductAttributeValuesType::FLOAT),
+                Toggle::make(ProductAttributeValueTranslationKey::VALUE_BOOLEAN->value)
                     ->required()
                     ->inline(false)
-                    ->hidden(fn (callable $get): bool => $get(ProductAttributeValueResourceTranslationKey::ATTRIBUTE->value) === null)
-                    ->visible(fn (callable $get): bool => ProductAttribute::query()->where('id', $get(ProductAttributeValueResourceTranslationKey::ATTRIBUTE->value))->first()?->values_type === ProductAttributeValuesType::BOOLEAN),
+                    ->hidden(fn (callable $get): bool => $get(ProductAttributeValueTranslationKey::ATTRIBUTE->value) === null)
+                    ->visible(fn (callable $get): bool => ProductAttribute::query()->where('id', $get(ProductAttributeValueTranslationKey::ATTRIBUTE->value))->first()?->values_type === ProductAttributeValuesType::BOOLEAN),
             ]));
     }
 
@@ -80,10 +80,10 @@ final class ProductAttributeValuesRelationManager extends RelationManager
     {
         return $table
             ->columns(self::setTranslatableLabels([
-                TextColumn::make(ProductAttributeValueResourceTranslationKey::ATTRIBUTE_TITLE->value)
+                TextColumn::make(ProductAttributeValueTranslationKey::ATTRIBUTE_TITLE->value)
                     ->sortable()
                     ->searchable(),
-                TextColumn::make(ProductAttributeValueResourceTranslationKey::READABLE_VALUE->value),
+                TextColumn::make(ProductAttributeValueTranslationKey::READABLE_VALUE->value),
             ]))
             ->filters([
                 //
@@ -128,6 +128,6 @@ final class ProductAttributeValuesRelationManager extends RelationManager
 
     protected static function getTranslationKeyClass(): string
     {
-        return ProductAttributeValueResourceTranslationKey::class;
+        return ProductAttributeValueTranslationKey::class;
     }
 }

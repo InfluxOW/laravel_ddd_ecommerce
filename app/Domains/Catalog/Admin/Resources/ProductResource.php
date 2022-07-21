@@ -8,7 +8,7 @@ use App\Domains\Admin\Admin\Components\Cards\TimestampsCard;
 use App\Domains\Catalog\Admin\Resources\ProductResource\RelationManagers\ProductAttributeValuesRelationManager;
 use App\Domains\Catalog\Admin\Resources\ProductResource\RelationManagers\ProductPricesRelationManager;
 use App\Domains\Catalog\Enums\Media\ProductMediaCollectionKey;
-use App\Domains\Catalog\Enums\Translation\ProductResourceTranslationKey;
+use App\Domains\Catalog\Enums\Translation\ProductTranslationKey;
 use App\Domains\Catalog\Models\Product;
 use App\Domains\Catalog\Models\ProductCategory;
 use Filament\Forms\Components\Card;
@@ -51,26 +51,26 @@ final class ProductResource extends Resource
             ->schema(self::setTranslatableLabels([
                 Card::make()
                     ->schema(self::setTranslatableLabels([
-                        Toggle::make(ProductResourceTranslationKey::IS_VISIBLE->value)
+                        Toggle::make(ProductTranslationKey::IS_VISIBLE->value)
                             ->columnSpan(1),
-                        Toggle::make(ProductResourceTranslationKey::IS_DISPLAYABLE->value)
+                        Toggle::make(ProductTranslationKey::IS_DISPLAYABLE->value)
                             ->disabled()
                             ->columnSpan(1),
-                        TextInput::make(ProductResourceTranslationKey::TITLE->value)
+                        TextInput::make(ProductTranslationKey::TITLE->value)
                             ->required()
                             ->reactive()
-                            ->afterStateUpdated(fn (callable $set, $state): mixed => $set(ProductResourceTranslationKey::SLUG->value, Str::slug($state)))
+                            ->afterStateUpdated(fn (callable $set, $state): mixed => $set(ProductTranslationKey::SLUG->value, Str::slug($state)))
                             ->minValue(2)
                             ->maxLength(255)
                             ->placeholder('TV')
                             ->columnSpan(1),
-                        TextInput::make(ProductResourceTranslationKey::SLUG->value)
+                        TextInput::make(ProductTranslationKey::SLUG->value)
                             ->required()
                             ->minValue(2)
                             ->maxLength(255)
                             ->placeholder('tv')
                             ->columnSpan(1),
-                        MarkdownEditor::make(ProductResourceTranslationKey::DESCRIPTION->value)
+                        MarkdownEditor::make(ProductTranslationKey::DESCRIPTION->value)
                             ->required()
                             ->disableToolbarButtons([
                                 'attachFiles',
@@ -83,17 +83,17 @@ final class ProductResource extends Resource
                 Card::make()
                     ->columnSpan(3)
                     ->schema(self::setTranslatableLabels([
-                        MultiSelect::make(ProductResourceTranslationKey::CATEGORIES->value)
+                        MultiSelect::make(ProductTranslationKey::CATEGORIES->value)
                             ->relationship('categories', 'title')
                             ->options(fn (?Product $record, callable $get): array => ProductCategory::query()
                                 ->hasLimitedDepth()
                                 ->where('depth', '>=', ProductCategory::MAX_DEPTH - 1)
-                                ->whereIntegerNotInRaw('id', $get(ProductResourceTranslationKey::CATEGORIES->value))
+                                ->whereIntegerNotInRaw('id', $get(ProductTranslationKey::CATEGORIES->value))
                                 ->orderBy('left')
                                 ->pluck('title', 'id')
                                 ->toArray()),
                     ])),
-                MediaLibraryFileUpload::make(ProductResourceTranslationKey::IMAGES->value)
+                MediaLibraryFileUpload::make(ProductTranslationKey::IMAGES->value)
                     ->collection(ProductMediaCollectionKey::IMAGES->value)
                     ->multiple()
                     ->minFiles(1)
@@ -110,8 +110,8 @@ final class ProductResource extends Resource
     {
         return $table
             ->columns(self::setTranslatableLabels([
-                TextColumn::make(ProductResourceTranslationKey::TITLE->value)->sortable()->searchable(),
-                TextColumn::make(ProductResourceTranslationKey::SLUG->value)->searchable(),
+                TextColumn::make(ProductTranslationKey::TITLE->value)->sortable()->searchable(),
+                TextColumn::make(ProductTranslationKey::SLUG->value)->searchable(),
             ]))
             ->filters([
                 //
@@ -147,6 +147,6 @@ final class ProductResource extends Resource
 
     protected static function getTranslationKeyClass(): string
     {
-        return ProductResourceTranslationKey::class;
+        return ProductTranslationKey::class;
     }
 }

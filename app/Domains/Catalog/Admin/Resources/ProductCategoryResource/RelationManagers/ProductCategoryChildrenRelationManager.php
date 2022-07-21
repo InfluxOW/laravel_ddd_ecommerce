@@ -5,7 +5,7 @@ namespace App\Domains\Catalog\Admin\Resources\ProductCategoryResource\RelationMa
 use App\Domains\Admin\Admin\Abstracts\RelationManager;
 use App\Domains\Admin\Admin\Components\Actions\Tables\ViewAction;
 use App\Domains\Catalog\Admin\Resources\ProductCategoryResource;
-use App\Domains\Catalog\Enums\Translation\ProductCategoryResourceTranslationKey;
+use App\Domains\Catalog\Enums\Translation\ProductCategoryTranslationKey;
 use App\Domains\Catalog\Models\ProductCategory;
 use Baum\Node;
 use Filament\Resources\Form;
@@ -42,9 +42,9 @@ final class ProductCategoryChildrenRelationManager extends RelationManager
                 Action::make('↓')->button()->action(fn (ProductCategory $record): ProductCategory|Node => ($record->left === $record->parent?->children->max('left')) ? $record : $record->moveRight())->visible(fn (Page|RelationManager $livewire, ProductCategory $record) => $livewire->canEdit($record)),
             ])
             ->columns(self::setTranslatableLabels([
-                TextColumn::make(ProductCategoryResourceTranslationKey::LEFT->value),
-                TextColumn::make(ProductCategoryResourceTranslationKey::TITLE->value)->searchable(),
-                TextColumn::make(ProductCategoryResourceTranslationKey::SLUG->value)->searchable(),
+                TextColumn::make(ProductCategoryTranslationKey::LEFT->value),
+                TextColumn::make(ProductCategoryTranslationKey::TITLE->value)->searchable(),
+                TextColumn::make(ProductCategoryTranslationKey::SLUG->value)->searchable(),
             ]))
             ->filters([
                 //
@@ -97,6 +97,6 @@ final class ProductCategoryChildrenRelationManager extends RelationManager
 
     protected static function getTranslationKeyClass(): string
     {
-        return ProductCategoryResourceTranslationKey::class;
+        return ProductCategoryTranslationKey::class;
     }
 }

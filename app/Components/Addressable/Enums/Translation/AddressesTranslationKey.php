@@ -2,7 +2,7 @@
 
 namespace App\Components\Addressable\Enums\Translation;
 
-enum AddressesRelationManagerTranslationKey: string
+enum AddressesTranslationKey: string
 {
     case ZIP = 'zip';
     case COUNTRY = 'country';

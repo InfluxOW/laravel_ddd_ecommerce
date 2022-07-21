@@ -1,31 +1,31 @@
 <?php
 
-use App\Domains\Users\Enums\Translation\LoginHistoryResourceTranslationKey;
-use App\Domains\Users\Enums\Translation\UserResourceTranslationKey;
+use App\Domains\Users\Enums\Translation\LoginHistoryTranslationKey;
+use App\Domains\Users\Enums\Translation\UserTranslationKey;
 
 return [
-    UserResourceTranslationKey::class => [
-        UserResourceTranslationKey::NAME->name => 'Name',
-        UserResourceTranslationKey::EMAIL->name => 'Email',
-        UserResourceTranslationKey::PHONE->name => 'Phone',
-        UserResourceTranslationKey::PASSWORD->name => 'Password',
-        UserResourceTranslationKey::EMAIL_VERIFIED_AT->name => 'Email Verified At',
+    UserTranslationKey::class => [
+        UserTranslationKey::NAME->name => 'Name',
+        UserTranslationKey::EMAIL->name => 'Email',
+        UserTranslationKey::PHONE->name => 'Phone',
+        UserTranslationKey::PASSWORD->name => 'Password',
+        UserTranslationKey::EMAIL_VERIFIED_AT->name => 'Email Verified At',
     ],
-    LoginHistoryResourceTranslationKey::class => [
-        LoginHistoryResourceTranslationKey::IP->name => 'Ip',
-        LoginHistoryResourceTranslationKey::USER_AGENT->name => 'User Agent',
-        LoginHistoryResourceTranslationKey::DEVICE->name => 'Device',
-        LoginHistoryResourceTranslationKey::PLATFORM->name => 'Platform',
-        LoginHistoryResourceTranslationKey::PLATFORM_VERSION->name => 'Platform Version',
-        LoginHistoryResourceTranslationKey::BROWSER->name => 'Browser',
-        LoginHistoryResourceTranslationKey::BROWSER_VERSION->name => 'Browser Version',
-        LoginHistoryResourceTranslationKey::REGION_CODE->name => 'Region Code',
-        LoginHistoryResourceTranslationKey::REGION_NAME->name => 'Region',
-        LoginHistoryResourceTranslationKey::COUNTRY_CODE->name => 'Country Code',
-        LoginHistoryResourceTranslationKey::COUNTRY_NAME->name => 'Country',
-        LoginHistoryResourceTranslationKey::CITY->name => 'City',
-        LoginHistoryResourceTranslationKey::LOCATION->name => 'Location',
-        LoginHistoryResourceTranslationKey::ZIP->name => 'ZIP',
-        LoginHistoryResourceTranslationKey::TIME->name => 'Time',
+    LoginHistoryTranslationKey::class => [
+        LoginHistoryTranslationKey::IP->name => 'Ip',
+        LoginHistoryTranslationKey::USER_AGENT->name => 'User Agent',
+        LoginHistoryTranslationKey::DEVICE->name => 'Device',
+        LoginHistoryTranslationKey::PLATFORM->name => 'Platform',
+        LoginHistoryTranslationKey::PLATFORM_VERSION->name => 'Platform Version',
+        LoginHistoryTranslationKey::BROWSER->name => 'Browser',
+        LoginHistoryTranslationKey::BROWSER_VERSION->name => 'Browser Version',
+        LoginHistoryTranslationKey::REGION_CODE->name => 'Region Code',
+        LoginHistoryTranslationKey::REGION_NAME->name => 'Region',
+        LoginHistoryTranslationKey::COUNTRY_CODE->name => 'Country Code',
+        LoginHistoryTranslationKey::COUNTRY_NAME->name => 'Country',
+        LoginHistoryTranslationKey::CITY->name => 'City',
+        LoginHistoryTranslationKey::LOCATION->name => 'Location',
+        LoginHistoryTranslationKey::ZIP->name => 'ZIP',
+        LoginHistoryTranslationKey::TIME->name => 'Time',
     ],
 ];

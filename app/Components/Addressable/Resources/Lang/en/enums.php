@@ -1,13 +1,13 @@
 <?php
 
-use App\Components\Addressable\Enums\Translation\AddressesRelationManagerTranslationKey;
+use App\Components\Addressable\Enums\Translation\AddressesTranslationKey;
 
 return [
-    AddressesRelationManagerTranslationKey::class => [
-        AddressesRelationManagerTranslationKey::ZIP->name => 'Zip / Postal Code',
-        AddressesRelationManagerTranslationKey::REGION->name => 'Region',
-        AddressesRelationManagerTranslationKey::COUNTRY->name => 'Country',
-        AddressesRelationManagerTranslationKey::CITY->name => 'City',
-        AddressesRelationManagerTranslationKey::STREET->name => 'Street Address',
+    AddressesTranslationKey::class => [
+        AddressesTranslationKey::ZIP->name => 'Zip / Postal Code',
+        AddressesTranslationKey::REGION->name => 'Region',
+        AddressesTranslationKey::COUNTRY->name => 'Country',
+        AddressesTranslationKey::CITY->name => 'City',
+        AddressesTranslationKey::STREET->name => 'Street Address',
     ],
 ];

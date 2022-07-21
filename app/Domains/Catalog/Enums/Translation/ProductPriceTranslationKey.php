@@ -2,7 +2,7 @@
 
 namespace App\Domains\Catalog\Enums\Translation;
 
-enum ProductPriceResourceTranslationKey: string
+enum ProductPriceTranslationKey: string
 {
     case PRICE = 'price';
     case PRICE_DISCOUNTED = 'price_discounted';

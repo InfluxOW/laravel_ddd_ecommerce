@@ -4,7 +4,7 @@ namespace App\Domains\Users\Admin\Resources\UserResource\RelationManagers;
 
 use App\Domains\Admin\Admin\Abstracts\RelationManager;
 use App\Domains\Users\Admin\Resources\UserResource;
-use App\Domains\Users\Enums\Translation\LoginHistoryResourceTranslationKey;
+use App\Domains\Users\Enums\Translation\LoginHistoryTranslationKey;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
@@ -22,20 +22,20 @@ class UserLoginHistoryRelationManager extends RelationManager
     {
         return $form
             ->schema(self::setTranslatableLabels([
-                TextInput::make(LoginHistoryResourceTranslationKey::IP->value)->visible(fn (Model $record): bool => isset($record->{LoginHistoryResourceTranslationKey::IP->value}))->columnSpan(3),
-                TextInput::make(LoginHistoryResourceTranslationKey::USER_AGENT->value)->visible(fn (Model $record): bool => isset($record->{LoginHistoryResourceTranslationKey::USER_AGENT->value}))->columnSpan(3),
-                TextInput::make(LoginHistoryResourceTranslationKey::DEVICE->value)->visible(fn (Model $record): bool => isset($record->{LoginHistoryResourceTranslationKey::DEVICE->value}))->columnSpan(1),
-                TextInput::make(LoginHistoryResourceTranslationKey::PLATFORM->value)->visible(fn (Model $record): bool => isset($record->{LoginHistoryResourceTranslationKey::PLATFORM->value}))->columnSpan(1),
-                TextInput::make(LoginHistoryResourceTranslationKey::PLATFORM_VERSION->value)->visible(fn (Model $record): bool => isset($record->{LoginHistoryResourceTranslationKey::PLATFORM_VERSION->value}))->columnSpan(1),
-                TextInput::make(LoginHistoryResourceTranslationKey::BROWSER->value)->visible(fn (Model $record): bool => isset($record->{LoginHistoryResourceTranslationKey::BROWSER->value}))->columnSpan(2),
-                TextInput::make(LoginHistoryResourceTranslationKey::BROWSER_VERSION->value)->visible(fn (Model $record): bool => isset($record->{LoginHistoryResourceTranslationKey::BROWSER_VERSION->value}))->columnSpan(1),
-                TextInput::make(LoginHistoryResourceTranslationKey::COUNTRY_CODE->value)->visible(fn (Model $record): bool => isset($record->{LoginHistoryResourceTranslationKey::COUNTRY_CODE->value}))->columnSpan(1),
-                TextInput::make(LoginHistoryResourceTranslationKey::COUNTRY_NAME->value)->visible(fn (Model $record): bool => isset($record->{LoginHistoryResourceTranslationKey::COUNTRY_NAME->value}))->columnSpan(2),
-                TextInput::make(LoginHistoryResourceTranslationKey::REGION_CODE->value)->visible(fn (Model $record): bool => isset($record->{LoginHistoryResourceTranslationKey::REGION_CODE->value}))->columnSpan(1),
-                TextInput::make(LoginHistoryResourceTranslationKey::REGION_NAME->value)->visible(fn (Model $record): bool => isset($record->{LoginHistoryResourceTranslationKey::REGION_NAME->value}))->columnSpan(2),
-                TextInput::make(LoginHistoryResourceTranslationKey::CITY->value)->visible(fn (Model $record): bool => isset($record->{LoginHistoryResourceTranslationKey::CITY->value}))->columnSpan(2),
-                TextInput::make(LoginHistoryResourceTranslationKey::ZIP->value)->visible(fn (Model $record): bool => isset($record->{LoginHistoryResourceTranslationKey::ZIP->value}))->columnSpan(1),
-                OSMMap::make(LoginHistoryResourceTranslationKey::LOCATION->value)
+                TextInput::make(LoginHistoryTranslationKey::IP->value)->visible(fn (Model $record): bool => isset($record->{LoginHistoryTranslationKey::IP->value}))->columnSpan(3),
+                TextInput::make(LoginHistoryTranslationKey::USER_AGENT->value)->visible(fn (Model $record): bool => isset($record->{LoginHistoryTranslationKey::USER_AGENT->value}))->columnSpan(3),
+                TextInput::make(LoginHistoryTranslationKey::DEVICE->value)->visible(fn (Model $record): bool => isset($record->{LoginHistoryTranslationKey::DEVICE->value}))->columnSpan(1),
+                TextInput::make(LoginHistoryTranslationKey::PLATFORM->value)->visible(fn (Model $record): bool => isset($record->{LoginHistoryTranslationKey::PLATFORM->value}))->columnSpan(1),
+                TextInput::make(LoginHistoryTranslationKey::PLATFORM_VERSION->value)->visible(fn (Model $record): bool => isset($record->{LoginHistoryTranslationKey::PLATFORM_VERSION->value}))->columnSpan(1),
+                TextInput::make(LoginHistoryTranslationKey::BROWSER->value)->visible(fn (Model $record): bool => isset($record->{LoginHistoryTranslationKey::BROWSER->value}))->columnSpan(2),
+                TextInput::make(LoginHistoryTranslationKey::BROWSER_VERSION->value)->visible(fn (Model $record): bool => isset($record->{LoginHistoryTranslationKey::BROWSER_VERSION->value}))->columnSpan(1),
+                TextInput::make(LoginHistoryTranslationKey::COUNTRY_CODE->value)->visible(fn (Model $record): bool => isset($record->{LoginHistoryTranslationKey::COUNTRY_CODE->value}))->columnSpan(1),
+                TextInput::make(LoginHistoryTranslationKey::COUNTRY_NAME->value)->visible(fn (Model $record): bool => isset($record->{LoginHistoryTranslationKey::COUNTRY_NAME->value}))->columnSpan(2),
+                TextInput::make(LoginHistoryTranslationKey::REGION_CODE->value)->visible(fn (Model $record): bool => isset($record->{LoginHistoryTranslationKey::REGION_CODE->value}))->columnSpan(1),
+                TextInput::make(LoginHistoryTranslationKey::REGION_NAME->value)->visible(fn (Model $record): bool => isset($record->{LoginHistoryTranslationKey::REGION_NAME->value}))->columnSpan(2),
+                TextInput::make(LoginHistoryTranslationKey::CITY->value)->visible(fn (Model $record): bool => isset($record->{LoginHistoryTranslationKey::CITY->value}))->columnSpan(2),
+                TextInput::make(LoginHistoryTranslationKey::ZIP->value)->visible(fn (Model $record): bool => isset($record->{LoginHistoryTranslationKey::ZIP->value}))->columnSpan(1),
+                OSMMap::make(LoginHistoryTranslationKey::LOCATION->value)
                     ->showMarker()
                     ->draggable()
                     ->zoom(10)
@@ -43,12 +43,12 @@ class UserLoginHistoryRelationManager extends RelationManager
                     ->afterStateHydrated(function (array|Point|null $state, callable $set) {
                         if ($state instanceof Point) {
                             /** @var Point $state */
-                            $set(LoginHistoryResourceTranslationKey::LOCATION->value, ['lat' => $state->getLat(), 'lng' => $state->getLng()]);
+                            $set(LoginHistoryTranslationKey::LOCATION->value, ['lat' => $state->getLat(), 'lng' => $state->getLng()]);
                         }
                     })
-                    ->visible(fn (Model $record): bool => isset($record->{LoginHistoryResourceTranslationKey::LOCATION->value}))
+                    ->visible(fn (Model $record): bool => isset($record->{LoginHistoryTranslationKey::LOCATION->value}))
                     ->columnSpan(3),
-                DateTimePicker::make(LoginHistoryResourceTranslationKey::TIME->value)->visible(fn (Model $record): bool => isset($record->{LoginHistoryResourceTranslationKey::TIME->value})),
+                DateTimePicker::make(LoginHistoryTranslationKey::TIME->value)->visible(fn (Model $record): bool => isset($record->{LoginHistoryTranslationKey::TIME->value})),
             ]))
             ->columns(3);
     }
@@ -57,13 +57,13 @@ class UserLoginHistoryRelationManager extends RelationManager
     {
         return $table
             ->columns(self::setTranslatableLabels([
-                TextColumn::make(LoginHistoryResourceTranslationKey::IP->value)
+                TextColumn::make(LoginHistoryTranslationKey::IP->value)
                     ->sortable()
                     ->searchable(),
-                TextColumn::make(LoginHistoryResourceTranslationKey::USER_AGENT->value)
+                TextColumn::make(LoginHistoryTranslationKey::USER_AGENT->value)
                     ->sortable()
                     ->searchable(),
-                TextColumn::make(LoginHistoryResourceTranslationKey::TIME->value)
+                TextColumn::make(LoginHistoryTranslationKey::TIME->value)
                     ->dateTime()
                     ->sortable()
                     ->searchable(),
@@ -113,6 +113,6 @@ class UserLoginHistoryRelationManager extends RelationManager
 
     protected static function getTranslationKeyClass(): string
     {
-        return LoginHistoryResourceTranslationKey::class;
+        return LoginHistoryTranslationKey::class;
     }
 }

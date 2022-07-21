@@ -2,7 +2,7 @@
 
 namespace App\Domains\Users\Enums\Translation;
 
-enum LoginHistoryResourceTranslationKey: string
+enum LoginHistoryTranslationKey: string
 {
     case IP = 'ip';
     case USER_AGENT = 'user_agent';
