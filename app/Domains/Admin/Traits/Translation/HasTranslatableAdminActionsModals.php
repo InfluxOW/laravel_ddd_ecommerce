@@ -4,7 +4,6 @@ namespace App\Domains\Admin\Traits\Translation;
 
 use App\Domains\Admin\Enums\Translation\AdminModalTranslationKey;
 use Filament\Support\Actions\Concerns\CanOpenModal;
-use UnitEnum;
 
 trait HasTranslatableAdminActionsModals
 {
@@ -36,11 +35,4 @@ trait HasTranslatableAdminActionsModals
 
         return $item;
     }
-
-    /**
-     * @phpstan-ignore-next-line
-     *
-     * @return string<UnitEnum>
-     */
-    abstract protected static function getTranslationKeyClass(): string;
 }

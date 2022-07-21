@@ -2,6 +2,7 @@
 
 use App\Domains\Admin\Admin\Components\Actions\Tables\BulkUpdateAction;
 use App\Domains\Admin\Admin\Components\Actions\Tables\DeleteAction;
+use App\Domains\Admin\Admin\Components\Actions\Tables\ExportAction;
 use App\Domains\Admin\Admin\Resources\Development\ClockworkLinkResource;
 use App\Domains\Admin\Admin\Resources\Development\ElasticvueLinkResource;
 use App\Domains\Admin\Admin\Resources\Development\HorizonLinkResource;
@@ -22,6 +23,11 @@ return [
     BulkUpdateAction::class => [
         AdminModalTranslationKey::HEADING->name => 'Update Records',
         AdminModalTranslationKey::SUBHEADING->name => 'Are you sure you want to update these records?',
+        AdminModalTranslationKey::BUTTON->name => 'Confirm',
+    ],
+    ExportAction::class => [
+        AdminModalTranslationKey::HEADING->name => 'Export Records',
+        AdminModalTranslationKey::SUBHEADING->name => 'Are you sure you want to export these records?',
         AdminModalTranslationKey::BUTTON->name => 'Confirm',
     ],
     DeleteAction::class => [

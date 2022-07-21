@@ -2,28 +2,33 @@
 
 namespace App\Domains\Admin\Traits\Translation;
 
-use UnitEnum;
+use BackedEnum;
 
 trait HasTranslatableAdminLabels
 {
     use TranslatableAdmin;
 
     /**
-     * @param object[] $schema
+     * @param object[]                      $schema
+     * @param class-string<BackedEnum>|null $translationKeyClass
      *
      * @return array
      */
-    protected static function setTranslatableLabels(array $schema): array
+    protected static function setTranslatableLabels(array $schema, ?string $translationKeyClass = null): array
     {
         return collect($schema)
-            ->map(fn (object $item): object => static::setTranslatableLabel($item))
+            ->map(fn (object $item): object => static::setTranslatableLabel($item, $translationKeyClass))
             ->toArray();
     }
 
-    protected static function setTranslatableLabel(object $item): object
+    /**
+     * @param class-string<BackedEnum>|null $translationKeyClass
+     */
+    protected static function setTranslatableLabel(object $item, ?string $translationKeyClass = null): object
     {
         if (method_exists($item, 'getName') && method_exists($item, 'label')) {
-            $formTranslationKeyEnum = static::getTranslationKeyClass()::tryFrom($item->getName());
+            $itemName = $item->getName();
+            $formTranslationKeyEnum = ($translationKeyClass ?? static::getTranslationKeyClass())::tryFrom($itemName);
             if (isset($formTranslationKeyEnum)) {
                 $item->label(static::translateEnum($formTranslationKeyEnum, allowClosures: true));
             }
@@ -33,9 +38,7 @@ trait HasTranslatableAdminLabels
     }
 
     /**
-     * @phpstan-ignore-next-line
-     *
-     * @return string<UnitEnum>
+     * @return class-string<BackedEnum>
      */
     abstract protected static function getTranslationKeyClass(): string;
 }

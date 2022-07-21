@@ -8,8 +8,10 @@ use App\Components\Purchasable\Models\Price;
 use App\Domains\Catalog\Database\Factories\ProductFactory;
 use App\Domains\Catalog\Enums\Media\ProductMediaCollectionKey;
 use App\Domains\Catalog\Enums\ProductAttributeValuesType;
+use App\Domains\Catalog\Jobs\ProductsExportJob;
 use App\Domains\Catalog\Models\Pivot\ProductProductCategory;
 use App\Domains\Generic\Enums\BooleanString;
+use App\Domains\Generic\Interfaces\Exportable;
 use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
 use App\Domains\Generic\Traits\Models\Searchable;
 use Illuminate\Database\Eloquent\Builder;
@@ -44,6 +46,9 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read int|null $base_media_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Domains\Catalog\Models\ProductCategory[] $categories
  * @property-read int|null $categories_count
+ * @property-read string $attribute_values_string
+ * @property-read string $categories_string
+ * @property-read string $prices_string
  * @property-read \App\Components\Mediable\Models\Media|null $image
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|\App\Components\Mediable\Models\Media[] $images
  * @property-read int|null $images_count
@@ -75,7 +80,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Product whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-final class Product extends Model implements Purchasable, HasMedia, Explored
+final class Product extends Model implements Purchasable, HasMedia, Explored, Exportable
 {
     use HasExtendedFunctionality;
     use HasFactory;
@@ -133,6 +138,21 @@ final class Product extends Model implements Purchasable, HasMedia, Explored
         return SlugOptions::create()
             ->generateSlugsFrom('title')
             ->saveSlugsTo('slug');
+    }
+
+    public function getCategoriesStringAttribute(): string
+    {
+        return $this->categories->implode(fn (ProductCategory $category): string => $category->title, ',' . PHP_EOL);
+    }
+
+    public function getPricesStringAttribute(): string
+    {
+        return $this->prices->implode(fn (Price $price): string => isset($price->price_discounted) ? $price->price_discounted->render() : $price->price->render(), ',' . PHP_EOL);
+    }
+
+    public function getAttributeValuesStringAttribute(): string
+    {
+        return $this->attributeValues->implode(fn (ProductAttributeValue $value): string => "{$value->attribute->title} - {$value->readable_value}", ',' . PHP_EOL);
     }
 
     /*
@@ -275,5 +295,14 @@ final class Product extends Model implements Purchasable, HasMedia, Explored
             'slug' => 'text',
             'description' => 'text',
         ];
+    }
+
+    /*
+     * Exportable
+     * */
+
+    public static function getExportJob(): string
+    {
+        return ProductsExportJob::class;
     }
 }

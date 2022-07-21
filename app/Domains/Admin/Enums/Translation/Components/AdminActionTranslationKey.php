@@ -7,4 +7,5 @@ enum AdminActionTranslationKey: string
     case VIEW = 'view';
     case DELETE = 'delete';
     case UPDATE = 'update';
+    case EXPORT = 'export';
 }
