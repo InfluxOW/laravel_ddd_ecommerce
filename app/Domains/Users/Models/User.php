@@ -5,10 +5,13 @@ namespace App\Domains\Users\Models;
 use App\Components\Addressable\Models\Address;
 use App\Domains\Cart\Models\Cart;
 use App\Domains\Feedback\Models\Feedback;
+use App\Domains\Generic\Interfaces\Exportable;
 use App\Domains\Generic\Models\ConfirmationToken;
 use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
 use App\Domains\Generic\Traits\Models\Searchable;
 use App\Domains\Users\Database\Factories\UserFactory;
+use App\Domains\Users\Jobs\Export\UsersExportJob;
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -38,6 +41,8 @@ use Laravel\Sanctum\HasApiTokens;
  * @property-read int|null $confirmation_tokens_count
  * @property-read \Illuminate\Database\Eloquent\Collection|Feedback[] $feedback
  * @property-read int|null $feedback_count
+ * @property-read bool $has_verified_email
+ * @property-read \Carbon\Carbon|null $last_logged_in_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Domains\Users\Models\LoginHistory[] $loginHistory
  * @property-read int|null $login_history_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
@@ -61,7 +66,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-final class User extends Authenticatable implements MustVerifyEmail, Explored
+final class User extends Authenticatable implements MustVerifyEmail, Explored, Exportable
 {
     use HasExtendedFunctionality;
     use HasApiTokens;
@@ -139,6 +144,20 @@ final class User extends Authenticatable implements MustVerifyEmail, Explored
     }
 
     /*
+     * Attributes
+     * */
+
+    public function getLastLoggedInAtAttribute(): ?Carbon
+    {
+        return $this->loginHistory->last()?->created_at;
+    }
+
+    public function getHasVerifiedEmailAttribute(): bool
+    {
+        return isset($this->email_verified_at);
+    }
+
+    /*
      * Searchable
      * */
 
@@ -158,5 +177,14 @@ final class User extends Authenticatable implements MustVerifyEmail, Explored
             'email' => 'text',
             'phone' => 'text',
         ];
+    }
+
+    /*
+     * Exportable
+     * */
+
+    public static function getExportJob(): string
+    {
+        return UsersExportJob::class;
     }
 }

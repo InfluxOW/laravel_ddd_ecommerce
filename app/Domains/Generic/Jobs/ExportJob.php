@@ -59,6 +59,10 @@ abstract class ExportJob implements FromQuery, WithStrictNullComparison, WithCus
                     $value = Date::dateTimeToExcel($value);
                 }
 
+                if (is_bool($value)) {
+                    $value = $value ? '✓' : '❌';
+                }
+
                 return $value;
             })->toArray();
     }
