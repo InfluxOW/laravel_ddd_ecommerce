@@ -22,7 +22,7 @@ return new class extends Migration {
             $table->mediumText('text');
             $table->boolean('is_reviewed');
             $table->string('ip')->nullable();
-            $table->timestamps();
+            $table->timestamp('created_at')->nullable();
         });
     }
 

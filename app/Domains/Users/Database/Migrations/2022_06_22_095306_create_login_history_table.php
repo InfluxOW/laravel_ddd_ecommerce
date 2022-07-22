@@ -32,7 +32,7 @@ return new class extends Migration {
             $table->string('city', 50)->nullable();
             $table->point('location')->nullable();
             $table->string('zip', 20)->nullable();
-            $table->timestamps();
+            $table->timestamp('created_at')->nullable();
         });
     }
 

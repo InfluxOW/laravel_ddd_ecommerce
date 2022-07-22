@@ -27,7 +27,6 @@ use JeroenG\Explorer\Application\Explored;
  * @property bool                            $is_reviewed
  * @property string|null                     $ip
  * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read User|null $user
  *
  * @method static \App\Domains\Feedback\Database\Factories\FeedbackFactory factory(...$parameters)
@@ -44,7 +43,6 @@ use JeroenG\Explorer\Application\Explored;
  * @method static Builder|Feedback whereIsReviewed($value)
  * @method static Builder|Feedback wherePhone($value)
  * @method static Builder|Feedback whereText($value)
- * @method static Builder|Feedback whereUpdatedAt($value)
  * @method static Builder|Feedback whereUserId($value)
  * @method static Builder|Feedback whereUsername($value)
  * @mixin \Eloquent
@@ -61,6 +59,8 @@ final class Feedback extends Model implements Explored, Exportable
         'phone',
         'text',
     ];
+
+    public const UPDATED_AT = null;
 
     /*
      * Relations

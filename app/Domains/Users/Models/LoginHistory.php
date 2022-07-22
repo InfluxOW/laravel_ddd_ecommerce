@@ -28,7 +28,6 @@ use MStaack\LaravelPostgis\Geometries\Point;
  * @property \MStaack\LaravelPostgis\Geometries\Point|null $location
  * @property string|null                                   $zip
  * @property \Illuminate\Support\Carbon|null               $created_at
- * @property \Illuminate\Support\Carbon|null               $updated_at
  * @property-read \App\Domains\Users\Models\User $user
  *
  * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory newModelQuery()
@@ -48,7 +47,6 @@ use MStaack\LaravelPostgis\Geometries\Point;
  * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory wherePlatformVersion($value)
  * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory whereRegionCode($value)
  * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory whereRegionName($value)
- * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory whereUpdatedAt($value)
  * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory whereUserAgent($value)
  * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory whereUserId($value)
  * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory whereZip($value)
@@ -81,6 +79,8 @@ final class LoginHistory extends Model
     protected array $postgisFields = [
         'location',
     ];
+
+    public const UPDATED_AT = null;
 
     /*
      * Relations
