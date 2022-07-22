@@ -4,6 +4,8 @@ namespace App\Domains\Catalog\Models;
 
 use App\Domains\Catalog\Database\Factories\ProductCategoryFactory;
 use App\Domains\Catalog\Enums\Media\ProductCategoryMediaCollectionKey;
+use App\Domains\Catalog\Jobs\Export\ProductCategoriesExportJob;
+use App\Domains\Generic\Interfaces\Exportable;
 use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
 use App\Domains\Generic\Traits\Models\Searchable;
 use Baum\NestedSet\Node;
@@ -11,6 +13,7 @@ use Closure;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
@@ -44,6 +47,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read int $overall_products_count
  * @property-read string $path
  * @property-read int|null $products_count
+ * @property-read string $products_string
  * @property-read \App\Components\Mediable\Models\Media|null $image
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|\App\Components\Mediable\Models\Media[] $images
  * @property-read int|null $images_count
@@ -79,7 +83,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|ProductCategory withoutSelf()
  * @mixin \Eloquent
  */
-final class ProductCategory extends Model implements HasMedia, Explored
+final class ProductCategory extends Model implements HasMedia, Explored, Exportable
 {
     use HasExtendedFunctionality;
     use HasFactory;
@@ -129,6 +133,11 @@ final class ProductCategory extends Model implements HasMedia, Explored
         return $this->morphOne(config('media-library.media_model'), 'model')->where('collection_name', ProductCategoryMediaCollectionKey::IMAGES->value);
     }
 
+    public function parent(): BelongsTo
+    {
+        return $this->belongsTo(self::class, 'parent_id');
+    }
+
     /*
      * Attributes
      * */
@@ -163,6 +172,11 @@ final class ProductCategory extends Model implements HasMedia, Explored
         $path[] = $this->title;
 
         return implode(' — ', $path);
+    }
+
+    public function getProductsStringAttribute(): string
+    {
+        return $this->products->implode(fn (Product $product): string => $product->title, ',' . PHP_EOL);
     }
 
     /*
@@ -286,5 +300,14 @@ final class ProductCategory extends Model implements HasMedia, Explored
             'title' => 'text',
             'slug' => 'text',
         ];
+    }
+
+    /*
+     * Exportable
+     * */
+
+    public static function getExportJob(): string
+    {
+        return ProductCategoriesExportJob::class;
     }
 }

@@ -31,6 +31,7 @@ return [
         ProductCategoryTranslationKey::MAIN->name => 'Main',
         ProductCategoryTranslationKey::STATISTICS->name => 'Statistics',
 
+        ProductCategoryTranslationKey::ID->name => 'Id',
         ProductCategoryTranslationKey::PATH->name => 'Breadcrumbs',
         ProductCategoryTranslationKey::TITLE->name => 'Title',
         ProductCategoryTranslationKey::SLUG->name => 'Slug',
@@ -41,6 +42,9 @@ return [
         ProductCategoryTranslationKey::IS_VISIBLE->name => 'Is Visible',
         ProductCategoryTranslationKey::IS_DISPLAYABLE->name => 'Is Displayable',
         ProductCategoryTranslationKey::IMAGES->name => 'Images',
+        ProductCategoryTranslationKey::PRODUCTS_STRING->name => 'Products',
+        ProductCategoryTranslationKey::CREATED_AT->name => 'Created At',
+        ProductCategoryTranslationKey::UPDATED_AT->name => 'Updated At',
 
         ProductCategoryTranslationKey::DEPTH->name => 'Depth',
     ],

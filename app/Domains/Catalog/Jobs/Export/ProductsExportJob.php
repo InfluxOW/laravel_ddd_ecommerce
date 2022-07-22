@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Catalog\Jobs;
+namespace App\Domains\Catalog\Jobs\Export;
 
 use App\Domains\Catalog\Enums\Translation\ProductTranslationKey;
 use App\Domains\Catalog\Models\Product;

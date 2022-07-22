@@ -4,6 +4,8 @@ namespace App\Domains\Catalog\Enums\Translation;
 
 enum ProductCategoryTranslationKey: string
 {
+    case ID = 'id';
+
     case MAIN = 'main';
     case STATISTICS = 'statistics';
 
@@ -16,7 +18,12 @@ enum ProductCategoryTranslationKey: string
     case LEFT = 'left';
     case IS_VISIBLE = 'is_visible';
     case IS_DISPLAYABLE = 'is_displayable';
+
     case IMAGES = 'images';
+    case PRODUCTS_STRING = 'products_string';
 
     case DEPTH = 'depth';
+
+    case CREATED_AT = 'created_at';
+    case UPDATED_AT = 'updated_at';
 }

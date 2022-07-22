@@ -8,7 +8,7 @@ use App\Components\Purchasable\Models\Price;
 use App\Domains\Catalog\Database\Factories\ProductFactory;
 use App\Domains\Catalog\Enums\Media\ProductMediaCollectionKey;
 use App\Domains\Catalog\Enums\ProductAttributeValuesType;
-use App\Domains\Catalog\Jobs\ProductsExportJob;
+use App\Domains\Catalog\Jobs\Export\ProductsExportJob;
 use App\Domains\Catalog\Models\Pivot\ProductProductCategory;
 use App\Domains\Generic\Enums\BooleanString;
 use App\Domains\Generic\Interfaces\Exportable;
