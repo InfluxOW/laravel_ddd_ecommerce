@@ -4,6 +4,7 @@ namespace App\Domains\Feedback\Enums\Translation;
 
 enum FeedbackTranslationKey: string
 {
+    case ID = 'id';
     case USERNAME = 'username';
     case EMAIL = 'email';
     case PHONE = 'phone';

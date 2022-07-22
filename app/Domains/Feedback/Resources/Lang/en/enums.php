@@ -5,6 +5,7 @@ use App\Domains\Feedback\Enums\Translation\FeedbackTranslationKey;
 
 return [
     FeedbackTranslationKey::class => [
+        FeedbackTranslationKey::ID->name => 'ID',
         FeedbackTranslationKey::USERNAME->name => 'Username',
         FeedbackTranslationKey::EMAIL->name => 'Email',
         FeedbackTranslationKey::PHONE->name => 'Phone',

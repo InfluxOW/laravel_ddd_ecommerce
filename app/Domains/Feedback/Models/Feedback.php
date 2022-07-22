@@ -3,6 +3,8 @@
 namespace App\Domains\Feedback\Models;
 
 use App\Domains\Feedback\Database\Factories\FeedbackFactory;
+use App\Domains\Feedback\Jobs\Export\FeedbackExportJob;
+use App\Domains\Generic\Interfaces\Exportable;
 use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
 use App\Domains\Generic\Traits\Models\Searchable;
 use App\Domains\Users\Models\User;
@@ -47,7 +49,7 @@ use JeroenG\Explorer\Application\Explored;
  * @method static Builder|Feedback whereUsername($value)
  * @mixin \Eloquent
  */
-final class Feedback extends Model implements Explored
+final class Feedback extends Model implements Explored, Exportable
 {
     use HasExtendedFunctionality;
     use HasFactory;
@@ -146,5 +148,14 @@ final class Feedback extends Model implements Explored
             'email' => 'text',
             'phone' => 'text',
         ];
+    }
+
+    /*
+     * Exportable
+     * */
+
+    public static function getExportJob(): string
+    {
+        return FeedbackExportJob::class;
     }
 }

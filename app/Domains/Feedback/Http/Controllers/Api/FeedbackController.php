@@ -26,7 +26,7 @@ final class FeedbackController extends Controller
             $feedback->phone = $user->phone;
         }
         $feedback->is_reviewed = false;
-        $feedback->ip = $request->ip();
+        $feedback->ip = $request->getIp();
         $feedback->save();
 
         return $this->respondSuccess();
