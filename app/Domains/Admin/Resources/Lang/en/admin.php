@@ -7,6 +7,7 @@ use App\Domains\Admin\Admin\Resources\Development\ClockworkLinkResource;
 use App\Domains\Admin\Admin\Resources\Development\ElasticvueLinkResource;
 use App\Domains\Admin\Admin\Resources\Development\HorizonLinkResource;
 use App\Domains\Admin\Admin\Resources\Development\KibanaLinkResource;
+use App\Domains\Admin\Admin\Resources\Development\PhpCacheAdminLinkResource;
 use App\Domains\Admin\Admin\Resources\Development\PrequelLinkResource;
 use App\Domains\Admin\Admin\Resources\Development\RabbitMQLinkResource;
 use App\Domains\Admin\Admin\Resources\Development\SwaggerLinkResource;
@@ -89,6 +90,12 @@ return [
         AdminResourcePropertyTranslationKey::LABEL->name => 'Kibana',
         AdminResourcePropertyTranslationKey::PLURAL_LABEL->name => 'Kibana',
         AdminResourcePropertyTranslationKey::NAVIGATION_LABEL->name => 'Kibana',
+        AdminResourcePropertyTranslationKey::NAVIGATION_GROUP->name => LangUtils::translateEnum(AdminNavigationGroupTranslationKey::DEVELOPMENT),
+    ],
+    PhpCacheAdminLinkResource::class => [
+        AdminResourcePropertyTranslationKey::LABEL->name => 'Cache Dashboard',
+        AdminResourcePropertyTranslationKey::PLURAL_LABEL->name => 'Cache Dashboard',
+        AdminResourcePropertyTranslationKey::NAVIGATION_LABEL->name => 'Cache Dashboard',
         AdminResourcePropertyTranslationKey::NAVIGATION_GROUP->name => LangUtils::translateEnum(AdminNavigationGroupTranslationKey::DEVELOPMENT),
     ],
 ];

@@ -3,7 +3,7 @@
 namespace App\Domains\Admin\Admin\Resources\Development;
 
 use App\Domains\Admin\Admin\Abstracts\SimpleResource;
-use App\Domains\Admin\Admin\Resources\Development\SwaggerLinkResource\Pages\HorizonLink;
+use App\Domains\Admin\Admin\Resources\Development\Pages\HorizonLink;
 
 final class HorizonLinkResource extends SimpleResource
 {

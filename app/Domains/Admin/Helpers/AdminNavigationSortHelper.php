@@ -6,6 +6,7 @@ use App\Domains\Admin\Admin\Resources\Development\ClockworkLinkResource;
 use App\Domains\Admin\Admin\Resources\Development\ElasticvueLinkResource;
 use App\Domains\Admin\Admin\Resources\Development\HorizonLinkResource;
 use App\Domains\Admin\Admin\Resources\Development\KibanaLinkResource;
+use App\Domains\Admin\Admin\Resources\Development\PhpCacheAdminLinkResource;
 use App\Domains\Admin\Admin\Resources\Development\PrequelLinkResource;
 use App\Domains\Admin\Admin\Resources\Development\RabbitMQLinkResource;
 use App\Domains\Admin\Admin\Resources\Development\SwaggerLinkResource;
@@ -38,5 +39,6 @@ final class AdminNavigationSortHelper
         RabbitMQLinkResource::class,
         ElasticvueLinkResource::class,
         KibanaLinkResource::class,
+        PhpCacheAdminLinkResource::class,
     ];
 }

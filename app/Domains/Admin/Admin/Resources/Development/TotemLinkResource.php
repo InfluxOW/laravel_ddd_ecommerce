@@ -3,7 +3,7 @@
 namespace App\Domains\Admin\Admin\Resources\Development;
 
 use App\Domains\Admin\Admin\Abstracts\SimpleResource;
-use App\Domains\Admin\Admin\Resources\Development\SwaggerLinkResource\Pages\TotemLink;
+use App\Domains\Admin\Admin\Resources\Development\Pages\TotemLink;
 
 final class TotemLinkResource extends SimpleResource
 {

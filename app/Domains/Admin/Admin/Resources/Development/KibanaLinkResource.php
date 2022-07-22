@@ -3,7 +3,7 @@
 namespace App\Domains\Admin\Admin\Resources\Development;
 
 use App\Domains\Admin\Admin\Abstracts\SimpleResource;
-use App\Domains\Admin\Admin\Resources\Development\SwaggerLinkResource\Pages\KibanaLink;
+use App\Domains\Admin\Admin\Resources\Development\Pages\KibanaLink;
 
 final class KibanaLinkResource extends SimpleResource
 {

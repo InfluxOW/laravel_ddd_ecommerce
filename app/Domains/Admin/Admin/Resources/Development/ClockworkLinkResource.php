@@ -3,7 +3,7 @@
 namespace App\Domains\Admin\Admin\Resources\Development;
 
 use App\Domains\Admin\Admin\Abstracts\SimpleResource;
-use App\Domains\Admin\Admin\Resources\Development\SwaggerLinkResource\Pages\ClockworkLink;
+use App\Domains\Admin\Admin\Resources\Development\Pages\ClockworkLink;
 
 final class ClockworkLinkResource extends SimpleResource
 {

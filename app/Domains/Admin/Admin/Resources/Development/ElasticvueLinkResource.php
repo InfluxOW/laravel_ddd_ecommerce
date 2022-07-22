@@ -3,7 +3,7 @@
 namespace App\Domains\Admin\Admin\Resources\Development;
 
 use App\Domains\Admin\Admin\Abstracts\SimpleResource;
-use App\Domains\Admin\Admin\Resources\Development\SwaggerLinkResource\Pages\ElasticvueLink;
+use App\Domains\Admin\Admin\Resources\Development\Pages\ElasticvueLink;
 
 final class ElasticvueLinkResource extends SimpleResource
 {

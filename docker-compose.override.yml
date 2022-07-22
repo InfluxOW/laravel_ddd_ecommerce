@@ -125,6 +125,20 @@ services:
         networks:
             - sail
 
+    phpcacheadmin:
+        image: robinn/phpcacheadmin:latest
+        environment:
+            PCA_REDIS_0_NAME: ${APP_NAME}
+            PCA_REDIS_0_HOST: redis
+            PCA_REDIS_0_PORT: 6379
+        ports:
+            - ${FORWARD_PHPCACHEADMIN_PORT}:80
+        depends_on:
+            redis:
+                condition: service_healthy
+        networks:
+            - sail
+
 networks:
     sail:
         driver: bridge

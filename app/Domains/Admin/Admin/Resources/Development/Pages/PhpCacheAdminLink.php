@@ -1,16 +1,18 @@
 <?php
 
-namespace App\Domains\Admin\Admin\Resources\Development\SwaggerLinkResource\Pages;
+namespace App\Domains\Admin\Admin\Resources\Development\Pages;
 
 use App\Domains\Admin\Admin\Abstracts\Pages\ListRecords;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Route;
 
-final class HorizonLink extends ListRecords
+final class PhpCacheAdminLink extends ListRecords
 {
     public function __invoke(Container $container, Route $route): RedirectResponse
     {
-        return redirect()->route('horizon.index');
+        $port = env('FORWARD_PHPCACHEADMIN_PORT');
+
+        return redirect()->to("http://0.0.0.0:{$port}");
     }
 }
