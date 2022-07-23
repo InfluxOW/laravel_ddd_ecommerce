@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Catalog\Tests\Admin;
+namespace App\Domains\Catalog\Tests\Admin\Resources;
 
 use App\Application\Tests\Admin\AdminCrudTestCase;
 use App\Domains\Catalog\Admin\Resources\ProductResource\Pages\CreateProduct;

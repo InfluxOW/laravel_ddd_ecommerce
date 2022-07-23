@@ -55,6 +55,11 @@ final class ExportAction extends Action
         return $action;
     }
 
+    public static function getDefaultName(): ?string
+    {
+        return AdminActionTranslationKey::EXPORT->value;
+    }
+
     /*
      * Translation
      * */
