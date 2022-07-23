@@ -3,6 +3,7 @@
 namespace App\Domains\Admin\Traits\Translation;
 
 use App\Domains\Admin\Enums\Translation\AdminModalTranslationKey;
+use App\Domains\Admin\Traits\Translation\Internal\TranslatableAdmin;
 use Filament\Support\Actions\Concerns\CanOpenModal;
 
 trait HasTranslatableAdminActionsModals
@@ -28,9 +29,9 @@ trait HasTranslatableAdminActionsModals
         if (isset($uses[CanOpenModal::class])) {
             /** @phpstan-ignore-next-line */
             $item
-                ->modalHeading(static::translateAdminEnum(AdminModalTranslationKey::HEADING, allowClosures: true))
-                ->modalSubheading(static::translateAdminEnum(AdminModalTranslationKey::SUBHEADING, allowClosures: true))
-                ->modalButton(static::translateAdminEnum(AdminModalTranslationKey::BUTTON, allowClosures: true));
+                ->modalHeading(self::translateAdminEnum(AdminModalTranslationKey::HEADING, allowClosures: true))
+                ->modalSubheading(self::translateAdminEnum(AdminModalTranslationKey::SUBHEADING, allowClosures: true))
+                ->modalButton(self::translateAdminEnum(AdminModalTranslationKey::BUTTON, allowClosures: true));
         }
 
         return $item;

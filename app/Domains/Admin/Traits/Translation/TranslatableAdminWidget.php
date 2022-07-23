@@ -3,6 +3,7 @@
 namespace App\Domains\Admin\Traits\Translation;
 
 use App\Domains\Admin\Enums\Translation\AdminWidgetPropertyTranslationKey;
+use App\Domains\Admin\Traits\Translation\Internal\TranslatableAdmin;
 
 trait TranslatableAdminWidget
 {
@@ -11,7 +12,7 @@ trait TranslatableAdminWidget
     protected function getHeading(): ?string
     {
         /** @var string $translation */
-        $translation = static::translateComponentProperty(AdminWidgetPropertyTranslationKey::HEADING);
+        $translation = self::translateComponentProperty(AdminWidgetPropertyTranslationKey::HEADING);
 
         return $translation;
     }

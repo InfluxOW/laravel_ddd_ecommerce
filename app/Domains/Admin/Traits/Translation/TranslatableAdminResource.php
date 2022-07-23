@@ -3,6 +3,7 @@
 namespace App\Domains\Admin\Traits\Translation;
 
 use App\Domains\Admin\Enums\Translation\AdminResourcePropertyTranslationKey;
+use App\Domains\Admin\Traits\Translation\Internal\TranslatableAdmin;
 
 trait TranslatableAdminResource
 {
@@ -11,7 +12,7 @@ trait TranslatableAdminResource
     public static function getLabel(): string
     {
         /** @var string $translation */
-        $translation = static::translateComponentProperty(AdminResourcePropertyTranslationKey::LABEL);
+        $translation = self::translateComponentProperty(AdminResourcePropertyTranslationKey::LABEL);
 
         return $translation;
     }
@@ -19,7 +20,7 @@ trait TranslatableAdminResource
     public static function getPluralLabel(): string
     {
         /** @var string $translation */
-        $translation = static::translateComponentProperty(AdminResourcePropertyTranslationKey::PLURAL_LABEL);
+        $translation = self::translateComponentProperty(AdminResourcePropertyTranslationKey::PLURAL_LABEL);
 
         return $translation;
     }
@@ -27,7 +28,7 @@ trait TranslatableAdminResource
     protected static function getNavigationLabel(): string
     {
         /** @var string $translation */
-        $translation = static::translateComponentProperty(AdminResourcePropertyTranslationKey::NAVIGATION_LABEL);
+        $translation = self::translateComponentProperty(AdminResourcePropertyTranslationKey::NAVIGATION_LABEL);
 
         return $translation;
     }
@@ -35,7 +36,7 @@ trait TranslatableAdminResource
     protected static function getNavigationGroup(): ?string
     {
         /** @var string $translation */
-        $translation = static::translateComponentProperty(AdminResourcePropertyTranslationKey::NAVIGATION_GROUP);
+        $translation = self::translateComponentProperty(AdminResourcePropertyTranslationKey::NAVIGATION_GROUP);
 
         return $translation;
     }

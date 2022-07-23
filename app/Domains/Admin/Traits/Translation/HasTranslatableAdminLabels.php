@@ -2,6 +2,7 @@
 
 namespace App\Domains\Admin\Traits\Translation;
 
+use App\Domains\Admin\Traits\Translation\Internal\TranslatableAdmin;
 use BackedEnum;
 
 trait HasTranslatableAdminLabels
@@ -30,7 +31,7 @@ trait HasTranslatableAdminLabels
             $itemName = $item->getName();
             $formTranslationKeyEnum = ($translationKeyClass ?? static::getTranslationKeyClass())::tryFrom($itemName);
             if (isset($formTranslationKeyEnum)) {
-                $item->label(static::translateEnum($formTranslationKeyEnum, allowClosures: true));
+                $item->label(self::translateEnum($formTranslationKeyEnum, allowClosures: true));
             }
         }
 

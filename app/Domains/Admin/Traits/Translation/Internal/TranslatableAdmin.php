@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Admin\Traits\Translation;
+namespace App\Domains\Admin\Traits\Translation\Internal;
 
 use App\Domains\Admin\Enums\Translation\AdminPagePropertyTranslationKey;
 use App\Domains\Admin\Enums\Translation\AdminRelationPropertyTranslationKey;
@@ -12,6 +12,9 @@ use App\Domains\Generic\Utils\LangUtils;
 use Closure;
 use UnitEnum;
 
+/**
+ * @internal
+ * */
 trait TranslatableAdmin
 {
     protected static function translateComponentProperty(AdminResourcePropertyTranslationKey|AdminRelationPropertyTranslationKey|AdminPagePropertyTranslationKey|AdminWidgetPropertyTranslationKey $enum, bool $allowClosures = false): string|Closure

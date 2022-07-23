@@ -3,6 +3,7 @@
 namespace App\Domains\Admin\Traits\Translation;
 
 use App\Domains\Admin\Enums\Translation\AdminPagePropertyTranslationKey;
+use App\Domains\Admin\Traits\Translation\Internal\TranslatableAdmin;
 
 trait TranslatableAdminPage
 {
@@ -11,7 +12,7 @@ trait TranslatableAdminPage
     protected function getTitle(): string
     {
         /** @var string $translation */
-        $translation = static::translateComponentProperty(AdminPagePropertyTranslationKey::TITLE);
+        $translation = self::translateComponentProperty(AdminPagePropertyTranslationKey::TITLE);
 
         return $translation;
     }
@@ -19,7 +20,7 @@ trait TranslatableAdminPage
     protected static function getNavigationLabel(): string
     {
         /** @var string $translation */
-        $translation = static::translateComponentProperty(AdminPagePropertyTranslationKey::NAVIGATION_LABEL);
+        $translation = self::translateComponentProperty(AdminPagePropertyTranslationKey::NAVIGATION_LABEL);
 
         return $translation;
     }
@@ -27,7 +28,7 @@ trait TranslatableAdminPage
     protected static function getNavigationGroup(): ?string
     {
         /** @var string $translation */
-        $translation = static::translateComponentProperty(AdminPagePropertyTranslationKey::NAVIGATION_GROUP);
+        $translation = self::translateComponentProperty(AdminPagePropertyTranslationKey::NAVIGATION_GROUP);
 
         return $translation;
     }
