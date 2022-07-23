@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Domains\Feedback\Tests\Admin;
+namespace App\Domains\Feedback\Tests\Feature\Admin\Resources;
 
-use App\Application\Tests\Admin\AdminCrudTestCase;
+use App\Application\Tests\Feature\Admin\AdminCrudTestCase;
 use App\Domains\Feedback\Admin\Resources\FeedbackResource\Pages\ListFeedback;
 use App\Domains\Feedback\Admin\Resources\FeedbackResource\Pages\ViewFeedback;
 use App\Domains\Feedback\Database\Seeders\FeedbackSeeder;

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Domains\Catalog\Tests\Admin\Resources;
+namespace App\Domains\Catalog\Tests\Feature\Admin\Resources;
 
-use App\Application\Tests\Admin\AdminCrudTestCase;
+use App\Application\Tests\Feature\Admin\AdminCrudTestCase;
 use App\Domains\Catalog\Admin\Resources\ProductCategoryResource\Pages\CreateProductCategory;
 use App\Domains\Catalog\Admin\Resources\ProductCategoryResource\Pages\EditProductCategory;
 use App\Domains\Catalog\Admin\Resources\ProductCategoryResource\Pages\ListProductCategories;

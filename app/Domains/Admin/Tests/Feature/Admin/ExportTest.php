@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Admin\Tests\Admin;
+namespace App\Domains\Admin\Tests\Feature\Admin;
 
 use App\Application\Tests\TestCase;
 use App\Domains\Admin\Admin\Abstracts\Pages\ListRecords;

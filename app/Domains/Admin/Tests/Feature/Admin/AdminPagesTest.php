@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Domains\Admin\Tests\Admin;
+namespace App\Domains\Admin\Tests\Feature\Admin;
 
-use App\Application\Tests\Admin\AdminTestCase;
+use App\Application\Tests\Feature\Admin\AdminTestCase;
 
 final class AdminPagesTest extends AdminTestCase
 {

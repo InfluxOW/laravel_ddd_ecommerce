@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Feedback\Tests\Feature;
+namespace App\Domains\Feedback\Tests\Feature\Api;
 
 use App\Application\Tests\TestCase;
 use App\Domains\Feedback\Models\Feedback;

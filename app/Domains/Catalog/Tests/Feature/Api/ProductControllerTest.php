@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Catalog\Tests\Feature;
+namespace App\Domains\Catalog\Tests\Feature\Api;
 
 use App\Application\Tests\TestCase;
 use App\Components\Purchasable\Models\Price;

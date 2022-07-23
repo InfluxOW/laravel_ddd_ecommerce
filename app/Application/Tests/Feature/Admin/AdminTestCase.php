@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\Tests\Admin;
+namespace App\Application\Tests\Feature\Admin;
 
 use App\Application\Tests\TestCase;
 use App\Domains\Admin\Database\Seeders\AdminSeeder;

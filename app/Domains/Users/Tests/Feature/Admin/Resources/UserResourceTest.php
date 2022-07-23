@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Domains\Users\Tests\Admin;
+namespace App\Domains\Users\Tests\Feature\Admin\Resources;
 
-use App\Application\Tests\Admin\AdminCrudTestCase;
+use App\Application\Tests\Feature\Admin\AdminCrudTestCase;
 use App\Domains\Users\Admin\Resources\UserResource\Pages\EditUser;
 use App\Domains\Users\Admin\Resources\UserResource\Pages\ListUsers;
 use App\Domains\Users\Admin\Resources\UserResource\Pages\ViewUser;
