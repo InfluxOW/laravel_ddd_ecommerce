@@ -9,7 +9,6 @@ use App\Domains\Generic\Jobs\ExportJob;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Collection;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
@@ -22,7 +21,7 @@ final class ProductsExportJob extends ExportJob
             ->with([
                 'categories' => fn (BelongsToMany $query): BelongsToMany => $query->select(['title']),
                 'prices' => fn (MorphMany $query): MorphMany => $query->select(['price', 'price_discounted', 'currency', 'purchasable_id', 'purchasable_type']),
-                'attributeValues' => fn (HasMany $query): HasMany => $query->with(['attribute' => fn (BelongsTo $query): BelongsTo => $query->select(['id', 'title', 'values_type'])])->select(['attribute_id', 'product_id', 'value_string', 'value_integer', 'value_float', 'value_boolean']),
+                'attributeValues' => fn (MorphMany $query): MorphMany => $query->with(['attribute' => fn (BelongsTo $query): BelongsTo => $query->select(['id', 'title', 'values_type'])])->select(['attribute_id', 'attributable_id', 'attributable_type', 'value_string', 'value_integer', 'value_float', 'value_boolean']),
             ])
             ->select(['id', 'title', 'slug', 'created_at', 'updated_at'])
             ->orderBy('id');
