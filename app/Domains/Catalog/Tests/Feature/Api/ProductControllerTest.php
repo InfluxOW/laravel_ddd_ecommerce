@@ -3,20 +3,20 @@
 namespace App\Domains\Catalog\Tests\Feature\Api;
 
 use App\Application\Tests\TestCase;
+use App\Components\Attributable\Database\Seeders\AttributeSeeder;
+use App\Components\Attributable\Enums\AttributeValuesType;
+use App\Components\Attributable\Models\AttributeValue;
 use App\Components\Purchasable\Models\Price;
 use App\Components\Queryable\Enums\QueryKey;
 use App\Domains\Catalog\Console\Commands\UpdateProductCategoriesDisplayability;
 use App\Domains\Catalog\Console\Commands\UpdateProductsDisplayability;
-use App\Domains\Catalog\Database\Seeders\ProductAttributeSeeder;
 use App\Domains\Catalog\Database\Seeders\ProductAttributeValueSeeder;
 use App\Domains\Catalog\Database\Seeders\ProductCategorySeeder;
 use App\Domains\Catalog\Database\Seeders\ProductPriceSeeder;
 use App\Domains\Catalog\Database\Seeders\ProductSeeder;
-use App\Domains\Catalog\Enums\ProductAttributeValuesType;
 use App\Domains\Catalog\Enums\Query\Filter\ProductAllowedFilter;
 use App\Domains\Catalog\Enums\Query\Sort\ProductAllowedSort;
 use App\Domains\Catalog\Models\Product;
-use App\Domains\Catalog\Models\ProductAttributeValue;
 use App\Domains\Catalog\Models\ProductCategory;
 use App\Domains\Catalog\Models\Settings\CatalogSettings;
 use App\Domains\Generic\Enums\Response\ResponseKey;
@@ -24,7 +24,7 @@ use Carbon\Carbon;
 use DateTime;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Illuminate\Testing\TestResponse;
@@ -50,10 +50,10 @@ final class ProductControllerTest extends TestCase
     {
         $this->seed([
             ProductCategorySeeder::class,
-            ProductAttributeSeeder::class,
             ProductSeeder::class,
-            ProductAttributeValueSeeder::class,
             ProductPriceSeeder::class,
+            AttributeSeeder::class,
+            ProductAttributeValueSeeder::class,
         ]);
 
         ProductCategory::query()->update(['is_visible' => true, 'is_displayable' => true]);
@@ -206,7 +206,7 @@ final class ProductControllerTest extends TestCase
      */
     public function a_user_can_filter_products_by_attribute_values(): void
     {
-        $nonBooleanAttributeValuesQuery = static fn (Builder|HasMany $query) => $query->whereHas('attribute', fn (Builder|HasMany $query) => $query->whereIn('values_type', [ProductAttributeValuesType::INTEGER, ProductAttributeValuesType::STRING, ProductAttributeValuesType::FLOAT]));
+        $nonBooleanAttributeValuesQuery = static fn (Builder|MorphMany $query) => $query->whereHas('attribute', fn (Builder|MorphMany $query) => $query->whereIn('values_type', [AttributeValuesType::INTEGER, AttributeValuesType::STRING, AttributeValuesType::FLOAT]));
 
         /** @var Product $teapot */
         $teapot = Product::query()
@@ -220,17 +220,17 @@ final class ProductControllerTest extends TestCase
         $this->assertNotNull($teapot);
 
         /**
-         * @var ProductAttributeValue $heightAttributeValue
-         * @var ProductAttributeValue $widthAttributeValue
+         * @var AttributeValue $heightAttributeValue
+         * @var AttributeValue $widthAttributeValue
          */
         [$heightAttributeValue, $widthAttributeValue] = $teapot->attributeValues;
 
         $height = $heightAttributeValue->attribute;
         $heightSmallValue = $heightAttributeValue->value;
         /** @var float|int|string $heightGreatValue */
-        $heightGreatValue = ProductAttributeValue::query()
+        $heightGreatValue = AttributeValue::query()
             ->whereBelongsTo($height, 'attribute')
-            ->where(ProductAttributeValue::getDatabaseValueColumnByAttributeType($height->values_type), '<>', $heightSmallValue)
+            ->where(AttributeValue::getDatabaseValueColumnByAttributeType($height->values_type), '<>', $heightSmallValue)
             ->inRandomOrder()
             ->first()
             ?->value;
@@ -242,11 +242,11 @@ final class ProductControllerTest extends TestCase
         /** @var Product $tv */
         $tv = Product::query()
             ->with(['attributeValues.attribute'])
-            ->whereHas('attributeValues', fn (Builder $query): Builder => $query->where(ProductAttributeValue::getDatabaseValueColumnByAttributeType($height->values_type), $heightGreatValue))
+            ->whereHas('attributeValues', fn (Builder $query): Builder => $query->where(AttributeValue::getDatabaseValueColumnByAttributeType($height->values_type), $heightGreatValue))
             ->first();
         $this->assertNotNull($tv);
 
-        /** @var ProductAttributeValue $tvWidthAttributeValue */
+        /** @var AttributeValue $tvWidthAttributeValue */
         $tvWidthAttributeValue = $tv->attributeValues->where('attribute.id', $width->id)->isNotEmpty() ? $tv->attributeValues->where('attribute.id', $width->id)->first() : $tv->attributeValues()->make();
         $tvWidthAttributeValue->attribute()->associate($width);
         $tvWidthAttributeValue->value = $widthValue;

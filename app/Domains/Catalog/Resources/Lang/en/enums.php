@@ -1,11 +1,8 @@
 <?php
 
-use App\Domains\Catalog\Enums\ProductAttributeValuesType;
 use App\Domains\Catalog\Enums\Query\Filter\ProductAllowedFilter;
 use App\Domains\Catalog\Enums\Query\Sort\ProductAllowedSort;
 use App\Domains\Catalog\Enums\Translation\CatalogSettingsTranslationKey;
-use App\Domains\Catalog\Enums\Translation\ProductAttributeTranslationKey;
-use App\Domains\Catalog\Enums\Translation\ProductAttributeValueTranslationKey;
 use App\Domains\Catalog\Enums\Translation\ProductCategoryTranslationKey;
 use App\Domains\Catalog\Enums\Translation\ProductPriceTranslationKey;
 use App\Domains\Catalog\Enums\Translation\ProductTranslationKey;
@@ -48,30 +45,10 @@ return [
 
         ProductCategoryTranslationKey::DEPTH->name => 'Depth',
     ],
-    ProductAttributeValueTranslationKey::class => [
-        ProductAttributeValueTranslationKey::ATTRIBUTE_TITLE->name => 'Attribute',
-        ProductAttributeValueTranslationKey::ATTRIBUTE->name => 'Attribute',
-        ProductAttributeValueTranslationKey::READABLE_VALUE->name => 'Value',
-        ProductAttributeValueTranslationKey::VALUE_STRING->name => 'Value',
-        ProductAttributeValueTranslationKey::VALUE_BOOLEAN->name => 'Value',
-        ProductAttributeValueTranslationKey::VALUE_FLOAT->name => 'Value',
-        ProductAttributeValueTranslationKey::VALUE_INTEGER->name => 'Value',
-    ],
-    ProductAttributeTranslationKey::class => [
-        ProductAttributeTranslationKey::TITLE->name => 'Title',
-        ProductAttributeTranslationKey::SLUG->name => 'Slug',
-        ProductAttributeTranslationKey::VALUES_TYPE->name => 'Type Of Values',
-    ],
     CatalogSettingsTranslationKey::class => [
         CatalogSettingsTranslationKey::AVAILABLE_CURRENCIES->name => 'Available Currencies',
         CatalogSettingsTranslationKey::REQUIRED_CURRENCIES->name => 'Required Currencies',
         CatalogSettingsTranslationKey::DEFAULT_CURRENCY->name => 'Default Currency',
-    ],
-    ProductAttributeValuesType::class => [
-        ProductAttributeValuesType::STRING->name => 'String',
-        ProductAttributeValuesType::BOOLEAN->name => 'Boolean',
-        ProductAttributeValuesType::FLOAT->name => 'Float',
-        ProductAttributeValuesType::INTEGER->name => 'Integer',
     ],
     ProductTranslationKey::class => [
         ProductTranslationKey::ID->name => 'ID',

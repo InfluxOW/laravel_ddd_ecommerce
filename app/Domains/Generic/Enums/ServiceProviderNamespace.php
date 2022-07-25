@@ -14,4 +14,5 @@ enum ServiceProviderNamespace: string
     case CART = 'cart';
     case FEEDBACK = 'feedback';
     case GENERIC = 'generic';
+    case ATTRIBUTE = 'attribute';
 }

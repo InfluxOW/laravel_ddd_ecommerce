@@ -2,8 +2,8 @@
 
 namespace App\Domains\Catalog\Models\Virtual\Product;
 
+use App\Components\Attributable\Models\Virtual\AttributeValue;
 use App\Components\Mediable\Models\Virtual\Media;
-use App\Domains\Catalog\Models\Virtual\ProductAttributeValue;
 use App\Domains\Catalog\Models\Virtual\ProductCategory\MediumProductCategory;
 use OpenApi\Annotations as OA;
 
@@ -35,10 +35,10 @@ final class HeavyProduct extends LightProduct
     /**
      * @OA\Property(
      *     type="array",
-     *     @OA\Items(ref="#/components/schemas/ProductAttributeValue")
+     *     @OA\Items(ref="#/components/schemas/AttributeValue")
      * )
      *
-     * @var ProductAttributeValue[]
+     * @var AttributeValue[]
      */
     public $attributes;
 

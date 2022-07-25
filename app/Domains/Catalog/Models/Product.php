@@ -3,11 +3,13 @@
 namespace App\Domains\Catalog\Models;
 
 use Akaunting\Money\Money;
+use App\Components\Attributable\Enums\AttributeValuesType;
+use App\Components\Attributable\Models\Attribute;
+use App\Components\Attributable\Models\AttributeValue;
 use App\Components\Purchasable\Abstracts\Purchasable;
 use App\Components\Purchasable\Models\Price;
 use App\Domains\Catalog\Database\Factories\ProductFactory;
 use App\Domains\Catalog\Enums\Media\ProductMediaCollectionKey;
-use App\Domains\Catalog\Enums\ProductAttributeValuesType;
 use App\Domains\Catalog\Jobs\Export\ProductsExportJob;
 use App\Domains\Catalog\Models\Pivot\ProductProductCategory;
 use App\Domains\Generic\Enums\BooleanString;
@@ -18,7 +20,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Support\Collection;
@@ -40,7 +41,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property bool                            $is_displayable
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Domains\Catalog\Models\ProductAttributeValue[] $attributeValues
+ * @property-read \Illuminate\Database\Eloquent\Collection|AttributeValue[] $attributeValues
  * @property-read int|null $attribute_values_count
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|\App\Components\Mediable\Models\Media[] $baseMedia
  * @property-read int|null $base_media_count
@@ -104,9 +105,9 @@ final class Product extends Model implements Purchasable, HasMedia, Explored, Ex
         return $this->belongsToMany(ProductCategory::class, 'product_categories_products', 'product_id', 'category_id')->withTimestamps()->using(ProductProductCategory::class);
     }
 
-    public function attributeValues(): HasMany
+    public function attributeValues(): MorphMany
     {
-        return $this->hasMany(ProductAttributeValue::class);
+        return $this->morphMany(AttributeValue::class, 'attributable');
     }
 
     public function prices(): MorphMany
@@ -152,7 +153,7 @@ final class Product extends Model implements Purchasable, HasMedia, Explored, Ex
 
     public function getAttributeValuesStringAttribute(): string
     {
-        return $this->attributeValues->implode(fn (ProductAttributeValue $value): string => "{$value->attribute->title} - {$value->readable_value}", ',' . PHP_EOL);
+        return $this->attributeValues->implode(fn (AttributeValue $value): string => "{$value->attribute->title} - {$value->readable_value}", ',' . PHP_EOL);
     }
 
     /*
@@ -187,17 +188,17 @@ final class Product extends Model implements Purchasable, HasMedia, Explored, Ex
 
     public function scopeWhereHasAttributeValue(Builder $query, array $attributesValuesByAttributeSlug): void
     {
-        $attributes = ProductAttribute::query()->whereIn('slug', array_keys($attributesValuesByAttributeSlug))->get();
+        $attributes = Attribute::query()->whereIn('slug', array_keys($attributesValuesByAttributeSlug))->get();
 
         if ($attributes->isNotEmpty()) {
             foreach ($attributes as $attribute) {
                 $values = (array) $attributesValuesByAttributeSlug[$attribute->slug];
-                if ($attribute->values_type === ProductAttributeValuesType::BOOLEAN) {
+                if ($attribute->values_type === AttributeValuesType::BOOLEAN) {
                     $values = array_map(static fn (string|int|bool|float $value): bool => Str::of((string) $value)->lower()->toString() === BooleanString::_TRUE->value, $values);
                 }
 
                 $query->whereHas('attributeValues', function (Builder $query) use ($attribute, $values): void {
-                    $query->where('attribute_id', $attribute->id)->whereIn(ProductAttributeValue::getDatabaseValueColumnByAttributeType($attribute->values_type), $values);
+                    $query->where('attribute_id', $attribute->id)->whereIn(AttributeValue::getDatabaseValueColumnByAttributeType($attribute->values_type), $values);
                 });
             }
         }

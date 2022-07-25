@@ -2,8 +2,8 @@
 
 namespace App\Domains\Catalog\Http\Resources\Product;
 
+use App\Components\Attributable\Http\Resources\AttributeValueResource;
 use App\Components\Mediable\Http\Resources\MediaResource;
-use App\Domains\Catalog\Http\Resources\ProductAttributeValueResource;
 use App\Domains\Catalog\Http\Resources\ProductCategory\MediumProductCategoryResource;
 use App\Domains\Catalog\Models\Product;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -20,7 +20,7 @@ final class HeavyProductResource extends ProductResource
         return array_merge(parent::toArray($request), [
             'images' => MediaResource::collection($product->images),
             'categories' => MediumProductCategoryResource::collection($product->categories->sortBy('title')),
-            'attributes' => ProductAttributeValueResource::collection($product->attributeValues->sortBy('attribute.title')),
+            'attributes' => AttributeValueResource::collection($product->attributeValues->sortBy('attribute.title')),
             'description' => $product->description,
         ]);
     }

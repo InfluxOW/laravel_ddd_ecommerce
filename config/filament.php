@@ -1,5 +1,6 @@
 <?php
 
+use App\Components\Attributable\Admin\Resources\AttributeResource;
 use App\Domains\Admin\Admin\Pages\Login;
 use App\Domains\Admin\Admin\Resources\Development\ClockworkLinkResource;
 use App\Domains\Admin\Admin\Resources\Development\ElasticvueLinkResource;
@@ -12,7 +13,6 @@ use App\Domains\Admin\Admin\Resources\Development\SwaggerLinkResource;
 use App\Domains\Admin\Admin\Resources\Development\TelescopeLinkResource;
 use App\Domains\Admin\Admin\Resources\Development\TotemLinkResource;
 use App\Domains\Catalog\Admin\Pages\ManageCatalogSettings;
-use App\Domains\Catalog\Admin\Resources\ProductAttributeResource;
 use App\Domains\Catalog\Admin\Resources\ProductCategoryResource;
 use App\Domains\Catalog\Admin\Resources\ProductResource;
 use App\Domains\Feedback\Admin\Pages\ManageFeedbackSettings;
@@ -142,7 +142,7 @@ return [
         'register' => [
             UserResource::class,
             ProductCategoryResource::class,
-            ProductAttributeResource::class,
+            AttributeResource::class,
             ProductResource::class,
             FeedbackResource::class,
             SwaggerLinkResource::class,

@@ -2,6 +2,7 @@
 
 namespace App\Domains\Admin\Helpers;
 
+use App\Components\Attributable\Admin\Resources\AttributeResource;
 use App\Domains\Admin\Admin\Resources\Development\ClockworkLinkResource;
 use App\Domains\Admin\Admin\Resources\Development\ElasticvueLinkResource;
 use App\Domains\Admin\Admin\Resources\Development\HorizonLinkResource;
@@ -13,7 +14,6 @@ use App\Domains\Admin\Admin\Resources\Development\SwaggerLinkResource;
 use App\Domains\Admin\Admin\Resources\Development\TelescopeLinkResource;
 use App\Domains\Admin\Admin\Resources\Development\TotemLinkResource;
 use App\Domains\Catalog\Admin\Pages\ManageCatalogSettings;
-use App\Domains\Catalog\Admin\Resources\ProductAttributeResource;
 use App\Domains\Catalog\Admin\Resources\ProductCategoryResource;
 use App\Domains\Catalog\Admin\Resources\ProductResource;
 use App\Domains\Feedback\Admin\Pages\ManageFeedbackSettings;
@@ -27,7 +27,7 @@ final class AdminNavigationSortHelper
         ManageFeedbackSettings::class,
         UserResource::class,
         FeedbackResource::class,
-        ProductAttributeResource::class,
+        AttributeResource::class,
         ProductCategoryResource::class,
         ProductResource::class,
         SwaggerLinkResource::class,

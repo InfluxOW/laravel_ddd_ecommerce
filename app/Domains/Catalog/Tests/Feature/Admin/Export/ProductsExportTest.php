@@ -2,9 +2,9 @@
 
 namespace App\Domains\Catalog\Tests\Feature\Admin\Export;
 
+use App\Components\Attributable\Database\Seeders\AttributeSeeder;
 use App\Domains\Admin\Tests\Feature\Admin\ExportTest;
 use App\Domains\Catalog\Admin\Resources\ProductResource\Pages\ListProducts;
-use App\Domains\Catalog\Database\Seeders\ProductAttributeSeeder;
 use App\Domains\Catalog\Database\Seeders\ProductAttributeValueSeeder;
 use App\Domains\Catalog\Database\Seeders\ProductCategorySeeder;
 use App\Domains\Catalog\Database\Seeders\ProductPriceSeeder;
@@ -18,10 +18,10 @@ final class ProductsExportTest extends ExportTest
     {
         $this->seed([
             ProductCategorySeeder::class,
-            ProductAttributeSeeder::class,
             ProductSeeder::class,
-            ProductAttributeValueSeeder::class,
             ProductPriceSeeder::class,
+            AttributeSeeder::class,
+            ProductAttributeValueSeeder::class,
         ]);
     }
 }

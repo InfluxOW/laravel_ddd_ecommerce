@@ -189,6 +189,7 @@ return [
         App\Components\Addressable\Providers\ComponentServiceProvider::class,
         App\Components\Mediable\Providers\ComponentServiceProvider::class,
         App\Components\Purchasable\Providers\ComponentServiceProvider::class,
+        App\Components\Attributable\Providers\ComponentServiceProvider::class,
     ],
 
     /*

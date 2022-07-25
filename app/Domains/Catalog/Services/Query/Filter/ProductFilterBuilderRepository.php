@@ -2,12 +2,12 @@
 
 namespace App\Domains\Catalog\Services\Query\Filter;
 
+use App\Components\Attributable\Models\Attribute;
+use App\Components\Attributable\Models\AttributeValue;
 use App\Components\Purchasable\Models\Price;
 use App\Components\Queryable\Classes\Filter\Resources\MultiselectFilter\NestedMultiselectFilterValues;
 use App\Components\Queryable\Classes\Filter\Resources\MultiselectFilter\NestedMultiselectFilterValuesAttribute;
 use App\Domains\Catalog\Models\Product;
-use App\Domains\Catalog\Models\ProductAttribute;
-use App\Domains\Catalog\Models\ProductAttributeValue;
 use App\Domains\Catalog\Models\ProductCategory;
 use App\Domains\Catalog\Models\Settings\CatalogSettings;
 use Illuminate\Database\Eloquent\Builder;
@@ -23,26 +23,27 @@ final class ProductFilterBuilderRepository
 
     public function getAttributeValues(SpatieQueryBuilder $productsQuery): Collection
     {
-        $attributeValuesQuery = DB::table('product_attribute_values')
-            ->whereIn('product_id', $productsQuery->getQuery()->select(['products.id']))
-            ->join('product_attributes', 'product_attributes.id', 'product_attribute_values.attribute_id')
-            ->select(['product_attribute_values.attribute_id', 'product_attribute_values.value_boolean', 'product_attribute_values.value_float', 'product_attribute_values.value_integer', 'product_attribute_values.value_string'])
-            ->distinct(['product_attribute_values.attribute_id', 'product_attribute_values.value_boolean', 'product_attribute_values.value_float', 'product_attribute_values.value_integer', 'product_attribute_values.value_string']);
+        $attributeValuesQuery = DB::table('attribute_values')
+            ->where('attributable_type', Product::class)
+            ->whereIn('attributable_id', $productsQuery->getQuery()->select(['products.id']))
+            ->join('attributes', 'attributes.id', 'attribute_values.attribute_id')
+            ->select(['attribute_values.attribute_id', 'attribute_values.value_boolean', 'attribute_values.value_float', 'attribute_values.value_integer', 'attribute_values.value_string'])
+            ->distinct(['attribute_values.attribute_id', 'attribute_values.value_boolean', 'attribute_values.value_float', 'attribute_values.value_integer', 'attribute_values.value_string']);
 
-        $attributeIdsQuery = $attributeValuesQuery->clone()->distinct(['product_attribute_values.attribute_id'])->select(['product_attribute_values.attribute_id']);
+        $attributeIdsQuery = $attributeValuesQuery->clone()->distinct(['attribute_values.attribute_id'])->select(['attribute_values.attribute_id']);
         $attributeValues = $attributeValuesQuery->get()->groupBy('attribute_id');
 
-        return ProductAttribute::query()
+        return Attribute::query()
             ->whereIn('id', $attributeIdsQuery)
             ->orderBy('title')
             ->get()
-            ->map(static function (ProductAttribute $attribute) use ($attributeValues): NestedMultiselectFilterValues {
+            ->map(static function (Attribute $attribute) use ($attributeValues): NestedMultiselectFilterValues {
                 /** @var Collection $values */
                 $values = $attributeValues->get($attribute->id);
 
                 return new NestedMultiselectFilterValues(
                     new NestedMultiselectFilterValuesAttribute($attribute->title, $attribute->slug, $attribute->values_type->responseValueType()),
-                    $values->pluck(ProductAttributeValue::getDatabaseValueColumnByAttributeType($attribute->values_type))->sort()->values()
+                    $values->pluck(AttributeValue::getDatabaseValueColumnByAttributeType($attribute->values_type))->sort()->values()
                 );
             });
     }

@@ -2,8 +2,8 @@
 
 namespace App\Domains\Generic\Database\Seeders;
 
+use App\Components\Attributable\Database\Seeders\AttributeSeeder;
 use App\Domains\Admin\Database\Seeders\AdminSeeder;
-use App\Domains\Catalog\Database\Seeders\ProductAttributeSeeder;
 use App\Domains\Catalog\Database\Seeders\ProductAttributeValueSeeder;
 use App\Domains\Catalog\Database\Seeders\ProductCategorySeeder;
 use App\Domains\Catalog\Database\Seeders\ProductPriceSeeder;
@@ -27,7 +27,7 @@ final class DatabaseSeeder extends Seeder
             FeedbackSeeder::class,
             AdminSeeder::class,
             ProductCategorySeeder::class,
-            ProductAttributeSeeder::class,
+            AttributeSeeder::class,
             ProductSeeder::class,
             ProductAttributeValueSeeder::class,
             ProductPriceSeeder::class,

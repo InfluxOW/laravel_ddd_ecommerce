@@ -2,10 +2,10 @@
 
 namespace App\Domains\Catalog\Admin\Resources;
 
+use App\Components\Attributable\Admin\RelationManagers\AttributeValuesRelationManager;
 use App\Components\Mediable\Admin\Components\Fields\MediaLibraryFileUpload;
 use App\Domains\Admin\Admin\Abstracts\Resource;
 use App\Domains\Admin\Admin\Components\Cards\TimestampsCard;
-use App\Domains\Catalog\Admin\Resources\ProductResource\RelationManagers\ProductAttributeValuesRelationManager;
 use App\Domains\Catalog\Admin\Resources\ProductResource\RelationManagers\ProductPricesRelationManager;
 use App\Domains\Catalog\Enums\Media\ProductMediaCollectionKey;
 use App\Domains\Catalog\Enums\Translation\ProductTranslationKey;
@@ -121,7 +121,7 @@ final class ProductResource extends Resource
     public static function getRelations(): array
     {
         return [
-            ProductAttributeValuesRelationManager::class,
+            AttributeValuesRelationManager::class,
             ProductPricesRelationManager::class,
         ];
     }

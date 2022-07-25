@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
+use App\Components\Attributable\Models\Attribute;
 use App\Domains\Catalog\Models\Product;
-use App\Domains\Catalog\Models\ProductAttribute;
 use App\Domains\Catalog\Models\ProductCategory;
 use App\Domains\Feedback\Models\Feedback;
 use App\Domains\Users\Models\User;
@@ -22,7 +22,7 @@ return [
      */
     'indexes' => [
         Product::class,
-        ProductAttribute::class,
+        Attribute::class,
         ProductCategory::class,
         Feedback::class,
         User::class,
