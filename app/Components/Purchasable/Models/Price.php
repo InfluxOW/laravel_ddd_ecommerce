@@ -13,7 +13,7 @@ use Illuminate\Database\Query\Expression;
 use Illuminate\Support\Facades\DB;
 
 /**
- * App\Domains\Catalog\Models\Price
+ * App\Components\Purchasable\Models\Price
  *
  * @property int                             $id
  * @property string                          $purchasable_type

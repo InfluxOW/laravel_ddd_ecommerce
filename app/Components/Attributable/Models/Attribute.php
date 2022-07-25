@@ -14,7 +14,7 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 /**
- * App\Domains\Catalog\Models\ProductAttribute
+ * App\Components\Attributable\Models\Attribute
  *
  * @property int                             $id
  * @property string                          $title

@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
- * App\Domains\Catalog\Models\ProductAttributeValue
+ * App\Components\Attributable\Models\AttributeValue
  *
  * @property int                             $id
  * @property string                          $attributable_type
