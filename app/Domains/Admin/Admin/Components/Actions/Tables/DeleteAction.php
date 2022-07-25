@@ -2,6 +2,7 @@
 
 namespace App\Domains\Admin\Admin\Components\Actions\Tables;
 
+use App\Domains\Admin\Admin\Abstracts\RelationManager;
 use App\Domains\Admin\Enums\Translation\Components\AdminActionTranslationKey;
 use App\Domains\Admin\Traits\Translation\HasTranslatableAdminActionsModals;
 use App\Domains\Admin\Traits\Translation\HasTranslatableAdminLabels;
@@ -20,7 +21,8 @@ final class DeleteAction extends \Filament\Tables\Actions\DeleteAction
             ->requiresConfirmation()
             ->action(fn (?Model $record) => $record?->delete())
             ->icon('heroicon-o-trash')
-            ->hidden(fn (?Model $record, Page $livewire): bool => ! $livewire::getResource()::canDelete($record))
+            /** @phpstan-ignore-next-line */
+            ->visible(fn (?Model $record, Page|RelationManager $livewire): bool => isset($record) && $livewire instanceof Page ? $livewire::getResource()::canDelete($record) : $livewire->canDelete($record))
             ->color('danger')));
 
         return $action;

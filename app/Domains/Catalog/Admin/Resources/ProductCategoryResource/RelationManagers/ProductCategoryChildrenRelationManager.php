@@ -66,29 +66,22 @@ final class ProductCategoryChildrenRelationManager extends RelationManager
         /** @var ProductCategory $category */
         $category = $this->ownerRecord;
 
-        return $this->shouldBeDisplayed() && $category->depth < ProductCategory::MAX_DEPTH;
+        return parent::canCreate() && $category->depth < ProductCategory::MAX_DEPTH;
+    }
+
+    /**
+     * @param ProductCategory $record
+     *
+     * @return bool
+     */
+    public function canDelete(Model $record): bool
+    {
+        return parent::canDelete($record) && ProductCategoryResource::canDelete($record);
     }
 
     protected function canDeleteAny(): bool
     {
-        return $this->shouldBeDisplayed() && ProductCategoryResource::canDeleteAny();
-    }
-
-    /** @param  ProductCategory  $record */
-    protected function canDelete(Model $record): bool
-    {
-        return $this->shouldBeDisplayed() && ProductCategoryResource::canDelete($record);
-    }
-
-    /** @param  ProductCategory  $record */
-    protected function canEdit(Model $record): bool
-    {
-        return $this->shouldBeDisplayed();
-    }
-
-    protected function getViewableResourcesMap(): array
-    {
-        return [ProductCategoryResource::class => ProductCategoryResource\Pages\ViewProductCategory::class];
+        return parent::canDeleteAny() && ProductCategoryResource::canDeleteAny();
     }
 
     /*

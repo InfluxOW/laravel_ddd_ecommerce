@@ -4,14 +4,12 @@ namespace App\Components\Purchasable\Admin\RelationManagers;
 
 use App\Components\Purchasable\Enums\Translation\PriceTranslationKey;
 use App\Domains\Admin\Admin\Abstracts\RelationManager;
-use App\Domains\Catalog\Admin\Resources\ProductResource;
 use App\Domains\Catalog\Models\Settings\CatalogSettings;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Tables\Columns\TextColumn;
-use Illuminate\Database\Eloquent\Model;
 
 final class PricesRelationManager extends RelationManager
 {
@@ -76,27 +74,7 @@ final class PricesRelationManager extends RelationManager
 
     protected function canCreate(): bool
     {
-        return isset($this->ownerRecord->prices) && $this->ownerRecord->prices->count() < count(app(CatalogSettings::class)->available_currencies) && $this->shouldBeDisplayed();
-    }
-
-    protected function canDeleteAny(): bool
-    {
-        return $this->shouldBeDisplayed();
-    }
-
-    protected function canDelete(Model $record): bool
-    {
-        return $this->shouldBeDisplayed();
-    }
-
-    protected function canEdit(Model $record): bool
-    {
-        return $this->shouldBeDisplayed();
-    }
-
-    protected function getViewableResourcesMap(): array
-    {
-        return [ProductResource::class => ProductResource\Pages\ViewProduct::class];
+        return parent::canCreate() && isset($this->ownerRecord->prices) && $this->ownerRecord->prices->count() < count(app(CatalogSettings::class)->available_currencies);
     }
 
     /*

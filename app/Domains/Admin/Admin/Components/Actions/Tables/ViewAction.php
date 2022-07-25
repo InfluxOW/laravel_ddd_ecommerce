@@ -18,9 +18,9 @@ final class ViewAction extends \Filament\Tables\Actions\ViewAction
     {
         /** @var self $action */
         $action = self::setTranslatableLabel(self::make(AdminActionTranslationKey::VIEW->value)
-            ->url(fn (Model $record, Page $livewire): string => $livewire::getResource()::getUrl('view', ['record' => $record]))
+            ->url(fn (Model $record, Page|RelationManager $livewire): ?string => $livewire instanceof Page ? $livewire::getResource()::getUrl('view', ['record' => $record]) : null)
             ->icon('heroicon-o-eye')
-            ->hidden(fn (Model $record, Page|RelationManager $livewire): bool => ! ($livewire instanceof Page ? $livewire::getResource()::canView($record) : $livewire::canViewForRecord($livewire->ownerRecord)))
+            ->visible(fn (Model $record, Page|RelationManager $livewire): bool => $livewire instanceof Page ? $livewire::getResource()::canView($record) : $livewire::canViewForRecord($livewire->ownerRecord))
             ->color('success'));
 
         return $action;

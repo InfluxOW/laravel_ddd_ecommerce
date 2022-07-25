@@ -5,13 +5,11 @@ namespace App\Components\Addressable\Admin\RelationManagers;
 use App\Components\Addressable\Enums\Translation\AddressesTranslationKey;
 use App\Components\Addressable\Models\Address;
 use App\Domains\Admin\Admin\Abstracts\RelationManager;
-use App\Domains\Users\Admin\Resources\UserResource;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Tables\Columns\TextColumn;
-use Illuminate\Database\Eloquent\Model;
 use Squire\Models\Country;
 use Squire\Models\Region;
 
@@ -71,35 +69,6 @@ final class AddressesRelationManager extends RelationManager
             ->filters([
                 //
             ]);
-    }
-
-    /*
-     * Policies
-     * */
-
-    protected function canCreate(): bool
-    {
-        return $this->shouldBeDisplayed();
-    }
-
-    protected function canDeleteAny(): bool
-    {
-        return $this->shouldBeDisplayed();
-    }
-
-    protected function canDelete(Model $record): bool
-    {
-        return $this->shouldBeDisplayed();
-    }
-
-    protected function canEdit(Model $record): bool
-    {
-        return $this->shouldBeDisplayed();
-    }
-
-    protected function getViewableResourcesMap(): array
-    {
-        return [UserResource::class => UserResource\Pages\ViewUser::class];
     }
 
     /*

@@ -3,7 +3,6 @@
 namespace App\Domains\Users\Admin\Resources\UserResource\RelationManagers;
 
 use App\Domains\Admin\Admin\Abstracts\RelationManager;
-use App\Domains\Users\Admin\Resources\UserResource;
 use App\Domains\Users\Enums\Translation\LoginHistoryTranslationKey;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\TextInput;
@@ -77,22 +76,7 @@ class UserLoginHistoryRelationManager extends RelationManager
      * Policies
      * */
 
-    protected function canView(Model $record): bool
-    {
-        return true;
-    }
-
     protected function canCreate(): bool
-    {
-        return false;
-    }
-
-    protected function canDeleteAny(): bool
-    {
-        return false;
-    }
-
-    protected function canDelete(Model $record): bool
     {
         return false;
     }
@@ -102,9 +86,14 @@ class UserLoginHistoryRelationManager extends RelationManager
         return false;
     }
 
-    protected function getViewableResourcesMap(): array
+    public function canDelete(Model $record): bool
     {
-        return [UserResource::class => UserResource\Pages\ViewUser::class];
+        return false;
+    }
+
+    protected function canDeleteAny(): bool
+    {
+        return false;
     }
 
     /*

@@ -7,14 +7,12 @@ use App\Components\Attributable\Enums\Translation\AttributeValueTranslationKey;
 use App\Components\Attributable\Models\Attribute;
 use App\Components\Attributable\Models\AttributeValue;
 use App\Domains\Admin\Admin\Abstracts\RelationManager;
-use App\Domains\Catalog\Admin\Resources\ProductResource;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Tables\Columns\TextColumn;
-use Illuminate\Database\Eloquent\Model;
 
 final class AttributeValuesRelationManager extends RelationManager
 {
@@ -87,27 +85,7 @@ final class AttributeValuesRelationManager extends RelationManager
 
     protected function canCreate(): bool
     {
-        return isset($this->ownerRecord->attributeValues) && $this->ownerRecord->attributeValues->count() < Attribute::query()->count() && $this->shouldBeDisplayed();
-    }
-
-    protected function canDeleteAny(): bool
-    {
-        return $this->shouldBeDisplayed();
-    }
-
-    protected function canDelete(Model $record): bool
-    {
-        return $this->shouldBeDisplayed();
-    }
-
-    protected function canEdit(Model $record): bool
-    {
-        return $this->shouldBeDisplayed();
-    }
-
-    protected function getViewableResourcesMap(): array
-    {
-        return [ProductResource::class => ProductResource\Pages\ViewProduct::class];
+        return parent::canCreate() && isset($this->ownerRecord->attributeValues) && $this->ownerRecord->attributeValues->count() < Attribute::query()->count();
     }
 
     /*
