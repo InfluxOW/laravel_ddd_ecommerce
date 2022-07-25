@@ -8,7 +8,6 @@ use App\Domains\Catalog\Admin\Pages\ManageCatalogSettings;
 use App\Domains\Catalog\Admin\Resources\ProductCategoryResource;
 use App\Domains\Catalog\Admin\Resources\ProductCategoryResource\RelationManagers\ProductCategoryChildrenRelationManager;
 use App\Domains\Catalog\Admin\Resources\ProductResource;
-use App\Domains\Catalog\Admin\Resources\ProductResource\RelationManagers\ProductPricesRelationManager;
 use App\Domains\Generic\Utils\LangUtils;
 
 return [
@@ -28,11 +27,6 @@ return [
         AdminRelationPropertyTranslationKey::TITLE->name => 'Children',
         AdminRelationPropertyTranslationKey::LABEL->name => 'child',
         AdminRelationPropertyTranslationKey::PLURAL_LABEL->name => 'children',
-    ],
-    ProductPricesRelationManager::class => [
-        AdminRelationPropertyTranslationKey::TITLE->name => 'Prices',
-        AdminRelationPropertyTranslationKey::LABEL->name => 'price',
-        AdminRelationPropertyTranslationKey::PLURAL_LABEL->name => 'prices',
     ],
     ManageCatalogSettings::class => [
         AdminPagePropertyTranslationKey::TITLE->name => 'Catalog Settings',

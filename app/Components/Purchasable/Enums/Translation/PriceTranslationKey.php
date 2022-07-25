@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Domains\Catalog\Enums\Translation;
+namespace App\Components\Purchasable\Enums\Translation;
 
-enum ProductPriceTranslationKey: string
+enum PriceTranslationKey: string
 {
     case PRICE = 'price';
     case PRICE_DISCOUNTED = 'price_discounted';

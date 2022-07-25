@@ -4,7 +4,6 @@ use App\Domains\Catalog\Enums\Query\Filter\ProductAllowedFilter;
 use App\Domains\Catalog\Enums\Query\Sort\ProductAllowedSort;
 use App\Domains\Catalog\Enums\Translation\CatalogSettingsTranslationKey;
 use App\Domains\Catalog\Enums\Translation\ProductCategoryTranslationKey;
-use App\Domains\Catalog\Enums\Translation\ProductPriceTranslationKey;
 use App\Domains\Catalog\Enums\Translation\ProductTranslationKey;
 
 return [
@@ -64,10 +63,5 @@ return [
         ProductTranslationKey::IS_DISPLAYABLE->name => 'Is Displayable',
         ProductTranslationKey::CREATED_AT->name => 'Created At',
         ProductTranslationKey::UPDATED_AT->name => 'Updated At',
-    ],
-    ProductPriceTranslationKey::class => [
-        ProductPriceTranslationKey::CURRENCY->name => 'Currency',
-        ProductPriceTranslationKey::PRICE->name => 'Price',
-        ProductPriceTranslationKey::PRICE_DISCOUNTED->name => 'Price Discounted',
     ],
 ];

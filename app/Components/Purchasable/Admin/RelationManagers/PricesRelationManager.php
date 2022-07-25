@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Domains\Catalog\Admin\Resources\ProductResource\RelationManagers;
+namespace App\Components\Purchasable\Admin\RelationManagers;
 
+use App\Components\Purchasable\Enums\Translation\PriceTranslationKey;
 use App\Domains\Admin\Admin\Abstracts\RelationManager;
 use App\Domains\Catalog\Admin\Resources\ProductResource;
-use App\Domains\Catalog\Enums\Translation\ProductPriceTranslationKey;
-use App\Domains\Catalog\Models\Product;
 use App\Domains\Catalog\Models\Settings\CatalogSettings;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -14,7 +13,7 @@ use Filament\Resources\Table;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
 
-final class ProductPricesRelationManager extends RelationManager
+final class PricesRelationManager extends RelationManager
 {
     protected static string $relationship = 'prices';
 
@@ -24,25 +23,19 @@ final class ProductPricesRelationManager extends RelationManager
 
         return $form
             ->schema(self::setTranslatableLabels([
-                Select::make(ProductPriceTranslationKey::CURRENCY->value)
+                Select::make(PriceTranslationKey::CURRENCY->value)
                     ->required()
                     ->options(function (RelationManager $livewire) use ($availableCurrencies): array {
-                        $currencies = $availableCurrencies
-                            ->filter(function (string $currency) use ($livewire): bool {
-                                /** @var Product $product */
-                                $product = $livewire->ownerRecord;
-
-                                return $product->prices->pluck('currency')->doesntContain($currency);
-                            });
+                        $currencies = $availableCurrencies->filter(fn (string $currency): bool => isset($livewire->ownerRecord->prices) && $livewire->ownerRecord->prices->pluck('currency')->doesntContain($currency));
 
                         return $currencies->combine($currencies)->toArray();
                     })
                     ->searchable()
                     ->columnSpan(2),
-                TextInput::make(ProductPriceTranslationKey::PRICE->value)
+                TextInput::make(PriceTranslationKey::PRICE->value)
                     ->required()
                     ->integer()
-                    ->disabled(fn (callable $get): bool => $get(ProductPriceTranslationKey::CURRENCY->value) === null)
+                    ->disabled(fn (callable $get): bool => $get(PriceTranslationKey::CURRENCY->value) === null)
                     ->afterStateHydrated(function (TextInput $component, ?array $state): void {
                         $amount = $state['amount'] ?? null;
                         if (isset($amount)) {
@@ -50,9 +43,9 @@ final class ProductPricesRelationManager extends RelationManager
                         }
                     })
                     ->dehydrateStateUsing(fn (string $state): int => (int) $state),
-                TextInput::make(ProductPriceTranslationKey::PRICE_DISCOUNTED->value)
+                TextInput::make(PriceTranslationKey::PRICE_DISCOUNTED->value)
                     ->nullable()
-                    ->disabled(fn (callable $get): bool => $get(ProductPriceTranslationKey::CURRENCY->value) === null)
+                    ->disabled(fn (callable $get): bool => $get(PriceTranslationKey::CURRENCY->value) === null)
                     ->integer()
                     ->afterStateHydrated(function (TextInput $component, ?array $state): void {
                         $component->state(($state === null) ? null : $state['amount']);
@@ -65,13 +58,13 @@ final class ProductPricesRelationManager extends RelationManager
     {
         return $table
             ->columns(self::setTranslatableLabels([
-                TextColumn::make(ProductPriceTranslationKey::CURRENCY->value)
+                TextColumn::make(PriceTranslationKey::CURRENCY->value)
                     ->sortable()
                     ->searchable(),
-                TextColumn::make(ProductPriceTranslationKey::PRICE->value)
+                TextColumn::make(PriceTranslationKey::PRICE->value)
                     ->sortable()
                     ->searchable(),
-                TextColumn::make(ProductPriceTranslationKey::PRICE_DISCOUNTED->value)
+                TextColumn::make(PriceTranslationKey::PRICE_DISCOUNTED->value)
                     ->sortable()
                     ->searchable(),
             ]));
@@ -83,10 +76,7 @@ final class ProductPricesRelationManager extends RelationManager
 
     protected function canCreate(): bool
     {
-        /** @var Product $product */
-        $product = $this->ownerRecord;
-
-        return $product->prices->count() < count(app(CatalogSettings::class)->available_currencies) && $this->shouldBeDisplayed();
+        return isset($this->ownerRecord->prices) && $this->ownerRecord->prices->count() < count(app(CatalogSettings::class)->available_currencies) && $this->shouldBeDisplayed();
     }
 
     protected function canDeleteAny(): bool
@@ -115,6 +105,6 @@ final class ProductPricesRelationManager extends RelationManager
 
     protected static function getTranslationKeyClass(): string
     {
-        return ProductPriceTranslationKey::class;
+        return PriceTranslationKey::class;
     }
 }
