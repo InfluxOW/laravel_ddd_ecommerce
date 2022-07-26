@@ -21,6 +21,8 @@ final class ProductCategoriesExportJob extends ExportJob
                 'parent' => fn (BelongsTo $query): BelongsTo => $query->select(['id', 'title']),
                 'products' => fn (BelongsToMany $query): BelongsToMany => $query->select(['title']),
             ])
+            /** @phpstan-ignore-next-line */
+            ->when(isset($this->recordsIds), fn (Builder $query): Builder => $query->whereIntegerInRaw('id', $this->recordsIds))
             ->select(['id', 'parent_id', 'title', 'slug', 'description', 'created_at', 'updated_at'])
             ->orderBy('id');
     }

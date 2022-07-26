@@ -24,6 +24,7 @@ return [
         AdminActionTranslationKey::DELETE->name => 'Delete',
         AdminActionTranslationKey::UPDATE->name => 'Update',
         AdminActionTranslationKey::EXPORT->name => 'Export',
+        AdminActionTranslationKey::BULK_EXPORT->name => 'Export Selected',
     ],
     AdminDatasetTranslationKey::class => [
         AdminDatasetTranslationKey::CUSTOMERS->name => 'Customers',

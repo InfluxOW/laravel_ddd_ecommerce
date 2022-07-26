@@ -19,6 +19,8 @@ final class UsersExportJob extends ExportJob
             ->with([
                 'loginHistory' => fn (HasMany $query): HasMany => $query->select(['id', 'user_id', 'created_at'])->orderByDesc('id')->limit(1),
             ])
+            /** @phpstan-ignore-next-line */
+            ->when(isset($this->recordsIds), fn (Builder $query): Builder => $query->whereIntegerInRaw('id', $this->recordsIds))
             ->select(['id', 'name', 'email', 'phone', 'email_verified_at', 'created_at', 'updated_at'])
             ->orderBy('id');
     }

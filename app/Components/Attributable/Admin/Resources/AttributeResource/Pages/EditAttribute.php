@@ -3,7 +3,7 @@
 namespace App\Components\Attributable\Admin\Resources\AttributeResource\Pages;
 
 use App\Components\Attributable\Admin\Resources\AttributeResource;
-use Filament\Resources\Pages\EditRecord;
+use App\Domains\Admin\Admin\Abstracts\Pages\EditRecord;
 
 final class EditAttribute extends EditRecord
 {

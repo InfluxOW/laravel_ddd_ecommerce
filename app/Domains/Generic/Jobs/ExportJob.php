@@ -20,6 +20,8 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 abstract class ExportJob implements FromQuery, WithStrictNullComparison, WithCustomQuerySize, WithHeadings, WithMapping, WithColumnFormatting, ShouldAutoSize, WithStyles
 {
+    protected Collection $recordsIds;
+
     private const DEFAULT_FONT = 'Times New Roman';
 
     private const DEFAULT_ALIGNMENT = ['horizontal' => 'center', 'vertical' => 'center'];
@@ -29,6 +31,11 @@ abstract class ExportJob implements FromQuery, WithStrictNullComparison, WithCus
     public function querySize(): int
     {
         return 200;
+    }
+
+    public function setRecordsIds(Collection $recordsIds): void
+    {
+        $this->recordsIds = $recordsIds;
     }
 
     public function styles(Worksheet $sheet): array

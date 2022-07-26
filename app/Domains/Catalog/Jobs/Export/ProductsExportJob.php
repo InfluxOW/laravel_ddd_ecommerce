@@ -23,6 +23,8 @@ final class ProductsExportJob extends ExportJob
                 'prices' => fn (MorphMany $query): MorphMany => $query->select(['price', 'price_discounted', 'currency', 'purchasable_id', 'purchasable_type']),
                 'attributeValues' => fn (MorphMany $query): MorphMany => $query->with(['attribute' => fn (BelongsTo $query): BelongsTo => $query->select(['id', 'title', 'values_type'])])->select(['attribute_id', 'attributable_id', 'attributable_type', 'value_string', 'value_integer', 'value_float', 'value_boolean']),
             ])
+            /** @phpstan-ignore-next-line */
+            ->when(isset($this->recordsIds), fn (Builder $query): Builder => $query->whereIntegerInRaw('id', $this->recordsIds))
             ->select(['id', 'title', 'slug', 'created_at', 'updated_at'])
             ->orderBy('id');
     }

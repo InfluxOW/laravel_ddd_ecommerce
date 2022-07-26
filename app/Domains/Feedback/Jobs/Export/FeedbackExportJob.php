@@ -16,6 +16,8 @@ final class FeedbackExportJob extends ExportJob
     {
         return Feedback::query()
             ->select(['id', 'username', 'email', 'phone', 'text', 'created_at'])
+            /** @phpstan-ignore-next-line */
+            ->when(isset($this->recordsIds), fn (Builder $query): Builder => $query->whereIntegerInRaw('id', $this->recordsIds))
             ->orderBy('id');
     }
 

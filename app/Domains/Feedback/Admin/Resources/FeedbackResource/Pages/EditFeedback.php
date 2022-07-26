@@ -2,8 +2,8 @@
 
 namespace App\Domains\Feedback\Admin\Resources\FeedbackResource\Pages;
 
+use App\Domains\Admin\Admin\Abstracts\Pages\EditRecord;
 use App\Domains\Feedback\Admin\Resources\FeedbackResource;
-use Filament\Resources\Pages\EditRecord;
 
 final class EditFeedback extends EditRecord
 {

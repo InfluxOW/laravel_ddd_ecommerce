@@ -2,8 +2,8 @@
 
 namespace App\Domains\Users\Admin\Resources\UserResource\Pages;
 
+use App\Domains\Admin\Admin\Abstracts\Pages\EditRecord;
 use App\Domains\Users\Admin\Resources\UserResource;
-use Filament\Resources\Pages\EditRecord;
 
 final class EditUser extends EditRecord
 {

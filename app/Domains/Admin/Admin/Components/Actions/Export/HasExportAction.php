@@ -1,37 +1,59 @@
 <?php
 
-namespace App\Domains\Admin\Admin\Components\Actions\Tables;
+namespace App\Domains\Admin\Admin\Components\Actions\Export;
 
-use App\Domains\Admin\Admin\Abstracts\Actions\Tables\Action;
+use App\Domains\Admin\Admin\Abstracts\Pages\EditRecord;
+use App\Domains\Admin\Admin\Abstracts\Pages\ViewRecord;
 use App\Domains\Admin\Enums\Translation\Components\Actions\ExportActionTranslationKey;
 use App\Domains\Admin\Enums\Translation\Components\AdminActionTranslationKey;
 use App\Domains\Admin\Enums\Translation\ExportFormat;
+use App\Domains\Admin\Traits\Translation\HasTranslatableAdminActionsModals;
+use App\Domains\Admin\Traits\Translation\HasTranslatableAdminLabels;
 use App\Domains\Generic\Interfaces\Exportable;
+use App\Domains\Generic\Jobs\ExportJob;
 use App\Domains\Generic\Utils\LangUtils;
 use Filament\Forms\Components\Select;
+use Filament\Resources\Pages\Page;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-final class ExportAction extends Action
+/**
+ * @internal
+ * */
+trait HasExportAction
 {
+    use HasTranslatableAdminLabels;
+    use HasTranslatableAdminActionsModals;
+
     /**
      * @param class-string<Model & Exportable> $model
      */
-    public static function create(string $model): self
+    public static function create(string $model): static
     {
-        /** @var self $action */
-        $action = self::setTranslatableModal(self::setTranslatableLabel(self::make(AdminActionTranslationKey::EXPORT->value)
-            ->button()
-            ->action(function (array $data) use ($model): BinaryFileResponse {
+        /** @var static $action */
+        $action = self::setTranslatableModal(self::setTranslatableLabel(self::make(static::getActionTranslationKey()->value)
+            ->action(function (Collection $records, Page $livewire, array $data) use ($model): BinaryFileResponse {
                 /** @var ExportFormat $format */
                 $format = ExportFormat::tryFrom($data[ExportActionTranslationKey::FORMAT->value]);
-                $job = $model::getExportJob();
                 $filename = Str::of($model)->classBasename()->plural()->snake()->lower()->value();
+
+                /** @var ExportJob $job */
+                $job = new ($model::getExportJob())();
+
+                if ($records->isNotEmpty()) {
+                    $job->setRecordsIds($records->pluck('id'));
+                } elseif ($livewire instanceof EditRecord || $livewire instanceof ViewRecord) {
+                    $recordId = $livewire->getRecord()->getKey();
+                    $job->setRecordsIds(collect($recordId));
+                    $filename = Str::of($model)->classBasename()->snake()->lower()->append("_{$recordId}")->value();
+                }
+
                 $file = "{$filename}.{$format->extension()}";
 
-                return Excel::download(new $job(), $file, $format->value, [
+                return Excel::download($job, $file, $format->value, [
                     'Content-Type' => $format->contentType(),
                     'Content-Disposition' => sprintf('inline; filename="%s"', $file),
                 ]);
@@ -57,8 +79,10 @@ final class ExportAction extends Action
 
     public static function getDefaultName(): ?string
     {
-        return AdminActionTranslationKey::EXPORT->value;
+        return static::getActionTranslationKey()->value;
     }
+
+    abstract protected static function getActionTranslationKey(): AdminActionTranslationKey;
 
     /*
      * Translation
@@ -66,6 +90,6 @@ final class ExportAction extends Action
 
     protected static function getTranslationKeyClass(): string
     {
-        return AdminActionTranslationKey::class;
+        return static::getActionTranslationKey()::class;
     }
 }

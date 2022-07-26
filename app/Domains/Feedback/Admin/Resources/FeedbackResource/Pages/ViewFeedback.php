@@ -2,8 +2,8 @@
 
 namespace App\Domains\Feedback\Admin\Resources\FeedbackResource\Pages;
 
+use App\Domains\Admin\Admin\Abstracts\Pages\ViewRecord;
 use App\Domains\Feedback\Admin\Resources\FeedbackResource;
-use Filament\Resources\Pages\ViewRecord;
 
 final class ViewFeedback extends ViewRecord
 {

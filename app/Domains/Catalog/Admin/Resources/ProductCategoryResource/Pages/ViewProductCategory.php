@@ -2,8 +2,8 @@
 
 namespace App\Domains\Catalog\Admin\Resources\ProductCategoryResource\Pages;
 
+use App\Domains\Admin\Admin\Abstracts\Pages\ViewRecord;
 use App\Domains\Catalog\Admin\Resources\ProductCategoryResource;
-use Filament\Resources\Pages\ViewRecord;
 
 final class ViewProductCategory extends ViewRecord
 {

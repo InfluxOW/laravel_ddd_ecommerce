@@ -2,31 +2,44 @@
 
 namespace App\Domains\Admin\Admin\Abstracts\Pages;
 
+use App\Domains\Admin\Admin\Components\Actions\Export\Tables\BulkExportTableAction;
+use App\Domains\Admin\Admin\Components\Actions\Export\Tables\ExportTableAction;
 use App\Domains\Admin\Admin\Components\Actions\Tables\DeleteAction;
-use App\Domains\Admin\Admin\Components\Actions\Tables\ExportAction;
 use App\Domains\Admin\Admin\Components\Actions\Tables\ViewAction;
 use App\Domains\Admin\Admin\Traits\AppliesSearchToTableQuery;
 use App\Domains\Generic\Interfaces\Exportable;
 use Filament\Resources\Pages\ListRecords as BaseListRecords;
-use Filament\Resources\Resource as FilamentResource;
 use Illuminate\Database\Eloquent\Model;
 
 abstract class ListRecords extends BaseListRecords
 {
     use AppliesSearchToTableQuery;
+    use ExportableResourcePage;
 
     protected function getTableHeaderActions(): array
     {
         $actions = parent::getTableHeaderActions();
-        /** @var FilamentResource $resource */
-        $resource = static::getResource();
-        $model = $resource::getModel();
-        $modelInterfaces = class_implements($model);
+        $model = $this->getModel();
 
-        if (is_array($modelInterfaces) && isset($modelInterfaces[Exportable::class])) {
+        if ($this->modelIsExportable($model)) {
             /** @var class-string<Model & Exportable> $model */
             $actions = array_merge($actions, [
-                ExportAction::create($model),
+                ExportTableAction::create($model),
+            ]);
+        }
+
+        return $actions;
+    }
+
+    protected function getTableBulkActions(): array
+    {
+        $actions = parent::getTableBulkActions();
+        $model = $this->getModel();
+
+        if ($this->modelIsExportable($model)) {
+            /** @var class-string<Model & Exportable> $model */
+            $actions = array_merge($actions, [
+                BulkExportTableAction::create($model),
             ]);
         }
 
