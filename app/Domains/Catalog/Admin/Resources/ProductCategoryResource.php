@@ -9,6 +9,7 @@ use App\Domains\Catalog\Admin\Resources\ProductCategoryResource\RelationManagers
 use App\Domains\Catalog\Enums\Media\ProductCategoryMediaCollectionKey;
 use App\Domains\Catalog\Enums\Translation\ProductCategoryTranslationKey;
 use App\Domains\Catalog\Models\ProductCategory;
+use App\Domains\Generic\Utils\LangUtils;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\MarkdownEditor;
@@ -54,9 +55,9 @@ final class ProductCategoryResource extends Resource
     public static function form(Form $form): Form
     {
         /** @var string $mainTabTitle */
-        $mainTabTitle = self::translateEnum(ProductCategoryTranslationKey::MAIN);
+        $mainTabTitle = LangUtils::translateEnum(ProductCategoryTranslationKey::MAIN);
         /** @var string $statisticsTabTitle */
-        $statisticsTabTitle = self::translateEnum(ProductCategoryTranslationKey::STATISTICS);
+        $statisticsTabTitle = LangUtils::translateEnum(ProductCategoryTranslationKey::STATISTICS);
 
         return $form
             ->schema([

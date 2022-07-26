@@ -7,6 +7,7 @@ use App\Components\Attributable\Enums\Translation\AttributeTranslationKey;
 use App\Components\Attributable\Models\Attribute;
 use App\Domains\Admin\Admin\Abstracts\Resource;
 use App\Domains\Admin\Admin\Components\Cards\TimestampsCard;
+use App\Domains\Generic\Utils\LangUtils;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -61,7 +62,7 @@ final class AttributeResource extends Resource
                             ->placeholder('width'),
                         Select::makeTranslated(AttributeTranslationKey::VALUES_TYPE)
                             ->required()
-                            ->options(collect(AttributeValuesType::cases())->reduce(fn (Collection $acc, AttributeValuesType $valuesType): Collection => tap($acc, static fn () => $acc->offsetSet($valuesType->value, self::translateEnum($valuesType))), collect([])))
+                            ->options(collect(AttributeValuesType::cases())->reduce(fn (Collection $acc, AttributeValuesType $valuesType): Collection => tap($acc, static fn () => $acc->offsetSet($valuesType->value, LangUtils::translateEnum($valuesType))), collect([])))
                             ->searchable(),
                     ])
                     ->columnSpan(2),

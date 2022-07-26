@@ -26,9 +26,4 @@ trait TranslatableAdmin
     {
         return LangUtils::translateValue(AppUtils::guessServiceProviderNamespace(static::class), TranslationFilename::ADMIN, $enum->name, static::class, $allowClosures);
     }
-
-    protected static function translateEnum(UnitEnum $enum, bool $allowClosures = false): string|Closure
-    {
-        return LangUtils::translateEnum($enum, allowClosures: $allowClosures);
-    }
 }

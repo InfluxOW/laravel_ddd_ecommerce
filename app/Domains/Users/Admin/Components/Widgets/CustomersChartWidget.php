@@ -4,6 +4,7 @@ namespace App\Domains\Users\Admin\Components\Widgets;
 
 use App\Domains\Admin\Enums\Translation\Components\AdminDatasetTranslationKey;
 use App\Domains\Admin\Traits\Translation\TranslatableAdminWidget;
+use App\Domains\Generic\Utils\LangUtils;
 use App\Domains\Users\Models\User;
 use Filament\Widgets\LineChartWidget;
 use Flowframe\Trend\Trend;
@@ -28,7 +29,7 @@ final class CustomersChartWidget extends LineChartWidget
         return [
             'datasets' => [
                 [
-                    'label' => self::translateEnum(AdminDatasetTranslationKey::CUSTOMERS),
+                    'label' => LangUtils::translateEnum(AdminDatasetTranslationKey::CUSTOMERS),
                     'data' => $data->map(fn (TrendValue $value) => $value->aggregate),
                 ],
             ],
