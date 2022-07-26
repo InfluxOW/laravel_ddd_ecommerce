@@ -2,14 +2,15 @@
 
 namespace App\Domains\Admin\Admin\Abstracts;
 
+use App\Domains\Admin\Enums\Translation\AdminResourcePropertyTranslationKey;
 use App\Domains\Admin\Traits\HasNavigationSort;
-use App\Domains\Admin\Traits\Translation\TranslatableAdminResource;
+use App\Domains\Admin\Traits\Translation\Internal\TranslatableAdmin;
 use Filament\Resources\Resource as BaseResource;
 use Illuminate\Database\Eloquent\Model;
 
 abstract class SimpleResource extends BaseResource
 {
-    use TranslatableAdminResource;
+    use TranslatableAdmin;
     use HasNavigationSort;
 
     public static function getGlobalSearchResultUrl(Model $record): ?string
@@ -23,5 +24,41 @@ abstract class SimpleResource extends BaseResource
         }
 
         return null;
+    }
+
+    /*
+     * Translated
+     * */
+
+    public static function getLabel(): string
+    {
+        /** @var string $translation */
+        $translation = self::translateComponentProperty(AdminResourcePropertyTranslationKey::LABEL);
+
+        return $translation;
+    }
+
+    public static function getPluralLabel(): string
+    {
+        /** @var string $translation */
+        $translation = self::translateComponentProperty(AdminResourcePropertyTranslationKey::PLURAL_LABEL);
+
+        return $translation;
+    }
+
+    protected static function getNavigationLabel(): string
+    {
+        /** @var string $translation */
+        $translation = self::translateComponentProperty(AdminResourcePropertyTranslationKey::NAVIGATION_LABEL);
+
+        return $translation;
+    }
+
+    protected static function getNavigationGroup(): ?string
+    {
+        /** @var string $translation */
+        $translation = self::translateComponentProperty(AdminResourcePropertyTranslationKey::NAVIGATION_GROUP);
+
+        return $translation;
     }
 }

@@ -4,8 +4,6 @@ namespace App\Domains\Catalog\Admin\Pages;
 
 use Akaunting\Money\Currency;
 use App\Domains\Admin\Admin\Abstracts\SettingsPage;
-use App\Domains\Admin\Traits\HasNavigationSort;
-use App\Domains\Admin\Traits\Translation\TranslatableAdminPage;
 use App\Domains\Catalog\Enums\Translation\CatalogSettingsTranslationKey;
 use App\Domains\Catalog\Models\Settings\CatalogSettings;
 use Filament\Forms\Components\MultiSelect;
@@ -14,9 +12,6 @@ use Illuminate\Support\Collection;
 
 final class ManageCatalogSettings extends SettingsPage
 {
-    use TranslatableAdminPage;
-    use HasNavigationSort;
-
     protected static string $settings = CatalogSettings::class;
 
     protected static ?string $slug = 'settings/catalog';

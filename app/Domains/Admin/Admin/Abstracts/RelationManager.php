@@ -5,8 +5,9 @@ namespace App\Domains\Admin\Admin\Abstracts;
 use App\Domains\Admin\Admin\Components\Actions\Tables\DeleteAction;
 use App\Domains\Admin\Admin\Components\Actions\Tables\ViewAction;
 use App\Domains\Admin\Admin\Traits\AppliesSearchToTableQuery;
+use App\Domains\Admin\Enums\Translation\AdminRelationPropertyTranslationKey;
 use App\Domains\Admin\Traits\HasNavigationSort;
-use App\Domains\Admin\Traits\Translation\TranslatableAdminRelation;
+use App\Domains\Admin\Traits\Translation\Internal\TranslatableAdmin;
 use Filament\Resources\Pages\Page;
 use Filament\Resources\Pages\ViewRecord;
 use Filament\Resources\RelationManagers\RelationManager as BaseRelationManager;
@@ -21,7 +22,7 @@ use Illuminate\Database\Eloquent\Model;
 
 abstract class RelationManager extends BaseRelationManager
 {
-    use TranslatableAdminRelation;
+    use TranslatableAdmin;
     use HasNavigationSort;
     use AppliesSearchToTableQuery;
 
@@ -101,6 +102,34 @@ abstract class RelationManager extends BaseRelationManager
         $pageClassParents = class_parents($pageClass);
 
         return empty($pageClassParents[ViewRecord::class]);
+    }
+
+    /*
+     * Translated
+     * */
+
+    protected static function getRecordLabel(): string
+    {
+        /** @var string $translation */
+        $translation = self::translateComponentProperty(AdminRelationPropertyTranslationKey::LABEL);
+
+        return $translation;
+    }
+
+    protected static function getPluralRecordLabel(): string
+    {
+        /** @var string $translation */
+        $translation = self::translateComponentProperty(AdminRelationPropertyTranslationKey::PLURAL_LABEL);
+
+        return $translation;
+    }
+
+    public static function getTitle(): string
+    {
+        /** @var string $translation */
+        $translation = self::translateComponentProperty(AdminRelationPropertyTranslationKey::TITLE);
+
+        return $translation;
     }
 
     /*
