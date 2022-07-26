@@ -6,7 +6,6 @@ use App\Domains\Admin\Admin\Components\Actions\Tables\DeleteAction;
 use App\Domains\Admin\Admin\Components\Actions\Tables\ViewAction;
 use App\Domains\Admin\Admin\Traits\AppliesSearchToTableQuery;
 use App\Domains\Admin\Traits\HasNavigationSort;
-use App\Domains\Admin\Traits\Translation\HasTranslatableAdminLabels;
 use App\Domains\Admin\Traits\Translation\TranslatableAdminRelation;
 use Filament\Resources\Pages\Page;
 use Filament\Resources\Pages\ViewRecord;
@@ -23,7 +22,6 @@ use Illuminate\Database\Eloquent\Model;
 abstract class RelationManager extends BaseRelationManager
 {
     use TranslatableAdminRelation;
-    use HasTranslatableAdminLabels;
     use HasNavigationSort;
     use AppliesSearchToTableQuery;
 

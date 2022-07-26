@@ -19,6 +19,9 @@ enum ProductCategoryTranslationKey: string
     case IS_VISIBLE = 'is_visible';
     case IS_DISPLAYABLE = 'is_displayable';
 
+    case PRODUCTS_COUNT = 'products_count';
+    case OVERALL_PRODUCTS_COUNT = 'overall_products_count';
+
     case IMAGES = 'images';
     case PRODUCTS_STRING = 'products_string';
 

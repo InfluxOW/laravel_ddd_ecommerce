@@ -2,7 +2,6 @@
 
 namespace App\Domains\Admin\Admin\Abstracts;
 
-use App\Domains\Admin\Traits\Translation\HasTranslatableAdminLabels;
 use App\Domains\Generic\Traits\Models\Searchable;
 use Filament\GlobalSearch\GlobalSearchResult;
 use Illuminate\Database\Eloquent\Model;
@@ -10,8 +9,6 @@ use Illuminate\Support\Collection;
 
 abstract class Resource extends SimpleResource
 {
-    use HasTranslatableAdminLabels;
-
     public static function getGlobalSearchResults(string $searchQuery): Collection
     {
         /** @var Model $model */

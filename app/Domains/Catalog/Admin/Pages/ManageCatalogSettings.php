@@ -5,7 +5,6 @@ namespace App\Domains\Catalog\Admin\Pages;
 use Akaunting\Money\Currency;
 use App\Domains\Admin\Admin\Abstracts\SettingsPage;
 use App\Domains\Admin\Traits\HasNavigationSort;
-use App\Domains\Admin\Traits\Translation\HasTranslatableAdminLabels;
 use App\Domains\Admin\Traits\Translation\TranslatableAdminPage;
 use App\Domains\Catalog\Enums\Translation\CatalogSettingsTranslationKey;
 use App\Domains\Catalog\Models\Settings\CatalogSettings;
@@ -16,7 +15,6 @@ use Illuminate\Support\Collection;
 final class ManageCatalogSettings extends SettingsPage
 {
     use TranslatableAdminPage;
-    use HasTranslatableAdminLabels;
     use HasNavigationSort;
 
     protected static string $settings = CatalogSettings::class;
@@ -27,8 +25,8 @@ final class ManageCatalogSettings extends SettingsPage
 
     protected function getFormSchema(): array
     {
-        return self::setTranslatableLabels([
-            MultiSelect::make(CatalogSettingsTranslationKey::AVAILABLE_CURRENCIES->value)
+        return [
+            MultiSelect::makeTranslated(CatalogSettingsTranslationKey::AVAILABLE_CURRENCIES)
                 ->required()
                 ->options(function (callable $get): array {
                     $currencies = collect(Currency::getCurrencies());
@@ -42,7 +40,7 @@ final class ManageCatalogSettings extends SettingsPage
                         ->toArray();
                 })
                 ->getOptionLabelsUsing(fn (array $values): array => collect($values)->reduce(fn (Collection $acc, string $currency): Collection => tap($acc, static fn () => $acc->offsetSet($currency, currency($currency)->getName())), collect([]))->toArray()),
-            MultiSelect::make(CatalogSettingsTranslationKey::REQUIRED_CURRENCIES->value)
+            MultiSelect::makeTranslated(CatalogSettingsTranslationKey::REQUIRED_CURRENCIES)
                 ->required()
                 ->options(function (callable $get): array {
                     $currencies = collect(Currency::getCurrencies());
@@ -58,18 +56,9 @@ final class ManageCatalogSettings extends SettingsPage
                 })
                 ->getOptionLabelsUsing(fn (array $values): array => collect($values)->reduce(fn (Collection $acc, string $currency): Collection => tap($acc, static fn () => $acc->offsetSet($currency, currency($currency)->getName())), collect([]))->toArray()),
 
-            Select::make(CatalogSettingsTranslationKey::DEFAULT_CURRENCY->value)
+            Select::makeTranslated(CatalogSettingsTranslationKey::DEFAULT_CURRENCY)
                 ->required()
                 ->options(fn (callable $get): array => array_combine($get(CatalogSettingsTranslationKey::AVAILABLE_CURRENCIES->value), array_map(static fn (string $currency) => currency($currency)->getName(), $get(CatalogSettingsTranslationKey::AVAILABLE_CURRENCIES->value)))),
-        ]);
-    }
-
-    /*
-     * Translation
-     * */
-
-    protected static function getTranslationKeyClass(): string
-    {
-        return CatalogSettingsTranslationKey::class;
+        ];
     }
 }

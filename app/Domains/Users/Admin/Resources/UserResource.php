@@ -63,27 +63,27 @@ final class UserResource extends Resource
         return $form
             ->schema([
                 Card::make()
-                    ->schema(self::setTranslatableLabels([
+                    ->schema([
                         Grid::make()
-                            ->schema(self::setTranslatableLabels([
-                                TextInput::make(UserTranslationKey::NAME->value)
+                            ->schema([
+                                TextInput::makeTranslated(UserTranslationKey::NAME)
                                     ->required()
                                     ->minValue(2)
                                     ->maxLength(255)
                                     ->placeholder('John Doe'),
-                                TextInput::make(UserTranslationKey::EMAIL->value)
+                                TextInput::makeTranslated(UserTranslationKey::EMAIL)
                                     ->required()
                                     ->email()
                                     ->maxLength(255)
                                     ->placeholder('john_doe@gmail.com'),
-                                TextInput::make(UserTranslationKey::PHONE->value)
+                                TextInput::makeTranslated(UserTranslationKey::PHONE)
                                     ->nullable()
                                     ->maxLength(18)
                                     ->mask(fn (TextInput\Mask $mask): TextInput\Mask => $mask->pattern('+0 (000) 000-00-00'))
                                     ->tel(),
-                            ]))
+                            ])
                             ->columns(3),
-                        TextInput::make(UserTranslationKey::PASSWORD->value)
+                        TextInput::makeTranslated(UserTranslationKey::PASSWORD)
                             ->required(fn (Page $livewire): bool => $livewire instanceof CreateRecord)
                             ->password()
                             ->hidden(fn (Page $livewire): bool => $livewire instanceof ViewRecord)
@@ -93,11 +93,11 @@ final class UserResource extends Resource
                             ->maxLength(255)
                             ->placeholder('Password')
                             ->columnSpan(2),
-                        DateTimePicker::make(UserTranslationKey::EMAIL_VERIFIED_AT->value)
+                        DateTimePicker::makeTranslated(UserTranslationKey::EMAIL_VERIFIED_AT)
                             ->nullable()
                             ->placeholder(Carbon::now())
                             ->columnSpan(2),
-                    ]))
+                    ])
                     ->columnSpan(2),
                 TimestampsCard::make()
                     ->columnSpan(1),
@@ -108,11 +108,11 @@ final class UserResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->columns(self::setTranslatableLabels([
-                TextColumn::make(UserTranslationKey::NAME->value)->sortable()->searchable(),
-                TextColumn::make(UserTranslationKey::EMAIL->value)->sortable()->searchable(),
-                TextColumn::make(UserTranslationKey::PHONE->value)->sortable()->searchable(),
-            ]))
+            ->columns([
+                TextColumn::makeTranslated(UserTranslationKey::NAME)->sortable()->searchable(),
+                TextColumn::makeTranslated(UserTranslationKey::EMAIL)->sortable()->searchable(),
+                TextColumn::makeTranslated(UserTranslationKey::PHONE)->sortable()->searchable(),
+            ])
             ->filters([
                 //
             ]);
@@ -147,14 +147,5 @@ final class UserResource extends Resource
     public static function canDelete(Model $record): bool
     {
         return false;
-    }
-
-    /*
-     * Translation
-     * */
-
-    protected static function getTranslationKeyClass(): string
-    {
-        return UserTranslationKey::class;
     }
 }

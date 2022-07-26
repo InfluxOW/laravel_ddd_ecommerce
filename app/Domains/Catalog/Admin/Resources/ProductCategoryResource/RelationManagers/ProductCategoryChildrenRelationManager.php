@@ -41,11 +41,11 @@ final class ProductCategoryChildrenRelationManager extends RelationManager
                 /* @phpstan-ignore-next-line */
                 Action::make('↓')->button()->action(fn (ProductCategory $record): ProductCategory|Node => ($record->left === $record->parent?->children->max('left')) ? $record : $record->moveRight())->visible(fn (Page|RelationManager $livewire, ProductCategory $record) => $livewire->canEdit($record)),
             ])
-            ->columns(self::setTranslatableLabels([
-                TextColumn::make(ProductCategoryTranslationKey::LEFT->value),
-                TextColumn::make(ProductCategoryTranslationKey::TITLE->value)->searchable(),
-                TextColumn::make(ProductCategoryTranslationKey::SLUG->value)->searchable(),
-            ]))
+            ->columns([
+                TextColumn::makeTranslated(ProductCategoryTranslationKey::LEFT),
+                TextColumn::makeTranslated(ProductCategoryTranslationKey::TITLE)->searchable(),
+                TextColumn::makeTranslated(ProductCategoryTranslationKey::SLUG)->searchable(),
+            ])
             ->filters([
                 //
             ]);
@@ -82,14 +82,5 @@ final class ProductCategoryChildrenRelationManager extends RelationManager
     protected function canDeleteAny(): bool
     {
         return parent::canDeleteAny() && ProductCategoryResource::canDeleteAny();
-    }
-
-    /*
-     * Translation
-     * */
-
-    protected static function getTranslationKeyClass(): string
-    {
-        return ProductCategoryTranslationKey::class;
     }
 }

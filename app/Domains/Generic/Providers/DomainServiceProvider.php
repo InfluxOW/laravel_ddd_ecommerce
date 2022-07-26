@@ -27,7 +27,7 @@ final class DomainServiceProvider extends ServiceProvider
         RouteServiceProvider::class,
     ];
 
-    public function afterBooting(): void
+    protected function afterBooting(): void
     {
         $this->registerMacroses();
     }

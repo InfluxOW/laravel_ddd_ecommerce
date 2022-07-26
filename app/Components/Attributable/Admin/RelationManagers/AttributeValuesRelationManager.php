@@ -21,8 +21,8 @@ final class AttributeValuesRelationManager extends RelationManager
     public static function form(Form $form): Form
     {
         return $form
-            ->schema(self::setTranslatableLabels([
-                Select::make(AttributeValueTranslationKey::ATTRIBUTE->value)
+            ->schema([
+                Select::makeTranslated(AttributeValueTranslationKey::ATTRIBUTE)
                     ->required()
                     ->id(fn (RelationManager $livewire): ?string => isset($livewire->ownerRecord->attributeValues) ? $livewire->ownerRecord->attributeValues->pluck('attribute_id')->implode('|') : null)
                     ->relationship('attribute', 'title')
@@ -43,37 +43,37 @@ final class AttributeValuesRelationManager extends RelationManager
                     })
                     ->reactive()
                     ->searchable(fn (RelationManager $livewire): bool => $livewire->canCreate()),
-                TextInput::make(AttributeValueTranslationKey::VALUE_STRING->value)
+                TextInput::makeTranslated(AttributeValueTranslationKey::VALUE_STRING)
                     ->required()
                     ->hidden(fn (callable $get): bool => $get(AttributeValueTranslationKey::ATTRIBUTE->value) === null)
                     ->visible(fn (callable $get): bool => Attribute::query()->where('id', $get(AttributeValueTranslationKey::ATTRIBUTE->value))->first()?->values_type === AttributeValuesType::STRING),
-                TextInput::make(AttributeValueTranslationKey::VALUE_INTEGER->value)
+                TextInput::makeTranslated(AttributeValueTranslationKey::VALUE_INTEGER)
                     ->required()
                     ->integer()
                     ->hidden(fn (callable $get): bool => $get(AttributeValueTranslationKey::ATTRIBUTE->value) === null)
                     ->visible(fn (callable $get): bool => Attribute::query()->where('id', $get(AttributeValueTranslationKey::ATTRIBUTE->value))->first()?->values_type === AttributeValuesType::INTEGER),
-                TextInput::make(AttributeValueTranslationKey::VALUE_FLOAT->value)
+                TextInput::makeTranslated(AttributeValueTranslationKey::VALUE_FLOAT)
                     ->required()
                     ->numeric()
                     ->hidden(fn (callable $get): bool => $get(AttributeValueTranslationKey::ATTRIBUTE->value) === null)
                     ->visible(fn (callable $get): bool => Attribute::query()->where('id', $get(AttributeValueTranslationKey::ATTRIBUTE->value))->first()?->values_type === AttributeValuesType::FLOAT),
-                Toggle::make(AttributeValueTranslationKey::VALUE_BOOLEAN->value)
+                Toggle::makeTranslated(AttributeValueTranslationKey::VALUE_BOOLEAN)
                     ->required()
                     ->inline(false)
                     ->hidden(fn (callable $get): bool => $get(AttributeValueTranslationKey::ATTRIBUTE->value) === null)
                     ->visible(fn (callable $get): bool => Attribute::query()->where('id', $get(AttributeValueTranslationKey::ATTRIBUTE->value))->first()?->values_type === AttributeValuesType::BOOLEAN),
-            ]));
+            ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
-            ->columns(self::setTranslatableLabels([
-                TextColumn::make(AttributeValueTranslationKey::ATTRIBUTE_TITLE->value)
+            ->columns([
+                TextColumn::makeTranslated(AttributeValueTranslationKey::ATTRIBUTE_TITLE)
                     ->sortable()
                     ->searchable(),
-                TextColumn::make(AttributeValueTranslationKey::READABLE_VALUE->value),
-            ]))
+                TextColumn::makeTranslated(AttributeValueTranslationKey::READABLE_VALUE),
+            ])
             ->filters([
                 //
             ]);

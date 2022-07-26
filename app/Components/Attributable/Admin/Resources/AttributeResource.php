@@ -44,40 +44,40 @@ final class AttributeResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema(self::setTranslatableLabels([
+            ->schema([
                 Card::make()
-                    ->schema(self::setTranslatableLabels([
-                        TextInput::make(AttributeTranslationKey::TITLE->value)
+                    ->schema([
+                        TextInput::makeTranslated(AttributeTranslationKey::TITLE)
                             ->required()
                             ->reactive()
                             ->afterStateUpdated(fn (callable $set, $state): mixed => $set(AttributeTranslationKey::SLUG->value, Str::slug($state)))
                             ->minValue(2)
                             ->maxLength(255)
                             ->placeholder('Width'),
-                        TextInput::make(AttributeTranslationKey::SLUG->value)
+                        TextInput::makeTranslated(AttributeTranslationKey::SLUG)
                             ->required()
                             ->minValue(2)
                             ->maxLength(255)
                             ->placeholder('width'),
-                        Select::make(AttributeTranslationKey::VALUES_TYPE->value)
+                        Select::makeTranslated(AttributeTranslationKey::VALUES_TYPE)
                             ->required()
                             ->options(collect(AttributeValuesType::cases())->reduce(fn (Collection $acc, AttributeValuesType $valuesType): Collection => tap($acc, static fn () => $acc->offsetSet($valuesType->value, self::translateEnum($valuesType))), collect([])))
                             ->searchable(),
-                    ]))
+                    ])
                     ->columnSpan(2),
                 TimestampsCard::make()
                     ->columnSpan(1),
-            ]))
+            ])
             ->columns(3);
     }
 
     public static function table(Table $table): Table
     {
         return $table
-            ->columns(self::setTranslatableLabels([
-                TextColumn::make(AttributeTranslationKey::TITLE->value)->sortable()->searchable(),
-                TextColumn::make(AttributeTranslationKey::SLUG->value)->searchable(),
-            ]))
+            ->columns([
+                TextColumn::makeTranslated(AttributeTranslationKey::TITLE)->sortable()->searchable(),
+                TextColumn::makeTranslated(AttributeTranslationKey::SLUG)->searchable(),
+            ])
             ->filters([
                 //
             ]);

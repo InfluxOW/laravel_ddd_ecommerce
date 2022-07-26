@@ -48,15 +48,15 @@ final class ProductResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema(self::setTranslatableLabels([
+            ->schema([
                 Card::make()
-                    ->schema(self::setTranslatableLabels([
-                        Toggle::make(ProductTranslationKey::IS_VISIBLE->value)
+                    ->schema([
+                        Toggle::makeTranslated(ProductTranslationKey::IS_VISIBLE)
                             ->columnSpan(1),
-                        Toggle::make(ProductTranslationKey::IS_DISPLAYABLE->value)
+                        Toggle::makeTranslated(ProductTranslationKey::IS_DISPLAYABLE)
                             ->disabled()
                             ->columnSpan(1),
-                        TextInput::make(ProductTranslationKey::TITLE->value)
+                        TextInput::makeTranslated(ProductTranslationKey::TITLE)
                             ->required()
                             ->reactive()
                             ->afterStateUpdated(fn (callable $set, $state): mixed => $set(ProductTranslationKey::SLUG->value, Str::slug($state)))
@@ -64,26 +64,26 @@ final class ProductResource extends Resource
                             ->maxLength(255)
                             ->placeholder('TV')
                             ->columnSpan(1),
-                        TextInput::make(ProductTranslationKey::SLUG->value)
+                        TextInput::makeTranslated(ProductTranslationKey::SLUG)
                             ->required()
                             ->minValue(2)
                             ->maxLength(255)
                             ->placeholder('tv')
                             ->columnSpan(1),
-                        MarkdownEditor::make(ProductTranslationKey::DESCRIPTION->value)
+                        MarkdownEditor::makeTranslated(ProductTranslationKey::DESCRIPTION)
                             ->required()
                             ->disableToolbarButtons([
                                 'attachFiles',
                             ])
                             ->columnSpan(2),
-                    ]))
+                    ])
                     ->columnSpan(2),
                 TimestampsCard::make()
                     ->columnSpan(1),
                 Card::make()
                     ->columnSpan(3)
-                    ->schema(self::setTranslatableLabels([
-                        MultiSelect::make(ProductTranslationKey::CATEGORIES->value)
+                    ->schema([
+                        MultiSelect::makeTranslated(ProductTranslationKey::CATEGORIES)
                             ->relationship('categories', 'title')
                             ->options(fn (?Product $record, callable $get): array => ProductCategory::query()
                                 ->hasLimitedDepth()
@@ -92,8 +92,8 @@ final class ProductResource extends Resource
                                 ->orderBy('left')
                                 ->pluck('title', 'id')
                                 ->toArray()),
-                    ])),
-                MediaLibraryFileUpload::make(ProductTranslationKey::IMAGES->value)
+                    ]),
+                MediaLibraryFileUpload::makeTranslated(ProductTranslationKey::IMAGES)
                     ->collection(ProductMediaCollectionKey::IMAGES->value)
                     ->multiple()
                     ->minFiles(1)
@@ -102,17 +102,17 @@ final class ProductResource extends Resource
                     ->preserveFilenames()
                     ->enableReordering()
                     ->columnSpan(3),
-            ]))
+            ])
             ->columns(3);
     }
 
     public static function table(Table $table): Table
     {
         return $table
-            ->columns(self::setTranslatableLabels([
-                TextColumn::make(ProductTranslationKey::TITLE->value)->sortable()->searchable(),
-                TextColumn::make(ProductTranslationKey::SLUG->value)->searchable(),
-            ]))
+            ->columns([
+                TextColumn::makeTranslated(ProductTranslationKey::TITLE)->sortable()->searchable(),
+                TextColumn::makeTranslated(ProductTranslationKey::SLUG)->searchable(),
+            ])
             ->filters([
                 //
             ]);
@@ -139,14 +139,5 @@ final class ProductResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()->with(['attributeValues.attribute', 'prices', 'media.model']);
-    }
-
-    /*
-     * Translation
-     * */
-
-    protected static function getTranslationKeyClass(): string
-    {
-        return ProductTranslationKey::class;
     }
 }

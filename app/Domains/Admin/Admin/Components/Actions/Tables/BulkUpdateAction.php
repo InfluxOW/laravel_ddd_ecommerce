@@ -10,17 +10,8 @@ final class BulkUpdateAction extends BulkAction
     public static function create(): self
     {
         /** @var self $action */
-        $action = self::setTranslatableModal(self::setTranslatableLabel(self::make(AdminActionTranslationKey::UPDATE->value)->icon('heroicon-o-pencil')));
+        $action = self::setTranslatableModal(self::makeTranslated(AdminActionTranslationKey::UPDATE)->icon('heroicon-o-pencil'));
 
         return $action;
-    }
-
-    /*
-     * Translation
-     * */
-
-    protected static function getTranslationKeyClass(): string
-    {
-        return AdminActionTranslationKey::class;
     }
 }

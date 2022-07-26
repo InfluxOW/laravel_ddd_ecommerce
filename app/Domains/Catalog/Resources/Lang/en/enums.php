@@ -43,6 +43,9 @@ return [
         ProductCategoryTranslationKey::UPDATED_AT->name => 'Updated At',
 
         ProductCategoryTranslationKey::DEPTH->name => 'Depth',
+
+        ProductCategoryTranslationKey::PRODUCTS_COUNT->name => 'Products Count',
+        ProductCategoryTranslationKey::OVERALL_PRODUCTS_COUNT->name => 'Products Count Including Descendants',
     ],
     CatalogSettingsTranslationKey::class => [
         CatalogSettingsTranslationKey::AVAILABLE_CURRENCIES->name => 'Available Currencies',

@@ -69,27 +69,27 @@ final class FeedbackResource extends Resource
         return $form
             ->schema([
                 Card::make()
-                    ->schema(self::setTranslatableLabels([
-                        Toggle::make(FeedbackTranslationKey::IS_REVIEWED->value),
+                    ->schema([
+                        Toggle::makeTranslated(FeedbackTranslationKey::IS_REVIEWED),
                         Grid::make()
-                            ->schema(self::setTranslatableLabels([
-                                TextInput::make(FeedbackTranslationKey::USERNAME->value)
+                            ->schema([
+                                TextInput::makeTranslated(FeedbackTranslationKey::USERNAME)
                                     ->disabled(),
-                                TextInput::make(FeedbackTranslationKey::EMAIL->value)
+                                TextInput::makeTranslated(FeedbackTranslationKey::EMAIL)
                                     ->email()
                                     ->disabled(),
-                                TextInput::make(FeedbackTranslationKey::PHONE->value)
+                                TextInput::makeTranslated(FeedbackTranslationKey::PHONE)
                                     ->mask(fn (TextInput\Mask $mask): TextInput\Mask => $mask->pattern('+0 (000) 000-00-00'))
                                     ->tel()
                                     ->disabled(),
-                            ]))
+                            ])
                             ->columns(3),
-                        Select::make(FeedbackTranslationKey::USER->value)
+                        Select::makeTranslated(FeedbackTranslationKey::USER)
                             ->relationship('user', 'name')
                             ->disabled(),
-                        Textarea::make(FeedbackTranslationKey::TEXT->value)
+                        Textarea::makeTranslated(FeedbackTranslationKey::TEXT)
                             ->disabled(),
-                    ]))
+                    ])
                     ->columnSpan(2),
                 TimestampsCard::make()
                     ->columnSpan(1),
@@ -100,18 +100,18 @@ final class FeedbackResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->columns(self::setTranslatableLabels([
-                BooleanColumn::make(FeedbackTranslationKey::IS_REVIEWED->value)->sortable(),
-                TextColumn::make(FeedbackTranslationKey::TEXT->value)->sortable()->searchable()->limit(70),
-                TextColumn::make(FeedbackTranslationKey::CREATED_AT->value)->sortable()->dateTime(),
-            ]))
-            ->filters(self::setTranslatableLabels([
-                TernaryFilter::make(FeedbackTranslationKey::IS_REVIEWED->value)
+            ->columns([
+                BooleanColumn::makeTranslated(FeedbackTranslationKey::IS_REVIEWED)->sortable(),
+                TextColumn::makeTranslated(FeedbackTranslationKey::TEXT)->sortable()->searchable()->limit(70),
+                TextColumn::makeTranslated(FeedbackTranslationKey::CREATED_AT)->sortable()->dateTime(),
+            ])
+            ->filters([
+                TernaryFilter::makeTranslated(FeedbackTranslationKey::IS_REVIEWED)
                     ->queries(
                         true: fn (Builder $query): Builder => $query->where('is_reviewed', true),
                         false: fn (Builder $query): Builder => $query->where('is_reviewed', false),
                     ),
-            ]))->appendBulkActions([
+            ])->appendBulkActions([
                 BulkUpdateAction::create()
                     ->action(function (Collection $records, array $data): void {
                         $records->each(function (Feedback $feedback) use ($data): void {
@@ -119,9 +119,9 @@ final class FeedbackResource extends Resource
                             $feedback->save();
                         });
                     })
-                    ->form(self::setTranslatableLabels([
-                        Toggle::make(FeedbackTranslationKey::IS_REVIEWED->value)->required(),
-                    ]))
+                    ->form([
+                        Toggle::makeTranslated(FeedbackTranslationKey::IS_REVIEWED)->required(),
+                    ])
                     ->deselectRecordsAfterCompletion(),
             ]);
     }
@@ -154,14 +154,5 @@ final class FeedbackResource extends Resource
     public static function canDelete(Model $record): bool
     {
         return false;
-    }
-
-    /*
-     * Translation
-     * */
-
-    protected static function getTranslationKeyClass(): string
-    {
-        return FeedbackTranslationKey::class;
     }
 }

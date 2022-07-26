@@ -8,7 +8,6 @@ use App\Domains\Admin\Enums\Translation\Components\Actions\ExportActionTranslati
 use App\Domains\Admin\Enums\Translation\Components\AdminActionTranslationKey;
 use App\Domains\Admin\Enums\Translation\ExportFormat;
 use App\Domains\Admin\Traits\Translation\HasTranslatableAdminActionsModals;
-use App\Domains\Admin\Traits\Translation\HasTranslatableAdminLabels;
 use App\Domains\Generic\Interfaces\Exportable;
 use App\Domains\Generic\Jobs\ExportJob;
 use App\Domains\Generic\Utils\LangUtils;
@@ -25,7 +24,6 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
  * */
 trait HasExportAction
 {
-    use HasTranslatableAdminLabels;
     use HasTranslatableAdminActionsModals;
 
     /**
@@ -34,7 +32,7 @@ trait HasExportAction
     public static function create(string $model): static
     {
         /** @var static $action */
-        $action = self::setTranslatableModal(self::setTranslatableLabel(self::make(static::getActionTranslationKey()->value)
+        $action = self::setTranslatableModal(self::makeTranslated(static::getActionTranslationKey())
             ->action(function (Collection $records, Page $livewire, array $data) use ($model): BinaryFileResponse {
                 /** @var ExportFormat $format */
                 $format = ExportFormat::tryFrom($data[ExportActionTranslationKey::FORMAT->value]);
@@ -58,8 +56,8 @@ trait HasExportAction
                     'Content-Disposition' => sprintf('inline; filename="%s"', $file),
                 ]);
             })
-            ->form(self::setTranslatableLabels([
-                Select::make(ExportActionTranslationKey::FORMAT->value)
+            ->form([
+                Select::makeTranslated(ExportActionTranslationKey::FORMAT)
                     ->options(function (): array {
                         $formats = [];
                         foreach (ExportFormat::cases() as $format) {
@@ -69,10 +67,10 @@ trait HasExportAction
                         return $formats;
                     })
                     ->required(),
-            ], ExportActionTranslationKey::class))
+            ])
             ->requiresConfirmation()
             ->icon('heroicon-o-download')
-            ->color('success')));
+            ->color('success'));
 
         return $action;
     }
@@ -83,13 +81,4 @@ trait HasExportAction
     }
 
     abstract protected static function getActionTranslationKey(): AdminActionTranslationKey;
-
-    /*
-     * Translation
-     * */
-
-    protected static function getTranslationKeyClass(): string
-    {
-        return static::getActionTranslationKey()::class;
-    }
 }

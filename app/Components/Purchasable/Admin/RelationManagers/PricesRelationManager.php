@@ -20,8 +20,8 @@ final class PricesRelationManager extends RelationManager
         $availableCurrencies = collect(app(CatalogSettings::class)->available_currencies);
 
         return $form
-            ->schema(self::setTranslatableLabels([
-                Select::make(PriceTranslationKey::CURRENCY->value)
+            ->schema([
+                Select::makeTranslated(PriceTranslationKey::CURRENCY)
                     ->required()
                     ->options(function (RelationManager $livewire) use ($availableCurrencies): array {
                         $currencies = $availableCurrencies->filter(fn (string $currency): bool => isset($livewire->ownerRecord->prices) && $livewire->ownerRecord->prices->pluck('currency')->doesntContain($currency));
@@ -30,7 +30,7 @@ final class PricesRelationManager extends RelationManager
                     })
                     ->searchable()
                     ->columnSpan(2),
-                TextInput::make(PriceTranslationKey::PRICE->value)
+                TextInput::makeTranslated(PriceTranslationKey::PRICE)
                     ->required()
                     ->integer()
                     ->disabled(fn (callable $get): bool => $get(PriceTranslationKey::CURRENCY->value) === null)
@@ -41,7 +41,7 @@ final class PricesRelationManager extends RelationManager
                         }
                     })
                     ->dehydrateStateUsing(fn (string $state): int => (int) $state),
-                TextInput::make(PriceTranslationKey::PRICE_DISCOUNTED->value)
+                TextInput::makeTranslated(PriceTranslationKey::PRICE_DISCOUNTED)
                     ->nullable()
                     ->disabled(fn (callable $get): bool => $get(PriceTranslationKey::CURRENCY->value) === null)
                     ->integer()
@@ -49,23 +49,23 @@ final class PricesRelationManager extends RelationManager
                         $component->state(($state === null) ? null : $state['amount']);
                     })
                     ->dehydrateStateUsing(fn (?string $state): ?int => ($state === null) ? null : (int) $state),
-            ]));
+            ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
-            ->columns(self::setTranslatableLabels([
-                TextColumn::make(PriceTranslationKey::CURRENCY->value)
+            ->columns([
+                TextColumn::makeTranslated(PriceTranslationKey::CURRENCY)
                     ->sortable()
                     ->searchable(),
-                TextColumn::make(PriceTranslationKey::PRICE->value)
+                TextColumn::makeTranslated(PriceTranslationKey::PRICE)
                     ->sortable()
                     ->searchable(),
-                TextColumn::make(PriceTranslationKey::PRICE_DISCOUNTED->value)
+                TextColumn::makeTranslated(PriceTranslationKey::PRICE_DISCOUNTED)
                     ->sortable()
                     ->searchable(),
-            ]));
+            ]);
     }
 
     /*

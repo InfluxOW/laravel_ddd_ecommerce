@@ -66,27 +66,25 @@ final class ProductCategoryResource extends Resource
                     ->tabs([
                         Tabs\Tab::make($mainTabTitle)
                             ->columns(3)
-                            ->schema(self::setTranslatableLabels([
+                            ->schema([
                                 Card::make()
                                     ->schema(self::getCreationFormSchema())
                                     ->columnSpan(2),
                                 TimestampsCard::make()
                                     ->columnSpan(1),
-                                Placeholder::make(ProductCategoryTranslationKey::PATH->value)
+                                Placeholder::makeTranslated(ProductCategoryTranslationKey::PATH)
                                     ->content(fn (?ProductCategory $record): string => ($record === null || $record->path === '') ? '-' : $record->path)
                                     ->columnSpan(3),
-                            ])),
+                            ]),
                         Tabs\Tab::make($statisticsTabTitle)
                             ->schema([
                                 Grid::make()
-                                    ->schema(self::setTranslatableLabels([
-                                        Placeholder::make('overall_products_count')
-                                            ->label('Products Count Including Descendants')
+                                    ->schema([
+                                        Placeholder::makeTranslated(ProductCategoryTranslationKey::OVERALL_PRODUCTS_COUNT)
                                             ->content(fn (?ProductCategory $record): int => ($record === null) ? 0 : $record->overall_products_count),
-                                        Placeholder::make('products_count')
-                                            ->label('Products Count')
+                                        Placeholder::makeTranslated(ProductCategoryTranslationKey::PRODUCTS_COUNT)
                                             ->content(fn (?ProductCategory $record): ?int => ($record === null) ? 0 : ProductCategory::findInHierarchy($record->id, ProductCategory::getHierarchy())?->products_count),
-                                    ]))
+                                    ])
                                     ->columns(4),
                             ]),
                     ]),
@@ -95,13 +93,13 @@ final class ProductCategoryResource extends Resource
 
     public static function getCreationFormSchema(): array
     {
-        return self::setTranslatableLabels([
-            Toggle::make(ProductCategoryTranslationKey::IS_VISIBLE->value)
+        return [
+            Toggle::makeTranslated(ProductCategoryTranslationKey::IS_VISIBLE)
                 ->columnSpan(1),
-            Toggle::make(ProductCategoryTranslationKey::IS_DISPLAYABLE->value)
+            Toggle::makeTranslated(ProductCategoryTranslationKey::IS_DISPLAYABLE)
                 ->disabled()
                 ->columnSpan(1),
-            TextInput::make(ProductCategoryTranslationKey::TITLE->value)
+            TextInput::makeTranslated(ProductCategoryTranslationKey::TITLE)
                 ->required()
                 ->reactive()
                 ->afterStateUpdated(fn (callable $set, $state): mixed => $set(ProductCategoryTranslationKey::SLUG->value, Str::slug($state)))
@@ -109,18 +107,18 @@ final class ProductCategoryResource extends Resource
                 ->maxLength(255)
                 ->placeholder('Electronics')
                 ->columnSpan(1),
-            TextInput::make(ProductCategoryTranslationKey::SLUG->value)
+            TextInput::makeTranslated(ProductCategoryTranslationKey::SLUG)
                 ->required()
                 ->minValue(2)
                 ->maxLength(255)
                 ->placeholder('electronics')
                 ->columnSpan(1),
-            MarkdownEditor::make(ProductCategoryTranslationKey::DESCRIPTION->value)
+            MarkdownEditor::makeTranslated(ProductCategoryTranslationKey::DESCRIPTION)
                 ->disableToolbarButtons([
                     'attachFiles',
                 ])
                 ->columnSpan(2),
-            Select::make(ProductCategoryTranslationKey::PARENT_ID->value)
+            Select::makeTranslated(ProductCategoryTranslationKey::PARENT_ID)
                 ->relationship('parent', 'title')
                 ->options(function (?Model $record, Page|RelationManager $livewire): array {
                     if ($livewire instanceof CreateRecord) {
@@ -146,12 +144,12 @@ final class ProductCategoryResource extends Resource
                     }
                 })
                 ->columnSpan(2),
-            TextInput::make(ProductCategoryTranslationKey::DEPTH->value)
+            TextInput::makeTranslated(ProductCategoryTranslationKey::DEPTH)
                 ->disabled()
                 ->default(fn (Page|RelationManager $livewire): ?int => ($livewire instanceof RelationManager && isset($livewire->ownerRecord->depth)) ? (int) ($livewire->ownerRecord->depth + 1) : null)
                 ->lte((string) ProductCategory::MAX_DEPTH, true)
                 ->columnSpan(2),
-            MediaLibraryFileUpload::make(ProductCategoryTranslationKey::IMAGES->value)
+            MediaLibraryFileUpload::makeTranslated(ProductCategoryTranslationKey::IMAGES)
                 ->collection(ProductCategoryMediaCollectionKey::IMAGES->value)
                 ->multiple()
                 ->minFiles(1)
@@ -160,21 +158,21 @@ final class ProductCategoryResource extends Resource
                 ->preserveFilenames()
                 ->enableReordering()
                 ->columnSpan(2),
-        ]);
+        ];
     }
 
     public static function table(Table $table): Table
     {
         return $table
-            ->columns(self::setTranslatableLabels([
-                TextColumn::make(ProductCategoryTranslationKey::LEFT->value)->sortable(),
-                TextColumn::make(ProductCategoryTranslationKey::TITLE->value)->sortable()->searchable(),
-                TextColumn::make(ProductCategoryTranslationKey::SLUG->value)->searchable(),
-                TextColumn::make(ProductCategoryTranslationKey::PARENT_TITLE->value)->sortable(),
-            ]))
-            ->filters(self::setTranslatableLabels([
-                SelectFilter::make(ProductCategoryTranslationKey::DEPTH->value)->options(ProductCategory::query()->hasLimitedDepth()->orderBy('depth')->distinct('depth')->pluck('depth', 'depth')),
-            ]))
+            ->columns([
+                TextColumn::makeTranslated(ProductCategoryTranslationKey::LEFT)->sortable(),
+                TextColumn::makeTranslated(ProductCategoryTranslationKey::TITLE)->sortable()->searchable(),
+                TextColumn::makeTranslated(ProductCategoryTranslationKey::SLUG)->searchable(),
+                TextColumn::makeTranslated(ProductCategoryTranslationKey::PARENT_TITLE)->sortable(),
+            ])
+            ->filters([
+                SelectFilter::makeTranslated(ProductCategoryTranslationKey::DEPTH)->options(ProductCategory::query()->hasLimitedDepth()->orderBy('depth')->distinct('depth')->pluck('depth', 'depth')),
+            ])
             ->defaultSort(ProductCategoryTranslationKey::LEFT->value, 'ASC');
     }
 
@@ -217,14 +215,5 @@ final class ProductCategoryResource extends Resource
     public static function canDeleteAny(): bool
     {
         return false;
-    }
-
-    /*
-     * Translation
-     * */
-
-    protected static function getTranslationKeyClass(): string
-    {
-        return ProductCategoryTranslationKey::class;
     }
 }
