@@ -7,7 +7,6 @@ use App\Domains\Admin\Admin\Abstracts\Pages\ViewRecord;
 use App\Domains\Admin\Enums\Translation\Components\Actions\ExportActionTranslationKey;
 use App\Domains\Admin\Enums\Translation\Components\AdminActionTranslationKey;
 use App\Domains\Admin\Enums\Translation\ExportFormat;
-use App\Domains\Admin\Traits\Translation\HasTranslatableAdminActionsModals;
 use App\Domains\Generic\Interfaces\Exportable;
 use App\Domains\Generic\Jobs\ExportJob;
 use App\Domains\Generic\Utils\LangUtils;
@@ -24,15 +23,12 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
  * */
 trait HasExportAction
 {
-    use HasTranslatableAdminActionsModals;
-
     /**
      * @param class-string<Model & Exportable> $model
      */
     public static function create(string $model): static
     {
-        /** @var static $action */
-        $action = self::setTranslatableModal(self::makeTranslated(static::getActionTranslationKey())
+        return static::makeTranslated(static::getActionTranslationKey())
             ->action(function (Collection $records, Page $livewire, array $data) use ($model): BinaryFileResponse {
                 /** @var ExportFormat $format */
                 $format = ExportFormat::tryFrom($data[ExportActionTranslationKey::FORMAT->value]);
@@ -70,9 +66,7 @@ trait HasExportAction
             ])
             ->requiresConfirmation()
             ->icon('heroicon-o-download')
-            ->color('success'));
-
-        return $action;
+            ->color('success');
     }
 
     public static function getDefaultName(): ?string

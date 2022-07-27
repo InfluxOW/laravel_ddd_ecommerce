@@ -7,7 +7,6 @@ use App\Domains\Admin\Admin\Components\Actions\Tables\ViewAction;
 use App\Domains\Admin\Admin\Traits\AppliesSearchToTableQuery;
 use App\Domains\Admin\Enums\Translation\AdminRelationPropertyTranslationKey;
 use App\Domains\Admin\Traits\HasNavigationSort;
-use App\Domains\Admin\Traits\Translation\Internal\TranslatableAdmin;
 use Filament\Resources\Pages\Page;
 use Filament\Resources\Pages\ViewRecord;
 use Filament\Resources\RelationManagers\RelationManager as BaseRelationManager;
@@ -22,7 +21,6 @@ use Illuminate\Database\Eloquent\Model;
 
 abstract class RelationManager extends BaseRelationManager
 {
-    use TranslatableAdmin;
     use HasNavigationSort;
     use AppliesSearchToTableQuery;
 

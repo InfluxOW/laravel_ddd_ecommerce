@@ -2,10 +2,10 @@
 
 namespace App\Domains\Admin\Admin\Components\Actions\Export\Tables;
 
-use App\Domains\Admin\Admin\Abstracts\Actions\Tables\Action;
 use App\Domains\Admin\Admin\Components\Actions\Export\HasExportAction;
 use App\Domains\Admin\Enums\Translation\Components\AdminActionTranslationKey;
 use App\Domains\Generic\Interfaces\Exportable;
+use Filament\Tables\Actions\Action;
 use Illuminate\Database\Eloquent\Model;
 
 final class ExportTableAction extends Action

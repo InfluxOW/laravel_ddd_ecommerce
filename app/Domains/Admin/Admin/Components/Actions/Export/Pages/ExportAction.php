@@ -2,9 +2,9 @@
 
 namespace App\Domains\Admin\Admin\Components\Actions\Export\Pages;
 
-use App\Domains\Admin\Admin\Abstracts\Actions\Pages\Action;
 use App\Domains\Admin\Admin\Components\Actions\Export\HasExportAction;
 use App\Domains\Admin\Enums\Translation\Components\AdminActionTranslationKey;
+use Filament\Pages\Actions\Action;
 
 final class ExportAction extends Action
 {

@@ -4,14 +4,14 @@ namespace App\Domains\Admin\Admin\Abstracts;
 
 use App\Domains\Admin\Enums\Translation\AdminResourcePropertyTranslationKey;
 use App\Domains\Admin\Traits\HasNavigationSort;
-use App\Domains\Admin\Traits\Translation\Internal\TranslatableAdmin;
 use Filament\Resources\Resource as BaseResource;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Traits\Macroable;
 
 abstract class SimpleResource extends BaseResource
 {
-    use TranslatableAdmin;
     use HasNavigationSort;
+    use Macroable;
 
     public static function getGlobalSearchResultUrl(Model $record): ?string
     {
