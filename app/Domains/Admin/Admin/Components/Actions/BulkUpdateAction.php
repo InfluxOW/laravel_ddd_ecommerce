@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Admin\Admin\Components\Actions\Tables;
+namespace App\Domains\Admin\Admin\Components\Actions;
 
 use App\Domains\Admin\Enums\Translation\Components\AdminActionTranslationKey;
 use Filament\Tables\Actions\BulkAction;

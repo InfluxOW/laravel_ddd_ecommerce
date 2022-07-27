@@ -1,10 +1,9 @@
 <?php
 
+use App\Domains\Admin\Admin\Components\Actions\BulkUpdateAction;
+use App\Domains\Admin\Admin\Components\Actions\Delete\Tables\DeleteAction;
 use App\Domains\Admin\Admin\Components\Actions\Export\Pages\ExportAction;
-use App\Domains\Admin\Admin\Components\Actions\Export\Tables\BulkExportTableAction;
-use App\Domains\Admin\Admin\Components\Actions\Export\Tables\ExportTableAction;
-use App\Domains\Admin\Admin\Components\Actions\Tables\BulkUpdateAction;
-use App\Domains\Admin\Admin\Components\Actions\Tables\DeleteAction;
+use App\Domains\Admin\Admin\Components\Actions\Export\Tables\BulkExportAction;
 use App\Domains\Admin\Admin\Resources\Development\ClockworkLinkResource;
 use App\Domains\Admin\Admin\Resources\Development\ElasticvueLinkResource;
 use App\Domains\Admin\Admin\Resources\Development\HorizonLinkResource;
@@ -28,12 +27,7 @@ return [
         AdminModalTranslationKey::SUBHEADING->name => 'Are you sure you want to update these records?',
         AdminModalTranslationKey::BUTTON->name => 'Confirm',
     ],
-    ExportTableAction::class => [
-        AdminModalTranslationKey::HEADING->name => 'Export Records',
-        AdminModalTranslationKey::SUBHEADING->name => 'Are you sure you want to export these records?',
-        AdminModalTranslationKey::BUTTON->name => 'Confirm',
-    ],
-    BulkExportTableAction::class => [
+    BulkExportAction::class => [
         AdminModalTranslationKey::HEADING->name => 'Export Selected Records',
         AdminModalTranslationKey::SUBHEADING->name => 'Are you sure you want to export these records?',
         AdminModalTranslationKey::BUTTON->name => 'Confirm',

@@ -3,7 +3,7 @@
 namespace App\Domains\Feedback\Admin\Resources;
 
 use App\Domains\Admin\Admin\Abstracts\Resource;
-use App\Domains\Admin\Admin\Components\Actions\Tables\BulkUpdateAction;
+use App\Domains\Admin\Admin\Components\Actions\BulkUpdateAction;
 use App\Domains\Admin\Admin\Components\Cards\TimestampsCard;
 use App\Domains\Feedback\Enums\Translation\FeedbackTranslationKey;
 use App\Domains\Feedback\Models\Feedback;

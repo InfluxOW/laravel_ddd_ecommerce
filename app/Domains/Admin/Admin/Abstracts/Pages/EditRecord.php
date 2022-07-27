@@ -6,5 +6,5 @@ use Filament\Resources\Pages\EditRecord as BaseEditRecord;
 
 abstract class EditRecord extends BaseEditRecord
 {
-    use ExportableResourceRecordPage;
+    use ResourceRecordPage;
 }

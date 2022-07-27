@@ -3,7 +3,7 @@
 namespace App\Domains\Catalog\Admin\Resources\ProductCategoryResource\RelationManagers;
 
 use App\Domains\Admin\Admin\Abstracts\RelationManager;
-use App\Domains\Admin\Admin\Components\Actions\Tables\ViewAction;
+use App\Domains\Admin\Admin\Components\Actions\View\Tables\ViewAction;
 use App\Domains\Catalog\Admin\Resources\ProductCategoryResource;
 use App\Domains\Catalog\Enums\Translation\ProductCategoryTranslationKey;
 use App\Domains\Catalog\Models\ProductCategory;
@@ -30,9 +30,6 @@ final class ProductCategoryChildrenRelationManager extends RelationManager
     public static function table(Table $table): Table
     {
         return $table
-            ->prependActions([
-                ViewAction::create()->url(fn (ProductCategory $record): string => route('filament.resources.catalog/categories.view', $record)),
-            ])
             ->appendActions([
                 /* @phpstan-ignore-next-line */
                 Action::make(' | ')->visible(fn (Page|RelationManager $livewire, ProductCategory $record) => $livewire->canEdit($record)),

@@ -21,6 +21,7 @@ return [
     ],
     AdminActionTranslationKey::class => [
         AdminActionTranslationKey::VIEW->name => 'View',
+        AdminActionTranslationKey::EDIT->name => 'Edit',
         AdminActionTranslationKey::DELETE->name => 'Delete',
         AdminActionTranslationKey::UPDATE->name => 'Update',
         AdminActionTranslationKey::EXPORT->name => 'Export',

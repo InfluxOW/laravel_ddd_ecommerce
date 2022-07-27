@@ -2,10 +2,11 @@
 
 namespace App\Domains\Admin\Admin\Abstracts\Pages;
 
-use App\Domains\Admin\Admin\Components\Actions\Export\Tables\BulkExportTableAction;
-use App\Domains\Admin\Admin\Components\Actions\Export\Tables\ExportTableAction;
-use App\Domains\Admin\Admin\Components\Actions\Tables\DeleteAction;
-use App\Domains\Admin\Admin\Components\Actions\Tables\ViewAction;
+use App\Domains\Admin\Admin\Components\Actions\Delete\Tables\DeleteAction;
+use App\Domains\Admin\Admin\Components\Actions\Edit\Tables\EditAction;
+use App\Domains\Admin\Admin\Components\Actions\Export\Pages\ExportAction;
+use App\Domains\Admin\Admin\Components\Actions\Export\Tables\BulkExportAction;
+use App\Domains\Admin\Admin\Components\Actions\View\Tables\ViewAction;
 use App\Domains\Admin\Admin\Traits\AppliesSearchToTableQuery;
 use App\Domains\Generic\Interfaces\Exportable;
 use Filament\Resources\Pages\ListRecords as BaseListRecords;
@@ -16,15 +17,15 @@ abstract class ListRecords extends BaseListRecords
     use AppliesSearchToTableQuery;
     use ExportableResourcePage;
 
-    protected function getTableHeaderActions(): array
+    protected function getActions(): array
     {
-        $actions = parent::getTableHeaderActions();
+        $actions = parent::getActions();
         $model = $this->getModel();
 
         if ($this->modelIsExportable($model)) {
             /** @var class-string<Model & Exportable> $model */
             $actions = array_merge($actions, [
-                ExportTableAction::create($model),
+                ExportAction::create($model),
             ]);
         }
 
@@ -39,7 +40,7 @@ abstract class ListRecords extends BaseListRecords
         if ($this->modelIsExportable($model)) {
             /** @var class-string<Model & Exportable> $model */
             $actions = array_merge($actions, [
-                BulkExportTableAction::create($model),
+                BulkExportAction::create($model),
             ]);
         }
 
@@ -48,6 +49,6 @@ abstract class ListRecords extends BaseListRecords
 
     protected function getTableActions(): array
     {
-        return array_merge(parent::getTableActions(), [ViewAction::create(), DeleteAction::create()]);
+        return array_merge(parent::getTableActions(), [ViewAction::create(), DeleteAction::create(), EditAction::create()]);
     }
 }

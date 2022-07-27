@@ -2,8 +2,9 @@
 
 namespace App\Domains\Admin\Admin\Abstracts;
 
-use App\Domains\Admin\Admin\Components\Actions\Tables\DeleteAction;
-use App\Domains\Admin\Admin\Components\Actions\Tables\ViewAction;
+use App\Domains\Admin\Admin\Components\Actions\Delete\Tables\DeleteAction;
+use App\Domains\Admin\Admin\Components\Actions\Edit\Tables\EditAction;
+use App\Domains\Admin\Admin\Components\Actions\View\Tables\ViewAction;
 use App\Domains\Admin\Admin\Traits\AppliesSearchToTableQuery;
 use App\Domains\Admin\Enums\Translation\AdminRelationPropertyTranslationKey;
 use App\Domains\Admin\Traits\HasNavigationSort;
@@ -16,7 +17,6 @@ use Filament\Tables\Actions\CreateAction;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\DissociateAction;
 use Filament\Tables\Actions\DissociateBulkAction;
-use Filament\Tables\Actions\EditAction;
 use Illuminate\Database\Eloquent\Model;
 
 abstract class RelationManager extends BaseRelationManager
@@ -30,7 +30,7 @@ abstract class RelationManager extends BaseRelationManager
 
         $table->actions([
             ViewAction::create(),
-            EditAction::make(),
+            EditAction::create(),
             DissociateAction::make(),
             DeleteAction::create(),
         ]);
@@ -51,6 +51,10 @@ abstract class RelationManager extends BaseRelationManager
     /*
      * Policies
      * */
+    public function getOwnerRecord(): Model
+    {
+        return parent::getOwnerRecord();
+    }
 
     protected function canView(Model $record): bool
     {
@@ -77,7 +81,7 @@ abstract class RelationManager extends BaseRelationManager
         return $this->actionShouldBeDisplayed();
     }
 
-    protected function canEdit(Model $record): bool
+    public function canEdit(Model $record): bool
     {
         return $this->actionShouldBeDisplayed();
     }

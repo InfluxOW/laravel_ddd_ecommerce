@@ -81,7 +81,7 @@ class UserLoginHistoryRelationManager extends RelationManager
         return false;
     }
 
-    protected function canEdit(Model $record): bool
+    public function canEdit(Model $record): bool
     {
         return false;
     }
