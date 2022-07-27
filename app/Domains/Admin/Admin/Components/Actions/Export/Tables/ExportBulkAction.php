@@ -6,7 +6,7 @@ use App\Domains\Admin\Admin\Components\Actions\Export\HasExportAction;
 use App\Domains\Admin\Enums\Translation\Components\AdminActionTranslationKey;
 use Filament\Tables\Actions\BulkAction;
 
-final class BulkExportAction extends BulkAction
+final class ExportBulkAction extends BulkAction
 {
     use HasExportAction;
 

@@ -10,5 +10,7 @@ enum AdminActionTranslationKey: string
     case DELETE = 'delete';
     case UPDATE = 'update';
     case EXPORT = 'export';
+
+    case BULK_DELETE = 'bulk_delete';
     case BULK_EXPORT = 'bulk_export';
 }

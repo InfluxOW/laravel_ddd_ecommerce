@@ -4,6 +4,7 @@ namespace App\Domains\Admin\Admin\Abstracts;
 
 use App\Domains\Admin\Admin\Components\Actions\Create\Tables\CreateAction;
 use App\Domains\Admin\Admin\Components\Actions\Delete\Tables\DeleteAction;
+use App\Domains\Admin\Admin\Components\Actions\DeleteBulkAction;
 use App\Domains\Admin\Admin\Components\Actions\Edit\Tables\EditAction;
 use App\Domains\Admin\Admin\Components\Actions\View\Tables\ViewAction;
 use App\Domains\Admin\Admin\Traits\AppliesSearchToTableQuery;
@@ -14,7 +15,6 @@ use Filament\Resources\Pages\ViewRecord;
 use Filament\Resources\RelationManagers\RelationManager as BaseRelationManager;
 use Filament\Resources\Table;
 use Filament\Tables\Actions\AssociateAction;
-use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\DissociateAction;
 use Filament\Tables\Actions\DissociateBulkAction;
 use Illuminate\Database\Eloquent\Model;
@@ -31,18 +31,18 @@ abstract class RelationManager extends BaseRelationManager
         $table->actions([
             ViewAction::create(),
             EditAction::create(),
-            DissociateAction::make(),
+            DissociateAction::make(), // TODO: Create custom when needed
             DeleteAction::create(),
         ]);
 
         $table->bulkActions([
-            DeleteBulkAction::make(),
-            DissociateBulkAction::make(),
+            DeleteBulkAction::create(),
+            DissociateBulkAction::make(), // TODO: Create custom when needed
         ]);
 
         $table->headerActions([
             CreateAction::create(),
-            AssociateAction::make(),
+            AssociateAction::make(), // TODO: Create custom when needed
         ]);
 
         return static::table($table);

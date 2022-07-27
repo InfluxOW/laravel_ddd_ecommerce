@@ -3,7 +3,7 @@
 namespace App\Domains\Feedback\Admin\Resources;
 
 use App\Domains\Admin\Admin\Abstracts\Resource;
-use App\Domains\Admin\Admin\Components\Actions\BulkUpdateAction;
+use App\Domains\Admin\Admin\Components\Actions\UpdateBulkAction;
 use App\Domains\Admin\Admin\Components\Cards\TimestampsCard;
 use App\Domains\Feedback\Enums\Translation\FeedbackTranslationKey;
 use App\Domains\Feedback\Models\Feedback;
@@ -112,7 +112,7 @@ final class FeedbackResource extends Resource
                         false: fn (Builder $query): Builder => $query->where('is_reviewed', false),
                     ),
             ])->appendBulkActions([
-                BulkUpdateAction::create()
+                UpdateBulkAction::create()
                     ->action(function (Collection $records, array $data): void {
                         $records->each(function (Feedback $feedback) use ($data): void {
                             $feedback->is_reviewed = $data[FeedbackTranslationKey::IS_REVIEWED->value];
