@@ -18,6 +18,7 @@ use Closure;
 use Filament\Pages\SettingsPage;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Support\Actions\Action;
+use Filament\Support\Actions\Concerns\CanOpenModal;
 use Filament\Tables\Columns\Column;
 use Filament\Tables\Filters\BaseFilter;
 use Filament\Widgets\Widget;
@@ -44,17 +45,29 @@ final class DomainServiceProvider extends ServiceProvider
         /** @phpstan-ignore-next-line */
         $makeTranslated = fn (BackedEnum $value): static => static::make($value->value)->label(LangUtils::translateEnum($value, allowClosures: true));
 
-        /** @phpstan-ignore-next-line */
-        Action::macro('makeTranslated', fn (BackedEnum $value): static => static::make($value->value)
-            ->label(LangUtils::translateEnum($value, allowClosures: true))
-            /** @phpstan-ignore-next-line */
-            ->modalHeading(self::translateAdminEnum(AdminModalTranslationKey::HEADING, allowClosures: true))
-            /** @phpstan-ignore-next-line */
-            ->modalSubheading(self::translateAdminEnum(AdminModalTranslationKey::SUBHEADING, allowClosures: true))
-            /** @phpstan-ignore-next-line */
-            ->modalButton(self::translateAdminEnum(AdminModalTranslationKey::BUTTON, allowClosures: true)));
         BaseFilter::macro('makeTranslated', $makeTranslated);
         Column::macro('makeTranslated', $makeTranslated);
+
+        /**
+         * TODO: Bug - triggers for Column class too
+         */
+        Action::macro('makeTranslated', function (BackedEnum $value): static {
+            /** @phpstan-ignore-next-line */
+            $action = static::make($value->value)->label(LangUtils::translateEnum($value, allowClosures: true));
+
+            $uses = class_uses_recursive(static::class);
+            if (isset($uses[CanOpenModal::class])) {
+                $action
+                    /** @phpstan-ignore-next-line */
+                    ->modalHeading(self::translateAdminEnum(AdminModalTranslationKey::HEADING, allowClosures: true))
+                    /** @phpstan-ignore-next-line */
+                    ->modalSubheading(self::translateAdminEnum(AdminModalTranslationKey::SUBHEADING, allowClosures: true))
+                    /** @phpstan-ignore-next-line */
+                    ->modalButton(self::translateAdminEnum(AdminModalTranslationKey::BUTTON, allowClosures: true));
+            }
+
+            return $action;
+        });
     }
 
     private function registerTranslateComponentPropertyMacros(): void
