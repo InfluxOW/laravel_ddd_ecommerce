@@ -23,6 +23,7 @@ final class PricesRelationManager extends RelationManager
             ->schema([
                 Select::makeTranslated(PriceTranslationKey::CURRENCY)
                     ->required()
+                    ->reactive()
                     ->options(function (RelationManager $livewire) use ($availableCurrencies): array {
                         $currencies = $availableCurrencies->filter(fn (string $currency): bool => isset($livewire->ownerRecord->prices) && $livewire->ownerRecord->prices->pluck('currency')->doesntContain($currency));
 
@@ -32,6 +33,7 @@ final class PricesRelationManager extends RelationManager
                     ->columnSpan(2),
                 TextInput::makeTranslated(PriceTranslationKey::PRICE)
                     ->required()
+                    ->reactive()
                     ->integer()
                     ->disabled(fn (callable $get): bool => $get(PriceTranslationKey::CURRENCY->value) === null)
                     ->afterStateHydrated(function (TextInput $component, ?array $state): void {
@@ -43,6 +45,7 @@ final class PricesRelationManager extends RelationManager
                     ->dehydrateStateUsing(fn (string $state): int => (int) $state),
                 TextInput::makeTranslated(PriceTranslationKey::PRICE_DISCOUNTED)
                     ->nullable()
+                    ->reactive()
                     ->disabled(fn (callable $get): bool => $get(PriceTranslationKey::CURRENCY->value) === null)
                     ->integer()
                     ->afterStateHydrated(function (TextInput $component, ?array $state): void {
@@ -72,7 +75,7 @@ final class PricesRelationManager extends RelationManager
      * Policies
      * */
 
-    protected function canCreate(): bool
+    public function canCreate(): bool
     {
         return parent::canCreate() && isset($this->ownerRecord->prices) && $this->ownerRecord->prices->count() < count(app(CatalogSettings::class)->available_currencies);
     }
