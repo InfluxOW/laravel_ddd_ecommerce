@@ -3,7 +3,6 @@
 namespace App\Domains\Catalog\Admin\Resources\ProductCategoryResource\RelationManagers;
 
 use App\Domains\Admin\Admin\Abstracts\RelationManager;
-use App\Domains\Admin\Admin\Components\Actions\View\Tables\ViewAction;
 use App\Domains\Catalog\Admin\Resources\ProductCategoryResource;
 use App\Domains\Catalog\Enums\Translation\ProductCategoryTranslationKey;
 use App\Domains\Catalog\Models\ProductCategory;
@@ -58,7 +57,7 @@ final class ProductCategoryChildrenRelationManager extends RelationManager
      * Policies
      * */
 
-    protected function canCreate(): bool
+    public function canCreate(): bool
     {
         /** @var ProductCategory $category */
         $category = $this->ownerRecord;

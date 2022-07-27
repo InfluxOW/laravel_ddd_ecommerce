@@ -2,6 +2,7 @@
 
 namespace App\Domains\Admin\Admin\Abstracts;
 
+use App\Domains\Admin\Admin\Components\Actions\Create\Tables\CreateAction;
 use App\Domains\Admin\Admin\Components\Actions\Delete\Tables\DeleteAction;
 use App\Domains\Admin\Admin\Components\Actions\Edit\Tables\EditAction;
 use App\Domains\Admin\Admin\Components\Actions\View\Tables\ViewAction;
@@ -13,7 +14,6 @@ use Filament\Resources\Pages\ViewRecord;
 use Filament\Resources\RelationManagers\RelationManager as BaseRelationManager;
 use Filament\Resources\Table;
 use Filament\Tables\Actions\AssociateAction;
-use Filament\Tables\Actions\CreateAction;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\DissociateAction;
 use Filament\Tables\Actions\DissociateBulkAction;
@@ -41,7 +41,7 @@ abstract class RelationManager extends BaseRelationManager
         ]);
 
         $table->headerActions([
-            CreateAction::make(),
+            CreateAction::create(),
             AssociateAction::make(),
         ]);
 
@@ -51,10 +51,6 @@ abstract class RelationManager extends BaseRelationManager
     /*
      * Policies
      * */
-    public function getOwnerRecord(): Model
-    {
-        return parent::getOwnerRecord();
-    }
 
     protected function canView(Model $record): bool
     {
@@ -76,7 +72,7 @@ abstract class RelationManager extends BaseRelationManager
         return false;
     }
 
-    protected function canCreate(): bool
+    public function canCreate(): bool
     {
         return $this->actionShouldBeDisplayed();
     }

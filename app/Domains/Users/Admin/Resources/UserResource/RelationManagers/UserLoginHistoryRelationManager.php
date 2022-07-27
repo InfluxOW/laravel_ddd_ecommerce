@@ -76,7 +76,7 @@ class UserLoginHistoryRelationManager extends RelationManager
      * Policies
      * */
 
-    protected function canCreate(): bool
+    public function canCreate(): bool
     {
         return false;
     }

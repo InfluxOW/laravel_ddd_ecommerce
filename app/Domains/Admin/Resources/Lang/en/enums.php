@@ -20,6 +20,7 @@ return [
         AdminTimestampsCardTranslationKey::CREATED_AT->name => 'Created At',
     ],
     AdminActionTranslationKey::class => [
+        AdminActionTranslationKey::CREATE->name => 'Create',
         AdminActionTranslationKey::VIEW->name => 'View',
         AdminActionTranslationKey::EDIT->name => 'Edit',
         AdminActionTranslationKey::DELETE->name => 'Delete',

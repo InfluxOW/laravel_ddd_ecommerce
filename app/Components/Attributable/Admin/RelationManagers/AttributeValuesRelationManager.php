@@ -83,7 +83,7 @@ final class AttributeValuesRelationManager extends RelationManager
      * Policies
      * */
 
-    protected function canCreate(): bool
+    public function canCreate(): bool
     {
         return parent::canCreate() && isset($this->ownerRecord->attributeValues) && $this->ownerRecord->attributeValues->count() < Attribute::query()->count();
     }

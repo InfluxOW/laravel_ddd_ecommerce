@@ -146,6 +146,11 @@ final class FeedbackResource extends Resource
      * Policies
      * */
 
+    public static function canCreate(): bool
+    {
+        return false;
+    }
+
     public static function canDeleteAny(): bool
     {
         return false;

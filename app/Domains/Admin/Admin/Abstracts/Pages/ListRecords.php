@@ -2,6 +2,7 @@
 
 namespace App\Domains\Admin\Admin\Abstracts\Pages;
 
+use App\Domains\Admin\Admin\Components\Actions\Create\Pages\CreateAction;
 use App\Domains\Admin\Admin\Components\Actions\Delete\Tables\DeleteAction;
 use App\Domains\Admin\Admin\Components\Actions\Edit\Tables\EditAction;
 use App\Domains\Admin\Admin\Components\Actions\Export\Pages\ExportAction;
@@ -19,7 +20,9 @@ abstract class ListRecords extends BaseListRecords
 
     protected function getActions(): array
     {
-        $actions = parent::getActions();
+        $actions = array_merge(parent::getActions(), [
+            CreateAction::create(),
+        ]);
         $model = $this->getModel();
 
         if ($this->modelIsExportable($model)) {
