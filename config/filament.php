@@ -2,6 +2,7 @@
 
 use App\Components\Attributable\Admin\Resources\AttributeResource;
 use App\Domains\Admin\Admin\Pages\Login;
+use App\Domains\Admin\Admin\Resources\AdminResource;
 use App\Domains\Admin\Admin\Resources\Development\ClockworkLinkResource;
 use App\Domains\Admin\Admin\Resources\Development\ElasticvueLinkResource;
 use App\Domains\Admin\Admin\Resources\Development\HorizonLinkResource;
@@ -140,6 +141,7 @@ return [
 
     'resources' => [
         'register' => [
+            AdminResource::class,
             UserResource::class,
             ProductCategoryResource::class,
             AttributeResource::class,

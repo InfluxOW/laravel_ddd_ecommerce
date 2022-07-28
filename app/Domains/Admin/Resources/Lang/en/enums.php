@@ -6,6 +6,7 @@ use App\Domains\Admin\Enums\Translation\Components\AdminActionTranslationKey;
 use App\Domains\Admin\Enums\Translation\Components\AdminDatasetTranslationKey;
 use App\Domains\Admin\Enums\Translation\Components\Cards\AdminTimestampsCardTranslationKey;
 use App\Domains\Admin\Enums\Translation\ExportFormat;
+use App\Domains\Admin\Enums\Translation\Resources\AdminTranslationKey;
 
 return [
     AdminNavigationGroupTranslationKey::class => [
@@ -39,5 +40,10 @@ return [
     ],
     ExportActionTranslationKey::class => [
         ExportActionTranslationKey::FORMAT->name => 'Format',
+    ],
+    AdminTranslationKey::class => [
+        AdminTranslationKey::NAME->name => 'Name',
+        AdminTranslationKey::EMAIL->name => 'Email',
+        AdminTranslationKey::PASSWORD->name => 'Password',
     ],
 ];

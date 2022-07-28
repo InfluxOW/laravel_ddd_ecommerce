@@ -5,6 +5,7 @@ use App\Domains\Admin\Admin\Components\Actions\DeleteBulkAction;
 use App\Domains\Admin\Admin\Components\Actions\Export\Pages\ExportAction;
 use App\Domains\Admin\Admin\Components\Actions\Export\Tables\ExportBulkAction;
 use App\Domains\Admin\Admin\Components\Actions\UpdateBulkAction;
+use App\Domains\Admin\Admin\Resources\AdminResource;
 use App\Domains\Admin\Admin\Resources\Development\ClockworkLinkResource;
 use App\Domains\Admin\Admin\Resources\Development\ElasticvueLinkResource;
 use App\Domains\Admin\Admin\Resources\Development\HorizonLinkResource;
@@ -23,6 +24,13 @@ use Filament\Resources\Pages\Page;
 use Illuminate\Database\Eloquent\Model;
 
 return [
+    AdminResource::class => [
+        AdminResourcePropertyTranslationKey::LABEL->name => 'Admin',
+        AdminResourcePropertyTranslationKey::PLURAL_LABEL->name => 'Admins',
+        AdminResourcePropertyTranslationKey::NAVIGATION_LABEL->name => 'Admins',
+        AdminResourcePropertyTranslationKey::NAVIGATION_GROUP->name => LangUtils::translateEnum(AdminNavigationGroupTranslationKey::GENERIC),
+
+    ],
     UpdateBulkAction::class => [
         AdminModalTranslationKey::HEADING->name => 'Update Records',
         AdminModalTranslationKey::SUBHEADING->name => 'Are you sure you want to update these records?',

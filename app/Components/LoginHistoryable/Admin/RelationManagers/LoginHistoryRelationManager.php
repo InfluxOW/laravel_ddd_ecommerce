@@ -13,7 +13,7 @@ use Humaidem\FilamentMapPicker\Fields\OSMMap;
 use Illuminate\Database\Eloquent\Model;
 use MStaack\LaravelPostgis\Geometries\Point;
 
-class UserLoginHistoryRelationManager extends RelationManager
+class LoginHistoryRelationManager extends RelationManager
 {
     protected static string $relationship = 'loginHistory';
 

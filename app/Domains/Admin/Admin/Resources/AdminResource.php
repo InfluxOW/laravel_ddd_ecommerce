@@ -1,33 +1,31 @@
 <?php
 
-namespace App\Domains\Users\Admin\Resources;
+namespace App\Domains\Admin\Admin\Resources;
 
-use App\Components\Addressable\Admin\RelationManagers\AddressesRelationManager;
 use App\Components\LoginHistoryable\Admin\RelationManagers\LoginHistoryRelationManager;
 use App\Domains\Admin\Admin\Abstracts\Pages\ViewRecord;
 use App\Domains\Admin\Admin\Abstracts\Resource;
 use App\Domains\Admin\Admin\Components\Cards\TimestampsCard;
-use App\Domains\Users\Enums\Translation\UserTranslationKey;
-use App\Domains\Users\Models\User;
-use Carbon\Carbon;
+use App\Domains\Admin\Enums\Translation\Resources\AdminTranslationKey;
+use App\Domains\Admin\Models\Admin;
 use Filament\Forms\Components\Card;
-use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
 use Filament\Resources\Pages\CreateRecord;
+use Filament\Resources\Pages\EditRecord;
 use Filament\Resources\Pages\Page;
 use Filament\Resources\Table;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
 
-final class UserResource extends Resource
+final class AdminResource extends Resource
 {
-    protected static ?string $model = User::class;
+    protected static ?string $model = Admin::class;
 
     protected static ?string $recordTitleAttribute = 'name';
 
-    protected static ?string $slug = 'users';
+    protected static ?string $slug = 'admins';
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
 
@@ -37,21 +35,15 @@ final class UserResource extends Resource
 
     public static function getGloballySearchableAttributes(): array
     {
-        return ['name', 'email', 'phone'];
+        return ['name', 'email'];
     }
 
-    /** @param  User  $record */
+    /** @param  Admin  $record */
     public static function getGlobalSearchResultDetails(Model $record): array
     {
-        $result = [
+        return [
             'E-mail' => $record->email,
         ];
-
-        if (isset($record->phone)) {
-            $result['Phone'] = $record->phone;
-        }
-
-        return $result;
     }
 
     /*
@@ -66,24 +58,19 @@ final class UserResource extends Resource
                     ->schema([
                         Grid::make()
                             ->schema([
-                                TextInput::makeTranslated(UserTranslationKey::NAME)
+                                TextInput::makeTranslated(AdminTranslationKey::NAME)
                                     ->required()
                                     ->minValue(2)
                                     ->maxLength(255)
                                     ->placeholder('John Doe'),
-                                TextInput::makeTranslated(UserTranslationKey::EMAIL)
+                                TextInput::makeTranslated(AdminTranslationKey::EMAIL)
                                     ->required()
                                     ->email()
                                     ->maxLength(255)
                                     ->placeholder('john_doe@gmail.com'),
-                                TextInput::makeTranslated(UserTranslationKey::PHONE)
-                                    ->nullable()
-                                    ->maxLength(18)
-                                    ->mask(fn (TextInput\Mask $mask): TextInput\Mask => $mask->pattern('+0 (000) 000-00-00'))
-                                    ->tel(),
                             ])
                             ->columns(3),
-                        TextInput::makeTranslated(UserTranslationKey::PASSWORD)
+                        TextInput::makeTranslated(AdminTranslationKey::PASSWORD)
                             ->required(fn (Page $livewire): bool => $livewire instanceof CreateRecord)
                             ->password()
                             ->hidden(fn (Page $livewire): bool => $livewire instanceof ViewRecord)
@@ -93,13 +80,10 @@ final class UserResource extends Resource
                             ->maxLength(255)
                             ->placeholder('Password')
                             ->columnSpan(2),
-                        DateTimePicker::makeTranslated(UserTranslationKey::EMAIL_VERIFIED_AT)
-                            ->nullable()
-                            ->placeholder(Carbon::now())
-                            ->columnSpan(2),
                     ])
                     ->columnSpan(2),
                 TimestampsCard::make()
+                    ->visible(fn (Page $livewire): bool => $livewire instanceof EditRecord || $livewire instanceof ViewRecord)
                     ->columnSpan(1),
             ])
             ->columns(3);
@@ -109,9 +93,8 @@ final class UserResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::makeTranslated(UserTranslationKey::NAME)->sortable()->searchable(),
-                TextColumn::makeTranslated(UserTranslationKey::EMAIL)->sortable()->searchable(),
-                TextColumn::makeTranslated(UserTranslationKey::PHONE)->sortable()->searchable(),
+                TextColumn::makeTranslated(AdminTranslationKey::NAME)->sortable()->searchable(),
+                TextColumn::makeTranslated(AdminTranslationKey::EMAIL)->sortable()->searchable(),
             ])
             ->filters([
                 //
@@ -121,7 +104,6 @@ final class UserResource extends Resource
     public static function getRelations(): array
     {
         return [
-            AddressesRelationManager::class,
             LoginHistoryRelationManager::class,
         ];
     }
@@ -129,20 +111,16 @@ final class UserResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => \App\Domains\Users\Admin\Resources\UserResource\Pages\ListUsers::route('/'),
-            'edit' => \App\Domains\Users\Admin\Resources\UserResource\Pages\EditUser::route('/{record}/edit'),
-            'view' => \App\Domains\Users\Admin\Resources\UserResource\Pages\ViewUser::route('/{record}'),
+            'index' => \App\Domains\Admin\Admin\Resources\AdminResource\Pages\ListAdmins::route('/'),
+            'create' => \App\Domains\Admin\Admin\Resources\AdminResource\Pages\CreateAdmin::route('/create'),
+            'edit' => \App\Domains\Admin\Admin\Resources\AdminResource\Pages\EditAdmin::route('/{record}/edit'),
+            'view' => \App\Domains\Admin\Admin\Resources\AdminResource\Pages\ViewAdmin::route('/{record}'),
         ];
     }
 
     /*
      * Policies
      * */
-
-    public static function canCreate(): bool
-    {
-        return false;
-    }
 
     public static function canDeleteAny(): bool
     {

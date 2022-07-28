@@ -3,6 +3,7 @@
 namespace App\Domains\Admin\Helpers;
 
 use App\Components\Attributable\Admin\Resources\AttributeResource;
+use App\Domains\Admin\Admin\Resources\AdminResource;
 use App\Domains\Admin\Admin\Resources\Development\ClockworkLinkResource;
 use App\Domains\Admin\Admin\Resources\Development\ElasticvueLinkResource;
 use App\Domains\Admin\Admin\Resources\Development\HorizonLinkResource;
@@ -25,6 +26,7 @@ final class AdminNavigationSortHelper
     public const NAVIGATION_SORT_BY_CLASS = [
         ManageCatalogSettings::class,
         ManageFeedbackSettings::class,
+        AdminResource::class,
         UserResource::class,
         FeedbackResource::class,
         AttributeResource::class,
