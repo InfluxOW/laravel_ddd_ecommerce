@@ -2,12 +2,12 @@
 
 namespace App\Domains\Users\Http\Controllers\Api\Auth;
 
+use App\Components\LoginHistoryable\Services\LoginDetailsService;
 use App\Domains\Generic\Exceptions\HttpException;
 use App\Domains\Users\Events\EmailVerificationFailed;
 use App\Domains\Users\Events\Login;
 use App\Domains\Users\Http\Requests\LoginRequest;
 use App\Domains\Users\Models\User;
-use App\Domains\Users\Services\LoginDetailsService;
 use App\Interfaces\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -25,7 +25,7 @@ final class LoginController extends Controller
         $loginDetails = $loginDetailsService->getLoginDetails($request);
 
         $accessToken = DB::transaction(function () use ($loginDetailsService, $user, $loginDetails): NewAccessToken {
-            $loginDetailsService->updateUserLoginHistory($user, $loginDetails);
+            $loginDetailsService->updateLoginHistory($user, $loginDetails);
 
             return $this->receiveNewAccessToken($user);
         });

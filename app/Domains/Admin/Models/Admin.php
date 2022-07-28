@@ -2,10 +2,12 @@
 
 namespace App\Domains\Admin\Models;
 
+use App\Components\LoginHistoryable\Models\LoginHistory;
 use App\Domains\Admin\Database\Factories\AdminFactory;
 use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
 use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -61,6 +63,15 @@ final class Admin extends Authenticatable implements FilamentUser
         'password',
         'remember_token',
     ];
+
+    /*
+     * Relations
+     * */
+
+    public function loginHistory(): MorphMany
+    {
+        return $this->morphMany(LoginHistory::class, 'login_historyable');
+    }
 
     /*
      * Helpers

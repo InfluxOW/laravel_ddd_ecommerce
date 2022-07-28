@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Domains\Users\Admin\Resources\UserResource\RelationManagers;
+namespace App\Components\LoginHistoryable\Admin\RelationManagers;
 
+use App\Components\LoginHistoryable\Enums\Translation\LoginHistoryTranslationKey;
 use App\Domains\Admin\Admin\Abstracts\RelationManager;
-use App\Domains\Users\Enums\Translation\LoginHistoryTranslationKey;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;

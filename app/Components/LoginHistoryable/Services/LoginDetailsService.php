@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Domains\Users\Services;
+namespace App\Components\LoginHistoryable\Services;
 
-use App\Domains\Users\DTOs\LoginDetails\LoginDetails;
-use App\Domains\Users\DTOs\LoginDetails\LoginDetailsLocation;
-use App\Domains\Users\DTOs\LoginDetails\LoginDetailsUserAgent;
-use App\Domains\Users\Models\User;
+use App\Components\LoginHistoryable\DTOs\LoginDetails\LoginDetails;
+use App\Components\LoginHistoryable\DTOs\LoginDetails\LoginDetailsLocation;
+use App\Components\LoginHistoryable\DTOs\LoginDetails\LoginDetailsUserAgent;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\Request;
 use Jenssegers\Agent\Agent;
 use MStaack\LaravelPostgis\Geometries\Point;
@@ -63,9 +63,9 @@ final class LoginDetailsService
         return $loginDetailsLocation;
     }
 
-    public function updateUserLoginHistory(User $user, LoginDetails $loginDetails): void
+    public function updateLoginHistory(Authenticatable $authenticatable, LoginDetails $loginDetails): void
     {
-        $user->loginHistory()->create($this->prepareLoginDetails($loginDetails));
+        $authenticatable->loginHistory()->create($this->prepareLoginDetails($loginDetails));
     }
 
     private function prepareLoginDetails(LoginDetails $loginDetails): array

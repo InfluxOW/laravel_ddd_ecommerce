@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Users\Enums\Translation;
+namespace App\Components\LoginHistoryable\Enums\Translation;
 
 enum LoginHistoryTranslationKey: string
 {

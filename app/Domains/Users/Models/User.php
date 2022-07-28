@@ -3,6 +3,7 @@
 namespace App\Domains\Users\Models;
 
 use App\Components\Addressable\Models\Address;
+use App\Components\LoginHistoryable\Models\LoginHistory;
 use App\Domains\Cart\Models\Cart;
 use App\Domains\Feedback\Models\Feedback;
 use App\Domains\Generic\Interfaces\Exportable;
@@ -43,7 +44,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property-read int|null $feedback_count
  * @property-read bool $has_verified_email
  * @property-read \Carbon\Carbon|null $last_logged_in_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Domains\Users\Models\LoginHistory[] $loginHistory
+ * @property-read \Illuminate\Database\Eloquent\Collection|LoginHistory[] $loginHistory
  * @property-read int|null $login_history_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
@@ -129,9 +130,9 @@ final class User extends Authenticatable implements MustVerifyEmail, Explored, E
         return $this->hasMany(ConfirmationToken::class);
     }
 
-    public function loginHistory(): HasMany
+    public function loginHistory(): MorphMany
     {
-        return $this->hasMany(LoginHistory::class);
+        return $this->morphMany(LoginHistory::class, 'login_historyable');
     }
 
     /*

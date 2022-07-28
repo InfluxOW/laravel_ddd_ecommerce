@@ -3,10 +3,10 @@
 namespace App\Domains\Users\Admin\Resources;
 
 use App\Components\Addressable\Admin\RelationManagers\AddressesRelationManager;
+use App\Components\LoginHistoryable\Admin\RelationManagers\UserLoginHistoryRelationManager;
 use App\Domains\Admin\Admin\Abstracts\Pages\ViewRecord;
 use App\Domains\Admin\Admin\Abstracts\Resource;
 use App\Domains\Admin\Admin\Components\Cards\TimestampsCard;
-use App\Domains\Users\Admin\Resources\UserResource\RelationManagers\UserLoginHistoryRelationManager;
 use App\Domains\Users\Enums\Translation\UserTranslationKey;
 use App\Domains\Users\Models\User;
 use Carbon\Carbon;

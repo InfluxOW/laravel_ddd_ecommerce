@@ -190,6 +190,7 @@ return [
         App\Components\Mediable\Providers\ComponentServiceProvider::class,
         App\Components\Purchasable\Providers\ComponentServiceProvider::class,
         App\Components\Attributable\Providers\ComponentServiceProvider::class,
+        App\Components\LoginHistoryable\Providers\ComponentServiceProvider::class,
     ],
 
     /*

@@ -7,7 +7,7 @@ use App\Domains\Generic\Jobs\ExportJob;
 use App\Domains\Users\Enums\Translation\UserTranslationKey;
 use App\Domains\Users\Models\User;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Collection;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
@@ -17,7 +17,7 @@ final class UsersExportJob extends ExportJob
     {
         return User::query()
             ->with([
-                'loginHistory' => fn (HasMany $query): HasMany => $query->select(['id', 'user_id', 'created_at'])->orderByDesc('id')->limit(1),
+                'loginHistory' => fn (MorphMany $query): MorphMany => $query->select(['id', 'login_historyable_type', 'login_historyable_id', 'created_at'])->orderByDesc('id')->limit(1),
             ])
             /** @phpstan-ignore-next-line */
             ->when(isset($this->recordsIds), fn (Builder $query): Builder => $query->whereIntegerInRaw('id', $this->recordsIds))

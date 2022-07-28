@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Users\Tests;
+namespace App\Domains\Generic\Tests;
 
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Str;

@@ -18,7 +18,7 @@ parameters:
         - '#\(Illuminate\\Support\\Carbon\|null\) does not accept Carbon\\Carbon#'
         - '#Call to an undefined method Illuminate\\Foundation\\Application#'
 
-        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Relations\\HasMany\<App\\Domains\\Users\\Models\\LoginHistory\>#'
+        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Relations\\MorphMany\<App\\Components\\LoginHistoryable\\Models\\LoginHistory\>#'
 
         - '#Cache::rememberInArray#'
         - '#Cache::simple#'

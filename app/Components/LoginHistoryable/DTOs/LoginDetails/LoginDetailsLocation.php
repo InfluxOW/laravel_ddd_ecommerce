@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Users\DTOs\LoginDetails;
+namespace App\Components\LoginHistoryable\DTOs\LoginDetails;
 
 use MStaack\LaravelPostgis\Geometries\Point;
 
