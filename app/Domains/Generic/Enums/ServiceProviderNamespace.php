@@ -16,4 +16,5 @@ enum ServiceProviderNamespace: string
     case GENERIC = 'generic';
     case ATTRIBUTE = 'attribute';
     case LOGIN_HISTORY = 'login_history';
+    case NEWS = 'news';
 }

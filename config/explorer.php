@@ -6,6 +6,7 @@ use App\Components\Attributable\Models\Attribute;
 use App\Domains\Catalog\Models\Product;
 use App\Domains\Catalog\Models\ProductCategory;
 use App\Domains\Feedback\Models\Feedback;
+use App\Domains\News\Models\Article;
 use App\Domains\Users\Models\User;
 
 return [
@@ -26,6 +27,7 @@ return [
         ProductCategory::class,
         Feedback::class,
         User::class,
+        Article::class,
     ],
 
     /**
