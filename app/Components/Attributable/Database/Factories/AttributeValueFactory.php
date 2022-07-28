@@ -8,6 +8,8 @@ use App\Infrastructure\Abstracts\Database\Factory;
 
 final class AttributeValueFactory extends Factory
 {
+    public static array $customAttributeValueHandlers;
+
     protected $model = AttributeValue::class;
 
     public function definition(): array
@@ -25,6 +27,10 @@ final class AttributeValueFactory extends Factory
                 AttributeValuesType::FLOAT => $this->faker->randomFloat(random_int(1, 8), 0, 100),
                 AttributeValuesType::STRING => $this->faker->words(3, true),
             };
+
+            if (array_key_exists($productAttributeValue->attribute->title, self::$customAttributeValueHandlers)) {
+                $value = self::$customAttributeValueHandlers[$productAttributeValue->attribute->title]($this->faker);
+            }
 
             $productAttributeValue->value = $value;
         });

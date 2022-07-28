@@ -22,12 +22,13 @@ final class AttributeValueSeeder extends Seeder
      */
     public function run(array $attributableModels = [])
     {
-        $attributes = Attribute::query()->inRandomOrder()->get(['id', 'values_type']);
+        $attributes = Attribute::query()->inRandomOrder()->get(['id', 'values_type', 'title']);
+        $attributesCount = $attributes->count();
 
         $attributeValuesRows = [];
         foreach ($attributableModels as $attributableModel) {
             foreach ($attributableModel::query()->whereDoesntHave('attributeValues')->get(['id']) as $attributable) {
-                foreach ($attributes->take(app()->runningUnitTests() ? 4 : random_int(3, 8)) as $attribute) {
+                foreach ($attributes->take(app()->runningUnitTests() ? 4 : random_int(3, $attributesCount)) as $attribute) {
                     $attributeValuesRows[] = AttributeValue::factory()->for($attributable, 'attributable')->for($attribute, 'attribute')->make()->getRawAttributes(['id']);
                 }
             }
