@@ -1,10 +1,14 @@
 <?php
 
+use App\Domains\Admin\Admin\Abstracts\RelationManager;
+use App\Domains\Admin\Admin\Components\Actions\Create\Tables\CreateAction;
 use App\Domains\Admin\Admin\Components\Actions\Delete\Tables\DeleteAction;
 use App\Domains\Admin\Admin\Components\Actions\DeleteBulkAction;
+use App\Domains\Admin\Admin\Components\Actions\Edit\Tables\EditAction;
 use App\Domains\Admin\Admin\Components\Actions\Export\Pages\ExportAction;
 use App\Domains\Admin\Admin\Components\Actions\Export\Tables\ExportBulkAction;
 use App\Domains\Admin\Admin\Components\Actions\UpdateBulkAction;
+use App\Domains\Admin\Admin\Components\Actions\View\Tables\ViewAction;
 use App\Domains\Admin\Admin\Resources\AdminResource;
 use App\Domains\Admin\Admin\Resources\Development\ClockworkLinkResource;
 use App\Domains\Admin\Admin\Resources\Development\ElasticvueLinkResource;
@@ -23,13 +27,15 @@ use App\Domains\Generic\Utils\LangUtils;
 use Filament\Resources\Pages\Page;
 use Illuminate\Database\Eloquent\Model;
 
+$getModelLabel = static fn (Page|RelationManager $livewire): string => ucwords($livewire instanceof Page ? $livewire::getResource()::getModelLabel() : $livewire->getTableModelLabel());
+$getRecordLabel = static fn (Page|RelationManager $livewire, Model $record): string => ucwords($livewire instanceof Page ? $livewire::getResource()::getRecordTitle($record) : $livewire->getTableRecordTitle($record));
+
 return [
     AdminResource::class => [
         AdminResourcePropertyTranslationKey::LABEL->name => 'Admin',
         AdminResourcePropertyTranslationKey::PLURAL_LABEL->name => 'Admins',
         AdminResourcePropertyTranslationKey::NAVIGATION_LABEL->name => 'Admins',
         AdminResourcePropertyTranslationKey::NAVIGATION_GROUP->name => LangUtils::translateEnum(AdminNavigationGroupTranslationKey::GENERIC),
-
     ],
     UpdateBulkAction::class => [
         AdminModalTranslationKey::HEADING->name => 'Update Records',
@@ -46,6 +52,23 @@ return [
         AdminModalTranslationKey::SUBHEADING->name => 'Are you sure you want to delete these records?',
         AdminModalTranslationKey::BUTTON->name => 'Confirm',
     ],
+    CreateAction::class => [
+        AdminModalTranslationKey::HEADING->name => [
+            static fn (Page|RelationManager $livewire): string => "Create {$getModelLabel($livewire)}",
+        ],
+        AdminModalTranslationKey::BUTTON->name => 'Confirm',
+    ],
+    EditAction::class => [
+        AdminModalTranslationKey::HEADING->name => [
+            static fn (Page|RelationManager $livewire, Model $record): string => $getRecordLabel($livewire, $record),
+        ],
+        AdminModalTranslationKey::BUTTON->name => 'Confirm',
+    ],
+    ViewAction::class => [
+        AdminModalTranslationKey::HEADING->name => [
+            static fn (Page|RelationManager $livewire, Model $record): string => $getRecordLabel($livewire, $record),
+        ],
+    ],
     ExportAction::class => [
         AdminModalTranslationKey::HEADING->name => 'Export Current Record',
         AdminModalTranslationKey::SUBHEADING->name => 'Are you sure you want to export this record?',
@@ -53,7 +76,7 @@ return [
     ],
     DeleteAction::class => [
         AdminModalTranslationKey::HEADING->name => [
-            static fn (Page $livewire, ?Model $record) => "Delete {$livewire::getResource()::getRecordTitle($record)}",
+            static fn (Page $livewire, ?Model $record): string => "Delete {$livewire::getResource()::getRecordTitle($record)}",
         ],
         AdminModalTranslationKey::SUBHEADING->name => 'Are you sure you would like to do this?',
         AdminModalTranslationKey::BUTTON->name => 'Confirm',
