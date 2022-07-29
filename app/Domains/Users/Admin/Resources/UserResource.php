@@ -6,7 +6,6 @@ use App\Components\Addressable\Admin\RelationManagers\AddressesRelationManager;
 use App\Components\LoginHistoryable\Admin\RelationManagers\LoginHistoryRelationManager;
 use App\Domains\Admin\Admin\Abstracts\Pages\ViewRecord;
 use App\Domains\Admin\Admin\Abstracts\Resource;
-use App\Domains\Admin\Admin\Components\Cards\TimestampsCard;
 use App\Domains\Users\Enums\Translation\UserTranslationKey;
 use App\Domains\Users\Models\User;
 use Carbon\Carbon;
@@ -97,10 +96,7 @@ final class UserResource extends Resource
                             ->nullable()
                             ->placeholder(Carbon::now())
                             ->columnSpan(2),
-                    ])
-                    ->columnSpan(2),
-                TimestampsCard::make()
-                    ->columnSpan(1),
+                    ]),
             ])
             ->columns(3);
     }

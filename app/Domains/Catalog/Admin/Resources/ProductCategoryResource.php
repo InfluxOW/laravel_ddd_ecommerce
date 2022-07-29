@@ -4,7 +4,6 @@ namespace App\Domains\Catalog\Admin\Resources;
 
 use App\Components\Mediable\Admin\Components\Fields\MediaLibraryFileUpload;
 use App\Domains\Admin\Admin\Abstracts\Resource;
-use App\Domains\Admin\Admin\Components\Cards\TimestampsCard;
 use App\Domains\Admin\Admin\Components\Forms\RichEditor;
 use App\Domains\Catalog\Admin\Resources\ProductCategoryResource\RelationManagers\ProductCategoryChildrenRelationManager;
 use App\Domains\Catalog\Enums\Media\ProductCategoryMediaCollectionKey;
@@ -54,12 +53,85 @@ final class ProductCategoryResource extends Resource
 
     public static function form(Form $form): Form
     {
+        return $form
+            ->schema([
+                Card::make()
+                    ->schema([
+                        Toggle::makeTranslated(ProductCategoryTranslationKey::IS_VISIBLE)
+                            ->columnSpan(1),
+                        Toggle::makeTranslated(ProductCategoryTranslationKey::IS_DISPLAYABLE)
+                            ->disabled()
+                            ->columnSpan(1),
+                        TextInput::makeTranslated(ProductCategoryTranslationKey::TITLE)
+                            ->required()
+                            ->reactive()
+                            ->afterStateUpdated(fn (callable $set, $state): mixed => $set(ProductCategoryTranslationKey::SLUG->value, Str::slug($state)))
+                            ->minValue(2)
+                            ->maxLength(255)
+                            ->placeholder('Electronics')
+                            ->columnSpan(1),
+                        TextInput::makeTranslated(ProductCategoryTranslationKey::SLUG)
+                            ->required()
+                            ->minValue(2)
+                            ->maxLength(255)
+                            ->placeholder('electronics')
+                            ->columnSpan(1),
+                        RichEditor::makeTranslated(ProductCategoryTranslationKey::DESCRIPTION)->columnSpan(2),
+                        Select::makeTranslated(ProductCategoryTranslationKey::PARENT_ID)
+                            ->relationship('parent', 'title')
+                            ->options(function (?Model $record, Page|RelationManager $livewire): array {
+                                if ($livewire instanceof CreateRecord) {
+                                    $categories = ProductCategory::query()->hasLimitedDepth()->orderBy('left')->get();
+                                } elseif ($livewire instanceof RelationManager) {
+                                    $categories = collect([$livewire->ownerRecord]);
+                                } else {
+                                    $categories = ProductCategory::query()->hasLimitedDepth()->orderBy('left')->withoutNode($record)->get()->filter(fn (ProductCategory $parent) => ! $parent->insideSubtree($record));
+                                }
+
+                                return $categories->pluck('title', 'id')->toArray();
+                            })
+                            ->disabled(fn (Page|RelationManager $livewire): bool => $livewire instanceof RelationManager)
+                            ->default(fn (Page|RelationManager $livewire): ?int => $livewire instanceof RelationManager ? $livewire->ownerRecord->getKey() : null)
+                            ->searchable(fn (Page|RelationManager $livewire) => $livewire instanceof Page)
+                            ->reactive()
+                            ->afterStateUpdated(function (callable $set, callable $get): void {
+                                $parentId = $get(ProductCategoryTranslationKey::PARENT_ID->value);
+                                $parent = ($parentId === null) ? null : ProductCategory::query()->hasLimitedDepth()->find($parentId);
+
+                                if (isset($parent->depth)) {
+                                    $set(ProductCategoryTranslationKey::DEPTH->value, $parent->depth + 1);
+                                }
+                            })
+                            ->columnSpan(2),
+                        TextInput::makeTranslated(ProductCategoryTranslationKey::DEPTH)
+                            ->disabled()
+                            ->default(fn (Page|RelationManager $livewire): ?int => ($livewire instanceof RelationManager && isset($livewire->ownerRecord->depth)) ? (int) ($livewire->ownerRecord->depth + 1) : null)
+                            ->lte((string) ProductCategory::MAX_DEPTH, true)
+                            ->columnSpan(2),
+                        MediaLibraryFileUpload::makeTranslated(ProductCategoryTranslationKey::IMAGES)
+                            ->collection(ProductCategoryMediaCollectionKey::IMAGES->value)
+                            ->multiple()
+                            ->minFiles(0)
+                            ->maxFiles(3)
+                            ->image()
+                            ->preserveFilenames()
+                            ->enableReordering()
+                            ->columnSpan(2),
+                    ]),
+            ])
+            ->columns(2);
+    }
+
+    public static function viewingForm(Form $form): Form
+    {
         /** @var string $mainTabTitle */
         $mainTabTitle = LangUtils::translateEnum(ProductCategoryTranslationKey::MAIN);
         /** @var string $statisticsTabTitle */
         $statisticsTabTitle = LangUtils::translateEnum(ProductCategoryTranslationKey::STATISTICS);
 
-        return $form
+        $form = parent::viewingForm($form);
+
+        return Form::make()
             ->schema([
                 Tabs::make('_')
                     ->columns(3)
@@ -68,11 +140,9 @@ final class ProductCategoryResource extends Resource
                         Tabs\Tab::make($mainTabTitle)
                             ->columns(3)
                             ->schema([
-                                Card::make()
-                                    ->schema(self::getCreationFormSchema())
-                                    ->columnSpan(2),
-                                TimestampsCard::make()
-                                    ->columnSpan(1),
+                                Grid::make()
+                                    ->schema($form->getSchema())
+                                    ->columnSpan(3),
                                 Placeholder::makeTranslated(ProductCategoryTranslationKey::PATH)
                                     ->content(fn (?ProductCategory $record): string => ($record === null || $record->path === '') ? '-' : $record->path)
                                     ->columnSpan(3),
@@ -90,72 +160,6 @@ final class ProductCategoryResource extends Resource
                             ]),
                     ]),
             ]);
-    }
-
-    public static function getCreationFormSchema(): array
-    {
-        return [
-            Toggle::makeTranslated(ProductCategoryTranslationKey::IS_VISIBLE)
-                ->columnSpan(1),
-            Toggle::makeTranslated(ProductCategoryTranslationKey::IS_DISPLAYABLE)
-                ->disabled()
-                ->columnSpan(1),
-            TextInput::makeTranslated(ProductCategoryTranslationKey::TITLE)
-                ->required()
-                ->reactive()
-                ->afterStateUpdated(fn (callable $set, $state): mixed => $set(ProductCategoryTranslationKey::SLUG->value, Str::slug($state)))
-                ->minValue(2)
-                ->maxLength(255)
-                ->placeholder('Electronics')
-                ->columnSpan(1),
-            TextInput::makeTranslated(ProductCategoryTranslationKey::SLUG)
-                ->required()
-                ->minValue(2)
-                ->maxLength(255)
-                ->placeholder('electronics')
-                ->columnSpan(1),
-            RichEditor::makeTranslated(ProductCategoryTranslationKey::DESCRIPTION)->columnSpan(2),
-            Select::makeTranslated(ProductCategoryTranslationKey::PARENT_ID)
-                ->relationship('parent', 'title')
-                ->options(function (?Model $record, Page|RelationManager $livewire): array {
-                    if ($livewire instanceof CreateRecord) {
-                        $categories = ProductCategory::query()->hasLimitedDepth()->orderBy('left')->get();
-                    } elseif ($livewire instanceof RelationManager) {
-                        $categories = collect([$livewire->ownerRecord]);
-                    } else {
-                        $categories = ProductCategory::query()->hasLimitedDepth()->orderBy('left')->withoutNode($record)->get()->filter(fn (ProductCategory $parent) => ! $parent->insideSubtree($record));
-                    }
-
-                    return $categories->pluck('title', 'id')->toArray();
-                })
-                ->disabled(fn (Page|RelationManager $livewire): bool => $livewire instanceof RelationManager)
-                ->default(fn (Page|RelationManager $livewire): ?int => $livewire instanceof RelationManager ? $livewire->ownerRecord->getKey() : null)
-                ->searchable(fn (Page|RelationManager $livewire) => $livewire instanceof Page)
-                ->reactive()
-                ->afterStateUpdated(function (callable $set, callable $get): void {
-                    $parentId = $get(ProductCategoryTranslationKey::PARENT_ID->value);
-                    $parent = ($parentId === null) ? null : ProductCategory::query()->hasLimitedDepth()->find($parentId);
-
-                    if (isset($parent->depth)) {
-                        $set(ProductCategoryTranslationKey::DEPTH->value, $parent->depth + 1);
-                    }
-                })
-                ->columnSpan(2),
-            TextInput::makeTranslated(ProductCategoryTranslationKey::DEPTH)
-                ->disabled()
-                ->default(fn (Page|RelationManager $livewire): ?int => ($livewire instanceof RelationManager && isset($livewire->ownerRecord->depth)) ? (int) ($livewire->ownerRecord->depth + 1) : null)
-                ->lte((string) ProductCategory::MAX_DEPTH, true)
-                ->columnSpan(2),
-            MediaLibraryFileUpload::makeTranslated(ProductCategoryTranslationKey::IMAGES)
-                ->collection(ProductCategoryMediaCollectionKey::IMAGES->value)
-                ->multiple()
-                ->minFiles(0)
-                ->maxFiles(3)
-                ->image()
-                ->preserveFilenames()
-                ->enableReordering()
-                ->columnSpan(2),
-        ];
     }
 
     public static function table(Table $table): Table

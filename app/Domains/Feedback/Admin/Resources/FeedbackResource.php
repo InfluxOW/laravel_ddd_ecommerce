@@ -4,7 +4,6 @@ namespace App\Domains\Feedback\Admin\Resources;
 
 use App\Domains\Admin\Admin\Abstracts\Resource;
 use App\Domains\Admin\Admin\Components\Actions\UpdateBulkAction;
-use App\Domains\Admin\Admin\Components\Cards\TimestampsCard;
 use App\Domains\Feedback\Enums\Translation\FeedbackTranslationKey;
 use App\Domains\Feedback\Models\Feedback;
 use Filament\Forms\Components\Card;
@@ -89,10 +88,7 @@ final class FeedbackResource extends Resource
                             ->disabled(),
                         Textarea::makeTranslated(FeedbackTranslationKey::TEXT)
                             ->disabled(),
-                    ])
-                    ->columnSpan(2),
-                TimestampsCard::make()
-                    ->columnSpan(1),
+                    ]),
             ])
             ->columns(3);
     }

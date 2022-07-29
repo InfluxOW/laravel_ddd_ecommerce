@@ -6,7 +6,6 @@ use App\Components\Attributable\Admin\RelationManagers\AttributeValuesRelationMa
 use App\Components\Mediable\Admin\Components\Fields\MediaLibraryFileUpload;
 use App\Components\Purchasable\Admin\RelationManagers\PricesRelationManager;
 use App\Domains\Admin\Admin\Abstracts\Resource;
-use App\Domains\Admin\Admin\Components\Cards\TimestampsCard;
 use App\Domains\Admin\Admin\Components\Forms\RichEditor;
 use App\Domains\Catalog\Enums\Media\ProductMediaCollectionKey;
 use App\Domains\Catalog\Enums\Translation\ProductTranslationKey;
@@ -73,13 +72,6 @@ final class ProductResource extends Resource
                         RichEditor::makeTranslated(ProductTranslationKey::DESCRIPTION)
                             ->required()
                             ->columnSpan(2),
-                    ])
-                    ->columnSpan(2),
-                TimestampsCard::make()
-                    ->columnSpan(1),
-                Card::make()
-                    ->columnSpan(3)
-                    ->schema([
                         MultiSelect::makeTranslated(ProductTranslationKey::CATEGORIES)
                             ->relationship('categories', 'title')
                             ->options(fn (?Product $record, callable $get): array => ProductCategory::query()
@@ -88,19 +80,20 @@ final class ProductResource extends Resource
                                 ->whereIntegerNotInRaw('id', $get(ProductTranslationKey::CATEGORIES->value))
                                 ->orderBy('left')
                                 ->pluck('title', 'id')
-                                ->toArray()),
+                                ->toArray())
+                            ->columnSpan(2),
+                        MediaLibraryFileUpload::makeTranslated(ProductTranslationKey::IMAGES)
+                            ->collection(ProductMediaCollectionKey::IMAGES->value)
+                            ->multiple()
+                            ->minFiles(0)
+                            ->maxFiles(10)
+                            ->image()
+                            ->preserveFilenames()
+                            ->enableReordering()
+                            ->columnSpan(2),
                     ]),
-                MediaLibraryFileUpload::makeTranslated(ProductTranslationKey::IMAGES)
-                    ->collection(ProductMediaCollectionKey::IMAGES->value)
-                    ->multiple()
-                    ->minFiles(0)
-                    ->maxFiles(10)
-                    ->image()
-                    ->preserveFilenames()
-                    ->enableReordering()
-                    ->columnSpan(3),
             ])
-            ->columns(3);
+            ->columns(2);
     }
 
     public static function table(Table $table): Table

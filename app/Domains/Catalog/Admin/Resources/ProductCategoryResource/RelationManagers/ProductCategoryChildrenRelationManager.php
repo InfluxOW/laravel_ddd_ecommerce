@@ -23,7 +23,7 @@ final class ProductCategoryChildrenRelationManager extends RelationManager
 
     public static function form(Form $form): Form
     {
-        return $form->schema(ProductCategoryResource::getCreationFormSchema());
+        return $form->schema(ProductCategoryResource::editingForm($form)->getSchema());
     }
 
     public static function table(Table $table): Table

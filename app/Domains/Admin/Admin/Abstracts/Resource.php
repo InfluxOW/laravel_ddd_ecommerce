@@ -2,8 +2,11 @@
 
 namespace App\Domains\Admin\Admin\Abstracts;
 
+use App\Domains\Admin\Admin\Components\Cards\TimestampsCard;
 use App\Domains\Generic\Traits\Models\Searchable;
+use Filament\Forms\Components\Grid;
 use Filament\GlobalSearch\GlobalSearchResult;
+use Filament\Resources\Form;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
@@ -38,5 +41,30 @@ abstract class Resource extends SimpleResource
         }
 
         return parent::getGlobalSearchResults($searchQuery);
+    }
+
+    public static function creationForm(Form $form): Form
+    {
+        return static::form($form);
+    }
+
+    public static function editingForm(Form $form): Form
+    {
+        return static::form($form);
+    }
+
+    public static function viewingForm(Form $form): Form
+    {
+        $form = static::form($form);
+
+        return Form::make()
+            ->schema([
+                Grid::make()
+                    ->schema($form->getSchema())
+                    ->columnSpan(2),
+                TimestampsCard::make()
+                    ->columnSpan(1),
+            ])
+            ->columns(3);
     }
 }

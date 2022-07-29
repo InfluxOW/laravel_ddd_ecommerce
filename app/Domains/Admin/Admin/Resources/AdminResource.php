@@ -5,7 +5,6 @@ namespace App\Domains\Admin\Admin\Resources;
 use App\Components\LoginHistoryable\Admin\RelationManagers\LoginHistoryRelationManager;
 use App\Domains\Admin\Admin\Abstracts\Pages\ViewRecord;
 use App\Domains\Admin\Admin\Abstracts\Resource;
-use App\Domains\Admin\Admin\Components\Cards\TimestampsCard;
 use App\Domains\Admin\Enums\Translation\Resources\AdminTranslationKey;
 use App\Domains\Admin\Models\Admin;
 use Filament\Forms\Components\Card;
@@ -13,7 +12,6 @@ use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
 use Filament\Resources\Pages\CreateRecord;
-use Filament\Resources\Pages\EditRecord;
 use Filament\Resources\Pages\Page;
 use Filament\Resources\Table;
 use Filament\Tables\Columns\TextColumn;
@@ -69,7 +67,7 @@ final class AdminResource extends Resource
                                     ->maxLength(255)
                                     ->placeholder('john_doe@gmail.com'),
                             ])
-                            ->columns(3),
+                            ->columns(2),
                         TextInput::makeTranslated(AdminTranslationKey::PASSWORD)
                             ->required(fn (Page $livewire): bool => $livewire instanceof CreateRecord)
                             ->password()
@@ -80,13 +78,9 @@ final class AdminResource extends Resource
                             ->maxLength(255)
                             ->placeholder('Password')
                             ->columnSpan(2),
-                    ])
-                    ->columnSpan(2),
-                TimestampsCard::make()
-                    ->visible(fn (Page $livewire): bool => $livewire instanceof EditRecord || $livewire instanceof ViewRecord)
-                    ->columnSpan(1),
+                    ]),
             ])
-            ->columns(3);
+            ->columns(2);
     }
 
     public static function table(Table $table): Table

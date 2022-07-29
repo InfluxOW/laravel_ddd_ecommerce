@@ -4,14 +4,12 @@ namespace App\Domains\News\Admin\Resources;
 
 use App\Components\Mediable\Admin\Components\Fields\MediaLibraryFileUpload;
 use App\Domains\Admin\Admin\Abstracts\Resource;
-use App\Domains\Admin\Admin\Components\Cards\TimestampsCard;
 use App\Domains\Admin\Admin\Components\Forms\RichEditor;
 use App\Domains\Catalog\Enums\Media\ProductCategoryMediaCollectionKey;
 use App\Domains\News\Enums\Translation\ArticleTranslationKey;
 use App\Domains\News\Models\Article;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\DateTimePicker;
-use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
@@ -50,53 +48,41 @@ final class ArticleResource extends Resource
             ->schema([
                 Card::make()
                     ->schema([
-                        Grid::make()
-                            ->schema(self::getCreationFormSchema())
-                            ->columns(3),
-                    ])
-                    ->columnSpan(2),
-                TimestampsCard::make()
-                    ->columnSpan(1),
+                        DateTimePicker::makeTranslated(ArticleTranslationKey::PUBLISHED_AT)
+                            ->nullable()
+                            ->columnSpan(3),
+                        TextInput::makeTranslated(ArticleTranslationKey::TITLE)
+                            ->required()
+                            ->reactive()
+                            ->afterStateUpdated(fn (callable $set, $state): mixed => $set(ArticleTranslationKey::SLUG->value, Str::slug($state)))
+                            ->minValue(2)
+                            ->maxLength(255)
+                            ->placeholder('Semi Truck Hauling Beer Collapses, Causing Traffic Mess On I-76')
+                            ->columnSpan(2),
+                        TextInput::makeTranslated(ArticleTranslationKey::SLUG)
+                            ->required()
+                            ->minValue(2)
+                            ->maxLength(255)
+                            ->placeholder('beer-truck-collapse')
+                            ->columnSpan(1),
+                        Textarea::makeTranslated(ArticleTranslationKey::DESCRIPTION)
+                            ->required()
+                            ->columnSpan(3),
+                        RichEditor::makeTranslated(ArticleTranslationKey::BODY)
+                            ->required()
+                            ->columnSpan(3),
+                        MediaLibraryFileUpload::makeTranslated(ArticleTranslationKey::IMAGES)
+                            ->collection(ProductCategoryMediaCollectionKey::IMAGES->value)
+                            ->multiple()
+                            ->minFiles(0)
+                            ->maxFiles(10)
+                            ->image()
+                            ->preserveFilenames()
+                            ->enableReordering()
+                            ->columnSpan(3),
+                    ]),
             ])
             ->columns(3);
-    }
-
-    public static function getCreationFormSchema(): array
-    {
-        return [
-            DateTimePicker::makeTranslated(ArticleTranslationKey::PUBLISHED_AT)
-                ->nullable()
-                ->columnSpan(3),
-            TextInput::makeTranslated(ArticleTranslationKey::TITLE)
-                ->required()
-                ->reactive()
-                ->afterStateUpdated(fn (callable $set, $state): mixed => $set(ArticleTranslationKey::SLUG->value, Str::slug($state)))
-                ->minValue(2)
-                ->maxLength(255)
-                ->placeholder('Semi Truck Hauling Beer Collapses, Causing Traffic Mess On I-76')
-                ->columnSpan(2),
-            TextInput::makeTranslated(ArticleTranslationKey::SLUG)
-                ->required()
-                ->minValue(2)
-                ->maxLength(255)
-                ->placeholder('beer-truck-collapse')
-                ->columnSpan(1),
-            Textarea::makeTranslated(ArticleTranslationKey::DESCRIPTION)
-                ->required()
-                ->columnSpan(3),
-            RichEditor::makeTranslated(ArticleTranslationKey::BODY)
-                ->required()
-                ->columnSpan(3),
-            MediaLibraryFileUpload::makeTranslated(ArticleTranslationKey::IMAGES)
-                ->collection(ProductCategoryMediaCollectionKey::IMAGES->value)
-                ->multiple()
-                ->minFiles(0)
-                ->maxFiles(10)
-                ->image()
-                ->preserveFilenames()
-                ->enableReordering()
-                ->columnSpan(3),
-        ];
     }
 
     public static function table(Table $table): Table
