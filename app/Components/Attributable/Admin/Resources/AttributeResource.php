@@ -8,6 +8,7 @@ use App\Components\Attributable\Models\Attribute;
 use App\Domains\Admin\Admin\Abstracts\Resource;
 use App\Domains\Generic\Utils\LangUtils;
 use Filament\Forms\Components\Card;
+use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
@@ -47,22 +48,30 @@ final class AttributeResource extends Resource
             ->schema([
                 Card::make()
                     ->schema([
-                        TextInput::makeTranslated(AttributeTranslationKey::TITLE)
-                            ->required()
-                            ->reactive()
-                            ->afterStateUpdated(fn (callable $set, $state): mixed => $set(AttributeTranslationKey::SLUG->value, Str::slug($state)))
-                            ->minValue(2)
-                            ->maxLength(255)
-                            ->placeholder('Width'),
-                        TextInput::makeTranslated(AttributeTranslationKey::SLUG)
-                            ->required()
-                            ->minValue(2)
-                            ->maxLength(255)
-                            ->placeholder('width'),
+                        Grid::make()
+                            ->schema([
+                                TextInput::makeTranslated(AttributeTranslationKey::TITLE)
+                                    ->required()
+                                    ->reactive()
+                                    ->afterStateUpdated(fn (callable $set, $state): mixed => $set(AttributeTranslationKey::SLUG->value, Str::slug($state)))
+                                    ->minValue(2)
+                                    ->maxLength(255)
+                                    ->placeholder('Width')
+                                    ->columnSpan(5),
+                                TextInput::makeTranslated(AttributeTranslationKey::SLUG)
+                                    ->required()
+                                    ->minValue(2)
+                                    ->maxLength(255)
+                                    ->placeholder('width')
+                                    ->columnSpan(3),
+                            ])
+                            ->columns(8)
+                            ->columnSpan(2),
                         Select::makeTranslated(AttributeTranslationKey::VALUES_TYPE)
                             ->required()
                             ->options(collect(AttributeValuesType::cases())->reduce(fn (Collection $acc, AttributeValuesType $valuesType): Collection => tap($acc, static fn () => $acc->offsetSet($valuesType->value, LangUtils::translateEnum($valuesType))), collect([])))
-                            ->searchable(),
+                            ->searchable()
+                            ->columnSpan(2),
                     ]),
             ])
             ->columns(3);

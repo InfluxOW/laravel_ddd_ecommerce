@@ -26,6 +26,7 @@ return [
     ProductCategoryTranslationKey::class => [
         ProductCategoryTranslationKey::MAIN->name => 'Main',
         ProductCategoryTranslationKey::STATISTICS->name => 'Statistics',
+        ProductCategoryTranslationKey::ADDITIONAL->name => 'Additional',
 
         ProductCategoryTranslationKey::ID->name => 'Id',
         ProductCategoryTranslationKey::PATH->name => 'Breadcrumbs',

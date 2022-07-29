@@ -10,6 +10,7 @@ use App\Domains\News\Enums\Translation\ArticleTranslationKey;
 use App\Domains\News\Models\Article;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
@@ -51,20 +52,25 @@ final class ArticleResource extends Resource
                         DateTimePicker::makeTranslated(ArticleTranslationKey::PUBLISHED_AT)
                             ->nullable()
                             ->columnSpan(3),
-                        TextInput::makeTranslated(ArticleTranslationKey::TITLE)
-                            ->required()
-                            ->reactive()
-                            ->afterStateUpdated(fn (callable $set, $state): mixed => $set(ArticleTranslationKey::SLUG->value, Str::slug($state)))
-                            ->minValue(2)
-                            ->maxLength(255)
-                            ->placeholder('Semi Truck Hauling Beer Collapses, Causing Traffic Mess On I-76')
-                            ->columnSpan(2),
-                        TextInput::makeTranslated(ArticleTranslationKey::SLUG)
-                            ->required()
-                            ->minValue(2)
-                            ->maxLength(255)
-                            ->placeholder('beer-truck-collapse')
-                            ->columnSpan(1),
+                        Grid::make()
+                            ->schema([
+                                TextInput::makeTranslated(ArticleTranslationKey::TITLE)
+                                    ->required()
+                                    ->reactive()
+                                    ->afterStateUpdated(fn (callable $set, $state): mixed => $set(ArticleTranslationKey::SLUG->value, Str::slug($state)))
+                                    ->minValue(2)
+                                    ->maxLength(255)
+                                    ->placeholder('Semi Truck Hauling Beer Collapses, Causing Traffic Mess On I-76')
+                                    ->columnSpan(5),
+                                TextInput::makeTranslated(ArticleTranslationKey::SLUG)
+                                    ->required()
+                                    ->minValue(2)
+                                    ->maxLength(255)
+                                    ->placeholder('beer-truck-collapse')
+                                    ->columnSpan(3),
+                            ])
+                            ->columns(8)
+                            ->columnSpan(3),
                         Textarea::makeTranslated(ArticleTranslationKey::DESCRIPTION)
                             ->required()
                             ->columnSpan(3),

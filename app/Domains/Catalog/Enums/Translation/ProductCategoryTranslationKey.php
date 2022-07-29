@@ -8,6 +8,7 @@ enum ProductCategoryTranslationKey: string
 
     case MAIN = 'main';
     case STATISTICS = 'statistics';
+    case ADDITIONAL = 'additional';
 
     case PATH = 'path';
     case TITLE = 'title';

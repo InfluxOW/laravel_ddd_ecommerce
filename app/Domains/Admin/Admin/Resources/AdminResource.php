@@ -60,14 +60,16 @@ final class AdminResource extends Resource
                                     ->required()
                                     ->minValue(2)
                                     ->maxLength(255)
-                                    ->placeholder('John Doe'),
+                                    ->placeholder('John Doe')
+                                    ->columnSpan(1),
                                 TextInput::makeTranslated(AdminTranslationKey::EMAIL)
                                     ->required()
                                     ->email()
                                     ->maxLength(255)
-                                    ->placeholder('john_doe@gmail.com'),
+                                    ->placeholder('john_doe@gmail.com')
+                                    ->columnSpan(1),
                             ])
-                            ->columns(2),
+                            ->columnSpan(2),
                         TextInput::makeTranslated(AdminTranslationKey::PASSWORD)
                             ->required(fn (Page $livewire): bool => $livewire instanceof CreateRecord)
                             ->password()

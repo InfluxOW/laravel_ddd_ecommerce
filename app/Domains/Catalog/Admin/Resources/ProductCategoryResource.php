@@ -13,6 +13,7 @@ use App\Domains\Generic\Utils\LangUtils;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Tabs;
 use Filament\Forms\Components\TextInput;
@@ -57,25 +58,56 @@ final class ProductCategoryResource extends Resource
             ->schema([
                 Card::make()
                     ->schema([
-                        Toggle::makeTranslated(ProductCategoryTranslationKey::IS_VISIBLE)
-                            ->columnSpan(1),
-                        Toggle::makeTranslated(ProductCategoryTranslationKey::IS_DISPLAYABLE)
-                            ->disabled()
-                            ->columnSpan(1),
-                        TextInput::makeTranslated(ProductCategoryTranslationKey::TITLE)
-                            ->required()
-                            ->reactive()
-                            ->afterStateUpdated(fn (callable $set, $state): mixed => $set(ProductCategoryTranslationKey::SLUG->value, Str::slug($state)))
-                            ->minValue(2)
-                            ->maxLength(255)
-                            ->placeholder('Electronics')
-                            ->columnSpan(1),
-                        TextInput::makeTranslated(ProductCategoryTranslationKey::SLUG)
-                            ->required()
-                            ->minValue(2)
-                            ->maxLength(255)
-                            ->placeholder('electronics')
-                            ->columnSpan(1),
+                        Grid::make()
+                            ->schema([
+                                Toggle::makeTranslated(ProductCategoryTranslationKey::IS_VISIBLE)
+                                    ->columnSpan(2),
+                                Toggle::makeTranslated(ProductCategoryTranslationKey::IS_DISPLAYABLE)
+                                    ->disabled()
+                                    ->columnSpan(3),
+                            ])
+                            ->columns(10)
+                            ->columnSpan(2),
+                        Grid::make()
+                            ->schema([
+                                TextInput::makeTranslated(ProductCategoryTranslationKey::TITLE)
+                                    ->required()
+                                    ->reactive()
+                                    ->afterStateUpdated(function (callable $set, callable $get, $state, ?ProductCategory $record, Page|RelationManager $livewire): void {
+                                        $path = $record?->parent?->path;
+                                        $depth = $record?->depth;
+
+                                        if ($livewire instanceof RelationManager && $record === null) {
+                                            /** @var ProductCategory $category */
+                                            $category = $livewire->ownerRecord;
+                                            $path = $category->path;
+                                            $depth = $category->depth;
+                                        }
+
+                                        if ($depth > 0) {
+                                            $path = isset($state) ? "{$path} — {$state}" : $path;
+                                        }
+
+                                        if ($depth === 0) {
+                                            $path = $state;
+                                        }
+
+                                        $set(ProductCategoryTranslationKey::SLUG->value, Str::slug($state));
+                                        $set(ProductCategoryTranslationKey::PATH->value, $path);
+                                    })
+                                    ->minValue(2)
+                                    ->maxLength(255)
+                                    ->placeholder('Electronics')
+                                    ->columnSpan(5),
+                                TextInput::makeTranslated(ProductCategoryTranslationKey::SLUG)
+                                    ->required()
+                                    ->minValue(2)
+                                    ->maxLength(255)
+                                    ->placeholder('electronics')
+                                    ->columnSpan(3),
+                            ])
+                            ->columns(8)
+                            ->columnSpan(2),
                         RichEditor::makeTranslated(ProductCategoryTranslationKey::DESCRIPTION)->columnSpan(2),
                         Select::makeTranslated(ProductCategoryTranslationKey::PARENT_ID)
                             ->relationship('parent', 'title')
@@ -103,11 +135,6 @@ final class ProductCategoryResource extends Resource
                                 }
                             })
                             ->columnSpan(2),
-                        TextInput::makeTranslated(ProductCategoryTranslationKey::DEPTH)
-                            ->disabled()
-                            ->default(fn (Page|RelationManager $livewire): ?int => ($livewire instanceof RelationManager && isset($livewire->ownerRecord->depth)) ? (int) ($livewire->ownerRecord->depth + 1) : null)
-                            ->lte((string) ProductCategory::MAX_DEPTH, true)
-                            ->columnSpan(2),
                         MediaLibraryFileUpload::makeTranslated(ProductCategoryTranslationKey::IMAGES)
                             ->collection(ProductCategoryMediaCollectionKey::IMAGES->value)
                             ->multiple()
@@ -118,6 +145,24 @@ final class ProductCategoryResource extends Resource
                             ->enableReordering()
                             ->columnSpan(2),
                     ]),
+                Section::makeTranslated(ProductCategoryTranslationKey::ADDITIONAL)
+                    ->schema([
+                        Grid::make()
+                            ->schema([
+                                TextInput::makeTranslated(ProductCategoryTranslationKey::DEPTH)
+                                    ->disabled()
+                                    ->default(fn (Page|RelationManager $livewire): int => ($livewire instanceof RelationManager && isset($livewire->ownerRecord->depth)) ? (int) ($livewire->ownerRecord->depth + 1) : 0)
+                                    ->lte((string) ProductCategory::MAX_DEPTH, true)
+                                    ->columnSpan(2),
+                                TextInput::makeTranslated(ProductCategoryTranslationKey::PATH)
+                                    ->disabled()
+                                    ->default(fn (Page|RelationManager $livewire): ?string => ($livewire instanceof RelationManager && isset($livewire->ownerRecord->path)) ? $livewire->ownerRecord->path : null)
+                                    ->columnSpan(8),
+                            ])
+                            ->columns(10)
+                            ->columnSpan(1),
+                    ])
+                    ->columnSpan(2),
             ])
             ->columns(2);
     }
@@ -142,9 +187,6 @@ final class ProductCategoryResource extends Resource
                             ->schema([
                                 Grid::make()
                                     ->schema($form->getSchema())
-                                    ->columnSpan(3),
-                                Placeholder::makeTranslated(ProductCategoryTranslationKey::PATH)
-                                    ->content(fn (?ProductCategory $record): string => ($record === null || $record->path === '') ? '-' : $record->path)
                                     ->columnSpan(3),
                             ]),
                         Tabs\Tab::make($statisticsTabTitle)

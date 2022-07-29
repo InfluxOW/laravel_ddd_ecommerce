@@ -107,6 +107,8 @@ final class ProductCategory extends Model implements HasMedia, Explored, Exporta
         'is_visible',
     ];
 
+    protected $appends = ['path'];
+
     public static Collection $hierarchy;
 
     /*

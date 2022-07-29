@@ -12,6 +12,7 @@ use App\Domains\Catalog\Enums\Translation\ProductTranslationKey;
 use App\Domains\Catalog\Models\Product;
 use App\Domains\Catalog\Models\ProductCategory;
 use Filament\Forms\Components\Card;
+use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\MultiSelect;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -50,25 +51,35 @@ final class ProductResource extends Resource
             ->schema([
                 Card::make()
                     ->schema([
-                        Toggle::makeTranslated(ProductTranslationKey::IS_VISIBLE)
-                            ->columnSpan(1),
-                        Toggle::makeTranslated(ProductTranslationKey::IS_DISPLAYABLE)
-                            ->disabled()
-                            ->columnSpan(1),
-                        TextInput::makeTranslated(ProductTranslationKey::TITLE)
-                            ->required()
-                            ->reactive()
-                            ->afterStateUpdated(fn (callable $set, $state): mixed => $set(ProductTranslationKey::SLUG->value, Str::slug($state)))
-                            ->minValue(2)
-                            ->maxLength(255)
-                            ->placeholder('TV')
-                            ->columnSpan(1),
-                        TextInput::makeTranslated(ProductTranslationKey::SLUG)
-                            ->required()
-                            ->minValue(2)
-                            ->maxLength(255)
-                            ->placeholder('tv')
-                            ->columnSpan(1),
+                        Grid::make()
+                            ->schema([
+                                Toggle::makeTranslated(ProductTranslationKey::IS_VISIBLE)
+                                    ->columnSpan(2),
+                                Toggle::makeTranslated(ProductTranslationKey::IS_DISPLAYABLE)
+                                    ->disabled()
+                                    ->columnSpan(3),
+                            ])
+                            ->columns(10)
+                            ->columnSpan(2),
+                        Grid::make()
+                            ->schema([
+                                TextInput::makeTranslated(ProductTranslationKey::TITLE)
+                                    ->required()
+                                    ->reactive()
+                                    ->afterStateUpdated(fn (callable $set, $state): mixed => $set(ProductTranslationKey::SLUG->value, Str::slug($state)))
+                                    ->minValue(2)
+                                    ->maxLength(255)
+                                    ->placeholder('TV')
+                                    ->columnSpan(5),
+                                TextInput::makeTranslated(ProductTranslationKey::SLUG)
+                                    ->required()
+                                    ->minValue(2)
+                                    ->maxLength(255)
+                                    ->placeholder('tv')
+                                    ->columnSpan(3),
+                            ])
+                            ->columns(8)
+                            ->columnSpan(2),
                         RichEditor::makeTranslated(ProductTranslationKey::DESCRIPTION)
                             ->required()
                             ->columnSpan(2),

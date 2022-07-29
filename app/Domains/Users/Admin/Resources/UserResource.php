@@ -69,18 +69,22 @@ final class UserResource extends Resource
                                     ->required()
                                     ->minValue(2)
                                     ->maxLength(255)
-                                    ->placeholder('John Doe'),
+                                    ->placeholder('John Doe')
+                                    ->columnSpan(1),
                                 TextInput::makeTranslated(UserTranslationKey::EMAIL)
                                     ->required()
                                     ->email()
                                     ->maxLength(255)
-                                    ->placeholder('john_doe@gmail.com'),
+                                    ->placeholder('john_doe@gmail.com')
+                                    ->columnSpan(1),
                                 TextInput::makeTranslated(UserTranslationKey::PHONE)
                                     ->nullable()
                                     ->maxLength(18)
                                     ->mask(fn (TextInput\Mask $mask): TextInput\Mask => $mask->pattern('+0 (000) 000-00-00'))
-                                    ->tel(),
+                                    ->tel()
+                                    ->columnSpan(1),
                             ])
+                            ->columnSpan(3)
                             ->columns(3),
                         TextInput::makeTranslated(UserTranslationKey::PASSWORD)
                             ->required(fn (Page $livewire): bool => $livewire instanceof CreateRecord)
@@ -91,11 +95,11 @@ final class UserResource extends Resource
                             ->minLength(6)
                             ->maxLength(255)
                             ->placeholder('Password')
-                            ->columnSpan(2),
+                            ->columnSpan(3),
                         DateTimePicker::makeTranslated(UserTranslationKey::EMAIL_VERIFIED_AT)
                             ->nullable()
                             ->placeholder(Carbon::now())
-                            ->columnSpan(2),
+                            ->columnSpan(3),
                     ]),
             ])
             ->columns(3);
