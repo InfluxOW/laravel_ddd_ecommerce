@@ -8,6 +8,7 @@ use App\Domains\Catalog\Http\Resources\ProductCategory\MediumProductCategoryReso
 use App\Domains\Catalog\Models\Product;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use JetBrains\PhpStorm\ArrayShape;
+use Stevebauman\Purify\Facades\Purify;
 
 final class HeavyProductResource extends ProductResource
 {
@@ -21,7 +22,7 @@ final class HeavyProductResource extends ProductResource
             'images' => MediaResource::collection($product->images),
             'categories' => MediumProductCategoryResource::collection($product->categories->sortBy('title')),
             'attributes' => AttributeValueResource::collection($product->attributeValues->sortBy('attribute.title')),
-            'description' => $product->description,
+            'description' => Purify::clean($product->description),
         ]);
     }
 }

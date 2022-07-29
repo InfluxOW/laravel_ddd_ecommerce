@@ -5,6 +5,7 @@ namespace App\Domains\Catalog\Admin\Resources;
 use App\Components\Mediable\Admin\Components\Fields\MediaLibraryFileUpload;
 use App\Domains\Admin\Admin\Abstracts\Resource;
 use App\Domains\Admin\Admin\Components\Cards\TimestampsCard;
+use App\Domains\Admin\Admin\Components\Forms\RichEditor;
 use App\Domains\Catalog\Admin\Resources\ProductCategoryResource\RelationManagers\ProductCategoryChildrenRelationManager;
 use App\Domains\Catalog\Enums\Media\ProductCategoryMediaCollectionKey;
 use App\Domains\Catalog\Enums\Translation\ProductCategoryTranslationKey;
@@ -12,7 +13,6 @@ use App\Domains\Catalog\Models\ProductCategory;
 use App\Domains\Generic\Utils\LangUtils;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Tabs;
@@ -114,11 +114,7 @@ final class ProductCategoryResource extends Resource
                 ->maxLength(255)
                 ->placeholder('electronics')
                 ->columnSpan(1),
-            MarkdownEditor::makeTranslated(ProductCategoryTranslationKey::DESCRIPTION)
-                ->disableToolbarButtons([
-                    'attachFiles',
-                ])
-                ->columnSpan(2),
+            RichEditor::makeTranslated(ProductCategoryTranslationKey::DESCRIPTION)->columnSpan(2),
             Select::makeTranslated(ProductCategoryTranslationKey::PARENT_ID)
                 ->relationship('parent', 'title')
                 ->options(function (?Model $record, Page|RelationManager $livewire): array {
@@ -153,7 +149,7 @@ final class ProductCategoryResource extends Resource
             MediaLibraryFileUpload::makeTranslated(ProductCategoryTranslationKey::IMAGES)
                 ->collection(ProductCategoryMediaCollectionKey::IMAGES->value)
                 ->multiple()
-                ->minFiles(1)
+                ->minFiles(0)
                 ->maxFiles(3)
                 ->image()
                 ->preserveFilenames()

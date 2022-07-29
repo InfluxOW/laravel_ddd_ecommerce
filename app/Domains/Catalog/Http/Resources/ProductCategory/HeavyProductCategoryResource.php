@@ -7,6 +7,7 @@ use App\Domains\Catalog\Models\ProductCategory;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 use JetBrains\PhpStorm\ArrayShape;
+use Stevebauman\Purify\Facades\Purify;
 
 final class HeavyProductCategoryResource extends JsonResource
 {
@@ -15,10 +16,11 @@ final class HeavyProductCategoryResource extends JsonResource
     {
         /** @var ProductCategory $category */
         $category = $this->resource;
+        $description = $category->description;
 
         return array_merge(LightProductCategoryResource::make($category)->toArray($request), [
             'images' => MediaResource::collection($category->images),
-            'description' => $category->description,
+            'description' => isset($description) ? Purify::clean($description) : null,
             'products_count' => $category->overall_products_count,
             'children' => $this->whenLoaded(
                 'children',

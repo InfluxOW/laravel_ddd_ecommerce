@@ -7,12 +7,12 @@ use App\Components\Mediable\Admin\Components\Fields\MediaLibraryFileUpload;
 use App\Components\Purchasable\Admin\RelationManagers\PricesRelationManager;
 use App\Domains\Admin\Admin\Abstracts\Resource;
 use App\Domains\Admin\Admin\Components\Cards\TimestampsCard;
+use App\Domains\Admin\Admin\Components\Forms\RichEditor;
 use App\Domains\Catalog\Enums\Media\ProductMediaCollectionKey;
 use App\Domains\Catalog\Enums\Translation\ProductTranslationKey;
 use App\Domains\Catalog\Models\Product;
 use App\Domains\Catalog\Models\ProductCategory;
 use Filament\Forms\Components\Card;
-use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\MultiSelect;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -70,11 +70,8 @@ final class ProductResource extends Resource
                             ->maxLength(255)
                             ->placeholder('tv')
                             ->columnSpan(1),
-                        MarkdownEditor::makeTranslated(ProductTranslationKey::DESCRIPTION)
+                        RichEditor::makeTranslated(ProductTranslationKey::DESCRIPTION)
                             ->required()
-                            ->disableToolbarButtons([
-                                'attachFiles',
-                            ])
                             ->columnSpan(2),
                     ])
                     ->columnSpan(2),
@@ -96,7 +93,7 @@ final class ProductResource extends Resource
                 MediaLibraryFileUpload::makeTranslated(ProductTranslationKey::IMAGES)
                     ->collection(ProductMediaCollectionKey::IMAGES->value)
                     ->multiple()
-                    ->minFiles(1)
+                    ->minFiles(0)
                     ->maxFiles(10)
                     ->image()
                     ->preserveFilenames()
