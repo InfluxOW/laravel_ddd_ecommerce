@@ -6,7 +6,6 @@ use App\Domains\Catalog\Enums\Media\ProductMediaCollectionKey;
 use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
 use App\Domains\Generic\Traits\Models\Searchable;
 use App\Domains\News\Database\Factories\ArticleFactory;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -43,6 +42,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Article published()
  * @method static Builder|Article query()
  * @method static Builder|Article search(string $searchable, bool $orderByScore)
+ * @method static Builder|Article unpublished()
  * @method static Builder|Article whereBody($value)
  * @method static Builder|Article whereCreatedAt($value)
  * @method static Builder|Article whereDescription($value)
@@ -121,7 +121,12 @@ class Article extends Model implements HasMedia, Explored
 
     public function scopePublished(Builder $query): void
     {
-        $query->where('published_at', '>=', Carbon::now());
+        $query->whereNotNull('published_at');
+    }
+
+    public function scopeUnpublished(Builder $query): void
+    {
+        $query->whereNull('published_at');
     }
 
     /*

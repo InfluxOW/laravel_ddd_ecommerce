@@ -15,6 +15,7 @@ return [
         AdminNavigationGroupTranslationKey::SETTINGS->name => 'Settings',
         AdminNavigationGroupTranslationKey::FEEDBACK->name => 'Feedback',
         AdminNavigationGroupTranslationKey::DEVELOPMENT->name => 'Development',
+        AdminNavigationGroupTranslationKey::NEWS->name => 'News',
     ],
     AdminTimestampsCardTranslationKey::class => [
         AdminTimestampsCardTranslationKey::UPDATED_AT->name => 'Last Modified At',
