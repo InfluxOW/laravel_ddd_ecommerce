@@ -169,6 +169,8 @@ final class ProductCategory extends Model implements HasMedia, Explored, Exporta
             $path[] = $category->title;
             $category = ($category->parent_id === null) ? null : self::findInHierarchy($category->parent_id, self::getHierarchy());
         }
+
+        $path = array_reverse($path);
         $path[] = $this->title;
 
         return implode(' — ', $path);
