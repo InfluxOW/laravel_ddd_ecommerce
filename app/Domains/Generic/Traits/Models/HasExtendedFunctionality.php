@@ -21,7 +21,7 @@ trait HasExtendedFunctionality
         return $attributes;
     }
 
-    private function getColumns(): array
+    public function getColumns(): array
     {
         $table = $this->getTable();
 

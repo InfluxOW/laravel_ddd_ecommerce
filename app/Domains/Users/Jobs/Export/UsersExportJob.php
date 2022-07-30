@@ -13,16 +13,13 @@ use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
 final class UsersExportJob extends ExportJob
 {
-    public function query(): Builder
+    protected function getBaseQuery(): Builder
     {
         return User::query()
             ->with([
                 'loginHistory' => fn (MorphMany $query): MorphMany => $query->select(['id', 'login_historyable_type', 'login_historyable_id', 'created_at'])->orderByDesc('id')->limit(1),
             ])
-            /** @phpstan-ignore-next-line */
-            ->when(isset($this->recordsIds), fn (Builder $query): Builder => $query->whereIntegerInRaw('id', $this->recordsIds))
-            ->select(['id', 'name', 'email', 'phone', 'email_verified_at', 'created_at', 'updated_at'])
-            ->orderBy('id');
+            ->select(['id', 'name', 'email', 'phone', 'email_verified_at', 'created_at', 'updated_at']);
     }
 
     protected function rows(): Collection

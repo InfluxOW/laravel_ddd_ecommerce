@@ -14,17 +14,14 @@ use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
 final class ProductCategoriesExportJob extends ExportJob
 {
-    public function query(): Builder
+    protected function getBaseQuery(): Builder
     {
         return ProductCategory::query()
             ->with([
                 'parent' => fn (BelongsTo $query): BelongsTo => $query->select(['id', 'title']),
                 'products' => fn (BelongsToMany $query): BelongsToMany => $query->select(['title']),
             ])
-            /** @phpstan-ignore-next-line */
-            ->when(isset($this->recordsIds), fn (Builder $query): Builder => $query->whereIntegerInRaw('id', $this->recordsIds))
-            ->select(['id', 'parent_id', 'title', 'slug', 'description', 'created_at', 'updated_at'])
-            ->orderBy('id');
+            ->select(['id', 'parent_id', 'title', 'slug', 'description', 'created_at', 'updated_at']);
     }
 
     protected function rows(): Collection

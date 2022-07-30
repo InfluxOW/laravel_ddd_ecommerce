@@ -22,20 +22,60 @@ abstract class ExportJob implements FromQuery, WithStrictNullComparison, WithCus
 {
     protected Collection $recordsIds;
 
+    private string $sortColumn = 'id';
+
+    private bool $sortByDesc = false;
+
     private const DEFAULT_FONT = 'Times New Roman';
 
     private const DEFAULT_ALIGNMENT = ['horizontal' => 'center', 'vertical' => 'center'];
 
-    abstract public function query(): Builder;
+    public function query(): Builder
+    {
+        $query = $this->getBaseQuery();
+
+        $this->narrowQuery($query);
+
+        $this->sortQuery($query);
+
+        return $query;
+    }
 
     public function querySize(): int
     {
         return 200;
     }
 
-    public function setRecordsIds(Collection $recordsIds): void
+    public function setRecordsIds(Collection $recordsIds): static
     {
         $this->recordsIds = $recordsIds;
+
+        return $this;
+    }
+
+    public function setSortColumn(?string $column): static
+    {
+        if ($column === null) {
+            return $this;
+        }
+
+        /** @phpstan-ignore-next-line */
+        if (in_array($column, $this->getBaseQuery()->newModelInstance()->getColumns(), true)) {
+            $this->sortColumn = $column;
+        }
+
+        return $this;
+    }
+
+    public function setSortDirection(?string $sortDirection): static
+    {
+        if ($sortDirection === null) {
+            return $this;
+        }
+
+        $this->sortByDesc = ($sortDirection === 'desc');
+
+        return $this;
     }
 
     public function styles(Worksheet $sheet): array
@@ -98,4 +138,16 @@ abstract class ExportJob implements FromQuery, WithStrictNullComparison, WithCus
      * @return Collection<int,ExportColumn>
      */
     abstract protected function rows(): Collection;
+
+    abstract protected function getBaseQuery(): Builder;
+
+    private function narrowQuery(Builder $query): Builder
+    {
+        return $query->when(isset($this->recordsIds), fn (Builder $query): Builder => $query->whereIntegerInRaw('id', $this->recordsIds));
+    }
+
+    protected function sortQuery(Builder $query): Builder
+    {
+        return $this->sortByDesc ? $query->orderByDesc($this->sortColumn) : $query->orderBy($this->sortColumn);
+    }
 }

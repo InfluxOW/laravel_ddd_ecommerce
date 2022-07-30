@@ -11,6 +11,7 @@ use App\Domains\Generic\Interfaces\Exportable;
 use App\Domains\Generic\Jobs\ExportJob;
 use App\Domains\Generic\Utils\LangUtils;
 use Filament\Forms\Components\Select;
+use Filament\Resources\Pages\ListRecords;
 use Filament\Resources\Pages\Page;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
@@ -43,6 +44,12 @@ trait HasExportAction
                     $recordId = $livewire->getRecord()->getKey();
                     $job->setRecordsIds(collect($recordId));
                     $filename = Str::of($model)->classBasename()->snake()->lower()->append("_{$recordId}")->value();
+                }
+
+                if ($livewire instanceof ListRecords) {
+                    $job
+                        ->setSortColumn($livewire->getTableSortColumn())
+                        ->setSortDirection($livewire->getTableSortDirection());
                 }
 
                 $file = "{$filename}.{$format->extension()}";

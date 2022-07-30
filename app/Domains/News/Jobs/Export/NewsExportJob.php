@@ -12,11 +12,9 @@ use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
 final class NewsExportJob extends ExportJob
 {
-    public function query(): Builder
+    protected function getBaseQuery(): Builder
     {
-        return Article::query()
-            ->select(['id', 'title', 'slug', 'description', 'body', 'published_at', 'created_at', 'updated_at'])
-            ->orderBy('id');
+        return Article::query()->select(['id', 'title', 'slug', 'description', 'body', 'published_at', 'created_at', 'updated_at']);
     }
 
     protected function rows(): Collection

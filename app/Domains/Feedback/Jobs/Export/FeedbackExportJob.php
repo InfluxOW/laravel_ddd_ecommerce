@@ -12,13 +12,9 @@ use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
 final class FeedbackExportJob extends ExportJob
 {
-    public function query(): Builder
+    protected function getBaseQuery(): Builder
     {
-        return Feedback::query()
-            ->select(['id', 'username', 'email', 'phone', 'text', 'created_at'])
-            /** @phpstan-ignore-next-line */
-            ->when(isset($this->recordsIds), fn (Builder $query): Builder => $query->whereIntegerInRaw('id', $this->recordsIds))
-            ->orderBy('id');
+        return Feedback::query()->select(['id', 'username', 'email', 'phone', 'text', 'created_at']);
     }
 
     protected function rows(): Collection
