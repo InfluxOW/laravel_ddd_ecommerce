@@ -120,7 +120,7 @@ final class ArticleResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => \App\Domains\News\Admin\Resources\ArticleResource\Pages\ListArticles::route('/'),
+            'index' => \App\Domains\News\Admin\Resources\ArticleResource\Pages\ListNews::route('/'),
             'create' => \App\Domains\News\Admin\Resources\ArticleResource\Pages\CreateArticle::route('/create'),
             'edit' => \App\Domains\News\Admin\Resources\ArticleResource\Pages\EditArticle::route('/{record}/edit'),
             'view' => \App\Domains\News\Admin\Resources\ArticleResource\Pages\ViewArticle::route('/{record}'),
