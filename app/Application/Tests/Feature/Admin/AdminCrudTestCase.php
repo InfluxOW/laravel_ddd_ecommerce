@@ -6,75 +6,99 @@ use Filament\Resources\Pages\CreateRecord;
 use Filament\Resources\Pages\EditRecord;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Resources\Pages\ViewRecord;
+use Filament\Resources\Resource as FilamentResource;
 use Illuminate\Database\Eloquent\Model;
 
 abstract class AdminCrudTestCase extends AdminTestCase
 {
+    /** @var class-string<FilamentResource> */
+    protected static string $resource;
+
     /** @var class-string<ListRecords>|null */
-    protected ?string $listRecords = null;
+    private static ?string $listRecords = null;
 
     /** @var class-string<CreateRecord>|null */
-    protected ?string $createRecord = null;
+    private static ?string $createRecord = null;
 
     /** @var class-string<ViewRecord>|null */
-    protected ?string $viewRecord = null;
+    private static ?string $viewRecord = null;
 
     /** @var class-string<EditRecord>|null */
-    protected ?string $editRecord = null;
+    private static ?string $editRecord = null;
+
+    protected function setUpOnce(): void
+    {
+        parent::setUpOnce();
+
+        $this->preparePages();
+    }
 
     /** @test */
     public function it_has_crud(): void
     {
-        $record = $this->getRecord();
+        $record = static::getRecord();
 
-        $this->testRecordsList();
-        $this->testRecordCreation();
-        $this->testRecordView($record);
-        $this->testRecordEditing($record);
+        $this->testListRecords();
+        $this->testCreateRecord();
+        $this->testViewRecord($record);
+        $this->testEditRecord($record);
     }
 
-    abstract protected function getRecord(): ?Model;
-
-    private function testRecordsList(): void
+    protected static function getRecord(): ?Model
     {
-        if (isset($this->listRecords)) {
-            $this->getResourceActionUrl($this->listRecords)->assertOk();
+        return static::$resource::getEloquentQuery()->withoutEagerLoads()->first();
+    }
+
+    private function testListRecords(): void
+    {
+        if (isset(self::$listRecords)) {
+            $this->getResourceActionUrl(self::$listRecords)->assertOk();
         }
     }
 
-    private function testRecordCreation(): void
+    private function testCreateRecord(): void
     {
-        if (isset($this->createRecord)) {
-            $this->getResourceActionUrl($this->createRecord)->assertOk();
+        if (isset(self::$createRecord)) {
+            $this->getResourceActionUrl(self::$createRecord)->assertOk();
         }
     }
 
-    private function testRecordView(?Model $record): void
+    private function testViewRecord(?Model $record): void
     {
-        if (isset($this->viewRecord)) {
+        if (isset(self::$viewRecord)) {
             $this->assertNotNull($record);
-            /** @phpstan-ignore-next-line */
-            $this->getResourceActionUrl($this->viewRecord, ['record' => $record?->getKey()])->assertOk();
+            $this->getResourceActionUrl(self::$viewRecord, ['record' => $record?->getKey()])->assertOk();
 
-            /** @phpstan-ignore-next-line */
-            foreach ($this->viewRecord::getResource()::getRelations() as $relation) {
-                /** @phpstan-ignore-next-line */
-                $this->getResourceActionUrl($this->viewRecord, ['record' => $record?->getKey(), 'activeRelationManager' => $relation])->assertOk();
+            foreach (static::$resource::getRelations() as $relation) {
+                $this->getResourceActionUrl(self::$viewRecord, ['record' => $record?->getKey(), 'activeRelationManager' => $relation])->assertOk();
             }
         }
     }
 
-    private function testRecordEditing(?Model $record): void
+    private function testEditRecord(?Model $record): void
     {
-        if (isset($this->editRecord)) {
+        if (isset(self::$editRecord)) {
             $this->assertNotNull($record);
-            /** @phpstan-ignore-next-line */
-            $this->getResourceActionUrl($this->editRecord, ['record' => $record?->getKey()])->assertOk();
+            $this->getResourceActionUrl(self::$editRecord, ['record' => $record?->getKey()])->assertOk();
 
-            /** @phpstan-ignore-next-line */
-            foreach ($this->editRecord::getResource()::getRelations() as $relation) {
-                /** @phpstan-ignore-next-line */
-                $this->getResourceActionUrl($this->editRecord, ['record' => $record?->getKey(), 'activeRelationManager' => $relation])->assertOk();
+            foreach (static::$resource::getRelations() as $relation) {
+                $this->getResourceActionUrl(self::$editRecord, ['record' => $record?->getKey(), 'activeRelationManager' => $relation])->assertOk();
+            }
+        }
+    }
+
+    private function preparePages(): void
+    {
+        foreach (static::$resource::getPages() as ['class' => $page]) {
+            /** @var array<string, class-string> $parents */
+            $parents = class_parents($page);
+
+            foreach ([ListRecords::class => &self::$listRecords, CreateRecord::class => &self::$createRecord, EditRecord::class => &self::$editRecord, ViewRecord::class => &self::$viewRecord] as $type => &$attribute) {
+                if (isset($parents[$type])) {
+                    $attribute = $page;
+
+                    break;
+                }
             }
         }
     }

@@ -11,7 +11,7 @@ use Livewire\Testing\TestableLivewire;
 
 abstract class AdminTestCase extends TestCase
 {
-    protected Admin $admin;
+    protected static Admin $admin;
 
     protected array $seeders = [];
 
@@ -22,16 +22,11 @@ abstract class AdminTestCase extends TestCase
         $this->seed(array_merge([
             AdminSeeder::class,
         ], $this->seeders));
-    }
-
-    protected function setUp(): void
-    {
-        parent::setUp();
 
         /** @var Admin $admin */
         $admin = Admin::query()->first();
 
-        $this->admin = $admin;
+        static::$admin = $admin;
     }
 
     /**
@@ -42,6 +37,6 @@ abstract class AdminTestCase extends TestCase
      */
     protected function getResourceActionUrl(string $page, array $parameters = []): TestableLivewire
     {
-        return Livewire::actingAs($this->admin, 'admin')->test($page, $parameters);
+        return Livewire::actingAs(static::$admin, 'admin')->test($page, $parameters);
     }
 }
