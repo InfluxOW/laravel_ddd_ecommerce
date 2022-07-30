@@ -3,9 +3,11 @@
 namespace App\Domains\News\Models;
 
 use App\Domains\Catalog\Enums\Media\ProductMediaCollectionKey;
+use App\Domains\Generic\Interfaces\Exportable;
 use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
 use App\Domains\Generic\Traits\Models\Searchable;
 use App\Domains\News\Database\Factories\ArticleFactory;
+use App\Domains\News\Jobs\Export\NewsExportJob;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -53,7 +55,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Article whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class Article extends Model implements HasMedia, Explored
+class Article extends Model implements HasMedia, Explored, Exportable
 {
     use HasExtendedFunctionality;
     use HasFactory;
@@ -153,5 +155,14 @@ class Article extends Model implements HasMedia, Explored
             'body' => 'text',
             'published_at' => 'date',
         ];
+    }
+
+    /*
+     * Exportable
+     * */
+
+    public static function getExportJob(): string
+    {
+        return NewsExportJob::class;
     }
 }
