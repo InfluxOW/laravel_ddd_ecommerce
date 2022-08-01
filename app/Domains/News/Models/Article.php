@@ -8,6 +8,7 @@ use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
 use App\Domains\Generic\Traits\Models\Searchable;
 use App\Domains\News\Database\Factories\ArticleFactory;
 use App\Domains\News\Jobs\Export\NewsExportJob;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -123,7 +124,7 @@ class Article extends Model implements HasMedia, Explored, Exportable
 
     public function scopePublished(Builder $query): void
     {
-        $query->whereNotNull('published_at');
+        $query->whereNotNull('published_at')->where('published_at', '<=', Carbon::now());
     }
 
     public function scopeUnpublished(Builder $query): void

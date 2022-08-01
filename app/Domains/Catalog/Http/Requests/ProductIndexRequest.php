@@ -5,18 +5,14 @@ namespace App\Domains\Catalog\Http\Requests;
 use App\Components\Queryable\Enums\QueryKey;
 use App\Domains\Catalog\Enums\Query\Filter\ProductAllowedFilter;
 use App\Domains\Catalog\Models\Settings\CatalogSettings;
-use App\Infrastructure\Abstracts\Http\FormRequest;
+use App\Domains\Generic\Http\Requests\IndexRequest;
 use Illuminate\Validation\Rule;
 
-final class ProductIndexRequest extends FormRequest
+final class ProductIndexRequest extends IndexRequest
 {
-    private const DEFAULT_ITEMS_PER_PAGE = 20;
-
     public function rules(): array
     {
-        return [
-            QueryKey::PAGE->value => ['nullable', 'int', 'min:1'],
-            QueryKey::PER_PAGE->value => ['nullable', 'int', 'min:1', 'max:100'],
+        return array_merge(parent::rules(), [
             sprintf('%s.%s', QueryKey::FILTER->value, ProductAllowedFilter::SEARCH->name) => ['nullable', 'string'],
             sprintf('%s.%s', QueryKey::FILTER->value, ProductAllowedFilter::CATEGORY->name) => ['nullable', 'array'],
             sprintf('%s.%s.*', QueryKey::FILTER->value, ProductAllowedFilter::CATEGORY->name) => ['required', 'string'],
@@ -25,13 +21,14 @@ final class ProductIndexRequest extends FormRequest
             sprintf('%s.%s.*', QueryKey::FILTER->value, ProductAllowedFilter::PRICE_BETWEEN->name) => ['nullable', 'numeric', 'min:0.01'],
             sprintf('%s.%s.*', QueryKey::FILTER->value, ProductAllowedFilter::ATTRIBUTE_VALUE->name) => ['nullable', 'array'],
             QueryKey::SORT->value => ['nullable', 'string'],
-        ];
+        ]);
     }
 
     protected function prepareForValidation(): void
     {
+        parent::prepareForValidation();
+
         $this->prepareFilters();
-        $this->preparePagination();
     }
 
     private function prepareFilters(): void
@@ -71,23 +68,6 @@ final class ProductIndexRequest extends FormRequest
     {
         if (array_key_exists(ProductAllowedFilter::ATTRIBUTE_VALUE->name, $filters)) {
             $filters[ProductAllowedFilter::ATTRIBUTE_VALUE->name] = array_map(static fn (string $value): array => explode(',', $value), (array) $filters[ProductAllowedFilter::ATTRIBUTE_VALUE->name]);
-        }
-    }
-
-    private function preparePagination(): void
-    {
-        $perPage = $this->{QueryKey::PER_PAGE->value};
-        if ($perPage === null) {
-            $this->merge([
-                QueryKey::PER_PAGE->value => self::DEFAULT_ITEMS_PER_PAGE,
-            ]);
-        }
-
-        $page = $this->{QueryKey::PAGE->value};
-        if ($page === null) {
-            $this->merge([
-                QueryKey::PAGE->value => 1,
-            ]);
         }
     }
 }

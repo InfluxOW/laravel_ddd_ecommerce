@@ -87,7 +87,7 @@ final class ProductControllerTest extends TestCase
                 route('products.index', [QueryKey::FILTER->value => [ProductAllowedFilter::SEARCH->name => $query], QueryKey::PER_PAGE->value => $productsCount])
             )->assertOk();
 
-            $this->assertContains($this->product->slug, $this->getResponseData($response)->pluck('slug'));
+            $this->assertContains($this->product->title, $this->getResponseData($response)->pluck('title'));
             $this->assertContains(ProductAllowedFilter::SEARCH->name, $this->getResponseAppliedFilters($response)->pluck('query'));
         }
     }
@@ -115,7 +115,7 @@ final class ProductControllerTest extends TestCase
                 )->assertOk();
                 $appliedFilters = $this->getResponseAppliedFilters($response);
 
-                $this->assertContains($product->slug, $this->getResponseData($response)->pluck('slug'));
+                $this->assertContains($product->title, $this->getResponseData($response)->pluck('title'));
                 $this->assertContains(ProductAllowedFilter::CATEGORY->name, $appliedFilters->pluck('query'));
 
                 $categoryFilterValues = collect($appliedFilters->filter(fn (array $filter): bool => $filter['query'] === ProductAllowedFilter::CATEGORY->name)->first()['selected_values']);
