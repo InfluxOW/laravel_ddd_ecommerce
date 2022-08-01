@@ -15,20 +15,23 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class EmailVerificationControllerTest extends TestCase
 {
-    private User $user;
+    private static User $user;
 
-    private string $password;
+    private static string $password;
 
-    protected function setUp(): void
+    protected function setUpOnce(): void
     {
-        parent::setUp();
-
         $password = 'password';
         /** @var User $user */
         $user = User::factory()->unverified()->create(['password' => bcrypt($password)]);
 
-        $this->password = $password;
-        $this->user = $user;
+        self::$password = $password;
+        self::$user = $user;
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
 
         $this->withoutMiddleware([
             ThrottleRequestsWithRedis::class,
@@ -40,15 +43,15 @@ final class EmailVerificationControllerTest extends TestCase
     /** @test */
     public function a_user_can_verify_his_email_with_correct_token_from_email(): void
     {
-        $this->assertNull($this->user->email_verified_at);
+        $this->assertNull(self::$user->email_verified_at);
 
         $token = $this->getConfirmationToken();
 
         Event::fake();
-        $this->post(route('user.verify.email', ['token' => $token->token, 'email' => $this->user->email]))->assertOk();
+        $this->post(route('user.verify.email', ['token' => $token->token, 'email' => self::$user->email]))->assertOk();
         Event::assertDispatched(EmailVerificationSucceeded::class);
 
-        $this->assertNotNull($this->user->refresh()->email_verified_at);
+        $this->assertNotNull(self::$user->refresh()->email_verified_at);
     }
 
     /** @test */
@@ -57,7 +60,7 @@ final class EmailVerificationControllerTest extends TestCase
         $token = $this->getConfirmationToken();
 
         // Wrong token
-        $this->post(route('user.verify.email', ['token' => 'wrong_token', 'email' => $this->user->email]))->assertStatus(Response::HTTP_NOT_FOUND);
+        $this->post(route('user.verify.email', ['token' => 'wrong_token', 'email' => self::$user->email]))->assertStatus(Response::HTTP_NOT_FOUND);
 
         // Wrong email
         $this->post(route('user.verify.email', ['token' => $token->token, 'email' => 'wrong_email@mail.com']))->assertStatus(Response::HTTP_NOT_FOUND);
@@ -65,31 +68,31 @@ final class EmailVerificationControllerTest extends TestCase
         // Expired token
         $now = Carbon::now();
         $this->travelTo($token->expires_at->addMinute());
-        $this->post(route('user.verify.email', ['token' => $token->token, 'email' => $this->user->email]))->assertStatus(Response::HTTP_NOT_FOUND);
+        $this->post(route('user.verify.email', ['token' => $token->token, 'email' => self::$user->email]))->assertStatus(Response::HTTP_NOT_FOUND);
         $this->travelTo($now);
 
         // Previous token
         $previousToken = $token;
         $this->travelTo($now->addMinute());
         $token = $this->getConfirmationToken();
-        $this->post(route('user.verify.email', ['token' => $previousToken->token, 'email' => $this->user->email]))->assertStatus(Response::HTTP_NOT_FOUND);
+        $this->post(route('user.verify.email', ['token' => $previousToken->token, 'email' => self::$user->email]))->assertStatus(Response::HTTP_NOT_FOUND);
 
         // Used token
         $token->used_at = $now;
         $token->save();
-        $this->post(route('user.verify.email', ['token' => $token->token, 'email' => $this->user->email]))->assertStatus(Response::HTTP_NOT_FOUND);
+        $this->post(route('user.verify.email', ['token' => $token->token, 'email' => self::$user->email]))->assertStatus(Response::HTTP_NOT_FOUND);
 
         // Email is already verified
-        $this->post(route('user.verify.email', ['token' => $token->token, 'email' => $this->user->email]))->assertStatus(Response::HTTP_NOT_FOUND);
+        $this->post(route('user.verify.email', ['token' => $token->token, 'email' => self::$user->email]))->assertStatus(Response::HTTP_NOT_FOUND);
     }
 
     private function getConfirmationToken(): ConfirmationToken
     {
         $this->withoutRecaptcha();
-        $this->post(route('login'), ['email' => $this->user->email, 'password' => $this->password])->assertForbidden();
+        $this->post(route('login'), ['email' => self::$user->email, 'password' => self::$password])->assertForbidden();
 
         $token = null;
-        Notification::assertSentTo($this->user, EmailVerificationNotification::class, static function (EmailVerificationNotification $notification) use (&$token): bool {
+        Notification::assertSentTo(self::$user, EmailVerificationNotification::class, static function (EmailVerificationNotification $notification) use (&$token): bool {
             $token = $notification->getToken();
 
             return true;

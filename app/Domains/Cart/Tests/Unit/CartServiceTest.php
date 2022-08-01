@@ -13,17 +13,9 @@ use App\Domains\Catalog\Models\Settings\CatalogSettings;
 
 final class CartServiceTest extends TestCase
 {
-    private CatalogSettings $settings;
+    private static CatalogSettings $settings;
 
-    private CartService $service;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->settings = app(CatalogSettings::class);
-        $this->service = app(CartService::class);
-    }
+    private static CartService $service;
 
     protected function setUpOnce(): void
     {
@@ -32,6 +24,9 @@ final class CartServiceTest extends TestCase
             ProductSeeder::class,
             ProductPriceSeeder::class,
         ]);
+
+        self::$settings = app(CatalogSettings::class);
+        self::$service = app(CartService::class);
     }
 
     public function test_cart_workflow(): void
@@ -42,25 +37,25 @@ final class CartServiceTest extends TestCase
         $product = Product::query()->with(['prices'])->inRandomOrder()->first();
         $this->assertNotNull($product);
 
-        $cart = $this->service->make($this->settings->default_currency, null);
-        $cart = $this->service->add($cart, $product, $quantity);
+        $cart = self::$service->make(self::$settings->default_currency, null);
+        $cart = self::$service->add($cart, $product, $quantity);
         /** @var Cart $cart */
-        $cart = $this->service->find(null, $cart->key);
+        $cart = self::$service->find(null, $cart->key);
         $this->assertNotNull($cart);
 
-        $productPrice = $product->getPurchasablePrice($this->settings->default_currency)->getAmount();
-        $productDiscountedPrice = $product->getPurchasablePriceDiscounted($this->settings->default_currency)?->getAmount() ?? $productPrice;
+        $productPrice = $product->getPurchasablePrice(self::$settings->default_currency)->getAmount();
+        $productDiscountedPrice = $product->getPurchasablePriceDiscounted(self::$settings->default_currency)?->getAmount() ?? $productPrice;
 
         $this->assertEquals($productPrice * $quantity, $cart->price_items->getAmount());
         $this->assertEquals($productDiscountedPrice * $quantity, $cart->price_items_discounted->getAmount());
 
         $newQuantity = 10;
-        $cart = $this->service->update($cart, $product, $newQuantity);
+        $cart = self::$service->update($cart, $product, $newQuantity);
 
         $this->assertEquals($productPrice * $newQuantity, $cart->price_items->getAmount());
         $this->assertEquals($productDiscountedPrice * $newQuantity, $cart->price_items_discounted->getAmount());
 
-        $this->service->save($cart);
+        self::$service->save($cart);
         /** @var Cart $cart */
         $cart = Cart::query()->first();
         $this->assertNotNull($cart);
@@ -68,8 +63,8 @@ final class CartServiceTest extends TestCase
         $this->assertEquals($productPrice * $newQuantity, $cart->price_items->getAmount());
         $this->assertEquals($productDiscountedPrice * $newQuantity, $cart->price_items_discounted->getAmount());
 
-        $this->service->delete(null, $cart->key);
-        $cart = $this->service->find(null, $cart->key);
+        self::$service->delete(null, $cart->key);
+        $cart = self::$service->find(null, $cart->key);
         $this->assertNull($cart);
     }
 }

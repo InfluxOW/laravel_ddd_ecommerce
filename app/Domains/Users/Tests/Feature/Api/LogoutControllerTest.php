@@ -8,17 +8,20 @@ use Illuminate\Support\Facades\Event;
 
 final class LogoutControllerTest extends TestCase
 {
-    private User $user;
+    private static User $user;
 
-    protected function setUp(): void
+    protected function setUpOnce(): void
     {
-        parent::setUp();
-
         $password = 'password';
         /** @var User $user */
         $user = User::factory()->create(['password' => bcrypt($password)]);
 
-        $this->user = $user;
+        self::$user = $user;
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
 
         Event::fake();
     }
@@ -33,6 +36,6 @@ final class LogoutControllerTest extends TestCase
      */
     public function an_authenticated_user_can_logout(): void
     {
-        $this->actingAs($this->user)->post(route('logout'))->assertOk();
+        $this->actingAs(self::$user)->post(route('logout'))->assertOk();
     }
 }

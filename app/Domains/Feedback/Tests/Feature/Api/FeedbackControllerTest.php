@@ -15,20 +15,13 @@ final class FeedbackControllerTest extends TestCase
 {
     use WithFaker;
 
-    protected array $validData;
+    protected static array $validData;
 
-    protected User $user;
+    protected static User $user;
 
     protected function setUp(): void
     {
         parent::setUp();
-
-        /** @var User $user */
-        $user = User::query()->first();
-        $this->assertNotNull($user);
-
-        $this->validData = Arr::only(Feedback::factory()->make()->attributesToArray(), ['username', 'email', 'phone', 'text']);
-        $this->user = $user;
 
         $this->withoutRecaptcha();
     }
@@ -42,16 +35,23 @@ final class FeedbackControllerTest extends TestCase
         $settings = app(FeedbackSettings::class);
         $settings->feedback_limit_per_hour = 1;
         $settings->save();
+
+        /** @var User $user */
+        $user = User::query()->first();
+        $this->assertNotNull($user);
+
+        self::$validData = Arr::only(Feedback::factory()->make()->attributesToArray(), ['username', 'email', 'phone', 'text']);
+        self::$user = $user;
     }
 
     /** @test */
     public function a_guest_can_post_feedback(): void
     {
-        $this->assertDatabaseMissing('feedback', $this->validData);
+        $this->assertDatabaseMissing('feedback', self::$validData);
 
-        $this->post(route('feedback.store'), $this->validData)->assertOk();
+        $this->post(route('feedback.store'), self::$validData)->assertOk();
 
-        $this->assertDatabaseHas('feedback', $this->validData);
+        $this->assertDatabaseHas('feedback', self::$validData);
     }
 
     /** @test */
@@ -59,15 +59,15 @@ final class FeedbackControllerTest extends TestCase
     {
         $now = Carbon::now();
 
-        $this->post(route('feedback.store'), $this->validData)->assertOk();
+        $this->post(route('feedback.store'), self::$validData)->assertOk();
 
         $this->travelTo($now->addMinutes(30));
 
-        $this->post(route('feedback.store'), $this->validData)->assertForbidden();
+        $this->post(route('feedback.store'), self::$validData)->assertForbidden();
 
         $this->travelTo($now->addMinutes(30));
 
-        $this->post(route('feedback.store'), $this->validData)->assertOk();
+        $this->post(route('feedback.store'), self::$validData)->assertOk();
     }
 
     /** @test */
@@ -75,42 +75,42 @@ final class FeedbackControllerTest extends TestCase
     {
         $now = Carbon::now();
 
-        $this->setIp($this->faker->unique()->ipv4)->post(route('feedback.store'), $this->validData)->assertOk();
+        $this->setIp($this->faker->unique()->ipv4)->post(route('feedback.store'), self::$validData)->assertOk();
 
         $this->travelTo($now->addMinutes(30));
 
-        $this->setIp($this->faker->unique()->ipv4)->post(route('feedback.store'), $this->validData)->assertOk();
+        $this->setIp($this->faker->unique()->ipv4)->post(route('feedback.store'), self::$validData)->assertOk();
 
         $this->travelTo($now->addMinutes(30));
 
-        $this->setIp($this->faker->unique()->ipv4)->post(route('feedback.store'), $this->validData)->assertOk();
+        $this->setIp($this->faker->unique()->ipv4)->post(route('feedback.store'), self::$validData)->assertOk();
     }
 
     /** @test */
     public function a_guest_cannot_post_feedback_and_then_authenticate_to_post_again(): void
     {
-        $this->post(route('feedback.store'), $this->validData)->assertOk();
-        $this->actingAs($this->user)->post(route('feedback.store'), $this->validData)->assertForbidden();
+        $this->post(route('feedback.store'), self::$validData)->assertOk();
+        $this->actingAs(self::$user)->post(route('feedback.store'), self::$validData)->assertForbidden();
     }
 
     /** @test */
     public function an_authenticated_user_can_post_feedback_and_user_data_will_be_filled_in_automatically(): void
     {
         $now = Carbon::now();
-        $actualData = array_merge($this->validData, [
-            'username' => $this->user->name,
-            'email' => $this->user->email,
-            'phone' => $this->user->phone,
+        $actualData = array_merge(self::$validData, [
+            'username' => self::$user->name,
+            'email' => self::$user->email,
+            'phone' => self::$user->phone,
         ]);
 
         $this->assertDatabaseMissing('feedback', $actualData);
 
-        foreach ([$this->validData, Arr::only($this->validData, ['text'])] as $validData) {
+        foreach ([self::$validData, Arr::only(self::$validData, ['text'])] as $validData) {
             $this->travelTo($now);
 
             $this
                 ->setIp($this->faker->unique()->ipv4)
-                ->actingAs($this->user)
+                ->actingAs(self::$user)
                 ->post(route('feedback.store'), $validData)
                 ->assertOk();
 
@@ -127,24 +127,24 @@ final class FeedbackControllerTest extends TestCase
 
         $this
             ->setIp($this->faker->unique()->ipv4)
-            ->actingAs($this->user)
-            ->post(route('feedback.store'), $this->validData)
+            ->actingAs(self::$user)
+            ->post(route('feedback.store'), self::$validData)
             ->assertOk();
 
         $this->travelTo($now->addMinutes(30));
 
         $this
             ->setIp($this->faker->unique()->ipv4)
-            ->actingAs($this->user)
-            ->post(route('feedback.store'), $this->validData)
+            ->actingAs(self::$user)
+            ->post(route('feedback.store'), self::$validData)
             ->assertForbidden();
 
         $this->travelTo($now->addMinutes(30));
 
         $this
             ->setIp($this->faker->unique()->ipv4)
-            ->actingAs($this->user)
-            ->post(route('feedback.store'), $this->validData)
+            ->actingAs(self::$user)
+            ->post(route('feedback.store'), self::$validData)
             ->assertOk();
     }
 }
