@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Catalog\Enums\Query\Sort;
+namespace App\Domains\News\Enums\Query\Sort;
 
 use App\Components\Queryable\Abstracts\Sort\IAllowedSortEnum;
 use App\Components\Queryable\Traits\Sort\AllowedSortEnum;
@@ -9,17 +9,15 @@ use OpenApi\Annotations as OA;
 /**
  * @OA\Schema()
  */
-enum ProductAllowedSort implements IAllowedSortEnum
+enum ArticleAllowedSort implements IAllowedSortEnum
 {
     use AllowedSortEnum;
 
     case DEFAULT;
 
     case TITLE;
-    case PRICE;
-    case CREATED_AT;
+    case PUBLISHED_AT;
 
     case TITLE_DESC;
-    case PRICE_DESC;
-    case CREATED_AT_DESC;
+    case PUBLISHED_AT_DESC;
 }

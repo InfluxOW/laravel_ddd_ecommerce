@@ -50,7 +50,10 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Article whereCreatedAt($value)
  * @method static Builder|Article whereDescription($value)
  * @method static Builder|Article whereId($value)
+ * @method static Builder|Article wherePublishedAfter(?\Carbon\Carbon $date)
  * @method static Builder|Article wherePublishedAt($value)
+ * @method static Builder|Article wherePublishedBefore(?\Carbon\Carbon $date)
+ * @method static Builder|Article wherePublishedBetween(?\Carbon\Carbon $min, ?\Carbon\Carbon $max)
  * @method static Builder|Article whereSlug($value)
  * @method static Builder|Article whereTitle($value)
  * @method static Builder|Article whereUpdatedAt($value)
@@ -130,6 +133,27 @@ class Article extends Model implements HasMedia, Explored, Exportable
     public function scopeUnpublished(Builder $query): void
     {
         $query->whereNull('published_at');
+    }
+
+    public function scopeWherePublishedAfter(Builder $query, ?Carbon $date): void
+    {
+        $query->where('published_at', '>=', $date);
+    }
+
+    public function scopeWherePublishedBefore(Builder $query, ?Carbon $date): void
+    {
+        $query->where('published_at', '<=', $date);
+    }
+
+    public function scopeWherePublishedBetween(Builder|Article $query, ?Carbon $min, ?Carbon $max): void
+    {
+        if (isset($min)) {
+            $query->wherePublishedAfter($min);
+        }
+
+        if (isset($max)) {
+            $query->wherePublishedBefore($max);
+        }
     }
 
     /*

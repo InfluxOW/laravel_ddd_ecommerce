@@ -3,6 +3,7 @@
 namespace App\Domains\Generic\Http\Requests;
 
 use App\Components\Queryable\Enums\QueryKey;
+use App\Domains\Generic\Utils\StringUtils;
 use App\Infrastructure\Abstracts\Http\FormRequest;
 
 abstract class IndexRequest extends FormRequest
@@ -42,5 +43,27 @@ abstract class IndexRequest extends FormRequest
     public function append(): array
     {
         return $this->validated();
+    }
+
+    protected function implodeFilters(array $query): array
+    {
+        $toString = static fn (string|int|float|bool|null $value): string => is_bool($value) ? StringUtils::boolToString($value) : (string) $value;
+        $implode = static function (array $values) use ($toString, &$implode): array|string {
+            $result = [];
+            foreach ($values as $key => $value) {
+                $result[$key] = is_array($value) ? $implode($value) : $toString($value);
+            }
+
+            /** @phpstan-ignore-next-line */
+            return array_is_list($result) ? implode(',', $result) : $result;
+        };
+
+        foreach ($query[QueryKey::FILTER->value] ?? [] as $filter => $values) {
+            if (is_array($values)) {
+                $query[QueryKey::FILTER->value][$filter] = $implode($values);
+            }
+        }
+
+        return $query;
     }
 }

@@ -22,10 +22,10 @@ final class ProductSortService extends SortService
     {
         return $this
             ->add(ProductAllowedSort::DEFAULT, static fn (Builder $query): Builder => $query)
-            ->add(ProductAllowedSort::TITLE, static fn (Builder $query): Builder => $query->reorder()->orderBy(ProductAllowedSort::TITLE->getDatabaseField()))
-            ->add(ProductAllowedSort::TITLE_DESC, static fn (Builder $query): Builder => $query->reorder()->orderByDesc(ProductAllowedSort::TITLE->getDatabaseField()))
-            ->add(ProductAllowedSort::CREATED_AT, static fn (Builder $query): Builder => $query->reorder()->orderBy(ProductAllowedSort::CREATED_AT->getDatabaseField()))
-            ->add(ProductAllowedSort::CREATED_AT_DESC, static fn (Builder $query): Builder => $query->reorder()->orderByDesc(ProductAllowedSort::CREATED_AT->getDatabaseField()))
+            ->add(ProductAllowedSort::TITLE)
+            ->add(ProductAllowedSort::TITLE_DESC)
+            ->add(ProductAllowedSort::CREATED_AT)
+            ->add(ProductAllowedSort::CREATED_AT_DESC)
             /** @phpstan-ignore-next-line */
             ->add(ProductAllowedSort::PRICE, fn (Builder|Product $query): Builder => $query->reorder()->orderByCurrentPrice($this->currency, descending: false))
             /** @phpstan-ignore-next-line */

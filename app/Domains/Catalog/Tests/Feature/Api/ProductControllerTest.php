@@ -411,8 +411,8 @@ final class ProductControllerTest extends TestCase
         $products = $this->getProductsSortedBy($sort);
 
         $this->assertEquals(
-            $products->pluck($sort->getDatabaseField()),
-            $products->sortBy(...$this->getSortParametersByType($sort))->pluck($sort->getDatabaseField())
+            $products->pluck($sort->getDatabaseColumn()),
+            $products->sortBy(...$this->getSortParametersByType($sort))->pluck($sort->getDatabaseColumn())
         );
     }
 

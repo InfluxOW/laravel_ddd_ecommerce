@@ -2,7 +2,7 @@
 
 namespace App\Domains\Catalog\Services\Query\Filter;
 
-use App\Components\Queryable\Abstracts\Filter\AllowedFilterEnum;
+use App\Components\Queryable\Abstracts\Filter\IAllowedFilterEnum;
 use App\Components\Queryable\Abstracts\FilterBuilder;
 use App\Components\Queryable\Classes\Filter\Filter;
 use App\Components\Queryable\Classes\Filter\InputFilter;
@@ -35,7 +35,7 @@ final class ProductFilterBuilder implements FilterBuilder
     /**
      * @param ProductAllowedFilter $filter
      */
-    public function build(UnitEnum & AllowedFilterEnum $filter): Filter
+    public function build(UnitEnum & IAllowedFilterEnum $filter): Filter
     {
         return match ($filter) {
             ProductAllowedFilter::SEARCH => $this->buildSearchFilter($filter),
@@ -46,17 +46,17 @@ final class ProductFilterBuilder implements FilterBuilder
         };
     }
 
-    private function buildSearchFilter(UnitEnum & AllowedFilterEnum $filter): Filter
+    private function buildSearchFilter(UnitEnum & IAllowedFilterEnum $filter): Filter
     {
         return new InputFilter($filter);
     }
 
-    private function buildCurrencyFilter(UnitEnum & AllowedFilterEnum $filter): Filter
+    private function buildCurrencyFilter(UnitEnum & IAllowedFilterEnum $filter): Filter
     {
         return new SelectFilter($filter, $this->repository->getAvailableCurrencies($this->query));
     }
 
-    private function buildPriceBetweenFilter(UnitEnum & AllowedFilterEnum $filter): Filter
+    private function buildPriceBetweenFilter(UnitEnum & IAllowedFilterEnum $filter): Filter
     {
         $minPrice = $this->repository->getMinPrice($this->query, $this->currency);
         $maxPrice = $this->repository->getMaxPrice($this->query, $this->currency);
@@ -68,12 +68,12 @@ final class ProductFilterBuilder implements FilterBuilder
         );
     }
 
-    private function buildCategoryFilter(UnitEnum & AllowedFilterEnum $filter): Filter
+    private function buildCategoryFilter(UnitEnum & IAllowedFilterEnum $filter): Filter
     {
         return new PlainMultiselectFilter($filter, $this->repository->getCategories($this->query));
     }
 
-    private function buildAttributeValueFilter(UnitEnum & AllowedFilterEnum $filter): Filter
+    private function buildAttributeValueFilter(UnitEnum & IAllowedFilterEnum $filter): Filter
     {
         return new NestedMultiselectFilter($filter, $this->repository->getAttributeValues($this->query));
     }

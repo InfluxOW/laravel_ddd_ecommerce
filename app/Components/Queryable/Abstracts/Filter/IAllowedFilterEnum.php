@@ -2,6 +2,6 @@
 
 namespace App\Components\Queryable\Abstracts\Filter;
 
-interface AllowedFilterEnum
+interface IAllowedFilterEnum
 {
 }

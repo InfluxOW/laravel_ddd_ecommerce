@@ -2,9 +2,9 @@
 
 namespace App\Domains\Catalog\Enums\Query\Filter;
 
-use App\Components\Queryable\Abstracts\Filter\AllowedFilterEnum;
+use App\Components\Queryable\Abstracts\Filter\IAllowedFilterEnum;
 
-enum ProductAllowedFilter implements AllowedFilterEnum
+enum ProductAllowedFilter implements IAllowedFilterEnum
 {
     case SEARCH;
     case CATEGORY;

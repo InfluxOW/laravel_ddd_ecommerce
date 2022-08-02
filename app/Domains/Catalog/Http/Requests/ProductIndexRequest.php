@@ -46,7 +46,7 @@ final class ProductIndexRequest extends IndexRequest
             $appends[QueryKey::FILTER->value][ProductAllowedFilter::PRICE_BETWEEN->name][$i] = isset($price) ? $price->getValue() : null;
         }
 
-        return $appends;
+        return $this->implodeFilters($appends);
     }
 
     protected function prepareForValidation(): void
