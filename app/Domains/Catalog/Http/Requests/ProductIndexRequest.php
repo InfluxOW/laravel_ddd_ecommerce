@@ -2,6 +2,7 @@
 
 namespace App\Domains\Catalog\Http\Requests;
 
+use Akaunting\Money\Money;
 use App\Components\Queryable\Enums\QueryKey;
 use App\Domains\Catalog\Enums\Query\Filter\ProductAllowedFilter;
 use App\Domains\Catalog\Models\Settings\CatalogSettings;
@@ -22,6 +23,30 @@ final class ProductIndexRequest extends IndexRequest
             sprintf('%s.%s.*', QueryKey::FILTER->value, ProductAllowedFilter::ATTRIBUTE_VALUE->name) => ['nullable', 'array'],
             QueryKey::SORT->value => ['nullable', 'string'],
         ]);
+    }
+
+    public function validated($key = null, $default = null): array
+    {
+        $validated = parent::validated($key, $default);
+
+        $currency = $validated[QueryKey::FILTER->value][ProductAllowedFilter::CURRENCY->name];
+        foreach ($validated[QueryKey::FILTER->value][ProductAllowedFilter::PRICE_BETWEEN->name] ?? [] as $i => $price) {
+            $validated[QueryKey::FILTER->value][ProductAllowedFilter::PRICE_BETWEEN->name][$i] = isset($price) ? money($price, $currency) : null;
+        }
+
+        return $validated;
+    }
+
+    public function append(): array
+    {
+        $appends = parent::append();
+
+        /** @var ?Money $price */
+        foreach ($appends[QueryKey::FILTER->value][ProductAllowedFilter::PRICE_BETWEEN->name] ?? [] as $i => $price) {
+            $appends[QueryKey::FILTER->value][ProductAllowedFilter::PRICE_BETWEEN->name][$i] = isset($price) ? $price->getValue() : null;
+        }
+
+        return $appends;
     }
 
     protected function prepareForValidation(): void

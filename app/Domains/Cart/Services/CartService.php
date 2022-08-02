@@ -44,10 +44,14 @@ final class CartService
             return $this->update($cart, $purchasable, $quantity);
         }
 
+        /** @var int $quantity */
+        /** @noinspection CallableParameterUseCaseInTypeContextInspection */
+        $quantity = MathUtils::clamp($quantity, 0, CartItem::MAX_QUANTITY);
+
         /** @var CartItem $item */
         $item = $cart->items()->make();
         $item->purchasable()->associate($purchasable);
-        $item->quantity = (int) MathUtils::clamp($quantity, 0, CartItem::MAX_QUANTITY);
+        $item->quantity = $quantity;
         $item->setRelation('cart', $cart);
 
         $cart->setRelation('items', $cart->items->push($item));
@@ -66,7 +70,11 @@ final class CartService
             return $this->add($cart, $purchasable, $quantity);
         }
 
-        $item->quantity = (int) MathUtils::clamp($quantity, 0, CartItem::MAX_QUANTITY);
+        /** @var int $quantity */
+        /** @noinspection CallableParameterUseCaseInTypeContextInspection */
+        $quantity = MathUtils::clamp($quantity, 0, CartItem::MAX_QUANTITY);
+
+        $item->quantity = $quantity;
 
         $cart = $this->recalculate($cart);
 

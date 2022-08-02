@@ -4,7 +4,7 @@ namespace App\Interfaces\Http\Controllers;
 
 use App\Domains\Generic\Enums\Response\ResponseKey;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -49,8 +49,10 @@ trait ResponseTrait
     /**
      * @param class-string<JsonResource> $resource
      */
-    protected function respondWithItem(string $resource, Model $item, array $additional = []): JsonResource
+    protected function respondWithPossiblyNotFoundItem(string $resource, Builder $query, array $additional = []): JsonResource|JsonResponse
     {
-        return $resource::make($item)->additional($additional);
+        $item = $query->first();
+
+        return ($item === null) ? $this->respondNotFound() : $resource::make($item)->additional($additional);
     }
 }

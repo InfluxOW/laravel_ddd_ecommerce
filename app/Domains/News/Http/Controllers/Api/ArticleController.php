@@ -2,7 +2,6 @@
 
 namespace App\Domains\News\Http\Controllers\Api;
 
-use App\Components\Queryable\Enums\QueryKey;
 use App\Domains\News\Http\Requests\ArticleIndexRequest;
 use App\Domains\News\Http\Resources\Article\HeavyArticleResource;
 use App\Domains\News\Http\Resources\Article\LightArticleResource;
@@ -17,23 +16,17 @@ final class ArticleController extends Controller
 {
     public function index(ArticleIndexRequest $request): AnonymousResourceCollection
     {
-        $validated = $request->validated();
-
-        $news = $this->getBaseNewsQuery()
-            ->paginate($validated[QueryKey::PER_PAGE->value], ['*'], QueryKey::PAGE->value, $validated[QueryKey::PAGE->value])
-            ->appends($request->query() ?? []);
-
-        return $this->respondWithCollection(LightArticleResource::class, $news);
+        return $this->respondPaginated(LightArticleResource::class, self::getBaseNewsQuery(), $request);
     }
 
     public function show(string $slug): JsonResource|JsonResponse
     {
-        $article = $this->getBaseNewsQuery()->where('slug', $slug)->first();
+        $query = self::getBaseNewsQuery()->where('slug', $slug);
 
-        return ($article === null) ? $this->respondNotFound() : $this->respondWithItem(HeavyArticleResource::class, $article);
+        return $this->respondWithPossiblyNotFoundItem(HeavyArticleResource::class, $query);
     }
 
-    private function getBaseNewsQuery(): Builder
+    private static function getBaseNewsQuery(): Builder
     {
         return Article::query()->published()->orderByDesc('published_at');
     }

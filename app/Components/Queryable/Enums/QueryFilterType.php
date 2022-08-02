@@ -7,5 +7,6 @@ enum QueryFilterType
     case INPUT;
     case RANGE;
     case SELECT;
-    case MULTISELECT;
+    case NESTED_MULTISELECT;
+    case PLAIN_MULTISELECT;
 }

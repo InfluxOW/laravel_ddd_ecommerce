@@ -2,12 +2,13 @@
 
 namespace App\Domains\Catalog\Enums\Query\Sort;
 
+use App\Components\Queryable\Abstracts\Sort\AllowedSortEnum;
 use OpenApi\Annotations as OA;
 
 /**
  * @OA\Schema()
  */
-enum ProductAllowedSort
+enum ProductAllowedSort implements AllowedSortEnum
 {
     case DEFAULT;
 

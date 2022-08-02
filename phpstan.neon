@@ -27,7 +27,6 @@ parameters:
         # Laravel 9 issues
         - '#Unable to resolve the template type TValue in call to function collect#'
         - '#Unable to resolve the template type TKey in call to function collect#'
-        - '#Parameter \#1 \$value of function collect expects#'
         - '#Parameter \#1 \$callback of method Illuminate\\Support\\Collection<int,mixed>::filter\(\)#'
         - '#Parameter \#1 \$callback of method Illuminate\\Database\\Eloquent\\Factories\\Factory<Illuminate\\Database\\Eloquent\\Model>::afterMaking\(\)#'
         - '#Parameter \#1 \$callback of method Illuminate\\Database\\Eloquent\\Factories\\Factory<Illuminate\\Database\\Eloquent\\Model>::afterCreating\(\)#'

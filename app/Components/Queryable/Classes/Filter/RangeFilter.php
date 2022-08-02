@@ -2,7 +2,6 @@
 
 namespace App\Components\Queryable\Classes\Filter;
 
-use Akaunting\Money\Currency;
 use Akaunting\Money\Money;
 use App\Components\Queryable\Enums\QueryFilterType;
 use App\Domains\Generic\Utils\MathUtils;
@@ -13,65 +12,60 @@ final class RangeFilter extends Filter
 {
     public static QueryFilterType $type = QueryFilterType::RANGE;
 
-    public Money|int|float|null $minValue;
-
-    public Money|int|float|null $maxValue;
-
-    public readonly ?Currency $currency;
-
-    public function __construct(UnitEnum $filter, ?float $minValue, ?float $maxValue, ?string $currency)
+    public function __construct(UnitEnum $filter, private Money|int|float|null $min, private Money|int|float|null $max)
     {
         parent::__construct($filter);
-
-        $this->currency = ($currency === null) ? null : currency($currency);
-
-        $this->minValue = isset($this->currency, $minValue) ? money($minValue, $this->currency->getCurrency()) : $minValue;
-        $this->maxValue = isset($this->currency, $maxValue) ? money($maxValue, $this->currency->getCurrency()) : $maxValue;
     }
 
-    #[ArrayShape(['query' => 'string', 'title' => 'string', 'type' => 'string', 'min_value' => 'float', 'max_value' => 'float'])]
+    #[ArrayShape(['query' => 'string', 'title' => 'string', 'type' => 'string', 'min' => 'int|float|null', 'max' => 'int|float|null'])]
     public function toArray(): array
     {
         return array_merge(parent::toArray(), [
-            'min_value' => ($this->minValue instanceof Money) ? $this->minValue->getValue() : $this->minValue,
-            'max_value' => ($this->maxValue instanceof Money) ? $this->maxValue->getValue() : $this->maxValue,
+            'min' => $this->getValue($this->min),
+            'max' => $this->getValue($this->max),
         ]);
     }
 
-    #[ArrayShape(['query' => 'string', 'title' => 'string', 'type' => 'string', 'min_value' => 'float', 'max_value' => 'float'])]
-    public function toAllowedArray(): array
+    #[ArrayShape(['query' => 'string', 'title' => 'string', 'type' => 'string', 'min' => 'int|float|null', 'max' => 'int|float|null'])]
+    public function allowed(): array
     {
         return $this->toArray();
     }
 
-    #[ArrayShape(['query' => 'string', 'title' => 'string', 'type' => 'string', 'min_value' => 'float', 'max_value' => 'float'])]
-    public function toAppliedArray(): array
+    #[ArrayShape(['query' => 'string', 'title' => 'string', 'type' => 'string', 'min' => 'int|float|null', 'max' => 'int|float|null'])]
+    public function applied(): array
     {
         return $this->toArray();
     }
 
-    public function setSelectedValues(string|int|bool|float|array|null ...$values): self
+    public function apply(Money|int|float|null $min, Money|int|float|null $max): self
     {
-        [$selectedMinValue, $selectedMaxValue] = $values;
-        if (isset($selectedMinValue, $selectedMaxValue) && $selectedMinValue > $selectedMaxValue) {
-            [$selectedMaxValue, $selectedMinValue] = [$selectedMinValue, $selectedMaxValue];
+        if (isset($min, $max) && $min > $max) {
+            [$max, $min] = [$min, $max];
         }
 
-        $selectedMinValue = isset($this->currency, $selectedMinValue) ? money($selectedMinValue, $this->currency->getCurrency())->getValue() : $selectedMinValue;
-        $selectedMaxValue = isset($this->currency, $selectedMaxValue) ? money($selectedMaxValue, $this->currency->getCurrency())->getValue() : $selectedMaxValue;
-
-        $minValue = ($this->minValue instanceof Money) ? $this->minValue->getValue() : $this->minValue;
-        $maxValue = ($this->maxValue instanceof Money) ? $this->maxValue->getValue() : $this->maxValue;
+        $min = $min ?? $this->min;
+        $max = $max ?? $this->max;
 
         $filter = clone $this;
-        $filter->minValue = null;
-        $filter->maxValue = null;
 
-        if (isset($minValue, $maxValue)) {
-            $filter->minValue = isset($selectedMinValue) ? MathUtils::clamp((float) $selectedMinValue, $minValue, $maxValue) : $minValue;
-            $filter->maxValue = isset($selectedMaxValue) ? MathUtils::clamp((float) $selectedMaxValue, $minValue, $maxValue) : $maxValue;
-        }
+        $filter->min = isset($min) ? MathUtils::clamp($min, $filter->min, $filter->max) : null;
+        $filter->max = isset($max) ? MathUtils::clamp($max, $filter->min, $filter->max) : null;
 
         return $filter;
+    }
+
+    public function isset(): bool
+    {
+        return isset($this->min, $this->max);
+    }
+
+    private function getValue(Money|int|float|null $value): int|float|null
+    {
+        if ($value instanceof Money) {
+            return $value->getValue();
+        }
+
+        return $value;
     }
 }

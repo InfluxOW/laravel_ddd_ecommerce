@@ -29,9 +29,9 @@ abstract class Filter extends Query
         ]);
     }
 
-    abstract public function toAllowedArray(): array;
+    abstract public function allowed(): array;
 
-    abstract public function toAppliedArray(): array;
+    abstract public function applied(): array;
 
-    abstract public function setSelectedValues(string|int|bool|float|array|null ...$values): ?self;
+    abstract public function isset(): bool;
 }

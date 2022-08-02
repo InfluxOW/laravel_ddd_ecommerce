@@ -21,5 +21,5 @@ final class AppliedSelectFilter extends SelectFilter
      *
      * @example USD
      */
-    public $selected_value;
+    public $selected;
 }

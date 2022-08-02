@@ -19,5 +19,5 @@ final class AllowedSelectFilter extends SelectFilter
      *
      * @var array
      */
-    public $allowed_values;
+    public $allowed;
 }

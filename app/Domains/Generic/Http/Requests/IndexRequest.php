@@ -38,4 +38,9 @@ abstract class IndexRequest extends FormRequest
             ]);
         }
     }
+
+    public function append(): array
+    {
+        return $this->validated();
+    }
 }

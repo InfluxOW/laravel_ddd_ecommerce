@@ -17,18 +17,18 @@ abstract class RangeFilter extends Filter
     /**
      * @OA\Property()
      *
-     * @var float|null
+     * @var int|float|null
      *
      * @example 5.0
      */
-    public $min_value;
+    public $min;
 
     /**
      * @OA\Property()
      *
-     * @var float|null
+     * @var int|float|null
      *
      * @example 50.0
      */
-    public $max_value;
+    public $max;
 }

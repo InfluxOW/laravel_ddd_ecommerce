@@ -2,110 +2,46 @@
 
 namespace App\Domains\Catalog\Services\Query\Filter;
 
-use App\Components\Queryable\Abstracts\QueryService;
-use App\Components\Queryable\Classes\Filter\Filter;
+use App\Components\Queryable\Abstracts\Filter\FilterService;
 use App\Components\Queryable\Enums\QueryKey;
-use App\Domains\Catalog\Classes\Query\Filter\ProductFilterQuery;
 use App\Domains\Catalog\Enums\Query\Filter\ProductAllowedFilter;
-use App\Domains\Catalog\Http\Resources\Query\Filter\ProductFilterQueryResource;
 use App\Domains\Catalog\Models\Product;
 use App\Domains\Catalog\Models\ProductCategory;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Collection;
-use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder as SpatieQueryBuilder;
 
-final class ProductFilterService implements QueryService
+final class ProductFilterService extends FilterService
 {
-    protected SpatieQueryBuilder $productsQuery;
+    private array $validated;
 
-    protected string $currency;
-
-    public function __construct(private ProductFilterBuilder $filterBuilder)
+    public function prepare(array $validated, SpatieQueryBuilder $query): static
     {
-    }
+        $this->validated = $validated;
 
-    public function setCurrency(string $currency): self
-    {
-        $this->currency = $currency;
+        $currency = $this->getFilter(ProductAllowedFilter::CURRENCY);
+        /** @var ProductFilterBuilder $builder */
+        $builder = $this->builder;
+
+        $builder->prepare($currency, $query);
 
         return $this;
     }
 
-    public function setProductsQuery(SpatieQueryBuilder $productsQuery): self
+    public function build(): static
     {
-        $this->productsQuery = $productsQuery;
+        $getFilter = fn (ProductAllowedFilter $filter): mixed => $this->getFilter($filter);
 
-        return $this;
-    }
-
-    /**
-     * @return Collection<Filter>
-     */
-    public function getAllowed(): Collection
-    {
-        return collect([
-            $this->filterBuilder->buildSearchFilter(),
-            $this->filterBuilder->buildCurrencyFilter($this->productsQuery),
-            $this->filterBuilder->buildPriceBetweenFilter($this->productsQuery, $this->currency),
-            $this->filterBuilder->buildCategoryFilter($this->productsQuery),
-            $this->filterBuilder->buildAttributeValuesFilter($this->productsQuery),
-        ]);
-    }
-
-    /**
-     * @return AllowedFilter[]
-     */
-    public function getAllowedFiltersForQuery(array $validated): array
-    {
-        $currency = $validated[QueryKey::FILTER->value][ProductAllowedFilter::CURRENCY->name];
-
-        return [
+        return $this
             /** @phpstan-ignore-next-line */
-            AllowedFilter::callback(ProductAllowedFilter::SEARCH->name, static fn (Builder|Product $query, string $searchable): Builder => $query->search($searchable, orderByScore: true)),
-            AllowedFilter::callback(ProductAllowedFilter::CURRENCY->name, static fn (Builder|Product $query): Builder => $query->whereHasPriceCurrency($currency)),
-            AllowedFilter::callback(ProductAllowedFilter::CATEGORY->name, static fn (Builder|Product $query): Builder => $query->whereInCategory(ProductCategory::query()->displayable()->whereIn('slug', $validated[QueryKey::FILTER->value][ProductAllowedFilter::CATEGORY->name])->get())),
-            AllowedFilter::callback(ProductAllowedFilter::PRICE_BETWEEN->name, static fn (Builder|Product $query): Builder => $query->wherePriceBetween($currency, ...$validated[QueryKey::FILTER->value][ProductAllowedFilter::PRICE_BETWEEN->name])),
-            AllowedFilter::callback(ProductAllowedFilter::ATTRIBUTE_VALUE->name, static fn (Builder|Product $query): Builder => $query->whereHasAttributeValue($validated[QueryKey::FILTER->value][ProductAllowedFilter::ATTRIBUTE_VALUE->name])),
-        ];
+            ->add(ProductAllowedFilter::SEARCH, static fn (Builder|Product $query): Builder => $query->search($getFilter(ProductAllowedFilter::SEARCH), orderByScore: true))
+            ->add(ProductAllowedFilter::CURRENCY, static fn (Builder|Product $query): Builder => $query->whereHasPriceCurrency($getFilter(ProductAllowedFilter::CURRENCY)))
+            ->add(ProductAllowedFilter::CATEGORY, static fn (Builder|Product $query): Builder => $query->whereInCategory(ProductCategory::query()->displayable()->whereIn('slug', $getFilter(ProductAllowedFilter::CATEGORY))->get()))
+            ->add(ProductAllowedFilter::PRICE_BETWEEN, static fn (Builder|Product $query): Builder => $query->wherePriceBetween(...$getFilter(ProductAllowedFilter::PRICE_BETWEEN)))
+            ->add(ProductAllowedFilter::ATTRIBUTE_VALUE, static fn (Builder|Product $query): Builder => $query->whereHasAttributeValue($getFilter(ProductAllowedFilter::ATTRIBUTE_VALUE)));
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return Collection<Filter>
-     */
-    public function getApplied(Request $request): Collection
+    private function getFilter(ProductAllowedFilter $filter): mixed
     {
-        /** @var array $queryFilters */
-        $queryFilters = $request->query(QueryKey::FILTER->value, []);
-
-        $appliedFilters = collect([]);
-        if (count($queryFilters) > 0) {
-            $allowedFilters = $this->getAllowed();
-
-            $appliedFilters = collect($queryFilters)
-                ->reduce(function (Collection $acc, array|string $values, string $filterQuery) use ($allowedFilters): Collection {
-                    /** @var Filter $filter */
-                    $filter = $allowedFilters->filter(static fn (Filter $filter): bool => ($filter->query === $filterQuery))->first();
-                    $acc->push($filter->setSelectedValues(...(array) $values));
-
-                    return $acc;
-                }, collect([]))
-                ->filter()
-                ->values();
-        }
-
-        return $appliedFilters;
-    }
-
-    public function toResource(Request $request): JsonResource
-    {
-        $allowedFilters = $this->getAllowed();
-        $appliedFilters = $this->getApplied($request);
-
-        return ProductFilterQueryResource::make(new ProductFilterQuery($allowedFilters, $appliedFilters));
+        return $this->validated[QueryKey::FILTER->value][$filter->name];
     }
 }

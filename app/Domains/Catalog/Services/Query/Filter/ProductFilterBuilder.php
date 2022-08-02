@@ -2,50 +2,79 @@
 
 namespace App\Domains\Catalog\Services\Query\Filter;
 
+use App\Components\Queryable\Abstracts\Filter\AllowedFilterEnum;
+use App\Components\Queryable\Abstracts\FilterBuilder;
 use App\Components\Queryable\Classes\Filter\Filter;
 use App\Components\Queryable\Classes\Filter\InputFilter;
-use App\Components\Queryable\Classes\Filter\MultiselectFilter;
+use App\Components\Queryable\Classes\Filter\Multiselect\NestedMultiselectFilter;
+use App\Components\Queryable\Classes\Filter\Multiselect\PlainMultiselectFilter;
 use App\Components\Queryable\Classes\Filter\RangeFilter;
 use App\Components\Queryable\Classes\Filter\SelectFilter;
 use App\Domains\Catalog\Enums\Query\Filter\ProductAllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder as SpatieQueryBuilder;
+use UnitEnum;
 
-final class ProductFilterBuilder
+final class ProductFilterBuilder implements FilterBuilder
 {
-    public function __construct(private ProductFilterBuilderRepository $repository)
+    private SpatieQueryBuilder $query;
+
+    private string $currency;
+
+    public function __construct(private readonly ProductFilterBuilderRepository $repository)
     {
     }
 
-    public function buildSearchFilter(): Filter
+    public function prepare(string $currency, SpatieQueryBuilder $query): static
     {
-        return new InputFilter(ProductAllowedFilter::SEARCH);
+        $this->currency = $currency;
+        $this->query = $query;
+
+        return $this;
     }
 
-    public function buildCurrencyFilter(SpatieQueryBuilder $productsQuery): Filter
+    /**
+     * @param ProductAllowedFilter $filter
+     */
+    public function build(UnitEnum & AllowedFilterEnum $filter): Filter
     {
-        return new SelectFilter(ProductAllowedFilter::CURRENCY, $this->repository->getAvailableCurrencies($productsQuery->clone()));
+        return match ($filter) {
+            ProductAllowedFilter::SEARCH => $this->buildSearchFilter($filter),
+            ProductAllowedFilter::CATEGORY => $this->buildCategoryFilter($filter),
+            ProductAllowedFilter::PRICE_BETWEEN => $this->buildPriceBetweenFilter($filter),
+            ProductAllowedFilter::ATTRIBUTE_VALUE => $this->buildAttributeValueFilter($filter),
+            ProductAllowedFilter::CURRENCY => $this->buildCurrencyFilter($filter),
+        };
     }
 
-    public function buildPriceBetweenFilter(SpatieQueryBuilder $productsQuery, string $currency): Filter
+    private function buildSearchFilter(UnitEnum & AllowedFilterEnum $filter): Filter
     {
-        $minPrice = $this->repository->getMinPrice($productsQuery->clone(), $currency);
-        $maxPrice = $this->repository->getMaxPrice($productsQuery->clone(), $currency);
+        return new InputFilter($filter);
+    }
+
+    private function buildCurrencyFilter(UnitEnum & AllowedFilterEnum $filter): Filter
+    {
+        return new SelectFilter($filter, $this->repository->getAvailableCurrencies($this->query));
+    }
+
+    private function buildPriceBetweenFilter(UnitEnum & AllowedFilterEnum $filter): Filter
+    {
+        $minPrice = $this->repository->getMinPrice($this->query, $this->currency);
+        $maxPrice = $this->repository->getMaxPrice($this->query, $this->currency);
 
         return new RangeFilter(
-            ProductAllowedFilter::PRICE_BETWEEN,
-            $minPrice,
-            $maxPrice,
-            $currency
+            $filter,
+            isset($minPrice) ? money($minPrice, $this->currency) : null,
+            isset($maxPrice) ? money($maxPrice, $this->currency) : null,
         );
     }
 
-    public function buildCategoryFilter(SpatieQueryBuilder $productsQuery): Filter
+    private function buildCategoryFilter(UnitEnum & AllowedFilterEnum $filter): Filter
     {
-        return MultiselectFilter::createWithPlainValues(ProductAllowedFilter::CATEGORY, $this->repository->getCategories($productsQuery->clone()));
+        return new PlainMultiselectFilter($filter, $this->repository->getCategories($this->query));
     }
 
-    public function buildAttributeValuesFilter(SpatieQueryBuilder $productsQuery): Filter
+    private function buildAttributeValueFilter(UnitEnum & AllowedFilterEnum $filter): Filter
     {
-        return MultiselectFilter::createWithNestedValues(ProductAllowedFilter::ATTRIBUTE_VALUE, $this->repository->getAttributeValues($productsQuery->clone()));
+        return new NestedMultiselectFilter($filter, $this->repository->getAttributeValues($this->query));
     }
 }

@@ -23,8 +23,8 @@ final class AttributeValueFactory extends Factory
             /** @var bool|float|int|string $value */
             $value = match ($productAttributeValue->attribute->values_type) {
                 AttributeValuesType::BOOLEAN => $this->faker->boolean,
-                AttributeValuesType::INTEGER => random_int(0, 1000),
-                AttributeValuesType::FLOAT => $this->faker->randomFloat(random_int(1, 8), 0, 100),
+                AttributeValuesType::INTEGER => random_int(1, 1000),
+                AttributeValuesType::FLOAT => $this->faker->randomFloat(random_int(1, 8), 1, 100),
                 AttributeValuesType::STRING => $this->faker->words(3, true),
             };
 

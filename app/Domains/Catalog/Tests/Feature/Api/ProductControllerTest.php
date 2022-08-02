@@ -113,7 +113,7 @@ final class ProductControllerTest extends TestCase
                 $this->assertContains($product->title, $this->getResponseData($response)->pluck('title'));
                 $this->assertContains(ProductAllowedFilter::CATEGORY->name, $appliedFilters->pluck('query'));
 
-                $categoryFilterValues = collect($appliedFilters->filter(fn (array $filter): bool => $filter['query'] === ProductAllowedFilter::CATEGORY->name)->first()['selected_values']);
+                $categoryFilterValues = collect($appliedFilters->filter(fn (array $filter): bool => $filter['query'] === ProductAllowedFilter::CATEGORY->name)->first()['selected']);
                 if ($categoriesQuery === $category->slug) {
                     $this->assertContains($category->slug, $categoryFilterValues);
                 } else {
@@ -152,23 +152,11 @@ final class ProductControllerTest extends TestCase
             )->assertOk();
             $products = $this->getResponseData($response);
             $appliedFilters = $this->getResponseAppliedFilters($response);
+            $allowedFilters = $this->getResponseAllowedFilters($response);
 
             if (isset($minPrice, $maxPrice) && $maxPrice < $minPrice) {
                 [$minPrice, $maxPrice] = [$maxPrice, $minPrice];
             }
-
-            $priceQuery = Price::query()->where('currency', $currency);
-
-            $minPriceQuery = $priceQuery->clone();
-            $maxPriceQuery = $priceQuery->clone();
-            if (isset($minPrice)) {
-                $minPriceQuery->where(Price::getDatabasePriceExpression(), '>=', money($minPrice, $currency, true)->getAmount());
-            }
-            if (isset($maxPrice)) {
-                $maxPriceQuery->where(Price::getDatabasePriceExpression(), '<=', money($maxPrice, $currency, true)->getAmount());
-            }
-            $lowestAvailablePrice = money($minPriceQuery->min(Price::getDatabasePriceExpression()), $currency)->getValue();
-            $highestAvailablePrice = money($maxPriceQuery->max(Price::getDatabasePriceExpression()), $currency)->getValue();
 
             $this->assertNotEmpty($products);
             $products->each(function (array $product) use ($minPrice, $maxPrice): void {
@@ -187,10 +175,14 @@ final class ProductControllerTest extends TestCase
 
             $this->assertContains(ProductAllowedFilter::PRICE_BETWEEN->name, $appliedFilters->pluck('query'));
 
-            $priceBetweenFilter = $appliedFilters->filter(fn (array $filter): bool => $filter['query'] === ProductAllowedFilter::PRICE_BETWEEN->name)->first();
+            $priceBetweenAppliedFilter = $appliedFilters->filter(fn (array $filter): bool => $filter['query'] === ProductAllowedFilter::PRICE_BETWEEN->name)->first();
+            $priceBetweenAllowedFilter = $allowedFilters->filter(fn (array $filter): bool => $filter['query'] === ProductAllowedFilter::PRICE_BETWEEN->name)->first();
 
-            $this->assertEquals(isset($minPrice) ? max($minPrice, $lowestAvailablePrice) : $lowestAvailablePrice, $priceBetweenFilter['min_value']);
-            $this->assertEquals(isset($maxPrice) ? min($maxPrice, $highestAvailablePrice) : $highestAvailablePrice, $priceBetweenFilter['max_value']);
+            $lowestAvailablePrice = $priceBetweenAllowedFilter['min'];
+            $highestAvailablePrice = $priceBetweenAllowedFilter['max'];
+
+            $this->assertEquals(isset($minPrice) ? max($minPrice, $lowestAvailablePrice) : $lowestAvailablePrice, $priceBetweenAppliedFilter['min']);
+            $this->assertEquals(isset($maxPrice) ? min($maxPrice, $highestAvailablePrice) : $highestAvailablePrice, $priceBetweenAppliedFilter['max']);
         }
     }
 
@@ -268,7 +260,7 @@ final class ProductControllerTest extends TestCase
 
         $this->assertContains(ProductAllowedFilter::ATTRIBUTE_VALUE->name, $appliedFilters->pluck('query'));
 
-        $attributeValuesFilterValues = collect($appliedFilters->filter(fn (array $filter): bool => $filter['query'] === ProductAllowedFilter::ATTRIBUTE_VALUE->name)->first()['selected_values']);
+        $attributeValuesFilterValues = collect($appliedFilters->filter(fn (array $filter): bool => $filter['query'] === ProductAllowedFilter::ATTRIBUTE_VALUE->name)->first()['selected']);
         $this->assertEqualsCanonicalizing([$heightSmallValue, $heightGreatValue], $attributeValuesFilterValues->where('attribute.query', $height->slug)->first()['values']);
         $this->assertEqualsCanonicalizing([$widthValue], $attributeValuesFilterValues->where('attribute.query', $width->slug)->first()['values']);
     }
@@ -463,5 +455,10 @@ final class ProductControllerTest extends TestCase
     private function getResponseAppliedFilters(TestResponse $response): Collection
     {
         return collect($response->json(sprintf('%s.%s.%s', ResponseKey::QUERY->value, QueryKey::FILTER->value, 'applied')));
+    }
+
+    private function getResponseAllowedFilters(TestResponse $response): Collection
+    {
+        return collect($response->json(sprintf('%s.%s.%s', ResponseKey::QUERY->value, QueryKey::FILTER->value, 'allowed')));
     }
 }

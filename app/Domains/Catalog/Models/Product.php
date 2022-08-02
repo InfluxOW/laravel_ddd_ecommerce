@@ -7,6 +7,7 @@ use App\Components\Attributable\Enums\AttributeValuesType;
 use App\Components\Attributable\Models\Attribute;
 use App\Components\Attributable\Models\AttributeValue;
 use App\Components\Purchasable\Abstracts\Purchasable;
+use App\Components\Purchasable\Exceptions\IncompatibleCurrenciesException;
 use App\Components\Purchasable\Models\Price;
 use App\Domains\Catalog\Database\Factories\ProductFactory;
 use App\Domains\Catalog\Enums\Media\ProductMediaCollectionKey;
@@ -73,9 +74,9 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Product whereInCategory(\Illuminate\Support\Collection $categories)
  * @method static Builder|Product whereIsDisplayable($value)
  * @method static Builder|Product whereIsVisible($value)
- * @method static Builder|Product wherePriceAbove(string $currency, int $minPrice)
- * @method static Builder|Product wherePriceBelow(string $currency, int $maxPrice)
- * @method static Builder|Product wherePriceBetween(string $currency, ?int $minPrice, ?int $maxPrice)
+ * @method static Builder|Product wherePriceAbove(\Akaunting\Money\Money $price)
+ * @method static Builder|Product wherePriceBelow(\Akaunting\Money\Money $price)
+ * @method static Builder|Product wherePriceBetween(?\Akaunting\Money\Money $min, ?\Akaunting\Money\Money $max)
  * @method static Builder|Product whereSlug($value)
  * @method static Builder|Product whereTitle($value)
  * @method static Builder|Product whereUpdatedAt($value)
@@ -209,24 +210,26 @@ final class Product extends Model implements Purchasable, HasMedia, Explored, Ex
         $query->whereHas('prices', fn (Builder $query): Builder => $query->where('currency', $currency));
     }
 
-    public function scopeWherePriceAbove(Builder $query, string $currency, int $minPrice): void
+    public function scopeWherePriceAbove(Builder $query, Money $price): void
     {
-        $query->whereHas('prices', fn (Builder $query): Builder => $query->where('currency', $currency)->where(Price::getDatabasePriceExpression(), '>=', $minPrice));
+        $query->whereHas('prices', fn (Builder $query): Builder => $query->where('currency', $price->getCurrency()->getCurrency())->where(Price::getDatabasePriceExpression(), '>=', $price->getAmount()));
     }
 
-    public function scopeWherePriceBelow(Builder $query, string $currency, int $maxPrice): void
+    public function scopeWherePriceBelow(Builder $query, Money $price): void
     {
-        $query->whereHas('prices', fn (Builder $query): Builder => $query->where('currency', $currency)->where(Price::getDatabasePriceExpression(), '<=', $maxPrice));
+        $query->whereHas('prices', fn (Builder $query): Builder => $query->where('currency', $price->getCurrency()->getCurrency())->where(Price::getDatabasePriceExpression(), '<=', $price->getAmount()));
     }
 
-    public function scopeWherePriceBetween(Builder|Product $query, string $currency, ?int $minPrice, ?int $maxPrice): void
+    public function scopeWherePriceBetween(Builder|Product $query, ?Money $min, ?Money $max): void
     {
-        if (isset($minPrice, $maxPrice)) {
-            $query->whereHas('prices', fn (Builder $query): Builder => $query->where('currency', $currency)->whereBetween(Price::getDatabasePriceExpression(), $minPrice > $maxPrice ? [$maxPrice, $minPrice] : [$minPrice, $maxPrice]));
-        } elseif (isset($minPrice)) {
-            $query->wherePriceAbove($currency, $minPrice);
-        } elseif (isset($maxPrice)) {
-            $query->wherePriceBelow($currency, $maxPrice);
+        if (isset($min, $max)) {
+            throw_unless($min->getCurrency()->getCurrency() === $max->getCurrency()->getCurrency(), IncompatibleCurrenciesException::class);
+
+            $query->whereHas('prices', fn (Builder $query): Builder => $query->where('currency', $min->getCurrency()->getCurrency())->whereBetween(Price::getDatabasePriceExpression(), $min > $max ? [$max->getAmount(), $min->getAmount()] : [$min->getAmount(), $max->getAmount()]));
+        } elseif (isset($min)) {
+            $query->wherePriceAbove($min);
+        } elseif (isset($max)) {
+            $query->wherePriceBelow($max);
         }
     }
 
