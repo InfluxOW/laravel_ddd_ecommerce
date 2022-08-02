@@ -5,6 +5,8 @@ namespace App\Interfaces\Http\Controllers;
 use App\Components\Queryable\Abstracts\Filter\FilterService;
 use App\Components\Queryable\Abstracts\Sort\SortService;
 use App\Components\Queryable\Enums\QueryKey;
+use App\Components\Queryable\Services\Filter\FilterQueryResourceBuilder;
+use App\Components\Queryable\Services\Sort\SortQueryResourceBuilder;
 use App\Domains\Generic\Enums\Response\ResponseKey;
 use App\Domains\Generic\Http\Requests\IndexRequest;
 use Illuminate\Database\Eloquent\Builder;
@@ -63,7 +65,7 @@ abstract class Controller extends BaseController
 
             $query->allowedFilters($filterService->callbacks()->toArray());
 
-            $additional[ResponseKey::QUERY->value][QueryKey::FILTER->value] = $filterService->resource($request);
+            $additional[ResponseKey::QUERY->value][QueryKey::FILTER->value] = (new FilterQueryResourceBuilder($filterService))->resource($request);
         }
 
         if (isset($sortService)) {
@@ -73,7 +75,7 @@ abstract class Controller extends BaseController
                 ->allowedSorts($sortService->callbacks()->toArray())
                 ->defaultSort($sortService->callbacks()->first());
 
-            $additional[ResponseKey::QUERY->value][QueryKey::SORT->value] = $sortService->resource($request);
+            $additional[ResponseKey::QUERY->value][QueryKey::SORT->value] = (new SortQueryResourceBuilder($sortService))->resource($request);
         }
 
         $items = $query
