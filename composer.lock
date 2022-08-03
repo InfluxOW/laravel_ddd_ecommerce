@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "88f765826b6fdd7f33fd35aea6ec5083",
+    "content-hash": "c8b66c264c9e26ecb9bfaf378f7a9c5c",
     "packages": [
         {
             "name": "akaunting/laravel-money",
@@ -5613,6 +5613,57 @@
             "time": "2022-03-28T17:43:20+00:00"
         },
         {
+            "name": "mbezhanov/faker-provider-collection",
+            "version": "2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mbezhanov/faker-provider-collection.git",
+                "reference": "ae3a9ba9421c3a593836689f08da1443b4065bc0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mbezhanov/faker-provider-collection/zipball/ae3a9ba9421c3a593836689f08da1443b4065bc0",
+                "reference": "ae3a9ba9421c3a593836689f08da1443b4065bc0",
+                "shasum": ""
+            },
+            "require": {
+                "fakerphp/faker": "^1.13",
+                "php": "^7.4|^8.0"
+            },
+            "require-dev": {
+                "php-mock/php-mock": "^2.3",
+                "phpunit/phpunit": "^9.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Bezhanov\\Faker\\": "src/Faker"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marin Bezhanov",
+                    "email": "marin.bezhanov@gmail.com",
+                    "homepage": "http://marinbezhanov.com"
+                }
+            ],
+            "description": "A collection of custom providers for the Faker library",
+            "keywords": [
+                "data",
+                "faker",
+                "fixtures"
+            ],
+            "support": {
+                "issues": "https://github.com/mbezhanov/faker-provider-collection/issues",
+                "source": "https://github.com/mbezhanov/faker-provider-collection/tree/2.0.1"
+            },
+            "time": "2021-03-12T06:57:05+00:00"
+        },
+        {
             "name": "mobiledetect/mobiledetectlib",
             "version": "2.8.39",
             "source": {
@@ -6598,6 +6649,57 @@
                 "source": "https://github.com/paragonie/random_compat"
             },
             "time": "2020-10-15T08:29:30+00:00"
+        },
+        {
+            "name": "paulhennell/faker-news",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/paulhennell/faker-news.git",
+                "reference": "0172a92e358d8f753d439c5ac1336658708f4c6d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/paulhennell/faker-news/zipball/0172a92e358d8f753d439c5ac1336658708f4c6d",
+                "reference": "0172a92e358d8f753d439c5ac1336658708f4c6d",
+                "shasum": ""
+            },
+            "require": {
+                "fakerphp/faker": "^1",
+                "php": "^7.3|^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Faker\\Provider\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Paul Hennell",
+                    "email": "git@hennell.dev",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Faker provider for fake news!",
+            "homepage": "https://github.com/paulhennell/faker-news",
+            "keywords": [
+                "data",
+                "faker",
+                "faker-news",
+                "paulhennell"
+            ],
+            "support": {
+                "source": "https://github.com/paulhennell/faker-news/tree/v2.0.0"
+            },
+            "time": "2022-06-03T14:25:28+00:00"
         },
         {
             "name": "phar-io/manifest",

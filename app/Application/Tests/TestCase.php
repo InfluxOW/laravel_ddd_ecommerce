@@ -134,6 +134,13 @@ abstract class TestCase extends BaseTestCase
         }
 
         $this->artisan('scout:import', ['model' => $class]);
+
+        $this->waitBecauseOtherwiseItFailsForSomeReason(); // TODO: Fix
+    }
+
+    private function waitBecauseOtherwiseItFailsForSomeReason(): void
+    {
+        sleep(2);
     }
 
     protected function getResponseData(TestResponse $response): Collection

@@ -22,6 +22,8 @@ parameters:
 
         - '#Call to private method defaultFormat\(\) of parent class Carbon\\Carbon#'
 
+        - '#Access to an undefined property Faker\\Generator#'
+
         - '#Cache::rememberInArray#'
         - '#Cache::simple#'
         - '#Cache::getEventDispatcher#'

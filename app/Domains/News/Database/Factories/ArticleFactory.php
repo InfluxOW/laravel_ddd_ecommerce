@@ -12,8 +12,7 @@ final class ArticleFactory extends Factory
 
     public function definition(): array
     {
-        /** @var string $title */
-        $title = $this->faker->words(3, true);
+        $title = $this->faker->unique()->headline;
 
         $publishedAt = null;
         if ($this->faker->boolean(40)) {
@@ -26,8 +25,8 @@ final class ArticleFactory extends Factory
         return self::addTimestamps([
             'title' => $title,
             'slug' => Str::of($title)->slug(),
-            'description' => $this->faker->text(1000),
-            'body' => $this->faker->text(2000),
+            'description' => $this->faker->realText(300),
+            'body' => $this->faker->realText(2000),
             'published_at' => $publishedAt,
         ]);
     }

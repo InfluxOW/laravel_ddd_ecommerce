@@ -52,6 +52,7 @@ final class AppServiceProvider extends ServiceProvider
         $providers[] = $this->app->register(HorizonServiceProvider::class);
         $providers[] = $this->app->register(TelescopeServiceProvider::class);
         $providers[] = $this->app->register(TotemServiceProvider::class);
+        $providers[] = $this->app->register(FakerServiceProvider::class);
 
         return $providers;
     }

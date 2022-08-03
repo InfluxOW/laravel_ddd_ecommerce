@@ -19,6 +19,9 @@ trait Searchable
 
     public static function search(string $query = '', ?Closure $callback = null): ScoutBuilder
     {
+        /** @var string $query */
+        $query = preg_replace('/[^a-zA-Z0-9\-\s]+/', '', $query);
+
         $scoutQuery = static::baseSearch($query);
 
         if (env('SCOUT_DRIVER') === 'elastic') {
@@ -53,6 +56,6 @@ trait Searchable
     {
         $query->query = '';
 
-        return $query->must(new QueryString("*{$searchable}*"));
+        return $query->must(new QueryString("*{$searchable}*", QueryString::OP_AND));
     }
 }
