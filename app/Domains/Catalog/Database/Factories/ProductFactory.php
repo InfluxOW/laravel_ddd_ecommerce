@@ -25,13 +25,12 @@ final class ProductFactory extends Factory
 
     public function definition(): array
     {
-        /** @var string $title */
-        $title = $this->faker->unique()->words(3, true);
+        $title = $this->faker->unique()->productName;
 
         return self::addTimestamps([
             'title' => $title,
             'slug' => Str::of($title)->slug(),
-            'description' => $this->faker->words(50, true),
+            'description' => $this->faker->realText(300),
             'created_at' => $this->faker->dateTimeBetween('-2 years'),
             'is_visible' => $this->faker->boolean(90),
             'is_displayable' => false,

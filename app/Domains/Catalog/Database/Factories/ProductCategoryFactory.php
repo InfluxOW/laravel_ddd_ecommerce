@@ -12,8 +12,7 @@ final class ProductCategoryFactory extends Factory
 
     public function definition(): array
     {
-        /** @var string $title */
-        $title = $this->faker->unique()->words(3, true);
+        $title = "{$this->faker->colorName} {$this->faker->category}";
 
         return self::addTimestamps([
             'title' => $title,

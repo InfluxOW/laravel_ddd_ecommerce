@@ -43,11 +43,16 @@ final class ArticleControllerTest extends TestCase
     {
         $this->refreshModelIndex(Article::class);
 
+        $article = self::$article;
+        $article->published_at = Carbon::now()->subYear();
+        $article->save();
+
         $queries = [
-            self::$article->title,
-            Str::words(self::$article->title, 2, ''),
-            Str::words(self::$article->description, 2, ''),
-            Str::words(self::$article->body, 2, ''),
+            $article->title,
+            Str::words($article->title, 2, ''),
+            $article->slug,
+            Str::words($article->description, 2, ''),
+            Str::words($article->body, 2, ''),
         ];
 
         $newsCount = Article::query()->published()->count();
