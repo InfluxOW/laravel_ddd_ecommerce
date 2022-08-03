@@ -24,7 +24,7 @@ final class DomainServiceProvider extends ServiceProvider
         UpdateProductCategoriesDisplayability::class,
     ];
 
-    protected function afterBooting(): void
+    protected function afterRegistration(): void
     {
         $this->app
             ->when(ProductFilterService::class)

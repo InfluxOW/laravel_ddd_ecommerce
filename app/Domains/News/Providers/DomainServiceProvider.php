@@ -16,7 +16,7 @@ final class DomainServiceProvider extends ServiceProvider
         RouteServiceProvider::class,
     ];
 
-    protected function afterBooting(): void
+    protected function afterRegistration(): void
     {
         $this->app
             ->when(ArticleFilterService::class)

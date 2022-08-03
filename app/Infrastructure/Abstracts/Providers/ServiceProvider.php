@@ -49,6 +49,8 @@ abstract class ServiceProvider extends LaravelServiceProvider
         foreach ($this->providers as $provider) {
             $this->app->register($provider);
         }
+
+        $this->afterRegistration();
     }
 
     public function boot(): void
@@ -123,6 +125,11 @@ abstract class ServiceProvider extends LaravelServiceProvider
     protected function getCustomExceptionReporters(): array
     {
         return [];
+    }
+
+    protected function afterRegistration(): void
+    {
+        //
     }
 
     protected function afterBooting(): void
