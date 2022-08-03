@@ -3,7 +3,6 @@
 namespace App\Domains\Users\Http\Resources;
 
 use App\Domains\Users\Models\User;
-use DateTime;
 use Illuminate\Http\Resources\Json\JsonResource;
 use JetBrains\PhpStorm\ArrayShape;
 
@@ -19,7 +18,7 @@ final class UserResource extends JsonResource
             'name' => $user->name,
             'email' => $user->email,
             'phone' => $user->phone,
-            'created_at' => $user->created_at?->format(DateTime::RFC3339),
+            'created_at' => $user->created_at?->defaultFormat(),
         ];
     }
 }

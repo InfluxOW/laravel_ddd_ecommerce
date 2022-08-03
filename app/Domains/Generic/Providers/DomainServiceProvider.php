@@ -6,6 +6,7 @@ use App\Domains\Generic\Console\Commands\RefreshApplicationCommand;
 use App\Domains\Generic\Enums\ServiceProviderNamespace;
 use App\Domains\Generic\Services\Database;
 use App\Infrastructure\Abstracts\Providers\ServiceProvider;
+use Carbon\Carbon;
 use Illuminate\Auth\SessionGuard;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
@@ -77,5 +78,9 @@ final class DomainServiceProvider extends ServiceProvider
 
         DB::macro('insertByChunks', fn (string $table, Enumerable $rows, int $chunkSize = 100, int $chunkSliceSize = 20): array => app(Database::class)->insertByChunks($table, $rows, $chunkSize, $chunkSliceSize));
         DB::macro('updateByChunks', fn (string $table, Builder|EloquentBuilder $query, array $updates, int $chunkSize = 100, int $chunkSliceSize = 20): array => app(Database::class)->updateByChunks($table, $query, $updates, $chunkSize, $chunkSliceSize));
+
+        /** @var Carbon $this */
+        Carbon::macro('defaultFormat', fn (): string => $this->format(config('app.date_format')));
+        Carbon::macro('createFromDefaultFormat', static fn (string $datetime): Carbon => static::class::createFromFormat(config('app.date_format'), $datetime));
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Application\Tests;
 
+use App\Components\Queryable\Enums\QueryKey;
+use App\Domains\Generic\Enums\Response\ResponseKey;
 use App\Domains\Generic\Http\Middleware\Recaptcha;
 use Elasticsearch\Common\Exceptions\Missing404Exception;
 use Illuminate\Contracts\Console\Kernel;
@@ -9,8 +11,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\RefreshDatabaseState;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Testing\TestResponse;
 use PHPUnit\Framework\ExpectationFailedException;
 use ReflectionClass;
 
@@ -130,5 +134,25 @@ abstract class TestCase extends BaseTestCase
         }
 
         $this->artisan('scout:import', ['model' => $class]);
+    }
+
+    protected function getResponseData(TestResponse $response): Collection
+    {
+        return collect($response->json(ResponseKey::DATA->value));
+    }
+
+    protected function getResponseAppliedFilters(TestResponse $response): Collection
+    {
+        return collect($response->json(sprintf('%s.%s.%s', ResponseKey::QUERY->value, QueryKey::FILTER->value, 'applied')));
+    }
+
+    protected function getResponseAllowedFilters(TestResponse $response): Collection
+    {
+        return collect($response->json(sprintf('%s.%s.%s', ResponseKey::QUERY->value, QueryKey::FILTER->value, 'allowed')));
+    }
+
+    protected function getResponseAppliedSort(TestResponse $response): Collection
+    {
+        return collect($response->json(sprintf('%s.%s.%s', ResponseKey::QUERY->value, QueryKey::SORT->value, 'applied')));
     }
 }

@@ -29,6 +29,6 @@ final class ArticleFilterService extends FilterService
         return $this
             /** @phpstan-ignore-next-line */
             ->add(ArticleAllowedFilter::SEARCH, static fn (Builder|Article $query): Builder => $query->search($getFilter(ArticleAllowedFilter::SEARCH), orderByScore: true))
-            ->add(ArticleAllowedFilter::PUBLISHED_AT, static fn (Builder|Article $query): Builder => $query->wherePublishedBetween(...$getFilter(ArticleAllowedFilter::PUBLISHED_AT)));
+            ->add(ArticleAllowedFilter::PUBLISHED_BETWEEN, static fn (Builder|Article $query): Builder => $query->wherePublishedBetween(...$getFilter(ArticleAllowedFilter::PUBLISHED_BETWEEN)));
     }
 }

@@ -19,15 +19,12 @@ use App\Domains\Catalog\Enums\Query\Sort\ProductAllowedSort;
 use App\Domains\Catalog\Models\Product;
 use App\Domains\Catalog\Models\ProductCategory;
 use App\Domains\Catalog\Models\Settings\CatalogSettings;
-use App\Domains\Generic\Enums\Response\ResponseKey;
 use Carbon\Carbon;
-use DateTime;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use Illuminate\Testing\TestResponse;
 
 final class ProductControllerTest extends TestCase
 {
@@ -67,13 +64,15 @@ final class ProductControllerTest extends TestCase
      * @test
      * @unstable
      */
-    public function a_user_can_search_products_by_title_or_description(): void
+    public function a_user_can_search_products(): void
     {
         $this->refreshModelIndex(Product::class);
 
         $queries = [
-            self::$product->title, Str::words(self::$product->title, 2, ''),
-            self::$product->description, Str::words(self::$product->description, 2, ''),
+            self::$product->title,
+            self::$product->slug,
+            Str::words(self::$product->title, 2, ''),
+            Str::words(self::$product->description, 2, ''),
         ];
 
         $productsCount = Product::query()->count();
@@ -82,7 +81,7 @@ final class ProductControllerTest extends TestCase
                 route('products.index', [QueryKey::FILTER->value => [ProductAllowedFilter::SEARCH->name => $query], QueryKey::PER_PAGE->value => $productsCount])
             )->assertOk();
 
-            $this->assertContains(self::$product->title, $this->getResponseData($response)->pluck('title'));
+            $this->assertContains(self::$product->slug, $this->getResponseData($response)->pluck('slug'));
             $this->assertContains(ProductAllowedFilter::SEARCH->name, $this->getResponseAppliedFilters($response)->pluck('query'));
         }
     }
@@ -110,7 +109,7 @@ final class ProductControllerTest extends TestCase
                 )->assertOk();
                 $appliedFilters = $this->getResponseAppliedFilters($response);
 
-                $this->assertContains($product->title, $this->getResponseData($response)->pluck('title'));
+                $this->assertContains($product->slug, $this->getResponseData($response)->pluck('slug'));
                 $this->assertContains(ProductAllowedFilter::CATEGORY->name, $appliedFilters->pluck('query'));
 
                 $categoryFilterValues = collect($appliedFilters->filter(fn (array $filter): bool => $filter['query'] === ProductAllowedFilter::CATEGORY->name)->first()['selected']);
@@ -150,33 +149,25 @@ final class ProductControllerTest extends TestCase
             $response = $this->get(
                 route('products.index', [QueryKey::FILTER->value => [ProductAllowedFilter::PRICE_BETWEEN->name => "{$minPrice},{$maxPrice}"]])
             )->assertOk();
+
             $products = $this->getResponseData($response);
-            $appliedFilters = $this->getResponseAppliedFilters($response);
-            $allowedFilters = $this->getResponseAllowedFilters($response);
+            $this->assertNotEmpty($products);
 
             if (isset($minPrice, $maxPrice) && $maxPrice < $minPrice) {
                 [$minPrice, $maxPrice] = [$maxPrice, $minPrice];
             }
 
-            $this->assertNotEmpty($products);
-            $products->each(function (array $product) use ($minPrice, $maxPrice): void {
-                $actualPrice = $product['price_discounted']['value'] ?? $product['price']['value'];
+            if (isset($minPrice)) {
+                $this->assertTrue($products->every(fn (array $product): bool => ($product['price_discounted']['value'] ?? $product['price']['value']) >= $minPrice));
+            }
 
-                $result = true;
-                if (isset($minPrice)) {
-                    $result = $actualPrice >= $minPrice;
-                }
-                if (isset($maxPrice)) {
-                    $result = $result && $actualPrice <= $maxPrice;
-                }
+            if (isset($maxPrice)) {
+                $this->assertTrue($products->every(fn (array $product): bool => ($product['price_discounted']['value'] ?? $product['price']['value']) <= $maxPrice));
+            }
 
-                $this->assertTrue($result);
-            });
-
-            $this->assertContains(ProductAllowedFilter::PRICE_BETWEEN->name, $appliedFilters->pluck('query'));
-
-            $priceBetweenAppliedFilter = $appliedFilters->filter(fn (array $filter): bool => $filter['query'] === ProductAllowedFilter::PRICE_BETWEEN->name)->first();
-            $priceBetweenAllowedFilter = $allowedFilters->filter(fn (array $filter): bool => $filter['query'] === ProductAllowedFilter::PRICE_BETWEEN->name)->first();
+            $isPriceBetweenFilter = fn (array $filter): bool => $filter['query'] === ProductAllowedFilter::PRICE_BETWEEN->name;
+            $priceBetweenAppliedFilter = $this->getResponseAppliedFilters($response)->filter($isPriceBetweenFilter)->first();
+            $priceBetweenAllowedFilter = $this->getResponseAllowedFilters($response)->filter($isPriceBetweenFilter)->first();
 
             $lowestAvailablePrice = $priceBetweenAllowedFilter['min'];
             $highestAvailablePrice = $priceBetweenAllowedFilter['max'];
@@ -368,9 +359,7 @@ final class ProductControllerTest extends TestCase
         $this->get(route('products.show', self::$product))->assertOk();
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function a_user_can_sort_products_by_title_a_to_z(): void
     {
         $this->checkProductsSort(ProductAllowedSort::TITLE);
@@ -422,7 +411,7 @@ final class ProductControllerTest extends TestCase
             route('products.index', [QueryKey::SORT->value => $sort->name, QueryKey::PER_PAGE->value => Product::query()->count()])
         )->assertOk();
         $products = $this->getResponseData($response);
-        $appliedSort = collect($response->json(sprintf('%s.%s.%s', ResponseKey::QUERY->value, QueryKey::SORT->value, 'applied')));
+        $appliedSort = $this->getResponseAppliedSort($response);
 
         $this->assertEquals($appliedSort['query'], $sort->name);
 
@@ -432,8 +421,7 @@ final class ProductControllerTest extends TestCase
     private function getSortParametersByType(ProductAllowedSort $sort): array
     {
         $titleSort = static fn (array $product): string => $product['title'];
-        /** @phpstan-ignore-next-line */
-        $createdAtSort = static fn (array $product): int => (int) Carbon::createFromFormat(DateTime::RFC3339, $product['created_at'])->timestamp;
+        $createdAtSort = static fn (array $product): int => (int) Carbon::createFromDefaultFormat($product['created_at'])->timestamp;
         $priceSort = static fn (array $product): int => $product['price_discounted']['amount'] ?? $product['price']['amount'];
 
         return match ($sort) {
@@ -445,20 +433,5 @@ final class ProductControllerTest extends TestCase
             ProductAllowedSort::PRICE_DESC => [$priceSort, SORT_NUMERIC, true],
             ProductAllowedSort::DEFAULT => throw new Exception('To be implemented'),
         };
-    }
-
-    private function getResponseData(TestResponse $response): Collection
-    {
-        return collect($response->json(ResponseKey::DATA->value));
-    }
-
-    private function getResponseAppliedFilters(TestResponse $response): Collection
-    {
-        return collect($response->json(sprintf('%s.%s.%s', ResponseKey::QUERY->value, QueryKey::FILTER->value, 'applied')));
-    }
-
-    private function getResponseAllowedFilters(TestResponse $response): Collection
-    {
-        return collect($response->json(sprintf('%s.%s.%s', ResponseKey::QUERY->value, QueryKey::FILTER->value, 'allowed')));
     }
 }

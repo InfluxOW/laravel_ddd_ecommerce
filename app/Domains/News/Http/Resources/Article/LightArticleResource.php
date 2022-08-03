@@ -4,7 +4,6 @@ namespace App\Domains\News\Http\Resources\Article;
 
 use App\Components\Mediable\Http\Resources\MediaResource;
 use App\Domains\News\Models\Article;
-use DateTime;
 use Illuminate\Http\Resources\Json\JsonResource;
 use JetBrains\PhpStorm\ArrayShape;
 
@@ -22,7 +21,7 @@ class LightArticleResource extends JsonResource
             'url' => route('news.show', $article),
             'image' => MediaResource::make($article->image),
             'description' => $article->description,
-            'published_at' => $article->published_at?->format(DateTime::RFC3339),
+            'published_at' => $article->published_at?->defaultFormat(),
         ];
     }
 }

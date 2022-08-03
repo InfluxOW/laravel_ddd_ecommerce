@@ -7,5 +7,5 @@ use App\Components\Queryable\Abstracts\Filter\IAllowedFilterEnum;
 enum ArticleAllowedFilter implements IAllowedFilterEnum
 {
     case SEARCH;
-    case PUBLISHED_AT;
+    case PUBLISHED_BETWEEN;
 }

@@ -6,7 +6,6 @@ use Akaunting\Money\Money;
 use App\Components\Queryable\Enums\QueryFilterType;
 use App\Domains\Generic\Utils\MathUtils;
 use Carbon\Carbon;
-use DateTime;
 use JetBrains\PhpStorm\ArrayShape;
 use UnitEnum;
 
@@ -69,7 +68,7 @@ final class RangeFilter extends Filter
         }
 
         if ($value instanceof Carbon) {
-            return $value->format(DateTime::RFC3339);
+            return $value->defaultFormat();
         }
 
         return $value;

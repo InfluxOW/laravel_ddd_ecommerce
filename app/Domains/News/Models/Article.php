@@ -147,6 +147,10 @@ class Article extends Model implements HasMedia, Explored, Exportable
 
     public function scopeWherePublishedBetween(Builder|Article $query, ?Carbon $min, ?Carbon $max): void
     {
+        if (isset($min, $max) && $min > $max) {
+            [$max, $min] = [$min, $max];
+        }
+
         if (isset($min)) {
             $query->wherePublishedAfter($min);
         }

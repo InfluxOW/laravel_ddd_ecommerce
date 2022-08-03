@@ -71,6 +71,8 @@ return [
 
     'timezone' => 'UTC',
 
+    'date_format' => DateTime::RFC3339,
+
     /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration

@@ -33,7 +33,7 @@ final class ArticleFilterBuilder implements FilterBuilder
     {
         return match ($filter) {
             ArticleAllowedFilter::SEARCH => $this->buildSearchFilter($filter),
-            ArticleAllowedFilter::PUBLISHED_AT => $this->buildPublishedAtFilter($filter),
+            ArticleAllowedFilter::PUBLISHED_BETWEEN => $this->buildPublishedAtFilter($filter),
         };
     }
 

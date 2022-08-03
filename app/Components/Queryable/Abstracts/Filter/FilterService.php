@@ -35,7 +35,7 @@ abstract class FilterService
      */
     public function allowed(): Collection
     {
-        return $this->allowed;
+        return $this->allowed->values();
     }
 
     /**
@@ -43,7 +43,7 @@ abstract class FilterService
      */
     public function callbacks(): Collection
     {
-        return $this->callbacks;
+        return $this->callbacks->values();
     }
 
     abstract public function build(): static;

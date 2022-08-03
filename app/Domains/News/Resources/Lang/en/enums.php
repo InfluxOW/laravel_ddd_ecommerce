@@ -7,7 +7,7 @@ use App\Domains\News\Enums\Translation\ArticleTranslationKey;
 return [
     ArticleAllowedFilter::class => [
         ArticleAllowedFilter::SEARCH->name => 'Search',
-        ArticleAllowedFilter::PUBLISHED_AT->name => 'Published',
+        ArticleAllowedFilter::PUBLISHED_BETWEEN->name => 'Published',
     ],
     ArticleAllowedSort::class => [
         ArticleAllowedSort::DEFAULT->name => 'Default',

@@ -6,7 +6,6 @@ use App\Components\Queryable\Enums\QueryKey;
 use App\Domains\Generic\Http\Requests\IndexRequest;
 use App\Domains\News\Enums\Query\Filter\ArticleAllowedFilter;
 use Carbon\Carbon;
-use DateTime;
 
 final class ArticleIndexRequest extends IndexRequest
 {
@@ -14,8 +13,8 @@ final class ArticleIndexRequest extends IndexRequest
     {
         return array_merge(parent::rules(), [
             sprintf('%s.%s', QueryKey::FILTER->value, ArticleAllowedFilter::SEARCH->name) => ['nullable', 'string'],
-            sprintf('%s.%s', QueryKey::FILTER->value, ArticleAllowedFilter::PUBLISHED_AT->name) => ['nullable', 'array', 'size:2'],
-            sprintf('%s.%s.*', QueryKey::FILTER->value, ArticleAllowedFilter::PUBLISHED_AT->name) => ['nullable', 'date_format:' . DateTime::RFC3339],
+            sprintf('%s.%s', QueryKey::FILTER->value, ArticleAllowedFilter::PUBLISHED_BETWEEN->name) => ['nullable', 'array', 'size:2'],
+            sprintf('%s.%s.*', QueryKey::FILTER->value, ArticleAllowedFilter::PUBLISHED_BETWEEN->name) => ['nullable', 'date_format:' . config('app.date_format')],
             QueryKey::SORT->value => ['nullable', 'string'],
         ]);
     }
@@ -24,8 +23,8 @@ final class ArticleIndexRequest extends IndexRequest
     {
         $validated = parent::validated($key, $default);
 
-        foreach ($validated[QueryKey::FILTER->value][ArticleAllowedFilter::PUBLISHED_AT->name] ?? [] as $i => $date) {
-            $validated[QueryKey::FILTER->value][ArticleAllowedFilter::PUBLISHED_AT->name][$i] = isset($date) ? Carbon::createFromFormat(DateTime::RFC3339, $date) : null;
+        foreach ($validated[QueryKey::FILTER->value][ArticleAllowedFilter::PUBLISHED_BETWEEN->name] ?? [] as $i => $date) {
+            $validated[QueryKey::FILTER->value][ArticleAllowedFilter::PUBLISHED_BETWEEN->name][$i] = isset($date) ? Carbon::createFromDefaultFormat($date) : null;
         }
 
         return $validated;
@@ -36,8 +35,8 @@ final class ArticleIndexRequest extends IndexRequest
         $appends = parent::append();
 
         /** @var ?Carbon $date */
-        foreach ($appends[QueryKey::FILTER->value][ArticleAllowedFilter::PUBLISHED_AT->name] ?? [] as $i => $date) {
-            $appends[QueryKey::FILTER->value][ArticleAllowedFilter::PUBLISHED_AT->name][$i] = isset($date) ? $date->format(DateTime::RFC3339) : null;
+        foreach ($appends[QueryKey::FILTER->value][ArticleAllowedFilter::PUBLISHED_BETWEEN->name] ?? [] as $i => $date) {
+            $appends[QueryKey::FILTER->value][ArticleAllowedFilter::PUBLISHED_BETWEEN->name][$i] = isset($date) ? $date->defaultFormat() : null;
         }
 
         return $this->implodeFilters($appends);
@@ -56,7 +55,7 @@ final class ArticleIndexRequest extends IndexRequest
         if (isset($filter)) {
             $filters = $filter;
 
-            $this->preparePublishedAtFilterData($filters);
+            $this->preparePublishedBetweenFilterData($filters);
 
             $this->merge([
                 QueryKey::FILTER->value => $filters,
@@ -64,12 +63,12 @@ final class ArticleIndexRequest extends IndexRequest
         }
     }
 
-    private function preparePublishedAtFilterData(array &$filters): void
+    private function preparePublishedBetweenFilterData(array &$filters): void
     {
-        if (array_key_exists(ArticleAllowedFilter::PUBLISHED_AT->name, $filters)) {
-            [$from, $to] = explode(',', $filters[ArticleAllowedFilter::PUBLISHED_AT->name]);
+        if (array_key_exists(ArticleAllowedFilter::PUBLISHED_BETWEEN->name, $filters)) {
+            [$from, $to] = explode(',', $filters[ArticleAllowedFilter::PUBLISHED_BETWEEN->name]);
             $getValue = static fn (string $value): ?string => ($value === '') ? null : $value;
-            $filters[ArticleAllowedFilter::PUBLISHED_AT->name] = array_map($getValue, [$from, $to]);
+            $filters[ArticleAllowedFilter::PUBLISHED_BETWEEN->name] = array_map($getValue, [$from, $to]);
         }
     }
 }

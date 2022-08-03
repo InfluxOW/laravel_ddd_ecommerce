@@ -8,7 +8,6 @@ use App\Components\Purchasable\Models\Price;
 use App\Components\Queryable\Enums\QueryKey;
 use App\Domains\Catalog\Enums\Query\Filter\ProductAllowedFilter;
 use App\Domains\Catalog\Models\Product;
-use DateTime;
 use Illuminate\Http\Resources\Json\JsonResource;
 use JetBrains\PhpStorm\ArrayShape;
 
@@ -28,7 +27,7 @@ abstract class ProductResource extends JsonResource
             'slug' => $product->slug,
             'title' => $product->title,
             'url' => route('products.show', $product),
-            'created_at' => $product->created_at?->format(DateTime::RFC3339),
+            'created_at' => $product->created_at?->defaultFormat(),
             /* @phpstan-ignore-next-line */
             'price' => $this->when(isset($priceModel), fn (): MoneyResource => MoneyResource::make($priceModel->price)),
             /* @phpstan-ignore-next-line */
