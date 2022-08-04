@@ -125,14 +125,15 @@ class Article extends Model implements HasMedia, Explored, Exportable
      * Scopes
      * */
 
-    public function scopePublished(Builder $query): void
+    public function scopePublished(Builder|self $query): void
     {
-        $query->whereNotNull('published_at')->where('published_at', '<=', Carbon::now());
+        $query->wherePublishedBefore(Carbon::now());
     }
 
     public function scopeUnpublished(Builder $query): void
     {
-        $query->whereNull('published_at');
+        /** @phpstan-ignore-next-line */
+        $query->whereNull('published_at')->orWhere(fn (Builder|self $query) => $query->wherePublishedAfter(Carbon::now()));
     }
 
     public function scopeWherePublishedAfter(Builder $query, ?Carbon $date): void
@@ -145,7 +146,7 @@ class Article extends Model implements HasMedia, Explored, Exportable
         $query->where('published_at', '<=', $date);
     }
 
-    public function scopeWherePublishedBetween(Builder|Article $query, ?Carbon $min, ?Carbon $max): void
+    public function scopeWherePublishedBetween(Builder|self $query, ?Carbon $min, ?Carbon $max): void
     {
         if (isset($min, $max) && $min > $max) {
             [$max, $min] = [$min, $max];
