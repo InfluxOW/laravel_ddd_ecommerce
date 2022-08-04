@@ -70,9 +70,9 @@ final class ProductControllerTest extends TestCase
 
         $queries = [
             self::$product->title,
-            self::$product->slug,
             Str::words(self::$product->title, 2, ''),
-            Str::words(self::$product->description, 2, ''),
+            self::$product->slug,
+            Str::words(self::$product->description, 6, ''),
         ];
 
         $productsCount = Product::query()->count();
@@ -81,7 +81,7 @@ final class ProductControllerTest extends TestCase
                 route('products.index', [QueryKey::FILTER->value => [ProductAllowedFilter::SEARCH->name => $query], QueryKey::PER_PAGE->value => $productsCount])
             )->assertOk();
 
-            $this->assertContains(self::$product->slug, $this->getResponseData($response)->pluck('slug'));
+            $this->assertEquals(self::$product->slug, $this->getResponseData($response)->first()['slug']);
             $this->assertContains(ProductAllowedFilter::SEARCH->name, $this->getResponseAppliedFilters($response)->pluck('query'));
         }
     }

@@ -12,9 +12,9 @@ final class ArticleSortService extends SortService
     {
         return $this
             ->add(ArticleAllowedSort::DEFAULT, static fn (Builder $query): Builder => $query)
-            ->add(ArticleAllowedSort::TITLE)
-            ->add(ArticleAllowedSort::TITLE_DESC)
+            ->add(ArticleAllowedSort::PUBLISHED_AT_DESC)
             ->add(ArticleAllowedSort::PUBLISHED_AT)
-            ->add(ArticleAllowedSort::PUBLISHED_AT_DESC);
+            ->add(ArticleAllowedSort::TITLE_DESC)
+            ->add(ArticleAllowedSort::TITLE);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Domains\Generic\Traits\Models;
 use Closure;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
+use JeroenG\Explorer\Domain\Syntax\MultiMatch;
 use JeroenG\Explorer\Domain\Syntax\QueryString;
 use Laravel\Scout\Builder as ScoutBuilder;
 use Laravel\Scout\Searchable as BaseSearchable;
@@ -40,7 +41,7 @@ trait Searchable
 
         $query->whereIntegerInRaw("{$table}.id", $ids);
 
-        if (count($ids) > 1 && $orderByScore) {
+        if ($orderByScore && count($ids) > 1) {
             // TODO: No comments
             $orderByRaw = 'CASE' . PHP_EOL;
             foreach ($ids as $i => $id) {
@@ -56,6 +57,26 @@ trait Searchable
     {
         $query->query = '';
 
-        return $query->must(new QueryString("*{$searchable}*", QueryString::OP_AND));
+        return $query
+            ->should(new QueryString($searchable, QueryString::OP_AND, boost: 10.00))
+            ->should(new QueryString("*{$searchable}*", QueryString::OP_AND, boost: 5.00))
+            ->should(new MultiMatch($searchable, fuzziness: static::getFuzziness($searchable)));
+    }
+
+    protected static function getFuzziness(string $searchable): int
+    {
+        $strlen = strlen($searchable);
+
+        $fuzziness = 0;
+
+        if ($strlen > 4) {
+            $fuzziness = 1;
+        }
+
+        if ($strlen > 7) {
+            $fuzziness = 2;
+        }
+
+        return $fuzziness;
     }
 }

@@ -51,8 +51,8 @@ final class ArticleControllerTest extends TestCase
             $article->title,
             Str::words($article->title, 2, ''),
             $article->slug,
-            Str::words($article->description, 2, ''),
-            Str::words($article->body, 2, ''),
+            Str::words($article->description, 6, ''),
+            Str::words($article->body, 6, ''),
         ];
 
         $newsCount = Article::query()->published()->count();
@@ -61,7 +61,7 @@ final class ArticleControllerTest extends TestCase
                 route('news.index', [QueryKey::FILTER->value => [ArticleAllowedFilter::SEARCH->name => $query], QueryKey::PER_PAGE->value => $newsCount])
             )->assertOk();
 
-            $this->assertContains(self::$article->slug, $this->getResponseData($response)->pluck('slug'));
+            $this->assertEquals(self::$article->slug, $this->getResponseData($response)->first()['slug']);
             $this->assertContains(ArticleAllowedFilter::SEARCH->name, $this->getResponseAppliedFilters($response)->pluck('query'));
         }
     }

@@ -20,22 +20,22 @@ final class ArticleController extends Controller
     public function index(ArticleIndexRequest $request, ArticleFilterService $filterService, ArticleSortService $sortService): AnonymousResourceCollection
     {
         $validated = $request->validated();
-        $query = QueryBuilder::for(self::getBaseNewsQuery());
+        $query = QueryBuilder::for(self::getBaseQuery());
 
         $filterService->prepare($validated, $query->clone());
 
-        return $this->respondPaginated(LightArticleResource::class, self::getBaseNewsQuery(), $request, $filterService, $sortService);
+        return $this->respondPaginated(LightArticleResource::class, self::getBaseQuery(), $request, $filterService, $sortService);
     }
 
     public function show(string $slug): JsonResource|JsonResponse
     {
-        $query = self::getBaseNewsQuery()->where('slug', $slug);
+        $query = self::getBaseQuery()->where('slug', $slug);
 
         return $this->respondWithPossiblyNotFoundItem(HeavyArticleResource::class, $query);
     }
 
-    private static function getBaseNewsQuery(): Builder
+    private static function getBaseQuery(): Builder
     {
-        return Article::query()->published()->orderByDesc('published_at');
+        return Article::query()->published();
     }
 }

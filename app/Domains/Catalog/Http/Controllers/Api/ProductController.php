@@ -28,7 +28,7 @@ final class ProductController extends Controller
         $validated = $request->validated();
         $currency = $validated[QueryKey::FILTER->value][ProductAllowedFilter::CURRENCY->name];
 
-        $query = QueryBuilder::for(self::getBaseProductsQuery($currency)->with(['image.model']));
+        $query = QueryBuilder::for(self::getBaseQuery($currency)->with(['image.model']));
 
         $filterService->prepare($validated, $query->clone());
         $sortService->prepare($currency);
@@ -38,14 +38,14 @@ final class ProductController extends Controller
 
     public function show(ProductShowRequest $request, string $slug): JsonResource|JsonResponse
     {
-        $query = self::getBaseProductsQuery($request->validated()[QueryKey::FILTER->value][ProductAllowedFilter::CURRENCY->name])
+        $query = self::getBaseQuery($request->validated()[QueryKey::FILTER->value][ProductAllowedFilter::CURRENCY->name])
             ->with(['attributeValues.attribute', 'images.model'])
             ->where('slug', $slug);
 
         return $this->respondWithPossiblyNotFoundItem(HeavyProductResource::class, $query);
     }
 
-    private static function getBaseProductsQuery(string $currency): Builder
+    private static function getBaseQuery(string $currency): Builder
     {
         return Product::query()
             ->select(['products.*'])
