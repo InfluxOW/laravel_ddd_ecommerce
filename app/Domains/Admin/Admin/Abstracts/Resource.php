@@ -22,7 +22,6 @@ abstract class Resource extends SimpleResource
             /** @phpstan-ignore-next-line */
             return $model::search($searchQuery)
                 ->take(50)
-                ->get()
                 ->map(function (Model $record): ?GlobalSearchResult {
                     $url = static::getGlobalSearchResultUrl($record);
 

@@ -25,7 +25,6 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use JeroenG\Explorer\Application\Explored;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Sluggable\HasSlug;
@@ -82,7 +81,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Product whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-final class Product extends Model implements Purchasable, HasMedia, Explored, Exportable
+final class Product extends Model implements Purchasable, HasMedia, Exportable
 {
     use HasExtendedFunctionality;
     use HasFactory;

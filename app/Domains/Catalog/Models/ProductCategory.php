@@ -19,7 +19,6 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Redis;
-use JeroenG\Explorer\Application\Explored;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Sluggable\HasSlug;
@@ -83,7 +82,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|ProductCategory withoutSelf()
  * @mixin \Eloquent
  */
-final class ProductCategory extends Model implements HasMedia, Explored, Exportable
+final class ProductCategory extends Model implements HasMedia, Exportable
 {
     use HasExtendedFunctionality;
     use HasFactory;
@@ -295,14 +294,6 @@ final class ProductCategory extends Model implements HasMedia, Explored, Exporta
         return [
             'title' => $this->title,
             'slug' => $this->slug,
-        ];
-    }
-
-    public function mappableAs(): array
-    {
-        return [
-            'title' => 'text',
-            'slug' => 'text',
         ];
     }
 

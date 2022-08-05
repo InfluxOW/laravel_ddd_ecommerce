@@ -5,11 +5,9 @@ namespace App\Components\Attributable\Models;
 use App\Components\Attributable\Database\Factories\AttributeFactory;
 use App\Components\Attributable\Enums\AttributeValuesType;
 use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
-use App\Domains\Generic\Traits\Models\Searchable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use JeroenG\Explorer\Application\Explored;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -29,7 +27,6 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Attribute newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Attribute newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Attribute query()
- * @method static \Illuminate\Database\Eloquent\Builder|Attribute search(string $searchable, bool $orderByScore)
  * @method static \Illuminate\Database\Eloquent\Builder|Attribute whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Attribute whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Attribute whereSlug($value)
@@ -38,12 +35,11 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Attribute whereValuesType($value)
  * @mixin \Eloquent
  */
-final class Attribute extends Model implements Explored
+final class Attribute extends Model
 {
     use HasExtendedFunctionality;
     use HasFactory;
     use HasSlug;
-    use Searchable;
 
     protected $casts = [
         'values_type' => AttributeValuesType::class,
@@ -82,25 +78,5 @@ final class Attribute extends Model implements Explored
     protected static function newFactory(): AttributeFactory
     {
         return AttributeFactory::new();
-    }
-
-    /*
-     * Searchable
-     * */
-
-    public function toSearchableArray(): array
-    {
-        return [
-            'title' => $this->title,
-            'slug' => $this->slug,
-        ];
-    }
-
-    public function mappableAs(): array
-    {
-        return [
-            'title' => 'text',
-            'slug' => 'text',
-        ];
     }
 }

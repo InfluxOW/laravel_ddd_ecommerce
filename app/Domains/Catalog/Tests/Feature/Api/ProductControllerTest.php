@@ -81,7 +81,10 @@ final class ProductControllerTest extends TestCase
                 route('products.index', [QueryKey::FILTER->value => [ProductAllowedFilter::SEARCH->name => $query], QueryKey::PER_PAGE->value => $productsCount])
             )->assertOk();
 
-            $this->assertEquals(self::$product->slug, $this->getResponseData($response)->first()['slug']);
+            $products = $this->getResponseData($response);
+            $this->assertNotEmpty($products);
+
+            $this->assertEquals(self::$product->slug, $products->first()['slug']);
             $this->assertContains(ProductAllowedFilter::SEARCH->name, $this->getResponseAppliedFilters($response)->pluck('query'));
         }
     }

@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use JeroenG\Explorer\Application\Explored;
 
 /**
  * App\Domains\Feedback\Models\Feedback
@@ -47,7 +46,7 @@ use JeroenG\Explorer\Application\Explored;
  * @method static Builder|Feedback whereUsername($value)
  * @mixin \Eloquent
  */
-final class Feedback extends Model implements Explored, Exportable
+final class Feedback extends Model implements Exportable
 {
     use HasExtendedFunctionality;
     use HasFactory;
@@ -137,16 +136,6 @@ final class Feedback extends Model implements Explored, Exportable
             'username' => $this->username,
             'email' => $this->email,
             'phone' => $this->phone,
-        ];
-    }
-
-    public function mappableAs(): array
-    {
-        return [
-            'text' => 'text',
-            'username' => 'text',
-            'email' => 'text',
-            'phone' => 'text',
         ];
     }
 

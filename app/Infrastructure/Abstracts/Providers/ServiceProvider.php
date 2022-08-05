@@ -6,6 +6,7 @@ use App\Domains\Generic\Enums\ServiceProviderNamespace;
 use App\Domains\Generic\Utils\PathUtils;
 use App\Infrastructure\Abstracts\Exceptions\NotSupportedMacrosClassException;
 use Closure;
+use Elastic\Migrations\Filesystem\MigrationStorage;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Foundation\Exceptions\Handler;
 use Illuminate\Support\Facades\Gate;
@@ -16,6 +17,11 @@ use ReflectionClass;
 
 abstract class ServiceProvider extends LaravelServiceProvider
 {
+    public function __construct($app)
+    {
+        parent::__construct($app);
+    }
+
     /*
      * Namespace for loading translations.
      * */
@@ -80,6 +86,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
     protected function registerMigrations(): void
     {
         $this->loadMigrationsFrom($this->domainPath(PathUtils::join(['Database', 'Migrations'])));
+        app(MigrationStorage::class)->registerPaths([$this->domainPath(PathUtils::join(['Database', 'Elastic']))]);
     }
 
     protected function registerTranslations(): void

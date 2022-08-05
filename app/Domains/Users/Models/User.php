@@ -19,7 +19,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use JeroenG\Explorer\Application\Explored;
 use Laravel\Sanctum\HasApiTokens;
 
 /**
@@ -67,7 +66,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-final class User extends Authenticatable implements MustVerifyEmail, Explored, Exportable
+final class User extends Authenticatable implements MustVerifyEmail, Exportable
 {
     use HasExtendedFunctionality;
     use HasApiTokens;
@@ -168,15 +167,6 @@ final class User extends Authenticatable implements MustVerifyEmail, Explored, E
             'name' => $this->name,
             'email' => $this->email,
             'phone' => $this->phone,
-        ];
-    }
-
-    public function mappableAs(): array
-    {
-        return [
-            'name' => 'text',
-            'email' => 'text',
-            'phone' => 'text',
         ];
     }
 

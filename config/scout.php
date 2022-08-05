@@ -1,5 +1,11 @@
 <?php
 
+use App\Domains\Catalog\Models\Product;
+use App\Domains\Catalog\Models\ProductCategory;
+use App\Domains\Feedback\Models\Feedback;
+use App\Domains\News\Models\Article;
+use App\Domains\Users\Models\User;
+
 return [
 
     /*
@@ -132,6 +138,14 @@ return [
     'meilisearch' => [
         'host' => env('MEILISEARCH_HOST', 'http://localhost:7700'),
         'key' => env('MEILISEARCH_KEY', null),
+    ],
+
+    'models' => [
+        Article::class,
+        Feedback::class,
+        User::class,
+        Product::class,
+        ProductCategory::class,
     ],
 
 ];

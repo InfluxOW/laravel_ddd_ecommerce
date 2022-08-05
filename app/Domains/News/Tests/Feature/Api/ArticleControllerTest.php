@@ -61,7 +61,10 @@ final class ArticleControllerTest extends TestCase
                 route('news.index', [QueryKey::FILTER->value => [ArticleAllowedFilter::SEARCH->name => $query], QueryKey::PER_PAGE->value => $newsCount])
             )->assertOk();
 
-            $this->assertEquals(self::$article->slug, $this->getResponseData($response)->first()['slug']);
+            $news = $this->getResponseData($response);
+            $this->assertNotEmpty($news);
+
+            $this->assertEquals(self::$article->slug, $news->first()['slug']);
             $this->assertContains(ArticleAllowedFilter::SEARCH->name, $this->getResponseAppliedFilters($response)->pluck('query'));
         }
     }

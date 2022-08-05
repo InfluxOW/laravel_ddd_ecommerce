@@ -19,8 +19,9 @@
     <exclude-pattern>*/Enums</exclude-pattern>
 
     <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
-        <exclude-pattern>*/Migrations/*</exclude-pattern>
-        <exclude-pattern>*/Settings/*</exclude-pattern>
+        <exclude-pattern>*/Database/Migrations/*</exclude-pattern>
+        <exclude-pattern>*/Database/Settings/*</exclude-pattern>
+        <exclude-pattern>*/Database/Elastic/*</exclude-pattern>
     </rule>
     <rule ref="PSR1.Methods.CamelCapsMethodName.NotCamelCaps">
         <exclude-pattern>*/Tests/*</exclude-pattern>

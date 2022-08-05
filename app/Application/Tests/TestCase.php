@@ -5,7 +5,6 @@ namespace App\Application\Tests;
 use App\Components\Queryable\Enums\QueryKey;
 use App\Domains\Generic\Enums\Response\ResponseKey;
 use App\Domains\Generic\Http\Middleware\Recaptcha;
-use Elasticsearch\Common\Exceptions\Missing404Exception;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -128,11 +127,7 @@ abstract class TestCase extends BaseTestCase
      */
     protected function refreshModelIndex(string $class): void
     {
-        try {
-            $this->artisan('scout:flush', ['model' => $class]);
-        } catch (Missing404Exception) {
-        }
-
+        $this->artisan('scout:delete-index', ['name' => (new $class())->getTable()]);
         $this->artisan('scout:import', ['model' => $class]);
 
         $this->waitBecauseOtherwiseItFailsForSomeReason(); // TODO: Fix

@@ -14,7 +14,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
-use JeroenG\Explorer\Application\Explored;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Sluggable\HasSlug;
@@ -59,7 +58,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Article whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class Article extends Model implements HasMedia, Explored, Exportable
+class Article extends Model implements HasMedia, Exportable
 {
     use HasExtendedFunctionality;
     use HasFactory;
@@ -173,17 +172,6 @@ class Article extends Model implements HasMedia, Explored, Exportable
             'description' => $this->description,
             'body' => $this->body,
             'published_at' => $this->published_at,
-        ];
-    }
-
-    public function mappableAs(): array
-    {
-        return [
-            'title' => 'text',
-            'slug' => 'text',
-            'description' => 'text',
-            'body' => 'text',
-            'published_at' => 'date',
         ];
     }
 
