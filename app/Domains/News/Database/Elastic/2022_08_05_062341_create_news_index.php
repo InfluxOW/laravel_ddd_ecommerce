@@ -1,16 +1,10 @@
 <?php
 
-/**
- * @noinspection PhpIllegalPsrClassPathInspection
- * @noinspection PhpUnused
- */
-
 use Elastic\Adapter\Indices\Mapping;
 use Elastic\Migrations\Facades\Index;
 use Elastic\Migrations\MigrationInterface;
 
-final class CreateNewsIndex implements MigrationInterface
-{
+return new class implements MigrationInterface {
     /**
      * Run the migration.
      */
@@ -32,4 +26,4 @@ final class CreateNewsIndex implements MigrationInterface
     {
         Index::dropIfExists('news');
     }
-}
+};

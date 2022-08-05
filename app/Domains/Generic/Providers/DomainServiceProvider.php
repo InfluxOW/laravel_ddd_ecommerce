@@ -5,8 +5,10 @@ namespace App\Domains\Generic\Providers;
 use App\Domains\Generic\Console\Commands\RefreshApplicationCommand;
 use App\Domains\Generic\Enums\ServiceProviderNamespace;
 use App\Domains\Generic\Services\Database;
+use App\Domains\Generic\Services\Elastic\AnonymousMigrationFactory;
 use App\Infrastructure\Abstracts\Providers\ServiceProvider;
 use Carbon\Carbon;
+use Elastic\Migrations\Factories\MigrationFactory;
 use Illuminate\Auth\SessionGuard;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
@@ -27,6 +29,11 @@ final class DomainServiceProvider extends ServiceProvider
     protected array $providers = [
         RouteServiceProvider::class,
     ];
+
+    protected function afterRegistration(): void
+    {
+        $this->app->bind(MigrationFactory::class, AnonymousMigrationFactory::class);
+    }
 
     protected function afterBooting(): void
     {

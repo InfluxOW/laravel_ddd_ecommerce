@@ -106,14 +106,7 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "app/",
-            "\\": [
-                "app/Domains/Catalog/Database/Elastic",
-                "app/Domains/Feedback/Database/Elastic",
-                "app/Domains/Generic/Database/Elastic",
-                "app/Domains/News/Database/Elastic",
-                "app/Domains/Users/Database/Elastic"
-            ]
+            "App\\": "app/"
         }
     },
     "scripts": {

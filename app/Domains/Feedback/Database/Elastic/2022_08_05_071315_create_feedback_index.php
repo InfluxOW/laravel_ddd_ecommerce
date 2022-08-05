@@ -1,16 +1,10 @@
 <?php
 
-/**
- * @noinspection PhpIllegalPsrClassPathInspection
- * @noinspection PhpUnused
- */
-
 use Elastic\Adapter\Indices\Mapping;
 use Elastic\Migrations\Facades\Index;
 use Elastic\Migrations\MigrationInterface;
 
-final class CreateFeedbackIndex implements MigrationInterface
-{
+return new class implements MigrationInterface {
     /**
      * Run the migration.
      */
@@ -31,4 +25,4 @@ final class CreateFeedbackIndex implements MigrationInterface
     {
         Index::dropIfExists('feedback');
     }
-}
+};

@@ -1,16 +1,10 @@
 <?php
 
-/**
- * @noinspection PhpIllegalPsrClassPathInspection
- * @noinspection PhpUnused
- */
-
 use Elastic\Adapter\Indices\Mapping;
 use Elastic\Migrations\Facades\Index;
 use Elastic\Migrations\MigrationInterface;
 
-final class CreateProductCategoriesIndex implements MigrationInterface
-{
+return new class implements MigrationInterface {
     /**
      * Run the migration.
      */
@@ -29,4 +23,4 @@ final class CreateProductCategoriesIndex implements MigrationInterface
     {
         Index::dropIfExists('product_categories');
     }
-}
+};
