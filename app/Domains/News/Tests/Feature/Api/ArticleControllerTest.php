@@ -15,18 +15,20 @@ use Illuminate\Support\Str;
 
 final class ArticleControllerTest extends TestCase
 {
-    private static Article $article;
+    protected static array $seeders = [
+        ArticleSeeder::class,
+    ];
 
-    protected function setUpOnce(): void
+    private Article $article;
+
+    protected function setUp(): void
     {
-        $this->seed([
-            ArticleSeeder::class,
-        ]);
+        parent::setUp();
 
         /** @var Article $article */
         $article = Article::query()->first();
 
-        self::$article = $article;
+        $this->article = $article;
     }
 
     /** @test */
@@ -43,7 +45,7 @@ final class ArticleControllerTest extends TestCase
     {
         $this->refreshModelIndex(Article::class);
 
-        $article = self::$article;
+        $article = $this->article;
         $article->published_at = Carbon::now()->subYear();
         $article->save();
 
@@ -64,7 +66,7 @@ final class ArticleControllerTest extends TestCase
             $news = $this->getResponseData($response);
             $this->assertNotEmpty($news);
 
-            $this->assertEquals(self::$article->slug, $news->first()['slug']);
+            $this->assertEquals($this->article->slug, $news->first()['slug']);
             $this->assertContains(ArticleAllowedFilter::SEARCH->name, $this->getResponseAppliedFilters($response)->pluck('query'));
         }
     }
@@ -74,8 +76,8 @@ final class ArticleControllerTest extends TestCase
     {
         $publishedAt = Carbon::now()->subMonths(6);
 
-        self::$article->published_at = $publishedAt;
-        self::$article->save();
+        $this->article->published_at = $publishedAt;
+        $this->article->save();
 
         $monthBefore = $publishedAt->clone()->subMonths(3)->defaultFormat();
         $monthAfter = $publishedAt->clone()->addMonths(3)->defaultFormat();
@@ -123,7 +125,7 @@ final class ArticleControllerTest extends TestCase
     /** @test */
     public function a_user_not_view_published_article(): void
     {
-        $article = self::$article;
+        $article = $this->article;
         $article->published_at = Carbon::now()->subYear();
         $article->save();
 
@@ -133,7 +135,7 @@ final class ArticleControllerTest extends TestCase
     /** @test */
     public function a_user_can_not_view_non_published_article(): void
     {
-        $article = self::$article;
+        $article = $this->article;
         $article->published_at = Carbon::now()->addYear();
         $article->save();
 

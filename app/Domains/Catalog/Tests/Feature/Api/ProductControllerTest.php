@@ -28,30 +28,37 @@ use Illuminate\Support\Str;
 
 final class ProductControllerTest extends TestCase
 {
-    private static Product $product;
+    protected static array $seeders = [
+        ProductCategorySeeder::class,
+        ProductSeeder::class,
+        ProductPriceSeeder::class,
+        AttributeSeeder::class,
+        ProductAttributeValueSeeder::class,
+    ];
 
-    private static CatalogSettings $settings;
+    private Product $product;
+
+    private CatalogSettings $settings;
 
     protected function setUpOnce(): void
     {
-        $this->seed([
-            ProductCategorySeeder::class,
-            ProductSeeder::class,
-            ProductPriceSeeder::class,
-            AttributeSeeder::class,
-            ProductAttributeValueSeeder::class,
-        ]);
+        parent::setUpOnce();
 
         ProductCategory::query()->update(['is_visible' => true, 'is_displayable' => true]);
         Product::query()->update(['is_visible' => true, 'is_displayable' => true]);
 
         ProductCategory::loadHierarchy();
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
 
         /** @var Product $product */
         $product = Product::query()->with(['prices'])->first();
 
-        self::$product = $product;
-        self::$settings = app(CatalogSettings::class);
+        $this->product = $product;
+        $this->settings = app(CatalogSettings::class);
     }
 
     /** @test */
@@ -69,10 +76,10 @@ final class ProductControllerTest extends TestCase
         $this->refreshModelIndex(Product::class);
 
         $queries = [
-            self::$product->title,
-            Str::words(self::$product->title, 2, ''),
-            self::$product->slug,
-            Str::words(self::$product->description, 6, ''),
+            $this->product->title,
+            Str::words($this->product->title, 2, ''),
+            $this->product->slug,
+            Str::words($this->product->description, 6, ''),
         ];
 
         $productsCount = Product::query()->count();
@@ -84,7 +91,7 @@ final class ProductControllerTest extends TestCase
             $products = $this->getResponseData($response);
             $this->assertNotEmpty($products);
 
-            $this->assertEquals(self::$product->slug, $products->first()['slug']);
+            $this->assertEquals($this->product->slug, $products->first()['slug']);
             $this->assertContains(ProductAllowedFilter::SEARCH->name, $this->getResponseAppliedFilters($response)->pluck('query'));
         }
     }
@@ -133,9 +140,9 @@ final class ProductControllerTest extends TestCase
      */
     public function a_user_can_filter_products_by_current_price(): void
     {
-        $currency = self::$settings->default_currency;
+        $currency = $this->settings->default_currency;
         /** @var Price $priceModel */
-        $priceModel = self::$product->prices->where('currency', $currency)->first();
+        $priceModel = $this->product->prices->where('currency', $currency)->first();
         $this->assertNotNull($priceModel);
 
         $basePrice = ($priceModel->price_discounted === null) ? $priceModel->price->getValue() : $priceModel->price_discounted->getValue();
@@ -268,7 +275,7 @@ final class ProductControllerTest extends TestCase
     /** @test */
     public function a_user_can_view_specific_product_if_it_has_at_least_one_visible_category(): void
     {
-        $this->get(route('products.show', self::$product))->assertOk();
+        $this->get(route('products.show', $this->product))->assertOk();
     }
 
     /** @test */
@@ -303,24 +310,24 @@ final class ProductControllerTest extends TestCase
         $setVisibility($rootCategory, false);
         $setVisibility($firstLevelCategory, false);
 
-        $setProductCategory(self::$product, $firstLevelCategory);
+        $setProductCategory($this->product, $firstLevelCategory);
 
-        $this->get(route('products.show', self::$product))->assertNotFound();
+        $this->get(route('products.show', $this->product))->assertNotFound();
 
         $setVisibility($firstLevelCategory, true);
 
-        $this->get(route('products.show', self::$product))->assertNotFound();
+        $this->get(route('products.show', $this->product))->assertNotFound();
 
         $setVisibility($rootCategory, true);
 
-        $this->get(route('products.show', self::$product))->assertOk();
+        $this->get(route('products.show', $this->product))->assertOk();
     }
 
     /** @test */
     public function a_user_cannot_view_specific_product_if_it_doesnt_have_prices_with_all_required_currencies(): void
     {
         /** @var Price $price */
-        $price = self::$product->prices->first();
+        $price = $this->product->prices->first();
         $validCurrency = $price->currency;
 
         $updateCurrency = function (string $currency) use ($price): void {
@@ -330,36 +337,36 @@ final class ProductControllerTest extends TestCase
             $this->artisan(UpdateProductsDisplayability::class);
         };
 
-        $this->get(route('products.show', self::$product))->assertOk();
+        $this->get(route('products.show', $this->product))->assertOk();
 
         $updateCurrency((string) random_int(100, 999));
 
-        $this->get(route('products.show', self::$product))->assertNotFound();
+        $this->get(route('products.show', $this->product))->assertNotFound();
 
         $updateCurrency($validCurrency);
 
-        $this->get(route('products.show', self::$product))->assertOk();
+        $this->get(route('products.show', $this->product))->assertOk();
     }
 
     /** @test */
     public function a_user_cannot_view_specific_product_if_it_isnt_marked_as_visible(): void
     {
         $updateVisibility = function (bool $isVisible): void {
-            self::$product->is_visible = $isVisible;
-            self::$product->save();
+            $this->product->is_visible = $isVisible;
+            $this->product->save();
 
             $this->artisan(UpdateProductsDisplayability::class);
         };
 
-        $this->get(route('products.show', self::$product))->assertOk();
+        $this->get(route('products.show', $this->product))->assertOk();
 
         $updateVisibility(false);
 
-        $this->get(route('products.show', self::$product))->assertNotFound();
+        $this->get(route('products.show', $this->product))->assertNotFound();
 
         $updateVisibility(true);
 
-        $this->get(route('products.show', self::$product))->assertOk();
+        $this->get(route('products.show', $this->product))->assertOk();
     }
 
     /** @test */

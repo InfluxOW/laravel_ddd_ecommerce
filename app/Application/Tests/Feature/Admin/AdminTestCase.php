@@ -11,32 +11,33 @@ use Livewire\Testing\TestableLivewire;
 
 abstract class AdminTestCase extends TestCase
 {
-    protected static Admin $admin;
-
-    protected array $seeders = [];
+    protected Admin $admin;
 
     protected function setUpOnce(): void
     {
-        parent::setUpOnce();
+        static::$seeders[] = AdminSeeder::class;
 
-        $this->seed(array_merge([
-            AdminSeeder::class,
-        ], $this->seeders));
+        parent::setUpOnce();
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
 
         /** @var Admin $admin */
         $admin = Admin::query()->first();
 
-        static::$admin = $admin;
+        $this->admin = $admin;
     }
 
     /**
-     * @param class-string<Page> $page
-     * @param array              $parameters
+     * @param class-string<Page>|null $page
+     * @param array                   $parameters
      *
      * @return TestableLivewire
      */
-    protected function getResourceActionUrl(string $page, array $parameters = []): TestableLivewire
+    protected function getResourceActionUrl(?string $page, array $parameters = []): TestableLivewire
     {
-        return Livewire::actingAs(static::$admin, 'admin')->test($page, $parameters);
+        return Livewire::actingAs($this->admin, 'admin')->test($page, $parameters);
     }
 }

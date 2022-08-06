@@ -15,20 +15,20 @@ abstract class AdminCrudTestCase extends AdminTestCase
     protected static string $resource;
 
     /** @var class-string<ListRecords>|null */
-    private static ?string $listRecords = null;
+    private ?string $listRecords = null;
 
     /** @var class-string<CreateRecord>|null */
-    private static ?string $createRecord = null;
+    private ?string $createRecord = null;
 
     /** @var class-string<ViewRecord>|null */
-    private static ?string $viewRecord = null;
+    private ?string $viewRecord = null;
 
     /** @var class-string<EditRecord>|null */
-    private static ?string $editRecord = null;
+    private ?string $editRecord = null;
 
-    protected function setUpOnce(): void
+    protected function setUp(): void
     {
-        parent::setUpOnce();
+        parent::setUp();
 
         $this->preparePages();
     }
@@ -51,38 +51,38 @@ abstract class AdminCrudTestCase extends AdminTestCase
 
     private function testListRecords(): void
     {
-        if (isset(self::$listRecords)) {
-            $this->getResourceActionUrl(self::$listRecords)->assertOk();
+        if (isset($this->listRecords)) {
+            $this->getResourceActionUrl($this->listRecords)->assertOk();
         }
     }
 
     private function testCreateRecord(): void
     {
-        if (isset(self::$createRecord)) {
-            $this->getResourceActionUrl(self::$createRecord)->assertOk();
+        if (isset($this->createRecord)) {
+            $this->getResourceActionUrl($this->createRecord)->assertOk();
         }
     }
 
     private function testViewRecord(?Model $record): void
     {
-        if (isset(self::$viewRecord)) {
+        if (isset($this->viewRecord)) {
             $this->assertNotNull($record);
-            $this->getResourceActionUrl(self::$viewRecord, ['record' => $record?->getKey()])->assertOk();
+            $this->getResourceActionUrl($this->viewRecord, ['record' => $record?->getKey()])->assertOk();
 
             foreach (static::$resource::getRelations() as $relation) {
-                $this->getResourceActionUrl(self::$viewRecord, ['record' => $record?->getKey(), 'activeRelationManager' => $relation])->assertOk();
+                $this->getResourceActionUrl($this->viewRecord, ['record' => $record?->getKey(), 'activeRelationManager' => $relation])->assertOk();
             }
         }
     }
 
     private function testEditRecord(?Model $record): void
     {
-        if (isset(self::$editRecord)) {
+        if (isset($this->editRecord)) {
             $this->assertNotNull($record);
-            $this->getResourceActionUrl(self::$editRecord, ['record' => $record?->getKey()])->assertOk();
+            $this->getResourceActionUrl($this->editRecord, ['record' => $record?->getKey()])->assertOk();
 
             foreach (static::$resource::getRelations() as $relation) {
-                $this->getResourceActionUrl(self::$editRecord, ['record' => $record?->getKey(), 'activeRelationManager' => $relation])->assertOk();
+                $this->getResourceActionUrl($this->editRecord, ['record' => $record?->getKey(), 'activeRelationManager' => $relation])->assertOk();
             }
         }
     }
@@ -93,7 +93,7 @@ abstract class AdminCrudTestCase extends AdminTestCase
             /** @var array<string, class-string> $parents */
             $parents = class_parents($page);
 
-            foreach ([ListRecords::class => &self::$listRecords, CreateRecord::class => &self::$createRecord, EditRecord::class => &self::$editRecord, ViewRecord::class => &self::$viewRecord] as $type => &$attribute) {
+            foreach ([ListRecords::class => &$this->listRecords, CreateRecord::class => &$this->createRecord, EditRecord::class => &$this->editRecord, ViewRecord::class => &$this->viewRecord] as $type => &$attribute) {
                 if (isset($parents[$type])) {
                     $attribute = $page;
 

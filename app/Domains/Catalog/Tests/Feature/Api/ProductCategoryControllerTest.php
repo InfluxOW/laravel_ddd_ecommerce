@@ -8,13 +8,10 @@ use App\Domains\Catalog\Database\Seeders\ProductSeeder;
 
 final class ProductCategoryControllerTest extends TestCase
 {
-    protected function setUpOnce(): void
-    {
-        $this->seed([
-            ProductCategorySeeder::class,
-            ProductSeeder::class,
-        ]);
-    }
+    protected static array $seeders = [
+        ProductCategorySeeder::class,
+        ProductSeeder::class,
+    ];
 
     /** @test */
     public function a_user_can_view_categories_tree(): void

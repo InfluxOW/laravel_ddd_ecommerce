@@ -14,14 +14,11 @@ final class ProductsExportTest extends ExportTest
 {
     protected string $listRecords = ListProducts::class;
 
-    protected function setUpOnce(): void
-    {
-        $this->seed([
-            ProductCategorySeeder::class,
-            ProductSeeder::class,
-            ProductPriceSeeder::class,
-            AttributeSeeder::class,
-            ProductAttributeValueSeeder::class,
-        ]);
-    }
+    protected static array $seeders = [
+        ProductCategorySeeder::class,
+        ProductSeeder::class,
+        ProductPriceSeeder::class,
+        AttributeSeeder::class,
+        ProductAttributeValueSeeder::class,
+    ];
 }

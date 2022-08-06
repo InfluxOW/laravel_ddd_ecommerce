@@ -10,7 +10,7 @@ final class ArticleResourceTest extends AdminCrudTestCase
 {
     protected static string $resource = ArticleResource::class;
 
-    protected array $seeders = [
+    protected static array $seeders = [
         ArticleSeeder::class,
     ];
 }

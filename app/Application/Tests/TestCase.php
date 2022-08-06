@@ -29,10 +29,12 @@ abstract class TestCase extends BaseTestCase
      */
     protected static bool $doNotRecreateDatabase = false;
 
+    protected static array $seeders = [];
+
     protected function setUp(): void
     {
         if (static::$doNotRecreateDatabase) {
-            DatabaseState::$shouldRunSetUpOnce = false;
+            TestApplicationState::$shouldSetUpOnce = false;
             RefreshDatabaseState::$migrated = true;
         }
 
@@ -40,10 +42,10 @@ abstract class TestCase extends BaseTestCase
 
         Redis::flushall();
 
-        if (DatabaseState::$shouldRunSetUpOnce) {
+        if (TestApplicationState::$shouldSetUpOnce) {
             $this->setUpOnce();
 
-            DatabaseState::$shouldRunSetUpOnce = false;
+            TestApplicationState::$shouldSetUpOnce = false;
         }
 
         Http::preventStrayRequests();
@@ -70,12 +72,12 @@ abstract class TestCase extends BaseTestCase
      */
     protected function setUpOnce(): void
     {
-        //
+        $this->seed(static::$seeders);
     }
 
     public static function tearDownAfterClass(): void
     {
-        DatabaseState::$shouldRunSetUpOnce = true;
+        TestApplicationState::$shouldSetUpOnce = true;
         RefreshDatabaseState::$migrated = false;
 
         parent::tearDownAfterClass();

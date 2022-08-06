@@ -8,12 +8,9 @@ use App\Domains\Catalog\Models\ProductCategory;
 
 final class ProductCategoryTest extends TestCase
 {
-    protected function setUpOnce(): void
-    {
-        $this->seed([
-            ProductCategorySeeder::class,
-        ]);
-    }
+    protected static array $seeders = [
+        ProductCategorySeeder::class,
+    ];
 
     /** @test */
     public function product_category_with_depth_higher_than_max_cannot_be_created(): void

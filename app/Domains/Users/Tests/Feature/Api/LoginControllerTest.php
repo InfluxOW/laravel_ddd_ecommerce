@@ -15,23 +15,20 @@ final class LoginControllerTest extends TestCase
 {
     use MocksGeoIPRequests;
 
-    private static User $user;
+    private User $user;
 
-    private static string $password;
-
-    protected function setUpOnce(): void
-    {
-        $password = 'password';
-        /** @var User $user */
-        $user = User::factory()->create(['password' => bcrypt($password)]);
-
-        self::$password = $password;
-        self::$user = $user;
-    }
+    private string $password;
 
     protected function setUp(): void
     {
         parent::setUp();
+
+        $password = 'password';
+        /** @var User $user */
+        $user = User::factory()->create(['password' => bcrypt($password)]);
+
+        $this->password = $password;
+        $this->user = $user;
 
         Notification::fake();
 
@@ -47,14 +44,14 @@ final class LoginControllerTest extends TestCase
     /** @test */
     public function a_user_can_login_with_correct_credentials_and_confirmed_email(): void
     {
-        self::$user->email_verified_at = null;
-        self::$user->save();
+        $this->user->email_verified_at = null;
+        $this->user->save();
 
         $this->login()->assertForbidden();
 
-        Notification::assertSentTo(self::$user, EmailVerificationNotification::class, function (EmailVerificationNotification $notification): bool {
+        Notification::assertSentTo($this->user, EmailVerificationNotification::class, function (EmailVerificationNotification $notification): bool {
             Event::fake();
-            $this->post(route('user.verify.email', ['token' => $notification->getTokenString(), 'email' => self::$user->email]))->assertOk();
+            $this->post(route('user.verify.email', ['token' => $notification->getTokenString(), 'email' => $this->user->email]))->assertOk();
             Event::assertDispatched(EmailVerificationSucceeded::class);
 
             return true;
@@ -73,7 +70,7 @@ final class LoginControllerTest extends TestCase
          * */
         $this->withHeader('Authorization', "Bearer {$accessToken}")->get('products.index');
 
-        $this->assertAuthenticatedAs(self::$user, 'sanctum');
+        $this->assertAuthenticatedAs($this->user, 'sanctum');
     }
 
     /** @test */
@@ -81,13 +78,13 @@ final class LoginControllerTest extends TestCase
     {
         $this->mockGeoIP();
 
-        $this->assertEquals(0, self::$user->loginHistory()->count());
+        $this->assertEquals(0, $this->user->loginHistory()->count());
         $this->login();
-        $this->assertEquals(1, self::$user->loginHistory()->count());
+        $this->assertEquals(1, $this->user->loginHistory()->count());
     }
 
     private function login(?string $password = null): TestResponse
     {
-        return $this->post(route('login'), ['email' => self::$user->email, 'password' => $password ?? self::$password]);
+        return $this->post(route('login'), ['email' => $this->user->email, 'password' => $password ?? $this->password]);
     }
 }

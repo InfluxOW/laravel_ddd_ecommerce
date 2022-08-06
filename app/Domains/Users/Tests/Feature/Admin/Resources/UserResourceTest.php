@@ -10,7 +10,7 @@ final class UserResourceTest extends AdminCrudTestCase
 {
     protected static string $resource = UserResource::class;
 
-    protected array $seeders = [
+    protected static array $seeders = [
         UserSeeder::class,
     ];
 }

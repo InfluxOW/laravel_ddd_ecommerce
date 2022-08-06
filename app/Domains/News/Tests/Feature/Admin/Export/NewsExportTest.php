@@ -8,12 +8,9 @@ use App\Domains\News\Database\Seeders\ArticleSeeder;
 
 final class NewsExportTest extends ExportTest
 {
-    protected string $listRecords = ListNews::class;
+    protected static array $seeders = [
+        ArticleSeeder::class,
+    ];
 
-    protected function setUpOnce(): void
-    {
-        $this->seed([
-            ArticleSeeder::class,
-        ]);
-    }
+    protected string $listRecords = ListNews::class;
 }

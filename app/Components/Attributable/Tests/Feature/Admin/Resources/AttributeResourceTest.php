@@ -10,7 +10,7 @@ final class AttributeResourceTest extends AdminCrudTestCase
 {
     protected static string $resource = AttributeResource::class;
 
-    protected array $seeders = [
+    protected static array $seeders = [
         AttributeSeeder::class,
     ];
 }

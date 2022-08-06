@@ -11,7 +11,7 @@ final class FeedbackResourceTest extends AdminCrudTestCase
 {
     protected static string $resource = FeedbackResource::class;
 
-    protected array $seeders = [
+    protected static array $seeders = [
         UserSeeder::class,
         FeedbackSeeder::class,
     ];

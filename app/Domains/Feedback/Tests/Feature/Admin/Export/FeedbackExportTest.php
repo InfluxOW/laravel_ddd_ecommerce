@@ -9,13 +9,10 @@ use App\Domains\Users\Database\Seeders\UserSeeder;
 
 final class FeedbackExportTest extends ExportTest
 {
-    protected string $listRecords = ListFeedback::class;
+    protected static array $seeders = [
+        UserSeeder::class,
+        FeedbackSeeder::class,
+    ];
 
-    protected function setUpOnce(): void
-    {
-        $this->seed([
-            UserSeeder::class,
-            FeedbackSeeder::class,
-        ]);
-    }
+    protected string $listRecords = ListFeedback::class;
 }

@@ -14,7 +14,7 @@ final class ProductResourceTest extends AdminCrudTestCase
 {
     protected static string $resource = ProductResource::class;
 
-    protected array $seeders = [
+    protected static array $seeders = [
         ProductCategorySeeder::class,
         ProductSeeder::class,
         ProductPriceSeeder::class,

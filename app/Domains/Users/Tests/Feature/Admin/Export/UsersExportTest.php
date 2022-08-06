@@ -8,12 +8,9 @@ use App\Domains\Users\Database\Seeders\UserSeeder;
 
 final class UsersExportTest extends ExportTest
 {
-    protected string $listRecords = ListUsers::class;
+    protected static array $seeders = [
+        UserSeeder::class,
+    ];
 
-    protected function setUpOnce(): void
-    {
-        $this->seed([
-            UserSeeder::class,
-        ]);
-    }
+    protected string $listRecords = ListUsers::class;
 }

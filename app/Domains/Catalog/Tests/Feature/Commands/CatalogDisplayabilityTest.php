@@ -13,13 +13,15 @@ use App\Domains\Catalog\Models\ProductCategory;
 
 final class CatalogDisplayabilityTest extends TestCase
 {
+    protected static array $seeders = [
+        ProductCategorySeeder::class,
+        ProductSeeder::class,
+        ProductPriceSeeder::class,
+    ];
+
     protected function setUpOnce(): void
     {
-        $this->seed([
-            ProductCategorySeeder::class,
-            ProductSeeder::class,
-            ProductPriceSeeder::class,
-        ]);
+        parent::setUpOnce();
 
         ProductCategory::query()->update(['is_visible' => true, 'is_displayable' => true]);
         Product::query()->update(['is_visible' => true, 'is_displayable' => true]);

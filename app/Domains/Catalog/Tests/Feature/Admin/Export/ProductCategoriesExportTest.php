@@ -11,11 +11,8 @@ final class ProductCategoriesExportTest extends ExportTest
 {
     protected string $listRecords = ListProductCategories::class;
 
-    protected function setUpOnce(): void
-    {
-        $this->seed([
-            ProductCategorySeeder::class,
-            ProductSeeder::class,
-        ]);
-    }
+    protected static array $seeders = [
+        ProductCategorySeeder::class,
+        ProductSeeder::class,
+    ];
 }
