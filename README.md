@@ -52,6 +52,8 @@ idea or a team agreement than exact project structure. And that's why I've imple
 - RabbitMQ Queues
 - Redis Cache
 - Elasticsearch Search
+- Sentry Logging
+- XDebug Support
 
 ### Infrastructural Features
 
@@ -69,6 +71,7 @@ idea or a team agreement than exact project structure. And that's why I've imple
 - Catalog with different filters, full-text search, categories tree, etc. - [[**Catalog**](https://github.com/InfluxOW/laravel_ddd_ecommerce/tree/master/app/Domains/Catalog)]
 - Ability to add feedback, but a limited number of times per hour per IP - [[**Feedback**](https://github.com/InfluxOW/laravel_ddd_ecommerce/tree/master/app/Domains/Feedback)]
 - **[WIP]** Carts with Redis - [[**Cart**](https://github.com/InfluxOW/laravel_ddd_ecommerce/tree/master/app/Domains/Cart)]
+- [[**News**](https://github.com/InfluxOW/laravel_ddd_ecommerce/tree/master/app/Domains/News)]
 
 ### Random Features
 
