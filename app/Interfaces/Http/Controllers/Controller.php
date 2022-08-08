@@ -59,13 +59,17 @@ abstract class Controller extends BaseController
 
         $validated = $request->validated();
         $additional = [];
+        $searchFilterIsApplied = false;
 
         if (isset($filterService)) {
             $filterService->build();
 
             $query->allowedFilters($filterService->callbacks()->toArray());
 
-            $additional[ResponseKey::QUERY->value][QueryKey::FILTER->value] = (new FilterQueryResourceBuilder($filterService))->resource($request);
+            $filterQueryResourceBuilder = (new FilterQueryResourceBuilder($filterService));
+            $searchFilterIsApplied = $filterQueryResourceBuilder->hasAppliedSearchFilter($request);
+
+            $additional[ResponseKey::QUERY->value][QueryKey::FILTER->value] = $filterQueryResourceBuilder->resource($request);
         }
 
         if (isset($sortService)) {
@@ -73,9 +77,9 @@ abstract class Controller extends BaseController
 
             $query
                 ->allowedSorts($sortService->callbacks()->toArray())
-                ->defaultSort($sortService->callbacks()->first());
+                ->defaultSort($sortService->getDefaultCallback($searchFilterIsApplied));
 
-            $additional[ResponseKey::QUERY->value][QueryKey::SORT->value] = (new SortQueryResourceBuilder($sortService))->resource($request);
+            $additional[ResponseKey::QUERY->value][QueryKey::SORT->value] = (new SortQueryResourceBuilder($sortService))->resource($request, $searchFilterIsApplied);
         }
 
         $items = $query

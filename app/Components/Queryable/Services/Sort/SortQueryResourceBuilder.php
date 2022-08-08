@@ -18,10 +18,10 @@ final class SortQueryResourceBuilder
         $this->applicator = new SortApplicator($this->service);
     }
 
-    public function resource(FormRequest $request): JsonResource
+    public function resource(FormRequest $request, bool $hasAppliedSearchFilter): JsonResource
     {
         $allowed = $this->service->allowed();
-        $applied = $this->applicator->applied($request->validated()[QueryKey::SORT->value] ?? null) ?? $allowed->first();
+        $applied = $this->applicator->applied($request->validated()[QueryKey::SORT->value] ?? null) ?? $this->service->getDefaultQuery($hasAppliedSearchFilter);
 
         return SortQueryResource::make(new SortQuery($allowed, $applied));
     }

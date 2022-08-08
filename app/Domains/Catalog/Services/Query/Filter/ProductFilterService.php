@@ -30,10 +30,10 @@ final class ProductFilterService extends FilterService
 
         return $this
             /** @phpstan-ignore-next-line */
-            ->add(ProductAllowedFilter::SEARCH, static fn (Builder|Product $query): Builder => $query->search($getFilter(ProductAllowedFilter::SEARCH), orderByScore: true))
-            ->add(ProductAllowedFilter::CURRENCY, static fn (Builder|Product $query): Builder => $query->whereHasPriceCurrency($getFilter(ProductAllowedFilter::CURRENCY)))
-            ->add(ProductAllowedFilter::CATEGORY, static fn (Builder|Product $query): Builder => $query->whereInCategory(ProductCategory::query()->displayable()->whereIn('slug', $getFilter(ProductAllowedFilter::CATEGORY))->get()))
-            ->add(ProductAllowedFilter::PRICE_BETWEEN, static fn (Builder|Product $query): Builder => $query->wherePriceBetween(...$getFilter(ProductAllowedFilter::PRICE_BETWEEN)))
-            ->add(ProductAllowedFilter::ATTRIBUTE_VALUE, static fn (Builder|Product $query): Builder => $query->whereHasAttributeValue($getFilter(ProductAllowedFilter::ATTRIBUTE_VALUE)));
+            ->addSearchFilter(ProductAllowedFilter::SEARCH, static fn (Builder|Product $query): Builder => $query->search($getFilter(ProductAllowedFilter::SEARCH), orderByScore: true))
+            ->addFilter(ProductAllowedFilter::CURRENCY, static fn (Builder|Product $query): Builder => $query->whereHasPriceCurrency($getFilter(ProductAllowedFilter::CURRENCY)))
+            ->addFilter(ProductAllowedFilter::CATEGORY, static fn (Builder|Product $query): Builder => $query->whereInCategory(ProductCategory::query()->displayable()->whereIn('slug', $getFilter(ProductAllowedFilter::CATEGORY))->get()))
+            ->addFilter(ProductAllowedFilter::PRICE_BETWEEN, static fn (Builder|Product $query): Builder => $query->wherePriceBetween(...$getFilter(ProductAllowedFilter::PRICE_BETWEEN)))
+            ->addFilter(ProductAllowedFilter::ATTRIBUTE_VALUE, static fn (Builder|Product $query): Builder => $query->whereHasAttributeValue($getFilter(ProductAllowedFilter::ATTRIBUTE_VALUE)));
     }
 }

@@ -27,6 +27,10 @@ abstract class SortService
      */
     private Collection $callbacks;
 
+    private UnitEnum & IAllowedSortEnum $defaultSort;
+
+    private UnitEnum & IAllowedSortEnum $defaultSortForSearch;
+
     /**
      * @return Collection<Sort>
      */
@@ -45,7 +49,7 @@ abstract class SortService
 
     abstract public function build(): static;
 
-    protected function add(UnitEnum & IAllowedSortEnum $sort, ?Closure $callback = null): static
+    protected function addSort(UnitEnum & IAllowedSortEnum $sort, ?Closure $callback = null): static
     {
         if ($callback === null) {
             $callback = static function (Builder $query) use ($sort): Builder {
@@ -61,5 +65,53 @@ abstract class SortService
         $this->callbacks->offsetSet($sort->name, AllowedSort::callback($sort->name, $callback));
 
         return $this;
+    }
+
+    protected function addDefaultSort(UnitEnum & IAllowedSortEnum $sort, ?Closure $callback = null): static
+    {
+        $this->addSort($sort, $callback);
+
+        $this->defaultSort = $sort;
+
+        return $this;
+    }
+
+    protected function addDefaultSearchSort(UnitEnum & IAllowedSortEnum $sort, ?Closure $callback = null): static
+    {
+        $this->addSort($sort, $callback);
+
+        $this->defaultSortForSearch = $sort;
+
+        return $this;
+    }
+
+    public function getDefaultQuery(bool $isForSearch): Sort
+    {
+        $query = null;
+
+        if ($isForSearch && isset($this->defaultSortForSearch)) {
+            $query = $this->allowed->offsetGet($this->defaultSortForSearch->name);
+        }
+
+        if ($query === null && isset($this->defaultSort)) {
+            $query = $this->allowed->offsetGet($this->defaultSort->name);
+        }
+
+        return $query ?? $this->allowed->first();
+    }
+
+    public function getDefaultCallback(bool $isForSearch): AllowedSort
+    {
+        $callback = null;
+
+        if ($isForSearch) {
+            $callback = isset($this->defaultSortForSearch) ? $this->callbacks->offsetGet($this->defaultSortForSearch->name) : null;
+        }
+
+        if ($callback === null && isset($this->defaultSort)) {
+            $callback = $this->callbacks->offsetGet($this->defaultSort->name);
+        }
+
+        return $callback ?? $this->callbacks->first();
     }
 }

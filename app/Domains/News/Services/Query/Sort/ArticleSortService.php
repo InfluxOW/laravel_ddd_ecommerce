@@ -11,10 +11,10 @@ final class ArticleSortService extends SortService
     public function build(): static
     {
         return $this
-            ->add(ArticleAllowedSort::DEFAULT, static fn (Builder $query): Builder => $query)
-            ->add(ArticleAllowedSort::PUBLISHED_AT_DESC)
-            ->add(ArticleAllowedSort::PUBLISHED_AT)
-            ->add(ArticleAllowedSort::TITLE_DESC)
-            ->add(ArticleAllowedSort::TITLE);
+            ->addDefaultSort(ArticleAllowedSort::PUBLISHED_AT_DESC)
+            ->addSort(ArticleAllowedSort::PUBLISHED_AT)
+            ->addSort(ArticleAllowedSort::TITLE_DESC)
+            ->addSort(ArticleAllowedSort::TITLE)
+            ->addDefaultSearchSort(ArticleAllowedSort::DEFAULT, static fn (Builder $query): Builder => $query);
     }
 }
