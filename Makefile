@@ -4,7 +4,7 @@ install:
 	composer install
 	cp --no-clobber .env.example .env || true
 	php artisan key:generate
-	php artisan migrate:refresh
+	php artisan migrate:fresh
 
 test:
 	php artisan test --parallel -vvv

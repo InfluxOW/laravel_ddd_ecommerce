@@ -21,7 +21,7 @@ build:
 	$(sail) build
 
 dependencies-install:
-	$(sail) exec application make install
+	$(sail) bash -c "make install"
 
 destroy:
 	$(sail) down --rmi all --volumes --remove-orphans
