@@ -18,7 +18,7 @@ sail-install:
 		composer install --ignore-platform-reqs
 
 build:
-	$(sail) build
+	$(sail) build --pull
 
 dependencies-install:
 	$(sail) bash -c "make install"
