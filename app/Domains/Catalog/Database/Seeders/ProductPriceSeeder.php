@@ -6,6 +6,7 @@ use App\Components\Purchasable\Database\Seeders\PriceSeeder;
 use App\Domains\Catalog\Console\Commands\UpdateProductsDisplayability;
 use App\Domains\Catalog\Models\Product;
 use App\Infrastructure\Abstracts\Database\Seeder;
+use Illuminate\Support\Facades\Artisan;
 
 final class ProductPriceSeeder extends Seeder
 {
@@ -16,6 +17,6 @@ final class ProductPriceSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(PriceSeeder::class, false, ['purchasableModels' => [Product::class], fn () => $this->call(UpdateProductsDisplayability::class)]);
+        $this->call(PriceSeeder::class, false, ['purchasableModels' => [Product::class], 'afterInsertHook' => fn () => Artisan::call(UpdateProductsDisplayability::class)]);
     }
 }
