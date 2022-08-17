@@ -17,7 +17,7 @@ final class ArticleFactory extends Factory
         $publishedAt = null;
         if ($this->faker->boolean(40)) {
             $publishedAt = $this->faker->dateTimeBetween('-1 year');
-        /** @phpstan-ignore-next-line */
+            /** @phpstan-ignore-next-line */
         } elseif ($this->faker->boolean(40)) {
             $publishedAt = $this->faker->dateTimeBetween('now', '+1 year');
         }
