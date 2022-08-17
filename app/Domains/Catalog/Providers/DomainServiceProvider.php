@@ -9,6 +9,7 @@ use App\Domains\Catalog\Services\Query\Filter\ProductFilterBuilder;
 use App\Domains\Catalog\Services\Query\Filter\ProductFilterService;
 use App\Domains\Generic\Enums\ServiceProviderNamespace;
 use App\Infrastructure\Abstracts\Providers\ServiceProvider;
+use Illuminate\Console\Scheduling\Schedule;
 
 final class DomainServiceProvider extends ServiceProvider
 {
@@ -30,5 +31,11 @@ final class DomainServiceProvider extends ServiceProvider
             ->when(ProductFilterService::class)
             ->needs(FilterBuilder::class)
             ->give(ProductFilterBuilder::class);
+    }
+
+    protected function registerSchedule(Schedule $schedule): void
+    {
+        $schedule->command(UpdateProductCategoriesDisplayability::class)->cron('* * * * *')->runInBackground()->environments(['local', 'staging']);
+        $schedule->command(UpdateProductsDisplayability::class)->cron('* * * * *')->runInBackground()->environments(['local', 'staging']);
     }
 }

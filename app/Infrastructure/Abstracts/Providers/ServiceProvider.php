@@ -7,6 +7,7 @@ use App\Domains\Generic\Utils\PathUtils;
 use App\Infrastructure\Abstracts\Exceptions\NotSupportedMacrosClassException;
 use Closure;
 use Elastic\Migrations\Filesystem\MigrationStorage;
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Foundation\Exceptions\Handler;
 use Illuminate\Support\Facades\Gate;
@@ -17,11 +18,6 @@ use ReflectionClass;
 
 abstract class ServiceProvider extends LaravelServiceProvider
 {
-    public function __construct($app)
-    {
-        parent::__construct($app);
-    }
-
     /*
      * Namespace for loading translations.
      * */
@@ -67,6 +63,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
         $this->registerTranslations();
         $this->registerLivewireComponents();
         $this->registerExceptionHandlingCallbacks();
+        $this->app->resolving(Schedule::class, fn (Schedule $schedule) => $this->registerSchedule($schedule));
 
         $this->afterBooting();
     }
@@ -132,6 +129,11 @@ abstract class ServiceProvider extends LaravelServiceProvider
     protected function getCustomExceptionReporters(): array
     {
         return [];
+    }
+
+    protected function registerSchedule(Schedule $schedule): void
+    {
+        //
     }
 
     protected function afterRegistration(): void
