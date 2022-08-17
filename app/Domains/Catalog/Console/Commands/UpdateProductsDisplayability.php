@@ -43,6 +43,7 @@ final class UpdateProductsDisplayability extends Command
 
             DB::updateByChunks($table, DB::table($table)->whereIntegerNotInRaw("{$table}.id", $ids), ['is_displayable' => false, 'updated_at' => $now->toDateTime()]);
 
+            $this->settings->refresh();
             $this->settings->products_displayability_last_updated_at = $now;
             $this->settings->save();
         });
