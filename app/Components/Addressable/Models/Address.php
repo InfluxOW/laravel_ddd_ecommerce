@@ -26,19 +26,20 @@ use Squire\Models\Region;
  * @property-read string $string_representation
  *
  * @method static \App\Components\Addressable\Database\Factories\AddressFactory factory(...$parameters)
- * @method static \Illuminate\Database\Eloquent\Builder|Address newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Address newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Address query()
- * @method static \Illuminate\Database\Eloquent\Builder|Address whereAddressableId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Address whereAddressableType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Address whereCity($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Address whereCountry($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Address whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Address whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Address whereRegion($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Address whereStreet($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Address whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Address whereZip($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Address                 newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Address                 newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Address                 query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Address                 whereAddressableId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Address                 whereAddressableType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Address                 whereCity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Address                 whereCountry($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Address                 whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Address                 whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Address                 whereRegion($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Address                 whereStreet($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Address                 whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Address                 whereZip($value)
+ *
  * @mixin \Eloquent
  */
 final class Address extends Model

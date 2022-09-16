@@ -36,6 +36,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|ConfirmationToken whereUpdatedAt($value)
  * @method static Builder|ConfirmationToken whereUsedAt($value)
  * @method static Builder|ConfirmationToken whereUserId($value)
+ *
  * @mixin \Eloquent
  */
 final class ConfirmationToken extends Model

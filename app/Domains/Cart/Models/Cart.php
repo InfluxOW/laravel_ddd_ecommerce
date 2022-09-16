@@ -35,6 +35,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Cart wherePriceItemsDiscounted($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Cart whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Cart whereUserId($value)
+ *
  * @mixin \Eloquent
  */
 final class Cart extends Model

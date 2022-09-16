@@ -52,6 +52,7 @@ use MStaack\LaravelPostgis\Geometries\Point;
  * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory whereRegionName($value)
  * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory whereUserAgent($value)
  * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory whereZip($value)
+ *
  * @mixin \Eloquent
  */
 final class LoginHistory extends Model

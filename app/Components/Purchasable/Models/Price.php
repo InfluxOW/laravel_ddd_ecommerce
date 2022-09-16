@@ -26,17 +26,18 @@ use Illuminate\Support\Facades\DB;
  * @property-read Model|\Eloquent $purchasable
  *
  * @method static \App\Components\Purchasable\Database\Factories\PriceFactory factory(...$parameters)
- * @method static \Illuminate\Database\Eloquent\Builder|Price newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Price newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Price query()
- * @method static \Illuminate\Database\Eloquent\Builder|Price whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Price whereCurrency($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Price whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Price wherePrice($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Price wherePriceDiscounted($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Price wherePurchasableId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Price wherePurchasableType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Price whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Price                 newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Price                 newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Price                 query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Price                 whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Price                 whereCurrency($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Price                 whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Price                 wherePrice($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Price                 wherePriceDiscounted($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Price                 wherePurchasableId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Price                 wherePurchasableType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Price                 whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 final class Price extends Model

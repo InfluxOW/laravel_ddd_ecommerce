@@ -27,16 +27,17 @@ use Illuminate\Notifications\Notifiable;
  * @property-read int|null $notifications_count
  *
  * @method static \App\Domains\Admin\Database\Factories\AdminFactory factory(...$parameters)
- * @method static \Illuminate\Database\Eloquent\Builder|Admin newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Admin newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Admin query()
- * @method static \Illuminate\Database\Eloquent\Builder|Admin whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Admin whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Admin whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Admin whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Admin wherePassword($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Admin whereRememberToken($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Admin whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Admin        newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Admin        newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Admin        query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Admin        whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Admin        whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Admin        whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Admin        whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Admin        wherePassword($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Admin        whereRememberToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Admin        whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 final class Admin extends Authenticatable implements FilamentUser

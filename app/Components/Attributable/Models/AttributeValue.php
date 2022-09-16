@@ -30,19 +30,20 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property string|int|float|bool $value
  *
  * @method static \App\Components\Attributable\Database\Factories\AttributeValueFactory factory(...$parameters)
- * @method static \Illuminate\Database\Eloquent\Builder|AttributeValue newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|AttributeValue newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|AttributeValue query()
- * @method static \Illuminate\Database\Eloquent\Builder|AttributeValue whereAttributableId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|AttributeValue whereAttributableType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|AttributeValue whereAttributeId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|AttributeValue whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|AttributeValue whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|AttributeValue whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|AttributeValue whereValueBoolean($value)
- * @method static \Illuminate\Database\Eloquent\Builder|AttributeValue whereValueFloat($value)
- * @method static \Illuminate\Database\Eloquent\Builder|AttributeValue whereValueInteger($value)
- * @method static \Illuminate\Database\Eloquent\Builder|AttributeValue whereValueString($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AttributeValue                  newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|AttributeValue                  newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|AttributeValue                  query()
+ * @method static \Illuminate\Database\Eloquent\Builder|AttributeValue                  whereAttributableId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AttributeValue                  whereAttributableType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AttributeValue                  whereAttributeId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AttributeValue                  whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AttributeValue                  whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AttributeValue                  whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AttributeValue                  whereValueBoolean($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AttributeValue                  whereValueFloat($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AttributeValue                  whereValueInteger($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AttributeValue                  whereValueString($value)
+ *
  * @mixin \Eloquent
  */
 final class AttributeValue extends Model

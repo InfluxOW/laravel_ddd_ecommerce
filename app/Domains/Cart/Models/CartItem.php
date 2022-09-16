@@ -41,6 +41,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|CartItem wherePurchasableType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CartItem whereQuantity($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CartItem whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 final class CartItem extends Model

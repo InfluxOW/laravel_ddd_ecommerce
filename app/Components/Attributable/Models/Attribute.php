@@ -24,15 +24,16 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read int|null $values_count
  *
  * @method static \App\Components\Attributable\Database\Factories\AttributeFactory factory(...$parameters)
- * @method static \Illuminate\Database\Eloquent\Builder|Attribute newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Attribute newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Attribute query()
- * @method static \Illuminate\Database\Eloquent\Builder|Attribute whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Attribute whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Attribute whereSlug($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Attribute whereTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Attribute whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Attribute whereValuesType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Attribute                  newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Attribute                  newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Attribute                  query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Attribute                  whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Attribute                  whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Attribute                  whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Attribute                  whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Attribute                  whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Attribute                  whereValuesType($value)
+ *
  * @mixin \Eloquent
  */
 final class Attribute extends Model

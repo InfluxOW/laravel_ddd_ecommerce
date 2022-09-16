@@ -69,6 +69,7 @@ final class ProductControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @unstable
      */
     public function a_user_can_search_products(): void
@@ -136,6 +137,7 @@ final class ProductControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @complicated
      */
     public function a_user_can_filter_products_by_current_price(): void
@@ -189,7 +191,9 @@ final class ProductControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @complicated
+     *
      * @unstable
      */
     public function a_user_can_filter_products_by_attribute_values(): void

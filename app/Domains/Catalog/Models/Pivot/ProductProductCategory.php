@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  * @method static \Illuminate\Database\Eloquent\Builder|ProductProductCategory newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|ProductProductCategory newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|ProductProductCategory query()
+ *
  * @mixin \Eloquent
  */
 final class ProductProductCategory extends Pivot

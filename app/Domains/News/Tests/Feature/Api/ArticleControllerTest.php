@@ -39,6 +39,7 @@ final class ArticleControllerTest extends TestCase
 
     /**
      * @test
+     *
      * @unstable
      */
     public function a_user_can_search_news(): void

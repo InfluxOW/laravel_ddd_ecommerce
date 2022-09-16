@@ -29,21 +29,22 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property-read User|null $user
  *
  * @method static \App\Domains\Feedback\Database\Factories\FeedbackFactory factory(...$parameters)
- * @method static Builder|Feedback forUser(?string $ip, ?\App\Domains\Users\Models\User $user)
- * @method static Builder|Feedback inLastHour()
- * @method static Builder|Feedback newModelQuery()
- * @method static Builder|Feedback newQuery()
- * @method static Builder|Feedback query()
- * @method static Builder|Feedback search(string $searchable, bool $orderByScore)
- * @method static Builder|Feedback whereCreatedAt($value)
- * @method static Builder|Feedback whereEmail($value)
- * @method static Builder|Feedback whereId($value)
- * @method static Builder|Feedback whereIp($value)
- * @method static Builder|Feedback whereIsReviewed($value)
- * @method static Builder|Feedback wherePhone($value)
- * @method static Builder|Feedback whereText($value)
- * @method static Builder|Feedback whereUserId($value)
- * @method static Builder|Feedback whereUsername($value)
+ * @method static Builder|Feedback                                         forUser(?string $ip, ?\App\Domains\Users\Models\User $user)
+ * @method static Builder|Feedback                                         inLastHour()
+ * @method static Builder|Feedback                                         newModelQuery()
+ * @method static Builder|Feedback                                         newQuery()
+ * @method static Builder|Feedback                                         query()
+ * @method static Builder|Feedback                                         search(string $searchable, bool $orderByScore)
+ * @method static Builder|Feedback                                         whereCreatedAt($value)
+ * @method static Builder|Feedback                                         whereEmail($value)
+ * @method static Builder|Feedback                                         whereId($value)
+ * @method static Builder|Feedback                                         whereIp($value)
+ * @method static Builder|Feedback                                         whereIsReviewed($value)
+ * @method static Builder|Feedback                                         wherePhone($value)
+ * @method static Builder|Feedback                                         whereText($value)
+ * @method static Builder|Feedback                                         whereUserId($value)
+ * @method static Builder|Feedback                                         whereUsername($value)
+ *
  * @mixin \Eloquent
  */
 final class Feedback extends Model implements Exportable
