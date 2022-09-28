@@ -10,6 +10,7 @@ use App\Domains\Generic\Interfaces\Exportable;
 use App\Domains\Generic\Models\ConfirmationToken;
 use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
 use App\Domains\Generic\Traits\Models\Searchable;
+use App\Domains\Users\Database\Builders\UserBuilder;
 use App\Domains\Users\Database\Factories\UserFactory;
 use App\Domains\Users\Jobs\Export\UsersExportJob;
 use Carbon\Carbon;
@@ -51,19 +52,19 @@ use Laravel\Sanctum\HasApiTokens;
  * @property-read int|null $tokens_count
  *
  * @method static \App\Domains\Users\Database\Factories\UserFactory factory(...$parameters)
- * @method static \Illuminate\Database\Eloquent\Builder|User        newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|User        newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|User        query()
- * @method static \Illuminate\Database\Eloquent\Builder|User        search(string $searchable, bool $orderByScore)
- * @method static \Illuminate\Database\Eloquent\Builder|User        whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User        whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User        whereEmailVerifiedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User        whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User        whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User        wherePassword($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User        wherePhone($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User        whereRememberToken($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User        whereUpdatedAt($value)
+ * @method static UserBuilder|User                                  newModelQuery()
+ * @method static UserBuilder|User                                  newQuery()
+ * @method static UserBuilder|User                                  query()
+ * @method static UserBuilder|User                                  search(string $searchable, bool $orderByScore)
+ * @method static UserBuilder|User                                  whereCreatedAt($value)
+ * @method static UserBuilder|User                                  whereEmail($value)
+ * @method static UserBuilder|User                                  whereEmailVerifiedAt($value)
+ * @method static UserBuilder|User                                  whereId($value)
+ * @method static UserBuilder|User                                  whereName($value)
+ * @method static UserBuilder|User                                  wherePassword($value)
+ * @method static UserBuilder|User                                  wherePhone($value)
+ * @method static UserBuilder|User                                  whereRememberToken($value)
+ * @method static UserBuilder|User                                  whereUpdatedAt($value)
  *
  * @mixin \Eloquent
  */
@@ -107,6 +108,23 @@ final class User extends Authenticatable implements MustVerifyEmail, Exportable
     ];
 
     /*
+ * Internal
+ * */
+
+    protected static function newFactory(): UserFactory
+    {
+        return UserFactory::new();
+    }
+
+    public function newEloquentBuilder($query): UserBuilder
+    {
+        /** @var UserBuilder<self> $builder */
+        $builder = new UserBuilder($query);
+
+        return $builder;
+    }
+
+    /*
      * Relations
      * */
 
@@ -133,15 +151,6 @@ final class User extends Authenticatable implements MustVerifyEmail, Exportable
     public function loginHistory(): MorphMany
     {
         return $this->morphMany(LoginHistory::class, 'login_historyable');
-    }
-
-    /*
-     * Helpers
-     * */
-
-    protected static function newFactory(): UserFactory
-    {
-        return UserFactory::new();
     }
 
     /*

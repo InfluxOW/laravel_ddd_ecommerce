@@ -3,6 +3,7 @@
 namespace App\Components\Mediable\Models;
 
 use App\Components\Mediable\Classes\RegisteredResponsiveImages;
+use App\Components\Mediable\Database\Builders\MediaBuilder;
 use App\Components\Mediable\Enums\MediaType;
 use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
 use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
@@ -33,28 +34,28 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
  *
  * @method static \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|static[] all($columns = ['*'])
  * @method static \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|static[] get($columns = ['*'])
- * @method static \Illuminate\Database\Eloquent\Builder|Media                                       newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Media                                       newQuery()
- * @method static Builder|Media                                                                     ordered()
- * @method static \Illuminate\Database\Eloquent\Builder|Media                                       query()
- * @method static \Illuminate\Database\Eloquent\Builder|Media                                       whereCollectionName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Media                                       whereConversionsDisk($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Media                                       whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Media                                       whereCustomProperties($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Media                                       whereDisk($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Media                                       whereFileName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Media                                       whereGeneratedConversions($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Media                                       whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Media                                       whereManipulations($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Media                                       whereMimeType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Media                                       whereModelId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Media                                       whereModelType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Media                                       whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Media                                       whereOrderColumn($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Media                                       whereResponsiveImages($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Media                                       whereSize($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Media                                       whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Media                                       whereUuid($value)
+ * @method static MediaBuilder|Media                                                                newModelQuery()
+ * @method static MediaBuilder|Media                                                                newQuery()
+ * @method static \App\Components\Mediable\Database\Builders\MediaBuilder|Media                     ordered()
+ * @method static MediaBuilder|Media                                                                query()
+ * @method static MediaBuilder|Media                                                                whereCollectionName($value)
+ * @method static MediaBuilder|Media                                                                whereConversionsDisk($value)
+ * @method static MediaBuilder|Media                                                                whereCreatedAt($value)
+ * @method static MediaBuilder|Media                                                                whereCustomProperties($value)
+ * @method static MediaBuilder|Media                                                                whereDisk($value)
+ * @method static MediaBuilder|Media                                                                whereFileName($value)
+ * @method static MediaBuilder|Media                                                                whereGeneratedConversions($value)
+ * @method static MediaBuilder|Media                                                                whereId($value)
+ * @method static MediaBuilder|Media                                                                whereManipulations($value)
+ * @method static MediaBuilder|Media                                                                whereMimeType($value)
+ * @method static MediaBuilder|Media                                                                whereModelId($value)
+ * @method static MediaBuilder|Media                                                                whereModelType($value)
+ * @method static MediaBuilder|Media                                                                whereName($value)
+ * @method static MediaBuilder|Media                                                                whereOrderColumn($value)
+ * @method static MediaBuilder|Media                                                                whereResponsiveImages($value)
+ * @method static MediaBuilder|Media                                                                whereSize($value)
+ * @method static MediaBuilder|Media                                                                whereUpdatedAt($value)
+ * @method static MediaBuilder|Media                                                                whereUuid($value)
  *
  * @mixin \Eloquent
  */
@@ -62,15 +63,35 @@ final class Media extends BaseMedia
 {
     use HasExtendedFunctionality;
 
-    public function responsiveImages(string $conversionName = ''): RegisteredResponsiveImages
+    /*
+     * Internal
+     * */
+
+    public function newEloquentBuilder($query): MediaBuilder
     {
-        return new RegisteredResponsiveImages($this, $conversionName);
+        /** @var MediaBuilder<self> $builder */
+        $builder = new MediaBuilder($query);
+
+        return $builder;
     }
+
+    /*
+     * Attributes
+     * */
 
     public function getTypeAttribute(): string
     {
         $parentGetType = $this->type()->get;
 
         return (MediaType::tryFrom($parentGetType()) ?? MediaType::OTHER)->name;
+    }
+
+    /*
+     * Helpers
+     * */
+
+    public function responsiveImages(string $conversionName = ''): RegisteredResponsiveImages
+    {
+        return new RegisteredResponsiveImages($this, $conversionName);
     }
 }

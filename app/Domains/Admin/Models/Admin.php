@@ -3,6 +3,7 @@
 namespace App\Domains\Admin\Models;
 
 use App\Components\LoginHistoryable\Models\LoginHistory;
+use App\Domains\Admin\Database\Builders\AdminBuilder;
 use App\Domains\Admin\Database\Factories\AdminFactory;
 use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
 use Filament\Models\Contracts\FilamentUser;
@@ -27,16 +28,16 @@ use Illuminate\Notifications\Notifiable;
  * @property-read int|null $notifications_count
  *
  * @method static \App\Domains\Admin\Database\Factories\AdminFactory factory(...$parameters)
- * @method static \Illuminate\Database\Eloquent\Builder|Admin        newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Admin        newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Admin        query()
- * @method static \Illuminate\Database\Eloquent\Builder|Admin        whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Admin        whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Admin        whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Admin        whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Admin        wherePassword($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Admin        whereRememberToken($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Admin        whereUpdatedAt($value)
+ * @method static AdminBuilder|Admin                                 newModelQuery()
+ * @method static AdminBuilder|Admin                                 newQuery()
+ * @method static AdminBuilder|Admin                                 query()
+ * @method static AdminBuilder|Admin                                 whereCreatedAt($value)
+ * @method static AdminBuilder|Admin                                 whereEmail($value)
+ * @method static AdminBuilder|Admin                                 whereId($value)
+ * @method static AdminBuilder|Admin                                 whereName($value)
+ * @method static AdminBuilder|Admin                                 wherePassword($value)
+ * @method static AdminBuilder|Admin                                 whereRememberToken($value)
+ * @method static AdminBuilder|Admin                                 whereUpdatedAt($value)
  *
  * @mixin \Eloquent
  */
@@ -68,6 +69,23 @@ final class Admin extends Authenticatable implements FilamentUser
     ];
 
     /*
+     * Internal
+     * */
+
+    protected static function newFactory(): AdminFactory
+    {
+        return AdminFactory::new();
+    }
+
+    public function newEloquentBuilder($query): AdminBuilder
+    {
+        /** @var AdminBuilder<self> $builder */
+        $builder = new AdminBuilder($query);
+
+        return $builder;
+    }
+
+    /*
      * Relations
      * */
 
@@ -77,13 +95,8 @@ final class Admin extends Authenticatable implements FilamentUser
     }
 
     /*
-     * Helpers
+     * Filament
      * */
-
-    protected static function newFactory(): AdminFactory
-    {
-        return AdminFactory::new();
-    }
 
     public function canAccessFilament(): bool
     {

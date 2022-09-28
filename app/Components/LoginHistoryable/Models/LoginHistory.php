@@ -2,6 +2,7 @@
 
 namespace App\Components\LoginHistoryable\Models;
 
+use App\Components\LoginHistoryable\Database\Builders\LoginHistoryBuilder;
 use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -31,27 +32,27 @@ use MStaack\LaravelPostgis\Geometries\Point;
  * @property \Illuminate\Support\Carbon|null               $created_at
  * @property-read Model|\Eloquent $loginHistoryable
  *
- * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory newModelQuery()
- * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory newQuery()
- * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory query()
- * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory whereBrowser($value)
- * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory whereBrowserVersion($value)
- * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory whereCity($value)
- * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory whereCountryCode($value)
- * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory whereCountryName($value)
- * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory whereCreatedAt($value)
- * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory whereDevice($value)
- * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory whereId($value)
- * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory whereIp($value)
- * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory whereLocation($value)
- * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory whereLoginHistoryableId($value)
- * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory whereLoginHistoryableType($value)
- * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory wherePlatform($value)
- * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory wherePlatformVersion($value)
- * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory whereRegionCode($value)
- * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory whereRegionName($value)
- * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory whereUserAgent($value)
- * @method static \MStaack\LaravelPostgis\Eloquent\Builder|LoginHistory whereZip($value)
+ * @method static LoginHistoryBuilder|LoginHistory newModelQuery()
+ * @method static LoginHistoryBuilder|LoginHistory newQuery()
+ * @method static LoginHistoryBuilder|LoginHistory query()
+ * @method static LoginHistoryBuilder|LoginHistory whereBrowser($value)
+ * @method static LoginHistoryBuilder|LoginHistory whereBrowserVersion($value)
+ * @method static LoginHistoryBuilder|LoginHistory whereCity($value)
+ * @method static LoginHistoryBuilder|LoginHistory whereCountryCode($value)
+ * @method static LoginHistoryBuilder|LoginHistory whereCountryName($value)
+ * @method static LoginHistoryBuilder|LoginHistory whereCreatedAt($value)
+ * @method static LoginHistoryBuilder|LoginHistory whereDevice($value)
+ * @method static LoginHistoryBuilder|LoginHistory whereId($value)
+ * @method static LoginHistoryBuilder|LoginHistory whereIp($value)
+ * @method static LoginHistoryBuilder|LoginHistory whereLocation($value)
+ * @method static LoginHistoryBuilder|LoginHistory whereLoginHistoryableId($value)
+ * @method static LoginHistoryBuilder|LoginHistory whereLoginHistoryableType($value)
+ * @method static LoginHistoryBuilder|LoginHistory wherePlatform($value)
+ * @method static LoginHistoryBuilder|LoginHistory wherePlatformVersion($value)
+ * @method static LoginHistoryBuilder|LoginHistory whereRegionCode($value)
+ * @method static LoginHistoryBuilder|LoginHistory whereRegionName($value)
+ * @method static LoginHistoryBuilder|LoginHistory whereUserAgent($value)
+ * @method static LoginHistoryBuilder|LoginHistory whereZip($value)
  *
  * @mixin \Eloquent
  */
@@ -84,6 +85,18 @@ final class LoginHistory extends Model
     ];
 
     public const UPDATED_AT = null;
+
+    /*
+     * Internal
+     * */
+
+    public function newEloquentBuilder($query): LoginHistoryBuilder
+    {
+        /** @var LoginHistoryBuilder<self> $builder */
+        $builder = new LoginHistoryBuilder($query);
+
+        return $builder;
+    }
 
     /*
      * Relations

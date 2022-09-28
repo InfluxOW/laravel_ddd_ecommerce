@@ -2,6 +2,7 @@
 
 namespace App\Components\Attributable\Models;
 
+use App\Components\Attributable\Database\Builders\AttributeBuilder;
 use App\Components\Attributable\Database\Factories\AttributeFactory;
 use App\Components\Attributable\Enums\AttributeValuesType;
 use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
@@ -24,15 +25,15 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read int|null $values_count
  *
  * @method static \App\Components\Attributable\Database\Factories\AttributeFactory factory(...$parameters)
- * @method static \Illuminate\Database\Eloquent\Builder|Attribute                  newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Attribute                  newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Attribute                  query()
- * @method static \Illuminate\Database\Eloquent\Builder|Attribute                  whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Attribute                  whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Attribute                  whereSlug($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Attribute                  whereTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Attribute                  whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Attribute                  whereValuesType($value)
+ * @method static AttributeBuilder|Attribute                                       newModelQuery()
+ * @method static AttributeBuilder|Attribute                                       newQuery()
+ * @method static AttributeBuilder|Attribute                                       query()
+ * @method static AttributeBuilder|Attribute                                       whereCreatedAt($value)
+ * @method static AttributeBuilder|Attribute                                       whereId($value)
+ * @method static AttributeBuilder|Attribute                                       whereSlug($value)
+ * @method static AttributeBuilder|Attribute                                       whereTitle($value)
+ * @method static AttributeBuilder|Attribute                                       whereUpdatedAt($value)
+ * @method static AttributeBuilder|Attribute                                       whereValuesType($value)
  *
  * @mixin \Eloquent
  */
@@ -53,14 +54,20 @@ final class Attribute extends Model
     ];
 
     /*
-     * Attributes
+     * Internal
      * */
 
-    public function getSlugOptions(): SlugOptions
+    protected static function newFactory(): AttributeFactory
     {
-        return SlugOptions::create()
-            ->generateSlugsFrom('title')
-            ->saveSlugsTo('slug');
+        return AttributeFactory::new();
+    }
+
+    public function newEloquentBuilder($query): AttributeBuilder
+    {
+        /** @var AttributeBuilder<self> $builder */
+        $builder = new AttributeBuilder($query);
+
+        return $builder;
     }
 
     /*
@@ -73,11 +80,13 @@ final class Attribute extends Model
     }
 
     /*
-     * Helpers
+     * Attributes
      * */
 
-    protected static function newFactory(): AttributeFactory
+    public function getSlugOptions(): SlugOptions
     {
-        return AttributeFactory::new();
+        return SlugOptions::create()
+            ->generateSlugsFrom('title')
+            ->saveSlugsTo('slug');
     }
 }

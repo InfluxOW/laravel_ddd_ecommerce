@@ -2,6 +2,7 @@
 
 namespace App\Domains\Feedback\Models;
 
+use App\Domains\Feedback\Database\Builders\FeedbackBuilder;
 use App\Domains\Feedback\Database\Factories\FeedbackFactory;
 use App\Domains\Feedback\Jobs\Export\FeedbackExportJob;
 use App\Domains\Generic\Interfaces\Exportable;
@@ -9,7 +10,6 @@ use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
 use App\Domains\Generic\Traits\Models\Searchable;
 use App\Domains\Users\Models\User;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -29,21 +29,21 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property-read User|null $user
  *
  * @method static \App\Domains\Feedback\Database\Factories\FeedbackFactory factory(...$parameters)
- * @method static Builder|Feedback                                         forUser(?string $ip, ?\App\Domains\Users\Models\User $user)
- * @method static Builder|Feedback                                         inLastHour()
- * @method static Builder|Feedback                                         newModelQuery()
- * @method static Builder|Feedback                                         newQuery()
- * @method static Builder|Feedback                                         query()
- * @method static Builder|Feedback                                         search(string $searchable, bool $orderByScore)
- * @method static Builder|Feedback                                         whereCreatedAt($value)
- * @method static Builder|Feedback                                         whereEmail($value)
- * @method static Builder|Feedback                                         whereId($value)
- * @method static Builder|Feedback                                         whereIp($value)
- * @method static Builder|Feedback                                         whereIsReviewed($value)
- * @method static Builder|Feedback                                         wherePhone($value)
- * @method static Builder|Feedback                                         whereText($value)
- * @method static Builder|Feedback                                         whereUserId($value)
- * @method static Builder|Feedback                                         whereUsername($value)
+ * @method static FeedbackBuilder|Feedback                                 forUser(?string $ip, ?\App\Domains\Users\Models\User $user)
+ * @method static FeedbackBuilder|Feedback                                 inLastHour()
+ * @method static FeedbackBuilder|Feedback                                 newModelQuery()
+ * @method static FeedbackBuilder|Feedback                                 newQuery()
+ * @method static FeedbackBuilder|Feedback                                 query()
+ * @method static FeedbackBuilder|Feedback                                 search(string $searchable, bool $orderByScore)
+ * @method static FeedbackBuilder|Feedback                                 whereCreatedAt($value)
+ * @method static FeedbackBuilder|Feedback                                 whereEmail($value)
+ * @method static FeedbackBuilder|Feedback                                 whereId($value)
+ * @method static FeedbackBuilder|Feedback                                 whereIp($value)
+ * @method static FeedbackBuilder|Feedback                                 whereIsReviewed($value)
+ * @method static FeedbackBuilder|Feedback                                 wherePhone($value)
+ * @method static FeedbackBuilder|Feedback                                 whereText($value)
+ * @method static FeedbackBuilder|Feedback                                 whereUserId($value)
+ * @method static FeedbackBuilder|Feedback                                 whereUsername($value)
  *
  * @mixin \Eloquent
  */
@@ -72,13 +72,25 @@ final class Feedback extends Model implements Exportable
     }
 
     /*
-     * Helpers
+     * Internal
      * */
 
     protected static function newFactory(): FeedbackFactory
     {
         return FeedbackFactory::new();
     }
+
+    public function newEloquentBuilder($query): FeedbackBuilder
+    {
+        /** @var FeedbackBuilder<self> $builder */
+        $builder = new FeedbackBuilder($query);
+
+        return $builder;
+    }
+
+    /*
+     * Helpers
+     * */
 
     public static function canBeCreated(?int $limitPerHour, ?string $ip, ?User $user): bool
     {
@@ -99,31 +111,10 @@ final class Feedback extends Model implements Exportable
             return Carbon::now()->longAbsoluteDiffForHumans(Carbon::now()->subHour());
         }
 
-        $feedback = self::query()->select(['created_at'])->forUser($ip, $user)->inLastHour()->latest('created_at')->first();
+        /** @var ?self $feedback */
+        $feedback = self::query()->forUser($ip, $user)->inLastHour()->select(['created_at'])->latest('created_at')->first();
 
         return ($feedback === null) ? null : $feedback->created_at?->addHour()->longAbsoluteDiffForHumans(Carbon::now());
-    }
-
-    /*
-     * Scopes
-     * */
-
-    public function scopeForUser(Builder $query, ?string $ip, ?User $user): void
-    {
-        $query->where(function (Builder $query) use ($ip, $user): void {
-            if (isset($ip)) {
-                $query->where('ip', $ip);
-            }
-
-            if (isset($user)) {
-                $query->orWhereBelongsTo($user, 'user');
-            }
-        });
-    }
-
-    public function scopeInLastHour(Builder $query): void
-    {
-        $query->where('created_at', '>', Carbon::now()->subHour());
     }
 
     /*

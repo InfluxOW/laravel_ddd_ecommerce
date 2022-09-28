@@ -2,6 +2,7 @@
 
 namespace App\Components\Attributable\Models;
 
+use App\Components\Attributable\Database\Builders\AttributeValueBuilder;
 use App\Components\Attributable\Database\Factories\AttributeValueFactory;
 use App\Components\Attributable\Enums\AttributeValuesType;
 use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
@@ -30,19 +31,19 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property string|int|float|bool $value
  *
  * @method static \App\Components\Attributable\Database\Factories\AttributeValueFactory factory(...$parameters)
- * @method static \Illuminate\Database\Eloquent\Builder|AttributeValue                  newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|AttributeValue                  newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|AttributeValue                  query()
- * @method static \Illuminate\Database\Eloquent\Builder|AttributeValue                  whereAttributableId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|AttributeValue                  whereAttributableType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|AttributeValue                  whereAttributeId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|AttributeValue                  whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|AttributeValue                  whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|AttributeValue                  whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|AttributeValue                  whereValueBoolean($value)
- * @method static \Illuminate\Database\Eloquent\Builder|AttributeValue                  whereValueFloat($value)
- * @method static \Illuminate\Database\Eloquent\Builder|AttributeValue                  whereValueInteger($value)
- * @method static \Illuminate\Database\Eloquent\Builder|AttributeValue                  whereValueString($value)
+ * @method static AttributeValueBuilder|AttributeValue                                  newModelQuery()
+ * @method static AttributeValueBuilder|AttributeValue                                  newQuery()
+ * @method static AttributeValueBuilder|AttributeValue                                  query()
+ * @method static AttributeValueBuilder|AttributeValue                                  whereAttributableId($value)
+ * @method static AttributeValueBuilder|AttributeValue                                  whereAttributableType($value)
+ * @method static AttributeValueBuilder|AttributeValue                                  whereAttributeId($value)
+ * @method static AttributeValueBuilder|AttributeValue                                  whereCreatedAt($value)
+ * @method static AttributeValueBuilder|AttributeValue                                  whereId($value)
+ * @method static AttributeValueBuilder|AttributeValue                                  whereUpdatedAt($value)
+ * @method static AttributeValueBuilder|AttributeValue                                  whereValueBoolean($value)
+ * @method static AttributeValueBuilder|AttributeValue                                  whereValueFloat($value)
+ * @method static AttributeValueBuilder|AttributeValue                                  whereValueInteger($value)
+ * @method static AttributeValueBuilder|AttributeValue                                  whereValueString($value)
  *
  * @mixin \Eloquent
  */
@@ -69,6 +70,23 @@ final class AttributeValue extends Model
         'value_integer',
         'attribute_id',
     ];
+
+    /*
+     * Internal
+     * */
+
+    protected static function newFactory(): AttributeValueFactory
+    {
+        return AttributeValueFactory::new();
+    }
+
+    public function newEloquentBuilder($query): AttributeValueBuilder
+    {
+        /** @var AttributeValueBuilder<self> $builder */
+        $builder = new AttributeValueBuilder($query);
+
+        return $builder;
+    }
 
     /*
      * Relations
@@ -125,10 +143,5 @@ final class AttributeValue extends Model
             AttributeValuesType::FLOAT => 'value_float',
             AttributeValuesType::STRING => 'value_string',
         };
-    }
-
-    protected static function newFactory(): AttributeValueFactory
-    {
-        return AttributeValueFactory::new();
     }
 }
