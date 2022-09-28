@@ -2,10 +2,10 @@
 
 namespace App\Domains\Generic\Models;
 
+use App\Domains\Generic\Database\Builders\ConfirmationTokenBuilder;
 use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
 use App\Domains\Users\Models\User;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -22,20 +22,20 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read User $user
  *
- * @method static Builder|ConfirmationToken expired()
- * @method static Builder|ConfirmationToken newModelQuery()
- * @method static Builder|ConfirmationToken newQuery()
- * @method static Builder|ConfirmationToken query()
- * @method static Builder|ConfirmationToken unexpired()
- * @method static Builder|ConfirmationToken unused()
- * @method static Builder|ConfirmationToken whereCreatedAt($value)
- * @method static Builder|ConfirmationToken whereExpiresAt($value)
- * @method static Builder|ConfirmationToken whereId($value)
- * @method static Builder|ConfirmationToken whereToken($value)
- * @method static Builder|ConfirmationToken whereType($value)
- * @method static Builder|ConfirmationToken whereUpdatedAt($value)
- * @method static Builder|ConfirmationToken whereUsedAt($value)
- * @method static Builder|ConfirmationToken whereUserId($value)
+ * @method static ConfirmationTokenBuilder|ConfirmationToken expired()
+ * @method static ConfirmationTokenBuilder|ConfirmationToken newModelQuery()
+ * @method static ConfirmationTokenBuilder|ConfirmationToken newQuery()
+ * @method static ConfirmationTokenBuilder|ConfirmationToken query()
+ * @method static ConfirmationTokenBuilder|ConfirmationToken unexpired()
+ * @method static ConfirmationTokenBuilder|ConfirmationToken unused()
+ * @method static ConfirmationTokenBuilder|ConfirmationToken whereCreatedAt($value)
+ * @method static ConfirmationTokenBuilder|ConfirmationToken whereExpiresAt($value)
+ * @method static ConfirmationTokenBuilder|ConfirmationToken whereId($value)
+ * @method static ConfirmationTokenBuilder|ConfirmationToken whereToken($value)
+ * @method static ConfirmationTokenBuilder|ConfirmationToken whereType($value)
+ * @method static ConfirmationTokenBuilder|ConfirmationToken whereUpdatedAt($value)
+ * @method static ConfirmationTokenBuilder|ConfirmationToken whereUsedAt($value)
+ * @method static ConfirmationTokenBuilder|ConfirmationToken whereUserId($value)
  *
  * @mixin \Eloquent
  */
@@ -56,31 +56,24 @@ final class ConfirmationToken extends Model
     ];
 
     /*
+     * Internal
+     * */
+
+    public function newEloquentBuilder($query): ConfirmationTokenBuilder
+    {
+        /** @var ConfirmationTokenBuilder<self> $builder */
+        $builder = new ConfirmationTokenBuilder($query);
+
+        return $builder;
+    }
+
+    /*
      * Relations
      * */
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
-    }
-
-    /*
-     * Scopes
-     * */
-
-    public function scopeUnexpired(Builder $query): void
-    {
-        $query->where('expires_at', '>', Carbon::now());
-    }
-
-    public function scopeExpired(Builder $query): void
-    {
-        $query->where('expires_at', '<=', Carbon::now());
-    }
-
-    public function scopeUnused(Builder $query): void
-    {
-        $query->whereNull('used_at');
     }
 
     /*

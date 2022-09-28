@@ -18,9 +18,9 @@ parameters:
         - '#\(Illuminate\\Support\\Carbon\|null\) does not accept Carbon\\Carbon#'
         - '#Call to an undefined method Illuminate\\Foundation\\Application#'
 
-        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Relations\\MorphMany\<App\\Components\\LoginHistoryable\\Models\\LoginHistory\>#'
-
         - '#Call to private method defaultFormat\(\) of parent class Carbon\\Carbon#'
+
+        - '#The @extends tag of class App\\Components\\LoginHistoryable\\Database\\Builders\\LoginHistoryBuilder describes Illuminate\\Database\\Eloquent\\Builder but the class extends MStaack\\LaravelPostgis\\Eloquent\\Builder.#'
 
         - '#Access to an undefined property Faker\\Generator#'
 

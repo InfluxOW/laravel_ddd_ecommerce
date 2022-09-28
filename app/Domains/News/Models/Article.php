@@ -6,10 +6,9 @@ use App\Domains\Catalog\Enums\Media\ProductMediaCollectionKey;
 use App\Domains\Generic\Interfaces\Exportable;
 use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
 use App\Domains\Generic\Traits\Models\Searchable;
+use App\Domains\News\Database\Builders\ArticleBuilder;
 use App\Domains\News\Database\Factories\ArticleFactory;
 use App\Domains\News\Jobs\Export\NewsExportJob;
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -39,23 +38,23 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read int|null $media_count
  *
  * @method static \App\Domains\News\Database\Factories\ArticleFactory factory(...$parameters)
- * @method static Builder|Article                                     newModelQuery()
- * @method static Builder|Article                                     newQuery()
- * @method static Builder|Article                                     published()
- * @method static Builder|Article                                     query()
- * @method static Builder|Article                                     search(string $searchable, bool $orderByScore)
- * @method static Builder|Article                                     unpublished()
- * @method static Builder|Article                                     whereBody($value)
- * @method static Builder|Article                                     whereCreatedAt($value)
- * @method static Builder|Article                                     whereDescription($value)
- * @method static Builder|Article                                     whereId($value)
- * @method static Builder|Article                                     wherePublishedAfter(?\Carbon\Carbon $date)
- * @method static Builder|Article                                     wherePublishedAt($value)
- * @method static Builder|Article                                     wherePublishedBefore(?\Carbon\Carbon $date)
- * @method static Builder|Article                                     wherePublishedBetween(?\Carbon\Carbon $min, ?\Carbon\Carbon $max)
- * @method static Builder|Article                                     whereSlug($value)
- * @method static Builder|Article                                     whereTitle($value)
- * @method static Builder|Article                                     whereUpdatedAt($value)
+ * @method static ArticleBuilder|Article                              newModelQuery()
+ * @method static ArticleBuilder|Article                              newQuery()
+ * @method static ArticleBuilder|Article                              published()
+ * @method static ArticleBuilder|Article                              query()
+ * @method static ArticleBuilder|Article                              search(string $searchable, bool $orderByScore)
+ * @method static ArticleBuilder|Article                              unpublished()
+ * @method static ArticleBuilder|Article                              whereBody($value)
+ * @method static ArticleBuilder|Article                              whereCreatedAt($value)
+ * @method static ArticleBuilder|Article                              whereDescription($value)
+ * @method static ArticleBuilder|Article                              whereId($value)
+ * @method static ArticleBuilder|Article                              wherePublishedAfter(\Carbon\Carbon $date)
+ * @method static ArticleBuilder|Article                              wherePublishedAt($value)
+ * @method static ArticleBuilder|Article                              wherePublishedBefore(\Carbon\Carbon $date)
+ * @method static ArticleBuilder|Article                              wherePublishedBetween(?\Carbon\Carbon $min, ?\Carbon\Carbon $max)
+ * @method static ArticleBuilder|Article                              whereSlug($value)
+ * @method static ArticleBuilder|Article                              whereTitle($value)
+ * @method static ArticleBuilder|Article                              whereUpdatedAt($value)
  *
  * @mixin \Eloquent
  */
@@ -113,7 +112,7 @@ class Article extends Model implements HasMedia, Exportable
     }
 
     /*
-     * Helpers
+     * Internal
      * */
 
     protected static function newFactory(): ArticleFactory
@@ -121,44 +120,12 @@ class Article extends Model implements HasMedia, Exportable
         return ArticleFactory::new();
     }
 
-    /*
-     * Scopes
-     * */
-
-    public function scopePublished(Builder|self $query): void
+    public function newEloquentBuilder($query): ArticleBuilder
     {
-        $query->wherePublishedBefore(Carbon::now());
-    }
+        /** @var ArticleBuilder<self> $builder */
+        $builder = new ArticleBuilder($query);
 
-    public function scopeUnpublished(Builder $query): void
-    {
-        /** @phpstan-ignore-next-line */
-        $query->whereNull('published_at')->orWhere(fn (Builder|self $query) => $query->wherePublishedAfter(Carbon::now()));
-    }
-
-    public function scopeWherePublishedAfter(Builder $query, ?Carbon $date): void
-    {
-        $query->where('published_at', '>=', $date);
-    }
-
-    public function scopeWherePublishedBefore(Builder $query, ?Carbon $date): void
-    {
-        $query->where('published_at', '<=', $date);
-    }
-
-    public function scopeWherePublishedBetween(Builder|self $query, ?Carbon $min, ?Carbon $max): void
-    {
-        if (isset($min, $max) && $min > $max) {
-            [$max, $min] = [$min, $max];
-        }
-
-        if (isset($min)) {
-            $query->wherePublishedAfter($min);
-        }
-
-        if (isset($max)) {
-            $query->wherePublishedBefore($max);
-        }
+        return $builder;
     }
 
     /*

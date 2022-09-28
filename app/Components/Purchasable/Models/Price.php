@@ -4,6 +4,7 @@ namespace App\Components\Purchasable\Models;
 
 use Akaunting\Money\Money;
 use App\Components\Purchasable\Casts\MoneyCast;
+use App\Components\Purchasable\Database\Builders\PriceBuilder;
 use App\Components\Purchasable\Database\Factories\PriceFactory;
 use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -26,17 +27,17 @@ use Illuminate\Support\Facades\DB;
  * @property-read Model|\Eloquent $purchasable
  *
  * @method static \App\Components\Purchasable\Database\Factories\PriceFactory factory(...$parameters)
- * @method static \Illuminate\Database\Eloquent\Builder|Price                 newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Price                 newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Price                 query()
- * @method static \Illuminate\Database\Eloquent\Builder|Price                 whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Price                 whereCurrency($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Price                 whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Price                 wherePrice($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Price                 wherePriceDiscounted($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Price                 wherePurchasableId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Price                 wherePurchasableType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Price                 whereUpdatedAt($value)
+ * @method static PriceBuilder|Price                                          newModelQuery()
+ * @method static PriceBuilder|Price                                          newQuery()
+ * @method static PriceBuilder|Price                                          query()
+ * @method static PriceBuilder|Price                                          whereCreatedAt($value)
+ * @method static PriceBuilder|Price                                          whereCurrency($value)
+ * @method static PriceBuilder|Price                                          whereId($value)
+ * @method static PriceBuilder|Price                                          wherePrice($value)
+ * @method static PriceBuilder|Price                                          wherePriceDiscounted($value)
+ * @method static PriceBuilder|Price                                          wherePurchasableId($value)
+ * @method static PriceBuilder|Price                                          wherePurchasableType($value)
+ * @method static PriceBuilder|Price                                          whereUpdatedAt($value)
  *
  * @mixin \Eloquent
  */
@@ -57,6 +58,23 @@ final class Price extends Model
     ];
 
     /*
+     * Internal
+     * */
+
+    protected static function newFactory(): PriceFactory
+    {
+        return PriceFactory::new();
+    }
+
+    public function newEloquentBuilder($query): PriceBuilder
+    {
+        /** @var PriceBuilder<self> $builder */
+        $builder = new PriceBuilder($query);
+
+        return $builder;
+    }
+
+    /*
      * Relations
      * */
 
@@ -68,11 +86,6 @@ final class Price extends Model
     /*
      * Helpers
      * */
-
-    protected static function newFactory(): PriceFactory
-    {
-        return PriceFactory::new();
-    }
 
     public static function getDatabasePriceExpression(): Expression
     {

@@ -3,6 +3,7 @@
 namespace App\Domains\Cart\Models;
 
 use App\Components\Purchasable\Casts\MoneyCast;
+use App\Domains\Cart\Database\Builders\CartBuilder;
 use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
 use App\Domains\Users\Models\User;
 use Illuminate\Database\Eloquent\Model;
@@ -24,17 +25,17 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read int|null $items_count
  * @property-read User|null $user
  *
- * @method static \Illuminate\Database\Eloquent\Builder|Cart newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Cart newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Cart query()
- * @method static \Illuminate\Database\Eloquent\Builder|Cart whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Cart whereCurrency($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Cart whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Cart whereKey($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Cart wherePriceItems($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Cart wherePriceItemsDiscounted($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Cart whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Cart whereUserId($value)
+ * @method static CartBuilder|Cart newModelQuery()
+ * @method static CartBuilder|Cart newQuery()
+ * @method static CartBuilder|Cart query()
+ * @method static CartBuilder|Cart whereCreatedAt($value)
+ * @method static CartBuilder|Cart whereCurrency($value)
+ * @method static CartBuilder|Cart whereId($value)
+ * @method static CartBuilder|Cart whereKey($value)
+ * @method static CartBuilder|Cart wherePriceItems($value)
+ * @method static CartBuilder|Cart wherePriceItemsDiscounted($value)
+ * @method static CartBuilder|Cart whereUpdatedAt($value)
+ * @method static CartBuilder|Cart whereUserId($value)
  *
  * @mixin \Eloquent
  */
@@ -48,6 +49,18 @@ final class Cart extends Model
         'price_items' => MoneyCast::class,
         'price_items_discounted' => MoneyCast::class,
     ];
+
+    /*
+     * Internal
+     * */
+
+    public function newEloquentBuilder($query): CartBuilder
+    {
+        /** @var CartBuilder<self> $builder */
+        $builder = new CartBuilder($query);
+
+        return $builder;
+    }
 
     /*
      * Relations

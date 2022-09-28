@@ -2,6 +2,7 @@
 
 namespace App\Domains\Catalog\Models;
 
+use App\Domains\Catalog\Database\Builders\ProductCategoryBuilder;
 use App\Domains\Catalog\Database\Factories\ProductCategoryFactory;
 use App\Domains\Catalog\Enums\Media\ProductCategoryMediaCollectionKey;
 use App\Domains\Catalog\Jobs\Export\ProductCategoriesExportJob;
@@ -10,7 +11,6 @@ use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
 use App\Domains\Generic\Traits\Models\Searchable;
 use Baum\NestedSet\Node;
 use Closure;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -57,29 +57,29 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read ProductCategory|null $parent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Domains\Catalog\Models\Product[] $products
  *
- * @method static Builder|ProductCategory                                        displayable()
+ * @method static ProductCategoryBuilder|ProductCategory                         displayable()
  * @method static \App\Domains\Catalog\Database\Factories\ProductCategoryFactory factory(...$parameters)
- * @method static Builder|ProductCategory                                        hasLimitedDepth()
- * @method static Builder|ProductCategory                                        limitDepth($limit)
- * @method static Builder|ProductCategory                                        newModelQuery()
- * @method static Builder|ProductCategory                                        newQuery()
- * @method static Builder|ProductCategory                                        query()
- * @method static Builder|ProductCategory                                        search(string $searchable, bool $orderByScore)
- * @method static Builder|ProductCategory                                        whereCreatedAt($value)
- * @method static Builder|ProductCategory                                        whereDepth($value)
- * @method static Builder|ProductCategory                                        whereDescription($value)
- * @method static Builder|ProductCategory                                        whereId($value)
- * @method static Builder|ProductCategory                                        whereIsDisplayable($value)
- * @method static Builder|ProductCategory                                        whereIsVisible($value)
- * @method static Builder|ProductCategory                                        whereLeft($value)
- * @method static Builder|ProductCategory                                        whereParentId($value)
- * @method static Builder|ProductCategory                                        whereRight($value)
- * @method static Builder|ProductCategory                                        whereSlug($value)
- * @method static Builder|ProductCategory                                        whereTitle($value)
- * @method static Builder|ProductCategory                                        whereUpdatedAt($value)
- * @method static Builder|ProductCategory                                        withoutNode($node)
- * @method static Builder|ProductCategory                                        withoutRoot()
- * @method static Builder|ProductCategory                                        withoutSelf()
+ * @method static ProductCategoryBuilder|ProductCategory                         hasLimitedDepth()
+ * @method static ProductCategoryBuilder|ProductCategory                         limitDepth($limit)
+ * @method static ProductCategoryBuilder|ProductCategory                         newModelQuery()
+ * @method static ProductCategoryBuilder|ProductCategory                         newQuery()
+ * @method static ProductCategoryBuilder|ProductCategory                         query()
+ * @method static ProductCategoryBuilder|ProductCategory                         search(string $searchable, bool $orderByScore)
+ * @method static ProductCategoryBuilder|ProductCategory                         whereCreatedAt($value)
+ * @method static ProductCategoryBuilder|ProductCategory                         whereDepth($value)
+ * @method static ProductCategoryBuilder|ProductCategory                         whereDescription($value)
+ * @method static ProductCategoryBuilder|ProductCategory                         whereId($value)
+ * @method static ProductCategoryBuilder|ProductCategory                         whereIsDisplayable($value)
+ * @method static ProductCategoryBuilder|ProductCategory                         whereIsVisible($value)
+ * @method static ProductCategoryBuilder|ProductCategory                         whereLeft($value)
+ * @method static ProductCategoryBuilder|ProductCategory                         whereParentId($value)
+ * @method static ProductCategoryBuilder|ProductCategory                         whereRight($value)
+ * @method static ProductCategoryBuilder|ProductCategory                         whereSlug($value)
+ * @method static ProductCategoryBuilder|ProductCategory                         whereTitle($value)
+ * @method static ProductCategoryBuilder|ProductCategory                         whereUpdatedAt($value)
+ * @method static ProductCategoryBuilder|ProductCategory                         withoutNode($node)
+ * @method static ProductCategoryBuilder|ProductCategory                         withoutRoot()
+ * @method static ProductCategoryBuilder|ProductCategory                         withoutSelf()
  *
  * @mixin \Eloquent
  */
@@ -110,6 +110,23 @@ final class ProductCategory extends Model implements HasMedia, Exportable
     protected $appends = ['path'];
 
     public static Collection $hierarchy;
+
+    /*
+     * Internal
+     * */
+
+    protected static function newFactory(): ProductCategoryFactory
+    {
+        return ProductCategoryFactory::new();
+    }
+
+    public function newEloquentBuilder($query): ProductCategoryBuilder
+    {
+        /** @var ProductCategoryBuilder<self> $builder */
+        $builder = new ProductCategoryBuilder($query);
+
+        return $builder;
+    }
 
     /*
      * Relations
@@ -186,11 +203,6 @@ final class ProductCategory extends Model implements HasMedia, Exportable
     /*
      * Helpers
      * */
-
-    protected static function newFactory(): ProductCategoryFactory
-    {
-        return ProductCategoryFactory::new();
-    }
 
     public static function loadHierarchy(): void
     {
@@ -269,21 +281,6 @@ final class ProductCategory extends Model implements HasMedia, Exportable
     protected static function getHierarchyCacheKey(): string
     {
         return sprintf('%s:%s', self::class, self::HIERARCHY_CACHE_KEY);
-    }
-
-    /*
-     * Scopes
-     * */
-
-    public function scopeHasLimitedDepth(Builder|Model $query): void
-    {
-        /** @phpstan-ignore-next-line */
-        $query->limitDepth(self::MAX_DEPTH);
-    }
-
-    public function scopeDisplayable(Builder|Model $query): void
-    {
-        $query->where('product_categories.is_displayable', true);
     }
 
     /*

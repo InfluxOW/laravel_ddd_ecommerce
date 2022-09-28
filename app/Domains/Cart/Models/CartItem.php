@@ -3,6 +3,7 @@
 namespace App\Domains\Cart\Models;
 
 use App\Components\Purchasable\Casts\MoneyCast;
+use App\Domains\Cart\Database\Builders\CartItemBuilder;
 use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -26,21 +27,21 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property-read string $currency
  * @property-read Model|\Eloquent $purchasable
  *
- * @method static \Illuminate\Database\Eloquent\Builder|CartItem newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|CartItem newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|CartItem query()
- * @method static \Illuminate\Database\Eloquent\Builder|CartItem whereCartId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CartItem whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CartItem whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CartItem wherePriceItem($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CartItem wherePriceItemDiscounted($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CartItem wherePriceTotal($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CartItem wherePriceTotalDiscounted($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CartItem wherePurchasableData($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CartItem wherePurchasableId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CartItem wherePurchasableType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CartItem whereQuantity($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CartItem whereUpdatedAt($value)
+ * @method static CartItemBuilder|CartItem newModelQuery()
+ * @method static CartItemBuilder|CartItem newQuery()
+ * @method static CartItemBuilder|CartItem query()
+ * @method static CartItemBuilder|CartItem whereCartId($value)
+ * @method static CartItemBuilder|CartItem whereCreatedAt($value)
+ * @method static CartItemBuilder|CartItem whereId($value)
+ * @method static CartItemBuilder|CartItem wherePriceItem($value)
+ * @method static CartItemBuilder|CartItem wherePriceItemDiscounted($value)
+ * @method static CartItemBuilder|CartItem wherePriceTotal($value)
+ * @method static CartItemBuilder|CartItem wherePriceTotalDiscounted($value)
+ * @method static CartItemBuilder|CartItem wherePurchasableData($value)
+ * @method static CartItemBuilder|CartItem wherePurchasableId($value)
+ * @method static CartItemBuilder|CartItem wherePurchasableType($value)
+ * @method static CartItemBuilder|CartItem whereQuantity($value)
+ * @method static CartItemBuilder|CartItem whereUpdatedAt($value)
  *
  * @mixin \Eloquent
  */
@@ -68,12 +69,15 @@ final class CartItem extends Model
     ];
 
     /*
-     * Attributes
+     * Internal
      * */
 
-    public function getCurrencyAttribute(): string
+    public function newEloquentBuilder($query): CartItemBuilder
     {
-        return $this->cart->currency;
+        /** @var CartItemBuilder<self> $builder */
+        $builder = new CartItemBuilder($query);
+
+        return $builder;
     }
 
     /*
@@ -88,5 +92,14 @@ final class CartItem extends Model
     public function purchasable(): BelongsTo
     {
         return $this->morphTo();
+    }
+
+    /*
+     * Attributes
+     * */
+
+    public function getCurrencyAttribute(): string
+    {
+        return $this->cart->currency;
     }
 }
