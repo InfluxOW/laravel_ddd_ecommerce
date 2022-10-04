@@ -13,17 +13,8 @@ use UnitEnum;
 
 final class ArticleFilterBuilder implements FilterBuilder
 {
-    private SpatieQueryBuilder $query;
-
-    public function __construct(private readonly ArticleFilterBuilderRepository $repository)
+    public function __construct(private readonly SpatieQueryBuilder $query, private readonly ArticleFilterBuilderRepository $repository)
     {
-    }
-
-    public function prepare(SpatieQueryBuilder $query): static
-    {
-        $this->query = $query;
-
-        return $this;
     }
 
     /**

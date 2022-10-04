@@ -3,6 +3,7 @@
 namespace App\Domains\Catalog\Http\Controllers\Api;
 
 use App\Components\Queryable\Enums\QueryKey;
+use App\Domains\Catalog\Database\Builders\ProductBuilder;
 use App\Domains\Catalog\Database\Builders\ProductCategoryBuilder;
 use App\Domains\Catalog\Enums\Query\Filter\ProductAllowedFilter;
 use App\Domains\Catalog\Http\Requests\ProductIndexRequest;
@@ -13,7 +14,6 @@ use App\Domains\Catalog\Models\Product;
 use App\Domains\Catalog\Services\Query\Filter\ProductFilterService;
 use App\Domains\Catalog\Services\Query\Sort\ProductSortService;
 use App\Interfaces\Http\Controllers\Controller;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Http\JsonResponse;
@@ -23,29 +23,32 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 final class ProductController extends Controller
 {
-    public function index(ProductIndexRequest $request, ProductFilterService $filterService, ProductSortService $sortService): AnonymousResourceCollection
+    public function index(ProductIndexRequest $request): AnonymousResourceCollection
     {
-        $validated = $request->validated();
-        $currency = $validated[QueryKey::FILTER->value][ProductAllowedFilter::CURRENCY->name];
+        $filters = $request->validated(QueryKey::FILTER->value, []);
+        $currency = $filters[ProductAllowedFilter::CURRENCY->name];
 
         $query = QueryBuilder::for(self::getBaseQuery($currency)->with(['image.model']));
 
-        $filterService->prepare($validated, $query->clone());
-        $sortService->prepare($currency);
-
-        return $this->respondPaginated(LightProductResource::class, $query, $request, $filterService, $sortService);
+        return $this->respondPaginated(
+            LightProductResource::class,
+            $query,
+            $request,
+            app(ProductFilterService::class, ['filters' => $filters, 'query' => $query->clone()]),
+            app(ProductSortService::class, ['currency' => $currency])
+        );
     }
 
     public function show(ProductShowRequest $request, string $slug): JsonResource|JsonResponse
     {
-        $query = self::getBaseQuery($request->validated()[QueryKey::FILTER->value][ProductAllowedFilter::CURRENCY->name])
+        $query = self::getBaseQuery($request->validated(sprintf('%s.%s', QueryKey::FILTER->value, ProductAllowedFilter::CURRENCY->name)))
             ->with(['attributeValues.attribute', 'images.model'])
             ->where('slug', $slug);
 
         return $this->respondWithPossiblyNotFoundItem(HeavyProductResource::class, $query);
     }
 
-    private static function getBaseQuery(string $currency): Builder
+    private static function getBaseQuery(string $currency): ProductBuilder
     {
         return Product::query()
             ->select(['products.*'])

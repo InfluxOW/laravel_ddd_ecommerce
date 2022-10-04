@@ -10,28 +10,22 @@ use Spatie\QueryBuilder\QueryBuilder as SpatieQueryBuilder;
 
 final class ProductFilterService extends FilterService
 {
-    public function prepare(array $validated, SpatieQueryBuilder $query): static
+    public function __construct(array $filters, SpatieQueryBuilder $query)
     {
-        $this->validated = $validated;
+        $builder = app(ProductFilterBuilder::class, ['currency' => $this->getFilterValue(ProductAllowedFilter::CURRENCY, $filters), 'query' => $query]);
 
-        $currency = $this->getFilter(ProductAllowedFilter::CURRENCY);
-        /** @var ProductFilterBuilder $builder */
-        $builder = $this->builder;
-
-        $builder->prepare($currency, $query);
-
-        return $this;
+        parent::__construct($filters, $builder);
     }
 
     public function build(): static
     {
-        $getFilter = fn (ProductAllowedFilter $filter): mixed => $this->getFilter($filter);
+        $getFilterValue = fn (ProductAllowedFilter $filter): mixed => $this->getFilterValue($filter);
 
         return $this
-            ->addSearchFilter(ProductAllowedFilter::SEARCH, static fn (ProductBuilder $query) => $query->search($getFilter(ProductAllowedFilter::SEARCH), orderByScore: true))
-            ->addFilter(ProductAllowedFilter::CURRENCY, static fn (ProductBuilder $query) => $query->whereHasPriceCurrency($getFilter(ProductAllowedFilter::CURRENCY)))
-            ->addFilter(ProductAllowedFilter::CATEGORY, static fn (ProductBuilder $query) => $query->whereInCategory(ProductCategory::query()->displayable()->whereIn('slug', $getFilter(ProductAllowedFilter::CATEGORY))->get()))
-            ->addFilter(ProductAllowedFilter::PRICE_BETWEEN, static fn (ProductBuilder $query) => $query->wherePriceBetween(...$getFilter(ProductAllowedFilter::PRICE_BETWEEN)))
-            ->addFilter(ProductAllowedFilter::ATTRIBUTE_VALUE, static fn (ProductBuilder $query) => $query->whereHasAttributeValue($getFilter(ProductAllowedFilter::ATTRIBUTE_VALUE)));
+            ->addSearchFilter(ProductAllowedFilter::SEARCH, fn (ProductBuilder $query) => $query->search($getFilterValue(ProductAllowedFilter::SEARCH), orderByScore: true))
+            ->addFilter(ProductAllowedFilter::CURRENCY, fn (ProductBuilder $query) => $query->whereHasPriceCurrency($getFilterValue(ProductAllowedFilter::CURRENCY)))
+            ->addFilter(ProductAllowedFilter::CATEGORY, fn (ProductBuilder $query) => $query->whereInCategory(ProductCategory::query()->displayable()->whereIn('slug', $getFilterValue(ProductAllowedFilter::CATEGORY))->get()))
+            ->addFilter(ProductAllowedFilter::PRICE_BETWEEN, fn (ProductBuilder $query) => $query->wherePriceBetween(...$getFilterValue(ProductAllowedFilter::PRICE_BETWEEN)))
+            ->addFilter(ProductAllowedFilter::ATTRIBUTE_VALUE, fn (ProductBuilder $query) => $query->whereHasAttributeValue($getFilterValue(ProductAllowedFilter::ATTRIBUTE_VALUE)));
     }
 }

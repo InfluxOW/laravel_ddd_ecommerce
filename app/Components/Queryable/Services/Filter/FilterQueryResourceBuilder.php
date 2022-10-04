@@ -24,7 +24,7 @@ final class FilterQueryResourceBuilder
         return FilterQueryResource::make(
             new FilterQuery(
                 $this->service->allowed(),
-                $this->applicator->applied($request->validated()[QueryKey::FILTER->value] ?? [])
+                $this->applicator->applied($request->validated(QueryKey::FILTER->value, []))
             )
         );
     }
@@ -33,6 +33,6 @@ final class FilterQueryResourceBuilder
     {
         $searchFilter = $this->service->getSearchFilter();
 
-        return isset($searchFilter) && $this->applicator->applied($request->validated()[QueryKey::FILTER->value] ?? [])->filter(fn (Filter $filter): bool => $filter->query === $searchFilter->query)->isNotEmpty();
+        return isset($searchFilter) && $this->applicator->applied($request->validated(QueryKey::FILTER->value, []))->filter(fn (Filter $filter): bool => $filter->query === $searchFilter->query)->isNotEmpty();
     }
 }

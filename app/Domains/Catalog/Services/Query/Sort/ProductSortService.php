@@ -8,13 +8,9 @@ use App\Domains\Catalog\Enums\Query\Sort\ProductAllowedSort;
 
 final class ProductSortService extends SortService
 {
-    private string $currency;
-
-    public function prepare(string $currency): static
+    public function __construct(private readonly string $currency)
     {
-        $this->currency = $currency;
-
-        return $this;
+        parent::__construct();
     }
 
     public function build(): static

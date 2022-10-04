@@ -25,13 +25,19 @@ final class ProductIndexRequest extends IndexRequest
         ]);
     }
 
-    public function validated($key = null, $default = null): array
+    public function validated($key = null, $default = null): mixed
     {
         $validated = parent::validated($key, $default);
 
-        $currency = $validated[QueryKey::FILTER->value][ProductAllowedFilter::CURRENCY->name];
-        foreach ($validated[QueryKey::FILTER->value][ProductAllowedFilter::PRICE_BETWEEN->name] ?? [] as $i => $price) {
-            $validated[QueryKey::FILTER->value][ProductAllowedFilter::PRICE_BETWEEN->name][$i] = isset($price) ? money($price, $currency) : null;
+        if ($key === null || $key === QueryKey::FILTER->value) {
+            $filters = isset($key) ? $validated : $validated[QueryKey::FILTER->value];
+
+            $currency = $filters[ProductAllowedFilter::CURRENCY->name];
+            foreach ($filters[ProductAllowedFilter::PRICE_BETWEEN->name] ?? [] as $i => $price) {
+                $filters[ProductAllowedFilter::PRICE_BETWEEN->name][$i] = isset($price) ? money($price, $currency) : null;
+            }
+
+            $validated = array_merge($validated, isset($key) ? $filters : [QueryKey::FILTER->value => $filters]);
         }
 
         return $validated;

@@ -4,7 +4,6 @@ namespace App\Components\Queryable\Abstracts\Filter;
 
 use App\Components\Queryable\Abstracts\FilterBuilder;
 use App\Components\Queryable\Classes\Filter\Filter;
-use App\Components\Queryable\Enums\QueryKey;
 use Closure;
 use Illuminate\Support\Collection;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -12,8 +11,6 @@ use UnitEnum;
 
 abstract class FilterService
 {
-    protected array $validated;
-
     /**
      * @var Collection<Filter>
      */
@@ -26,7 +23,7 @@ abstract class FilterService
 
     private UnitEnum & IAllowedFilterEnum $searchFilter;
 
-    public function __construct(protected readonly FilterBuilder $builder)
+    public function __construct(protected readonly array $filters, protected readonly FilterBuilder $builder)
     {
         $this->allowed = collect([]);
         $this->callbacks = collect([]);
@@ -72,8 +69,8 @@ abstract class FilterService
         return isset($this->searchFilter) ? $this->allowed->offsetGet($this->searchFilter->name) : null;
     }
 
-    protected function getFilter(UnitEnum & IAllowedFilterEnum $filter): mixed
+    protected function getFilterValue(UnitEnum & IAllowedFilterEnum $filter, ?array $filters = null): mixed
     {
-        return $this->validated[QueryKey::FILTER->value][$filter->name];
+        return ($filters ?? $this->filters)[$filter->name] ?? null;
     }
 }

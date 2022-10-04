@@ -16,20 +16,8 @@ use UnitEnum;
 
 final class ProductFilterBuilder implements FilterBuilder
 {
-    private SpatieQueryBuilder $query;
-
-    private string $currency;
-
-    public function __construct(private readonly ProductFilterBuilderRepository $repository)
+    public function __construct(private readonly string $currency, private readonly SpatieQueryBuilder $query, private readonly ProductFilterBuilderRepository $repository)
     {
-    }
-
-    public function prepare(string $currency, SpatieQueryBuilder $query): static
-    {
-        $this->currency = $currency;
-        $this->query = $query;
-
-        return $this;
     }
 
     /**

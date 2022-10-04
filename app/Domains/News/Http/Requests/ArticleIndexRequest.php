@@ -19,12 +19,18 @@ final class ArticleIndexRequest extends IndexRequest
         ]);
     }
 
-    public function validated($key = null, $default = null): array
+    public function validated($key = null, $default = null): mixed
     {
         $validated = parent::validated($key, $default);
 
-        foreach ($validated[QueryKey::FILTER->value][ArticleAllowedFilter::PUBLISHED_BETWEEN->name] ?? [] as $i => $date) {
-            $validated[QueryKey::FILTER->value][ArticleAllowedFilter::PUBLISHED_BETWEEN->name][$i] = isset($date) ? Carbon::createFromDefaultFormat($date) : null;
+        if ($key === null || $key === QueryKey::FILTER->value) {
+            $filters = isset($key) ? $validated : ($validated[QueryKey::FILTER->value] ?? []);
+
+            foreach ($filters[ArticleAllowedFilter::PUBLISHED_BETWEEN->name] ?? [] as $i => $date) {
+                $filters[ArticleAllowedFilter::PUBLISHED_BETWEEN->name][$i] = isset($date) ? Carbon::createFromDefaultFormat($date) : null;
+            }
+
+            $validated = array_merge($validated, isset($key) ? $filters : [QueryKey::FILTER->value => $filters]);
         }
 
         return $validated;

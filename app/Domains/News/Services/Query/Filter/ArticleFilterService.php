@@ -9,24 +9,19 @@ use Spatie\QueryBuilder\QueryBuilder as SpatieQueryBuilder;
 
 final class ArticleFilterService extends FilterService
 {
-    public function prepare(array $validated, SpatieQueryBuilder $query): static
+    public function __construct(array $filters, SpatieQueryBuilder $query)
     {
-        $this->validated = $validated;
+        $builder = app(ArticleFilterBuilder::class, ['query' => $query]);
 
-        /** @var ArticleFilterBuilder $builder */
-        $builder = $this->builder;
-
-        $builder->prepare($query);
-
-        return $this;
+        parent::__construct($filters, $builder);
     }
 
     public function build(): static
     {
-        $getFilter = fn (ArticleAllowedFilter $filter): mixed => $this->getFilter($filter);
+        $getFilterValue = fn (ArticleAllowedFilter $filter): mixed => $this->getFilterValue($filter);
 
         return $this
-            ->addSearchFilter(ArticleAllowedFilter::SEARCH, static fn (ArticleBuilder $query) => $query->search($getFilter(ArticleAllowedFilter::SEARCH), orderByScore: true))
-            ->addFilter(ArticleAllowedFilter::PUBLISHED_BETWEEN, static fn (ArticleBuilder $query) => $query->wherePublishedBetween(...$getFilter(ArticleAllowedFilter::PUBLISHED_BETWEEN)));
+            ->addSearchFilter(ArticleAllowedFilter::SEARCH, static fn (ArticleBuilder $query) => $query->search($getFilterValue(ArticleAllowedFilter::SEARCH), orderByScore: true))
+            ->addFilter(ArticleAllowedFilter::PUBLISHED_BETWEEN, static fn (ArticleBuilder $query) => $query->wherePublishedBetween(...$getFilterValue(ArticleAllowedFilter::PUBLISHED_BETWEEN)));
     }
 }
