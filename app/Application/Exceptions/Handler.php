@@ -6,6 +6,7 @@ use App\Domains\Generic\Exceptions\HttpException;
 use App\Interfaces\Http\Controllers\ResponseTrait;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 final class Handler extends ExceptionHandler
@@ -39,6 +40,7 @@ final class Handler extends ExceptionHandler
      */
     public function register()
     {
+        $this->renderable(fn (NotFoundHttpException $e): mixed => $this->respondNotFound());
         $this->renderable(fn (HttpException $e): mixed => $this->respondWithMessage($e->getMessage(), $e->getCode()));
     }
 
