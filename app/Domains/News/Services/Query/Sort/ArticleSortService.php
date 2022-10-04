@@ -3,8 +3,8 @@
 namespace App\Domains\News\Services\Query\Sort;
 
 use App\Components\Queryable\Abstracts\Sort\SortService;
+use App\Domains\News\Database\Builders\ArticleBuilder;
 use App\Domains\News\Enums\Query\Sort\ArticleAllowedSort;
-use Illuminate\Database\Eloquent\Builder;
 
 final class ArticleSortService extends SortService
 {
@@ -15,6 +15,6 @@ final class ArticleSortService extends SortService
             ->addSort(ArticleAllowedSort::PUBLISHED_AT)
             ->addSort(ArticleAllowedSort::TITLE_DESC)
             ->addSort(ArticleAllowedSort::TITLE)
-            ->addDefaultSearchSort(ArticleAllowedSort::DEFAULT, static fn (Builder $query): Builder => $query);
+            ->addDefaultSearchSort(ArticleAllowedSort::DEFAULT, static fn (ArticleBuilder $query) => $query);
     }
 }

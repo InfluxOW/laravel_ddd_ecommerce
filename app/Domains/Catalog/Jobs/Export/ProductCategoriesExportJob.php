@@ -18,8 +18,8 @@ final class ProductCategoriesExportJob extends ExportJob
     {
         return ProductCategory::query()
             ->with([
-                'parent' => fn (BelongsTo $query): BelongsTo => $query->select(['id', 'title']),
-                'products' => fn (BelongsToMany $query): BelongsToMany => $query->select(['title']),
+                'parent' => fn (BelongsTo $query) => $query->select(['id', 'title']),
+                'products' => fn (BelongsToMany $query) => $query->select(['title']),
             ])
             ->select(['id', 'parent_id', 'title', 'slug', 'description', 'created_at', 'updated_at']);
     }

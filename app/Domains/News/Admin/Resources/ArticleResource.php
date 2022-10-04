@@ -6,6 +6,7 @@ use App\Components\Mediable\Admin\Components\Fields\MediaLibraryFileUpload;
 use App\Domains\Admin\Admin\Abstracts\Resource;
 use App\Domains\Admin\Admin\Components\Forms\RichEditor;
 use App\Domains\Catalog\Enums\Media\ProductCategoryMediaCollectionKey;
+use App\Domains\News\Database\Builders\ArticleBuilder;
 use App\Domains\News\Enums\Translation\ArticleTranslationKey;
 use App\Domains\News\Models\Article;
 use Filament\Forms\Components\Card;
@@ -17,7 +18,6 @@ use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TernaryFilter;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 
 final class ArticleResource extends Resource
@@ -102,10 +102,8 @@ final class ArticleResource extends Resource
             ->filters([
                 TernaryFilter::makeTranslated(ArticleTranslationKey::IS_PUBLISHED)
                     ->queries(
-                        /** @phpstan-ignore-next-line */
-                        true: fn (Builder|Article $query): Builder => $query->published(),
-                        /** @phpstan-ignore-next-line */
-                        false: fn (Builder|Article $query): Builder => $query->unpublished(),
+                        true: fn (ArticleBuilder $query) => $query->published(),
+                        false: fn (ArticleBuilder $query) => $query->unpublished(),
                     ),
             ]);
     }

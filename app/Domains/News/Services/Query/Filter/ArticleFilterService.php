@@ -3,9 +3,8 @@
 namespace App\Domains\News\Services\Query\Filter;
 
 use App\Components\Queryable\Abstracts\Filter\FilterService;
+use App\Domains\News\Database\Builders\ArticleBuilder;
 use App\Domains\News\Enums\Query\Filter\ArticleAllowedFilter;
-use App\Domains\News\Models\Article;
-use Illuminate\Database\Eloquent\Builder;
 use Spatie\QueryBuilder\QueryBuilder as SpatieQueryBuilder;
 
 final class ArticleFilterService extends FilterService
@@ -27,8 +26,7 @@ final class ArticleFilterService extends FilterService
         $getFilter = fn (ArticleAllowedFilter $filter): mixed => $this->getFilter($filter);
 
         return $this
-            /** @phpstan-ignore-next-line */
-            ->addSearchFilter(ArticleAllowedFilter::SEARCH, static fn (Builder|Article $query): Builder => $query->search($getFilter(ArticleAllowedFilter::SEARCH), orderByScore: true))
-            ->addFilter(ArticleAllowedFilter::PUBLISHED_BETWEEN, static fn (Builder|Article $query): Builder => $query->wherePublishedBetween(...$getFilter(ArticleAllowedFilter::PUBLISHED_BETWEEN)));
+            ->addSearchFilter(ArticleAllowedFilter::SEARCH, static fn (ArticleBuilder $query) => $query->search($getFilter(ArticleAllowedFilter::SEARCH), orderByScore: true))
+            ->addFilter(ArticleAllowedFilter::PUBLISHED_BETWEEN, static fn (ArticleBuilder $query) => $query->wherePublishedBetween(...$getFilter(ArticleAllowedFilter::PUBLISHED_BETWEEN)));
     }
 }

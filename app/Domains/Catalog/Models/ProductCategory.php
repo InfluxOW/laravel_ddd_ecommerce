@@ -210,7 +210,7 @@ final class ProductCategory extends Model implements HasMedia, Exportable
             ->hasLimitedDepth()
             ->with([
                 'parent',
-                'products' => fn (BelongsToMany $query): BelongsToMany => $query->select(['products.id']),
+                'products' => fn (BelongsToMany $query) => $query->select(['products.id']),
                 'images.model',
             ])
             ->get()

@@ -19,9 +19,9 @@ final class ProductsExportJob extends ExportJob
     {
         return Product::query()
             ->with([
-                'categories' => fn (BelongsToMany $query): BelongsToMany => $query->select(['title']),
-                'prices' => fn (MorphMany $query): MorphMany => $query->select(['price', 'price_discounted', 'currency', 'purchasable_id', 'purchasable_type']),
-                'attributeValues' => fn (MorphMany $query): MorphMany => $query->with(['attribute' => fn (BelongsTo $query): BelongsTo => $query->select(['id', 'title', 'values_type'])])->select(['attribute_id', 'attributable_id', 'attributable_type', 'value_string', 'value_integer', 'value_float', 'value_boolean']),
+                'categories' => fn (BelongsToMany $query) => $query->select(['title']),
+                'prices' => fn (MorphMany $query) => $query->select(['price', 'price_discounted', 'currency', 'purchasable_id', 'purchasable_type']),
+                'attributeValues' => fn (MorphMany $query) => $query->with(['attribute' => fn (BelongsTo $query) => $query->select(['id', 'title', 'values_type'])])->select(['attribute_id', 'attributable_id', 'attributable_type', 'value_string', 'value_integer', 'value_float', 'value_boolean']),
             ])
             ->select(['id', 'title', 'slug', 'created_at', 'updated_at']);
     }

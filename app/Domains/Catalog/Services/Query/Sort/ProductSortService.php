@@ -3,9 +3,8 @@
 namespace App\Domains\Catalog\Services\Query\Sort;
 
 use App\Components\Queryable\Abstracts\Sort\SortService;
+use App\Domains\Catalog\Database\Builders\ProductBuilder;
 use App\Domains\Catalog\Enums\Query\Sort\ProductAllowedSort;
-use App\Domains\Catalog\Models\Product;
-use Illuminate\Database\Eloquent\Builder;
 
 final class ProductSortService extends SortService
 {
@@ -21,14 +20,12 @@ final class ProductSortService extends SortService
     public function build(): static
     {
         return $this
-            ->addDefaultSearchSort(ProductAllowedSort::DEFAULT, static fn (Builder $query): Builder => $query)
+            ->addDefaultSearchSort(ProductAllowedSort::DEFAULT, static fn (ProductBuilder $query) => $query)
             ->addSort(ProductAllowedSort::TITLE)
             ->addSort(ProductAllowedSort::TITLE_DESC)
             ->addSort(ProductAllowedSort::CREATED_AT)
             ->addDefaultSort(ProductAllowedSort::CREATED_AT_DESC)
-            /** @phpstan-ignore-next-line */
-            ->addSort(ProductAllowedSort::PRICE, fn (Builder|Product $query): Builder => $query->reorder()->orderByCurrentPrice($this->currency, descending: false))
-            /** @phpstan-ignore-next-line */
-            ->addSort(ProductAllowedSort::PRICE_DESC, fn (Builder|Product $query): Builder => $query->reorder()->orderByCurrentPrice($this->currency, descending: true));
+            ->addSort(ProductAllowedSort::PRICE, fn (ProductBuilder $query) => $query->reorder()->orderByCurrentPrice($this->currency, descending: false))
+            ->addSort(ProductAllowedSort::PRICE_DESC, fn (ProductBuilder $query) => $query->reorder()->orderByCurrentPrice($this->currency, descending: true));
     }
 }

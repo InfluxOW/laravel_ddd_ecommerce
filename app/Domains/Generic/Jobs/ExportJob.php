@@ -141,13 +141,13 @@ abstract class ExportJob implements FromQuery, WithStrictNullComparison, WithCus
 
     abstract protected function getBaseQuery(): Builder;
 
-    private function narrowQuery(Builder $query): Builder
+    private function narrowQuery(Builder $query): void
     {
-        return $query->when(isset($this->recordsIds), fn (Builder $query): Builder => $query->whereIntegerInRaw('id', $this->recordsIds));
+        $query->when(isset($this->recordsIds), fn (Builder $query) => $query->whereIntegerInRaw('id', $this->recordsIds));
     }
 
-    protected function sortQuery(Builder $query): Builder
+    protected function sortQuery(Builder $query): void
     {
-        return $this->sortByDesc ? $query->orderByDesc($this->sortColumn) : $query->orderBy($this->sortColumn);
+        $this->sortByDesc ? $query->orderByDesc($this->sortColumn) : $query->orderBy($this->sortColumn);
     }
 }

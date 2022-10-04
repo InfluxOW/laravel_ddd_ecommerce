@@ -2,13 +2,13 @@
 
 namespace App\Domains\Catalog\Console\Commands;
 
-use App\Components\Purchasable\Models\Price;
+use App\Components\Purchasable\Database\Builders\PriceBuilder;
+use App\Domains\Catalog\Database\Builders\ProductBuilder;
+use App\Domains\Catalog\Database\Builders\ProductCategoryBuilder;
 use App\Domains\Catalog\Models\Product;
-use App\Domains\Catalog\Models\ProductCategory;
 use App\Domains\Catalog\Models\Settings\CatalogSettings;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 
 final class UpdateProductsDisplayability extends Command
@@ -28,12 +28,10 @@ final class UpdateProductsDisplayability extends Command
         $now = Carbon::now();
         $query = Product::query()
             ->where("{$table}.is_visible", true)
-            /** @phpstan-ignore-next-line */
-            ->whereHas('categories', fn (Builder|ProductCategory $query) => $query->displayable())
-            ->when(true, function (Builder $query): void {
+            ->whereHas('categories', fn (ProductCategoryBuilder $query) => $query->displayable())
+            ->when(true, function (ProductBuilder $query): void {
                 foreach ($this->settings->required_currencies as $currency) {
-                    /** @phpstan-ignore-next-line */
-                    $query->whereHas('prices', fn (Builder|Price $query): Builder => $query->where('currency', $currency));
+                    $query->whereHas('prices', fn (PriceBuilder $query) => $query->where('currency', $currency));
                 }
             })
             ->orderBy("{$table}.id");

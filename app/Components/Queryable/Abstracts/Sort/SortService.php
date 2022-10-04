@@ -52,12 +52,12 @@ abstract class SortService
     protected function addSort(UnitEnum & IAllowedSortEnum $sort, ?Closure $callback = null): static
     {
         if ($callback === null) {
-            $callback = static function (Builder $query) use ($sort): Builder {
+            $callback = static function (Builder $query) use ($sort) {
                 $query->reorder();
 
                 $column = $sort->getDatabaseColumn();
 
-                return $sort->isDescending() ? $query->orderByDesc($column) : $query->orderBy($column);
+                $sort->isDescending() ? $query->orderByDesc($column) : $query->orderBy($column);
             };
         }
 

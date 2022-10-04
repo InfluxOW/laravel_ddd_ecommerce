@@ -3,13 +3,13 @@
 namespace App\Domains\Catalog\Http\Controllers\Api;
 
 use App\Components\Queryable\Enums\QueryKey;
+use App\Domains\Catalog\Database\Builders\ProductCategoryBuilder;
 use App\Domains\Catalog\Enums\Query\Filter\ProductAllowedFilter;
 use App\Domains\Catalog\Http\Requests\ProductIndexRequest;
 use App\Domains\Catalog\Http\Requests\ProductShowRequest;
 use App\Domains\Catalog\Http\Resources\Product\HeavyProductResource;
 use App\Domains\Catalog\Http\Resources\Product\LightProductResource;
 use App\Domains\Catalog\Models\Product;
-use App\Domains\Catalog\Models\ProductCategory;
 use App\Domains\Catalog\Services\Query\Filter\ProductFilterService;
 use App\Domains\Catalog\Services\Query\Sort\ProductSortService;
 use App\Interfaces\Http\Controllers\Controller;
@@ -52,8 +52,8 @@ final class ProductController extends Controller
             ->displayable()
             ->with([
                 /** @phpstan-ignore-next-line */
-                'categories' => fn (BelongsToMany|ProductCategory $query): BelongsToMany => $query->displayable(),
-                'prices' => fn (MorphMany $query): MorphMany => $query->where('currency', $currency),
+                'categories' => fn (BelongsToMany|ProductCategoryBuilder $query) => $query->displayable(),
+                'prices' => fn (MorphMany $query) => $query->where('currency', $currency),
             ]);
     }
 }

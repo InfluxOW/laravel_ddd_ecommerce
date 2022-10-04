@@ -3,6 +3,7 @@
 namespace App\Domains\Catalog\Tests\Feature\Api;
 
 use App\Application\Tests\TestCase;
+use App\Components\Attributable\Database\Builders\AttributeValueBuilder;
 use App\Components\Attributable\Database\Seeders\AttributeSeeder;
 use App\Components\Attributable\Enums\AttributeValuesType;
 use App\Components\Attributable\Models\AttributeValue;
@@ -234,7 +235,7 @@ final class ProductControllerTest extends TestCase
         /** @var Product $tv */
         $tv = Product::query()
             ->with(['attributeValues.attribute'])
-            ->whereHas('attributeValues', fn (Builder $query): Builder => $query->where(AttributeValue::getDatabaseValueColumnByAttributeType($height->values_type), $heightGreatValue))
+            ->whereHas('attributeValues', fn (AttributeValueBuilder $query) => $query->where(AttributeValue::getDatabaseValueColumnByAttributeType($height->values_type), $heightGreatValue))
             ->first();
         $this->assertNotNull($tv);
 

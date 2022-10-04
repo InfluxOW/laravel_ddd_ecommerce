@@ -7,10 +7,10 @@ use App\Components\Attributable\Models\AttributeValue;
 use App\Components\Purchasable\Models\Price;
 use App\Components\Queryable\Classes\Filter\Multiselect\Resources\NestedMultiselectFilterValues;
 use App\Components\Queryable\Classes\Filter\Multiselect\Resources\NestedMultiselectFilterValuesAttribute;
+use App\Domains\Catalog\Database\Builders\ProductBuilder;
 use App\Domains\Catalog\Models\Product;
 use App\Domains\Catalog\Models\ProductCategory;
 use App\Domains\Catalog\Models\Settings\CatalogSettings;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Spatie\QueryBuilder\QueryBuilder as SpatieQueryBuilder;
@@ -53,7 +53,7 @@ final class ProductFilterBuilderRepository
         $childCategories = ProductCategory::query()
             ->hasLimitedDepth()
             ->select(['slug', 'title', 'parent_id', 'id'])
-            ->whereHas('products', static fn (Builder $query): Builder => $query->whereIn('products.id', $productsQuery->getQuery()->select(['products.id'])))
+            ->whereHas('products', static fn (ProductBuilder $query) => $query->whereIn('products.id', $productsQuery->getQuery()->select(['products.id'])))
             ->get();
 
         $categories = $childCategories->pluck('slug', 'title');

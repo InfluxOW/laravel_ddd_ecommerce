@@ -19,7 +19,7 @@ final class MediumProductCategoryResource extends JsonResource
         return array_merge(LightProductCategoryResource::make($category)->toArray($request), [
             'description' => isset($description) ? Purify::clean($description) : null,
             /* @phpstan-ignore-next-line */
-            'parent' => $this->when(isset($category->parent_id), fn (): JsonResource => self::make(ProductCategory::findInHierarchy($category->parent_id, ProductCategory::getHierarchy()))),
+            'parent' => $this->when(isset($category->parent_id), fn (): MediumProductCategoryResource => self::make(ProductCategory::findInHierarchy($category->parent_id, ProductCategory::getHierarchy()))),
         ]);
     }
 }

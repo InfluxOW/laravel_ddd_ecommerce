@@ -4,6 +4,7 @@ namespace App\Domains\Feedback\Admin\Resources;
 
 use App\Domains\Admin\Admin\Abstracts\Resource;
 use App\Domains\Admin\Admin\Components\Actions\UpdateBulkAction;
+use App\Domains\Feedback\Database\Builders\FeedbackBuilder;
 use App\Domains\Feedback\Enums\Translation\FeedbackTranslationKey;
 use App\Domains\Feedback\Models\Feedback;
 use Filament\Forms\Components\Card;
@@ -17,7 +18,6 @@ use Filament\Resources\Table;
 use Filament\Tables\Columns\BooleanColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TernaryFilter;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -104,8 +104,8 @@ final class FeedbackResource extends Resource
             ->filters([
                 TernaryFilter::makeTranslated(FeedbackTranslationKey::IS_REVIEWED)
                     ->queries(
-                        true: fn (Builder $query): Builder => $query->where('is_reviewed', true),
-                        false: fn (Builder $query): Builder => $query->where('is_reviewed', false),
+                        true: fn (FeedbackBuilder $query) => $query->where('is_reviewed', true),
+                        false: fn (FeedbackBuilder $query) => $query->where('is_reviewed', false),
                     ),
             ])->appendBulkActions([
                 UpdateBulkAction::create()
