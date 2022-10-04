@@ -76,7 +76,7 @@ jobs:
                     APPLICATION_IMAGE: ${{ env.APPLICATION_IMAGE }}
 
             -   name: Upload Coverage to CodeCov.io
-                uses: codecov/codecov-action@master
+                uses: codecov/codecov-action@main
                 with:
                     token: ${{ secrets.CODECOV_TOKEN }}
                     file: storage/logs/clover.xml
