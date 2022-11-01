@@ -16,6 +16,8 @@ fi
 
 chmod -R ugo+rw /home/sail/.config
 
+chmod 0644 /etc/cron.d/crontab && crontab /etc/cron.d/crontab
+
 if [ $# -gt 0 ]; then
 	if [ "$1" == "--no-supervisor" ]; then
 		/usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.empty.conf

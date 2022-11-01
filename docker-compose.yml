@@ -2,17 +2,17 @@
 services:
     application:
         build:
-            context: ./docker/php/${PHP_VERSION}
+            context: ./docker/php
             dockerfile: Dockerfile
             args:
                 WWWGROUP: ${WWWGROUP}
         image: ${APPLICATION_IMAGE}
         environment:
             WWWUSER: ${WWWUSER}
-            PHP_VERSION: ${PHP_VERSION}
             LARAVEL_SAIL: 1
         volumes:
             - .:/var/www/html
+            - ./crontab:/etc/cron.d/crontab
 
     database:
         image: postgis/postgis:${POSTGRES_VERSION}

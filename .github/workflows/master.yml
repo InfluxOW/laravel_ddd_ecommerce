@@ -31,7 +31,7 @@ jobs:
             -   name: Docker Build && Push
                 uses: docker/build-push-action@master
                 with:
-                    context: ./docker/php/${{ secrets.PHP_VERSION }}/
+                    context: ./docker/php/
                     builder: ${{ steps.buildx.outputs.name }}
                     push: true
                     tags: ${{ env.APPLICATION_IMAGE }}
