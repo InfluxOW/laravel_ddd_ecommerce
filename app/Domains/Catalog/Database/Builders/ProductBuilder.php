@@ -90,7 +90,7 @@ final class ProductBuilder extends Builder
 
     public function wherePriceBetween(?Money $min, ?Money $max): self
     {
-        if (isset($min, $max)) {
+        if (isset($min) && isset($max)) {
             throw_unless($min->getCurrency()->getCurrency() === $max->getCurrency()->getCurrency(), IncompatibleCurrenciesException::class);
 
             $this->whereHas('prices', fn (PriceBuilder $query) => $query->where('currency', $min->getCurrency()->getCurrency())->whereBetween(Price::getDatabasePriceExpression(), $min > $max ? [$max->getAmount(), $min->getAmount()] : [$min->getAmount(), $max->getAmount()]));

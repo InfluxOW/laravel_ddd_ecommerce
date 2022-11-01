@@ -50,8 +50,6 @@ final class LoginUserAction
         if (Auth::validate($credentials)) {
             /**
              * @var User $user
-             *
-             * @phpstan-ignore-next-line
              */
             $user = Auth::retrieveUserByCredentials($credentials);
 

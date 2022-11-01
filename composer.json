@@ -11,10 +11,6 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "git@github.com:InfluxOW/baum.git"
-        },
-        {
-            "type": "vcs",
             "url": "git@github.com:InfluxOW/Prequel.git"
         }
     ],
@@ -51,7 +47,7 @@
         "babenkoivan/elastic-migrations": "^3.1",
         "babenkoivan/elastic-scout-driver": "^3.0",
         "babenkoivan/elastic-scout-driver-plus": "^4.0",
-        "baum/baum": "dev-add_laravel_9_support",
+        "baum/baum": "^3.x-dev",
         "darkaonline/l5-swagger": "^8.3.0",
         "fakerphp/faker": "^1.9.1",
         "filament/filament": "^2.10",
@@ -77,7 +73,7 @@
         "paulhennell/faker-news": "^2.0",
         "phpunit/phpunit": "^9.5.10",
         "protoqol/prequel": "dev-main",
-        "sentry/sentry-laravel": "^2.12",
+        "sentry/sentry-laravel": "^3.0",
         "spatie/laravel-query-builder": "^5.0",
         "spatie/laravel-sluggable": "^3.3",
         "squirephp/countries-en": "^3.3",

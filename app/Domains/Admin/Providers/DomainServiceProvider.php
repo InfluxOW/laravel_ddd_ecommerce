@@ -21,7 +21,6 @@ use Filament\Forms\Components\Field;
 use Filament\Pages\SettingsPage;
 use Filament\Support\Actions\Action;
 use Filament\Support\Actions\Concerns\CanOpenModal;
-use Filament\Support\Components\Component as FilamentComponent;
 use Filament\Support\Components\ViewComponent;
 use Filament\Tables\Columns\Column;
 use Filament\Tables\Filters\BaseFilter;
@@ -51,21 +50,10 @@ final class DomainServiceProvider extends ServiceProvider
         $makeComponent = fn (UnitEnum $value, string $class): object => self::makeComponent($value, $class);
         $translateModals = fn (object $component, string $class): object => self::translateModals($component, $class);
 
-        FilamentComponent::macro('makeTranslated', function (BackedEnum $value) use ($blockNotSupportedClasses, $makeComponent): static {
-            $class = static::class;
-
-            $blockNotSupportedClasses($class, [BaseFilter::class]);
-
-            $component = $makeComponent($value, $class);
-
-            /** @var static $component */
-            return $component;
-        });
-
         ViewComponent::macro('makeTranslated', function (BackedEnum $value) use ($blockNotSupportedClasses, $makeComponent, $translateModals): static {
             $class = static::class;
 
-            $blockNotSupportedClasses($class, [Action::class, Column::class, Field::class, FilamentFormComponent::class]);
+            $blockNotSupportedClasses($class, [Action::class, Column::class, Field::class, FilamentFormComponent::class, BaseFilter::class]);
 
             /** @var static $component */
             $component = $makeComponent($value, $class);
