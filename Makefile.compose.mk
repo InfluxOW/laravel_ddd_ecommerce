@@ -1,8 +1,12 @@
 # Works only for project root
 
 project := $(shell git rev-parse --show-toplevel)
-sail_dir := $(project)/tools/laravel/sail
+
+sail_dir := $(project)/tools/sail
 sail := $(sail_dir)/vendor/bin/sail
+
+phpinsights_dir := $(project)/tools/phpinsights
+phpinsights := $(phpinsights_dir)/vendor/bin/phpinsights
 
 # Application
 
@@ -35,6 +39,9 @@ stop:
 restart: stop start
 
 # CI
+
+insights:
+	$(phpinsights) --summary
 
 ci: sail-install
 	cp --no-clobber .env.example .env || true

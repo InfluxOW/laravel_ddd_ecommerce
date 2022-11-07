@@ -17,7 +17,7 @@ services:
             elasticsearch_ci:
                 condition: service_healthy
         command: >
-            make install lint analyse test-coverage
+            make install insights lint analyse test-coverage
         networks:
             - sail_ci
 
