@@ -3,7 +3,7 @@
 use App\Domains\Feedback\Models\Settings\FeedbackSettings;
 use Spatie\LaravelSettings\Migrations\SettingsMigration;
 
-return new class extends SettingsMigration
+return new class () extends SettingsMigration
 {
     public function up(): void
     {

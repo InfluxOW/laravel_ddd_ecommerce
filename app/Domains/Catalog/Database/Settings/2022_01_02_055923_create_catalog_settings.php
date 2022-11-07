@@ -4,7 +4,7 @@ use Akaunting\Money\Currency;
 use App\Domains\Catalog\Models\Settings\CatalogSettings;
 use Spatie\LaravelSettings\Migrations\SettingsMigration;
 
-return new class extends SettingsMigration
+return new class () extends SettingsMigration
 {
     public function up(): void
     {

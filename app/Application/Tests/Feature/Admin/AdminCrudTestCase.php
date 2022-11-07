@@ -67,10 +67,10 @@ abstract class AdminCrudTestCase extends AdminTestCase
     {
         if (isset($this->viewRecord)) {
             $this->assertNotNull($record);
-            $this->getResourceActionUrl($this->viewRecord, ['record' => $record?->getKey()])->assertOk();
+            $this->getResourceActionUrl($this->viewRecord, ['record' => $record->getKey()])->assertOk();
 
             foreach (static::$resource::getRelations() as $relation) {
-                $this->getResourceActionUrl($this->viewRecord, ['record' => $record?->getKey(), 'activeRelationManager' => $relation])->assertOk();
+                $this->getResourceActionUrl($this->viewRecord, ['record' => $record->getKey(), 'activeRelationManager' => $relation])->assertOk();
             }
         }
     }
@@ -79,10 +79,10 @@ abstract class AdminCrudTestCase extends AdminTestCase
     {
         if (isset($this->editRecord)) {
             $this->assertNotNull($record);
-            $this->getResourceActionUrl($this->editRecord, ['record' => $record?->getKey()])->assertOk();
+            $this->getResourceActionUrl($this->editRecord, ['record' => $record->getKey()])->assertOk();
 
             foreach (static::$resource::getRelations() as $relation) {
-                $this->getResourceActionUrl($this->editRecord, ['record' => $record?->getKey(), 'activeRelationManager' => $relation])->assertOk();
+                $this->getResourceActionUrl($this->editRecord, ['record' => $record->getKey(), 'activeRelationManager' => $relation])->assertOk();
             }
         }
     }

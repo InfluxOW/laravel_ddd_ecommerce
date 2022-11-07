@@ -5,7 +5,11 @@
             "spacing": "one"
         },
         "phpdoc_separation": true,
-        "phpdoc_align": true
+        "phpdoc_align": true,
+        "class_definition": {
+            "space_before_parenthesis": true
+        },
+        "new_with_braces": true
     },
     "exclude": [
     ]

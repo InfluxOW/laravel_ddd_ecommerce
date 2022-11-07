@@ -4,7 +4,7 @@ use Elastic\Adapter\Indices\Mapping;
 use Elastic\Migrations\Facades\Index;
 use Elastic\Migrations\MigrationInterface;
 
-return new class implements MigrationInterface
+return new class () implements MigrationInterface
 {
     /**
      * Run the migration.
