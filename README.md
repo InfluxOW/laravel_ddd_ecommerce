@@ -11,11 +11,11 @@
         <a href="https://laravel-livewire.com"><img src="https://img.shields.io/badge/Livewire-2.x-FB70A9?style=for-the-badge" alt="Livewire v2.x"></a>
         <a href="https://php.net"><img src="https://img.shields.io/badge/PHP-8.1-777BB4?style=for-the-badge&logo=php" alt="PHP 8.1"></a>
         <a href="https://docker.com"><img src="https://img.shields.io/badge/Docker-20.10.x-0db7ed?style=for-the-badge&logo=docker" alt="Docker 19.03.0"></a>
-        <a href="https://postgresql.org"><img src="https://img.shields.io/badge/Postgresql-14.X-0064a5?style=for-the-badge&logo=postgresql" alt="PostgreSQL 14.X"></a>
+        <a href="https://postgresql.org"><img src="https://img.shields.io/badge/Postgresql-15.X-0064a5?style=for-the-badge&logo=postgresql" alt="PostgreSQL 15.X"></a>
         <a href="https://swagger.io"><img src="https://img.shields.io/badge/Swagger-3.0-a9f06b?style=for-the-badge&logo=swagger" alt="Swagger 3.0"></a>
         <a href="https://redis.io/"><img src="https://img.shields.io/badge/Redis-7.x-D82C20?style=for-the-badge&logo=redis" alt="Redis 7.x"></a>
         <a href="https://rabbitmq.com/"><img src="https://img.shields.io/badge/RabbitMQ-3.10.x-FF6600?style=for-the-badge&logo=rabbitmq" alt="RabbitMQ 3.10.x"></a>
-        <a href="https://elastic.co/"><img src="https://img.shields.io/badge/ELK-8.3.x-7DE2D1?style=for-the-badge&logo=elastic" alt="ELK 8.3.x"></a>
+        <a href="https://elastic.co/"><img src="https://img.shields.io/badge/ELK-8.4.x-7DE2D1?style=for-the-badge&logo=elastic" alt="ELK 8.4.x"></a>
     </p>
 </div>
 
