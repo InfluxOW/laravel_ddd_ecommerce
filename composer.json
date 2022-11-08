@@ -89,6 +89,7 @@
         "bamarni/composer-bin-plugin": "^1.8",
         "barryvdh/laravel-ide-helper": "^2.11",
         "brianium/paratest": "^6.4",
+        "infection/infection": "^0.26.16",
         "itsgoingd/clockwork": "^5.1",
         "jetbrains/phpstorm-attributes": "^1.0",
         "laravel/pint": "^1.0",
@@ -145,7 +146,8 @@
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "composer/package-versions-deprecated": true,
-            "bamarni/composer-bin-plugin": true
+            "bamarni/composer-bin-plugin": true,
+            "infection/extension-installer": true
         }
     },
     "minimum-stability": "dev",

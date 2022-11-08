@@ -5,6 +5,7 @@
         <a href="https://github.com/InfluxOW/laravel_ddd_ecommerce/actions/workflows/master.yml"><img src="https://github.com/InfluxOW/laravel_ddd_ecommerce/actions/workflows/master.yml/badge.svg" alt="PHP CI"></a>
         <a href="https://codeclimate.com/github/InfluxOW/laravel_ddd_ecommerce/maintainability"><img src="https://api.codeclimate.com/v1/badges/785ee07bd777cf41ee07/maintainability" alt="Maintainability"></a>
         <a href="https://codecov.io/gh/InfluxOW/laravel_ddd_ecommerce"><img src="https://codecov.io/gh/InfluxOW/laravel_ddd_ecommerce/branch/master/graph/badge.svg?token=MS9MMW2OBX" alt="Code Coverage"></a>
+        <a href="https://dashboard.stryker-mutator.io/reports/github.com/InfluxOW/laravel_ddd_ecommerce/master"><img src="https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2FInfluxOW%2Flaravel_ddd_ecommerce%2Fmaster" alt="Mutation Testing"></a>
     </p>
     <p>
         <a href="https://laravel.com"><img src="https://img.shields.io/badge/Laravel-9.x-FF2D20?style=for-the-badge&logo=laravel" alt="Laravel v8.x"></a>

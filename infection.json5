@@ -1,0 +1,22 @@
+{
+    "source": {
+        "directories": [
+            "app"
+        ],
+        "excludes": [
+            "/Test\\.php/",
+        ]
+    },
+    "timeout": 10,
+    "logs": {
+        "html": "infection.html",
+        "summary": "infection.log",
+        "stryker": {
+            "badge": "master"
+        }
+    },
+    "tmpDir": "storage",
+    "mutators": {
+        "@default": true,
+    },
+}

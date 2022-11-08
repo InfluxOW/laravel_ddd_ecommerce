@@ -6,6 +6,8 @@ install:
 	php artisan key:generate
 	php artisan migrate:fresh
 
+infection:
+	composer exec infection -- --threads=max
 test:
 	php artisan test --parallel -vvv
 test-coverage:
