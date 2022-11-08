@@ -6,13 +6,13 @@
 >
     <testsuites>
         <testsuite name="Unit">
-            <directory suffix="Test.php">./app/Domains/*/Tests/Unit</directory>
+            <directory>./app/Domains/*/Tests/Unit</directory>
         </testsuite>
         <testsuite name="Feature">
-            <directory suffix="Test.php">./app/Domains/*/Tests/Feature</directory>
+            <directory>./app/Domains/*/Tests/Feature</directory>
         </testsuite>
         <testsuite name="Admin">
-            <directory suffix="Test.php">./app/Domains/*/Tests/Admin</directory>
+            <directory>./app/Domains/*/Tests/Admin</directory>
         </testsuite>
     </testsuites>
     <coverage processUncoveredFiles="true">
