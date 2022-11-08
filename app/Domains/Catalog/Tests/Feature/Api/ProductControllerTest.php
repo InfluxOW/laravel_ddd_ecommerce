@@ -185,8 +185,8 @@ final class ProductControllerTest extends TestCase
             $lowestAvailablePrice = $priceBetweenAllowedFilter['min'];
             $highestAvailablePrice = $priceBetweenAllowedFilter['max'];
 
-            $this->assertEquals(isset($minPrice) ? max($minPrice, $lowestAvailablePrice) : $lowestAvailablePrice, $priceBetweenAppliedFilter['min']);
-            $this->assertEquals(isset($maxPrice) ? min($maxPrice, $highestAvailablePrice) : $highestAvailablePrice, $priceBetweenAppliedFilter['max']);
+            $this->assertEquals(round(isset($minPrice) ? max($minPrice, $lowestAvailablePrice) : $lowestAvailablePrice, 2), $priceBetweenAppliedFilter['min']);
+            $this->assertEquals(round(isset($maxPrice) ? min($maxPrice, $highestAvailablePrice) : $highestAvailablePrice, 2), $priceBetweenAppliedFilter['max']);
         }
     }
 
