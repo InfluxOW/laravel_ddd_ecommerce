@@ -23,10 +23,10 @@ jobs:
 
             -   name: Get Current Branch
                 id: current-branch
-                run: echo "::set-output name=branch::$(echo ${GITHUB_REF#refs/heads/})"
+                run: echo "CURRENT_BRANCH=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_OUTPUT
 
             -   name: Set APPLICATION_IMAGE Env Variable
-                run: echo "APPLICATION_IMAGE=$(echo "${{ secrets.APPLICATION_IMAGE_REPOSITORY }}:${{ steps.current-branch.outputs.branch == 'master' && 'latest' || steps.current-branch.outputs.branch }}")" >> $GITHUB_ENV
+                run: echo "APPLICATION_IMAGE=$(echo "${{ secrets.APPLICATION_IMAGE_REPOSITORY }}:${{ steps.current-branch.outputs.CURRENT_BRANCH == 'master' && 'latest' || steps.current-branch.outputs.CURRENT_BRANCH }}")" >> $GITHUB_ENV
 
             -   name: Docker Build && Push
                 uses: docker/build-push-action@master
@@ -43,23 +43,23 @@ jobs:
 
             -   name: Get Composer Cache Directory
                 id: composer-cache
-                run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+                run: echo "COMPOSER_CACHE_DIR=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
             -   name: Cache Composer Dependencies
                 uses: actions/cache@main
                 with:
-                    path: ${{ steps.composer-cache.outputs.dir }}
+                    path: ${{ steps.composer-cache.outputs.COMPOSER_CACHE_DIR }}
                     key: composer-${{ hashFiles('**/composer.lock') }}
                     restore-keys: composer-
 
             -   name: Get NPM Cache Directory
                 id: npm-cache-dir
-                run: echo "::set-output name=dir::$(npm config get cache)"
+                run: echo "NPM_CACHE_DIR=$(npm config get cache)" >> $GITHUB_OUTPUT
 
             -   name: Cache NPM Dependencies
                 uses: actions/cache@main
                 with:
-                    path: ${{ steps.npm-cache-dir.outputs.dir }}
+                    path: ${{ steps.npm-cache-dir.outputs.NPM_CACHE_DIR }}
                     key: node-${{ hashFiles('**/package-lock.json') }}
                     restore-keys: node-
 
