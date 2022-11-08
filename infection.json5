@@ -7,12 +7,12 @@
             "/Test\\.php/",
         ]
     },
-    "timeout": 10,
+    "timeout": 60,
     "logs": {
         "html": "infection.html",
         "summary": "infection.log",
         "stryker": {
-            "badge": "master"
+            "report": "master"
         }
     },
     "tmpDir": "storage",

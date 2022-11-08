@@ -5,6 +5,11 @@ project := $(shell git rev-parse --show-toplevel)
 sail_dir := $(project)/tools/sail
 sail := $(sail_dir)/vendor/bin/sail
 
+sail_ci := $(sail) -f docker-compose.ci.yml
+
+sail_test := $(sail) -f docker-compose.test.yml
+sail_test_bash := $(sail_test) run --rm application_test bash -c
+
 # Application
 
 setup: sail-install build start dependencies-install
@@ -39,14 +44,20 @@ restart: stop start
 
 ci: sail-install
 	cp --no-clobber .env.example .env || true
-	$(sail) -f docker-compose.ci.yml pull --ignore-pull-failures
-	$(sail) -f docker-compose.ci.yml up --abort-on-container-exit
-	$(sail) -f docker-compose.ci.yml down --volumes
+	$(sail_ci) pull --ignore-pull-failures
+	$(sail_ci) up --abort-on-container-exit
+	$(sail_ci) down --volumes
 
 # Tests
 
+infections:
+	$(sail_test_bash) "make infection"
+infections-coverage:
+	$(sail_test_bash) "make infection-coverage"
 tests:
-	$(sail) -f docker-compose.test.yml run --rm application_test bash -c "make test"
+	$(sail_test_bash) "make test"
+tests-coverage:
+	$(sail_test_bash) "make test-coverage"
 
 # Misc
 
@@ -58,5 +69,5 @@ fix-rights:
 
 stack:
 	$(sail) config > docker-compose.dev.stack.yml
-	$(sail) -f docker-compose.test.yml config > docker-compose.test.stack.yml
-	$(sail) -f docker-compose.ci.yml config > docker-compose.ci.stack.yml
+	$(sail_test) config > docker-compose.test.stack.yml
+	$(sail_ci) config > docker-compose.ci.stack.yml

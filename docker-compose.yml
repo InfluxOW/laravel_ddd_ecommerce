@@ -10,6 +10,11 @@ services:
         environment:
             WWWUSER: ${WWWUSER}
             LARAVEL_SAIL: 1
+            GITHUB_ACTIONS: ${GITHUB_ACTIONS}
+            GITHUB_EVENT_NAME: ${GITHUB_EVENT_NAME}
+            GITHUB_REPOSITORY: ${GITHUB_REPOSITORY}
+            GITHUB_REF: ${GITHUB_REF}
+            INFECTION_DASHBOARD_API_KEY: ${INFECTION_DASHBOARD_API_KEY}
         volumes:
             - .:/var/www/html
             - ./crontab:/etc/cron.d/crontab

@@ -3,6 +3,8 @@ include Makefile.compose.mk
 phpinsights_dir := $(project)/tools/phpinsights
 phpinsights := $(phpinsights_dir)/vendor/bin/phpinsights
 
+infection := composer exec infection -- --threads=max --verbose --only-covering-test-cases --only-covered
+
 install:
 	composer install
 	cp --no-clobber .env.example .env || true
@@ -10,7 +12,9 @@ install:
 	php artisan migrate:fresh
 
 infection:
-	composer exec infection -- --threads=max --coverage=storage/logs
+	$(infection)
+infection-coverage:
+	$(infection) --skip-initial-tests --coverage=storage/logs
 test:
 	php artisan test --parallel -vvv
 test-coverage:
