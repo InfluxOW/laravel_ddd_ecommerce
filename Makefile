@@ -1,5 +1,8 @@
 include Makefile.compose.mk
 
+phpinsights_dir := $(project)/tools/phpinsights
+phpinsights := $(phpinsights_dir)/vendor/bin/phpinsights
+
 install:
 	composer install
 	cp --no-clobber .env.example .env || true
@@ -13,6 +16,8 @@ test:
 test-coverage:
 	XDEBUG_MODE=coverage php artisan test --parallel --coverage-clover storage/logs/clover.xml
 
+insights:
+	$(phpinsights) --summary
 lint:
 	composer exec phpcs --verbose && composer exec pint -- --test 2>/dev/null
 lint-fix:
