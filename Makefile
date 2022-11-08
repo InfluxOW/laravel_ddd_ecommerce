@@ -10,11 +10,11 @@ install:
 	php artisan migrate:fresh
 
 infection:
-	composer exec infection -- --threads=max
+	composer exec infection -- --threads=max --coverage=storage/logs
 test:
 	php artisan test --parallel -vvv
 test-coverage:
-	XDEBUG_MODE=coverage php artisan test --parallel --coverage-clover storage/logs/clover.xml
+	XDEBUG_MODE=coverage php artisan test --parallel --coverage-clover storage/logs/clover.xml --coverage-xml=storage/logs/coverage-xml --log-junit=storage/logs/junit.xml
 
 insights:
 	$(phpinsights) --summary
