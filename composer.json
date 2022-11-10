@@ -148,7 +148,8 @@
             "composer/package-versions-deprecated": true,
             "bamarni/composer-bin-plugin": true,
             "infection/extension-installer": true
-        }
+        },
+        "process-timeout": 0
     },
     "minimum-stability": "dev",
     "prefer-stable": true
