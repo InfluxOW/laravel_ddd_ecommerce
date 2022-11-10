@@ -18,6 +18,7 @@ services:
         volumes:
             - .:/var/www/html
             - ./crontab:/etc/cron.d/crontab
+            - ./storage/phpinsights:/tmp/symfony-cache/phpinsights
 
     database:
         image: postgis/postgis:${POSTGRES_VERSION}

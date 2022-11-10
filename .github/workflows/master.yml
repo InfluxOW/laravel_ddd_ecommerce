@@ -58,8 +58,15 @@ jobs:
                 uses: actions/cache@main
                 with:
                     path: storage/phpstan
-                    key: php-8.1-phpstan-${{ github.sha }}
-                    restore-keys: php-8.1-phpstan-
+                    key: phpstan-${{ github.sha }}
+                    restore-keys: phpstan-
+
+            -   name: Cache PHPInsights Analysis
+                uses: actions/cache@main
+                with:
+                    path: storage/phpinsights
+                    key: phpinsights-${{ github.sha }}
+                    restore-keys: phpinsights-
 
             -   name: Cache Laravel Pint Analysis
                 uses: actions/cache@main
