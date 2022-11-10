@@ -43,7 +43,7 @@ jobs:
 
             -   name: Get Composer Cache Directory
                 id: composer-cache
-                run: echo "COMPOSER_CACHE_DIR=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+                run: echo "COMPOSER_CACHE_DIR=$(composer config vendor-dir)" >> $GITHUB_OUTPUT
 
             -   name: Cache Composer Dependencies
                 uses: actions/cache@main
@@ -51,17 +51,6 @@ jobs:
                     path: ${{ steps.composer-cache.outputs.COMPOSER_CACHE_DIR }}
                     key: composer-${{ hashFiles('**/composer.lock') }}
                     restore-keys: composer-
-
-            -   name: Get NPM Cache Directory
-                id: npm-cache-dir
-                run: echo "NPM_CACHE_DIR=$(npm config get cache)" >> $GITHUB_OUTPUT
-
-            -   name: Cache NPM Dependencies
-                uses: actions/cache@main
-                with:
-                    path: ${{ steps.npm-cache-dir.outputs.NPM_CACHE_DIR }}
-                    key: node-${{ hashFiles('**/package-lock.json') }}
-                    restore-keys: node-
 
             -   name: Cache PHPStan Analysis
                 uses: actions/cache@main
