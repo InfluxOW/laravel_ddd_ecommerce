@@ -59,6 +59,13 @@ jobs:
                     key: php-8.1-phpstan-${{ github.sha }}
                     restore-keys: php-8.1-phpstan-
 
+            -   name: Cache Laravel Pint Analysis
+                uses: actions/cache@main
+                with:
+                    path: storage/pint
+                    key: pint-${{ github.sha }}
+                    restore-keys: pint-
+
             -   name: Run CI
                 run: make ci
                 env:

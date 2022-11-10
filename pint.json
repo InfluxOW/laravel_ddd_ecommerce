@@ -12,5 +12,6 @@
         "new_with_braces": true
     },
     "exclude": [
-    ]
+    ],
+    "cache-file": "storage/pint/pint.json"
 }
