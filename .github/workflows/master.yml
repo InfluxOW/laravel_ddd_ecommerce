@@ -13,6 +13,10 @@ jobs:
         steps:
             -   uses: actions/checkout@main
 
+                #########################
+                ###       Docker      ###
+                #########################
+
             -   name: Set Up Docker Buildx
                 id: buildx
                 uses: docker/setup-buildx-action@master
@@ -43,16 +47,34 @@ jobs:
 
                 # https://help.github.com/en/actions/configuring-and-managing-workflows/caching-dependencies-to-speed-up-workflows
 
-            -   name: Get Composer Cache Directory
-                id: composer-cache
-                run: echo "COMPOSER_CACHE_DIR=$(composer config vendor-dir)" >> $GITHUB_OUTPUT
+                #########################
+                ###    Vendor Cache   ###
+                #########################
 
-            -   name: Cache Composer Dependencies
+            -   name: Cache Application Composer Dependencies
                 uses: actions/cache@main
                 with:
-                    path: ${{ steps.composer-cache.outputs.COMPOSER_CACHE_DIR }}
-                    key: composer-${{ hashFiles('**/composer.lock') }}
+                    path: vendor
+                    key: composer-${{ hashFiles('./composer.lock') }}
                     restore-keys: composer-
+
+            -   name: Cache Laravel Sail Composer Dependencies
+                uses: actions/cache@main
+                with:
+                    path: tools/sail/vendor
+                    key: tools-sail-${{ hashFiles('./tools/sail/composer.lock') }}
+                    restore-keys: tools-sail-
+
+            -   name: Cache PHPInsights Composer Dependencies
+                uses: actions/cache@main
+                with:
+                    path: tools/phpinsights/vendor
+                    key: tools-phpinsights-${{ hashFiles('./tools/phpinsights/composer.lock') }}
+                    restore-keys: tools-phpinsights-
+
+                #########################
+                ###    Tools Cache    ###
+                #########################
 
             -   name: Cache PHPStan Analysis
                 uses: actions/cache@main
@@ -75,10 +97,18 @@ jobs:
                     key: pint-${{ github.sha }}
                     restore-keys: pint-
 
+                #########################
+                ###         CI        ###
+                #########################
+
             -   name: Run CI
                 run: make ci
                 env:
                     APPLICATION_IMAGE: ${{ env.APPLICATION_IMAGE }}
+
+                #########################
+                ###       Report      ###
+                #########################
 
             -   name: Upload Coverage to CodeCov.io
                 uses: codecov/codecov-action@main
