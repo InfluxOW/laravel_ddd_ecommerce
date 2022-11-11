@@ -8,7 +8,7 @@ infection := composer exec infection -- --threads=max --verbose --only-covering-
 install:
 	composer install
 	npm install
-	cp --no-clobber .env.example .env || true
+	make prepare-env
 	php artisan key:generate
 	php artisan migrate:fresh
 

@@ -10,6 +10,8 @@ sail_ci := $(sail) -f docker-compose.ci.yml
 sail_test := $(sail) -f docker-compose.test.yml
 sail_test_bash := $(sail_test) run --rm application_test bash -c
 
+sail_composer_image = $(shell cat .env.infrastructure.example | grep SAIL_COMPOSER_IMAGE | sed "s/SAIL_COMPOSER_IMAGE=//")
+
 # Application
 
 setup: sail-install build start dependencies-install
@@ -20,7 +22,7 @@ sail-install:
 		--user "$(shell id -u):$(shell id -g)" \
 		--volume $(sail_dir):/var/www/html \
 		--workdir /var/www/html \
-		laravelsail/php81-composer:latest \
+		$(sail_composer_image) \
 		composer install --ignore-platform-reqs
 
 build:
@@ -42,8 +44,7 @@ restart: stop start
 
 # CI
 
-ci: sail-install
-	cp --no-clobber .env.example .env || true
+ci: prepare-env sail-install
 	$(sail_ci) pull --ignore-pull-failures
 	$(sail_ci) up --abort-on-container-exit
 	$(sail_ci) down --volumes
@@ -60,6 +61,9 @@ tests-coverage:
 	$(sail_test_bash) "make test-coverage"
 
 # Misc
+
+prepare-env:
+	test -f .env || sort -u -t '=' -k 1,1 .env.infrastructure.example .env.example | grep -v '^#' > .env
 
 fix-rights:
 	sudo chown -R $(shell whoami) .

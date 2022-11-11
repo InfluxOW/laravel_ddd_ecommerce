@@ -34,7 +34,7 @@ jobs:
             -   name: Set APPLICATION_IMAGE Env Variable
                 run: echo "APPLICATION_IMAGE=$(echo "${{ secrets.APPLICATION_IMAGE_REPOSITORY }}:${{ steps.current-branch.outputs.CURRENT_BRANCH == 'master' && 'latest' || steps.current-branch.outputs.CURRENT_BRANCH }}")" >> $GITHUB_ENV
 
-            -   name: Docker Build && Push
+            -   name: Docker Build && Cache && Push Application Image
                 uses: docker/build-push-action@master
                 with:
                     context: ./docker/php/
