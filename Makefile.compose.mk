@@ -46,7 +46,7 @@ restart: stop start
 
 ci: prepare-env sail-install
 	$(sail_ci) pull --ignore-pull-failures
-	$(sail_ci) up --abort-on-container-exit
+	$(sail_ci) up --abort-on-container-exit --attach application_ci
 	$(sail_ci) down --volumes
 
 # Tests
