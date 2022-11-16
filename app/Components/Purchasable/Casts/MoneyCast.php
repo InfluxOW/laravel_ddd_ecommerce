@@ -21,12 +21,7 @@ final class MoneyCast implements CastsAttributes
      */
     public function get($model, string $key, $value, array $attributes)
     {
-        $currency = app(CatalogSettings::class)->default_currency;
-        if (array_key_exists('currency', $attributes)) {
-            $currency = $attributes['currency'];
-        } elseif (isset($model->currency)) {
-            $currency = $model->currency;
-        }
+        $currency = $attributes['currency'] ?? $model->currency ?? app(CatalogSettings::class)->default_currency;
 
         return ($value === null) ? null : money($value, $currency);
     }
