@@ -12,13 +12,14 @@ sail_test_bash := $(sail_test) run --rm application_test bash -c
 
 sail_composer_image = $(shell cat .env.infrastructure.example | grep SAIL_COMPOSER_IMAGE | sed "s/SAIL_COMPOSER_IMAGE=//")
 
+SAIL_COMPOSER_CACHE ?= false
 # Application
 
 setup: sail-install build start dependencies-install
 	$(sail) php artisan app:refresh
 
 sail-install:
-	docker run --rm \
+	${SAIL_COMPOSER_CACHE} || docker run --rm \
 		--user "$(shell id -u):$(shell id -g)" \
 		--volume $(sail_dir):/var/www/html \
 		--workdir /var/www/html \

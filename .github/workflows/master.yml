@@ -52,6 +52,7 @@ jobs:
                 #########################
 
             -   name: Cache Application Composer Dependencies
+                id: application-composer
                 uses: actions/cache@main
                 with:
                     path: vendor
@@ -60,17 +61,29 @@ jobs:
 
             -   name: Cache Laravel Sail Composer Dependencies
                 uses: actions/cache@main
+                id: sail-composer
                 with:
                     path: tools/sail/vendor
                     key: tools-sail-${{ hashFiles('./tools/sail/composer.lock') }}
                     restore-keys: tools-sail-
 
             -   name: Cache PHPInsights Composer Dependencies
+                id: phpinsights-composer
                 uses: actions/cache@main
                 with:
                     path: tools/phpinsights/vendor
                     key: tools-phpinsights-${{ hashFiles('./tools/phpinsights/composer.lock') }}
                     restore-keys: tools-phpinsights-
+
+                #########################
+                ###  Vendor Cache Env ###
+                #########################
+
+            -   name: Set APPLICATION_COMPOSER_CACHE Env Variable
+                run: echo "APPLICATION_COMPOSER_CACHE=$(echo "${{ steps.application-composer.outputs.cache-hit == 'true' && steps.phpinsights-composer.outputs.cache-hit == 'true' }}")" >> $GITHUB_ENV
+
+            -   name: Set SAIL_COMPOSER_CACHE Env Variable
+                run: echo "SAIL_COMPOSER_CACHE=$(echo "${{ steps.sail-composer.outputs.cache-hit == 'true' }}")" >> $GITHUB_ENV
 
                 #########################
                 ###    Tools Cache    ###

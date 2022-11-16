@@ -5,8 +5,10 @@ phpinsights := $(phpinsights_dir)/vendor/bin/phpinsights
 
 infection := composer exec infection -- --threads=max --verbose --only-covering-test-cases --only-covered
 
+APPLICATION_COMPOSER_CACHE ?= false
+
 install:
-	composer install
+	${APPLICATION_COMPOSER_CACHE} || composer install
 	npm install
 	make prepare-env
 	php artisan key:generate

@@ -9,6 +9,7 @@ services:
             REDIS_HOST: redis_ci
             ELASTICSEARCH_URL: http://elasticsearch_ci:9200
             XDEBUG_MODE: ${SAIL_XDEBUG_MODE}
+            APPLICATION_COMPOSER_CACHE: ${APPLICATION_COMPOSER_CACHE:-false}
         depends_on:
             database_ci:
                 condition: service_healthy
