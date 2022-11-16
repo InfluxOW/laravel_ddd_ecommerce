@@ -129,13 +129,4 @@ final class AttributeResource extends Resource
     {
         return false;
     }
-
-    /*
-     * Translation
-     * */
-
-    protected static function getTranslationKeyClass(): string
-    {
-        return AttributeTranslationKey::class;
-    }
 }

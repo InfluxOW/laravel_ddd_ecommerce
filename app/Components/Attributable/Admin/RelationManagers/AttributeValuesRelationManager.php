@@ -87,13 +87,4 @@ final class AttributeValuesRelationManager extends RelationManager
     {
         return parent::canCreate() && isset($this->ownerRecord->attributeValues) && $this->ownerRecord->attributeValues->count() < Attribute::query()->count();
     }
-
-    /*
-     * Translation
-     * */
-
-    protected static function getTranslationKeyClass(): string
-    {
-        return AttributeValueTranslationKey::class;
-    }
 }

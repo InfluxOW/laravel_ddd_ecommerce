@@ -70,13 +70,4 @@ final class AddressesRelationManager extends RelationManager
                 //
             ]);
     }
-
-    /*
-     * Translation
-     * */
-
-    protected static function getTranslationKeyClass(): string
-    {
-        return AddressesTranslationKey::class;
-    }
 }

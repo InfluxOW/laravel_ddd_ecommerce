@@ -79,13 +79,4 @@ final class PricesRelationManager extends RelationManager
     {
         return parent::canCreate() && isset($this->ownerRecord->prices) && $this->ownerRecord->prices->count() < count(app(CatalogSettings::class)->available_currencies);
     }
-
-    /*
-     * Translation
-     * */
-
-    protected static function getTranslationKeyClass(): string
-    {
-        return PriceTranslationKey::class;
-    }
 }
