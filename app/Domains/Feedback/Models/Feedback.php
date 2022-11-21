@@ -114,7 +114,7 @@ final class Feedback extends Model implements Exportable
         /** @var ?self $feedback */
         $feedback = self::query()->forUser($ip, $user)->inLastHour()->select(['created_at'])->latest('created_at')->first();
 
-        return ($feedback === null) ? null : $feedback->created_at?->addHour()->longAbsoluteDiffForHumans(Carbon::now());
+        return $feedback === null ? null : $feedback->created_at?->addHour()->longAbsoluteDiffForHumans(Carbon::now());
     }
 
     /*

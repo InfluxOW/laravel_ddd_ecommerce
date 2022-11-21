@@ -177,7 +177,7 @@ final class ProductCategory extends Model implements HasMedia, Exportable
     {
         $category = self::findInHierarchy($this->id, self::getHierarchy());
 
-        return ($category === null) ? 0 : $category->products->count();
+        return $category === null ? 0 : $category->products->count();
     }
 
     public function getPathAttribute(): string
@@ -186,7 +186,7 @@ final class ProductCategory extends Model implements HasMedia, Exportable
         $category = self::findInHierarchy($this->id, self::getHierarchy())?->parent;
         while (isset($category)) {
             $path[] = $category->title;
-            $category = ($category->parent_id === null) ? null : self::findInHierarchy($category->parent_id, self::getHierarchy());
+            $category = $category->parent_id === null ? null : self::findInHierarchy($category->parent_id, self::getHierarchy());
         }
 
         $path = array_reverse($path);

@@ -19,7 +19,7 @@ final class AppUtils
         /** @var ServiceProvider|null $domainServiceProvider */
         $domainServiceProvider = self::guessDomainServiceProvider($class);
 
-        return ($domainServiceProvider === null) ? ServiceProviderNamespace::DEFAULT : $domainServiceProvider::NAMESPACE;
+        return $domainServiceProvider === null ? ServiceProviderNamespace::DEFAULT : $domainServiceProvider::NAMESPACE;
     }
 
     /**

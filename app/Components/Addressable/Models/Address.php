@@ -101,7 +101,7 @@ final class Address extends Model
 
     public function getRegion(): ?Region
     {
-        return ($this->region === null) ? null : Region::query()->find($this->region);
+        return $this->region === null ? null : Region::query()->find($this->region);
     }
 
     /*
@@ -110,6 +110,6 @@ final class Address extends Model
 
     public function __toString(): string
     {
-        return ($this->region === null) ? sprintf('%s, %s, %s, %s', $this->zip, $this->getCountry()?->name, $this->city, $this->street) : sprintf('%s, %s, %s, %s, %s', $this->zip, $this->getCountry()?->name, $this->getRegion()?->name, $this->city, $this->street);
+        return $this->region === null ? sprintf('%s, %s, %s, %s', $this->zip, $this->getCountry()?->name, $this->city, $this->street) : sprintf('%s, %s, %s, %s, %s', $this->zip, $this->getCountry()?->name, $this->getRegion()?->name, $this->city, $this->street);
     }
 }

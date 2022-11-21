@@ -27,7 +27,7 @@ final class AddressesRelationManager extends RelationManager
                     ->searchable()
                     ->options(Country::query()->pluck('name', 'id')->toArray())
                     ->getSearchResultsUsing(fn (string $query): array => Country::query()->where('name', 'LIKE', "%{$query}%")->pluck('name', 'id')->toArray())
-                    ->getOptionLabelUsing(fn (?string $value): ?string => ($value === null) ? null : Country::query()->find($value)?->name)
+                    ->getOptionLabelUsing(fn (?string $value): ?string => $value === null ? null : Country::query()->find($value)?->name)
                     ->afterStateUpdated(function (callable $set): void {
                         $set(AddressesTranslationKey::REGION->value, null);
                         $set(AddressesTranslationKey::CITY->value, null);
@@ -42,7 +42,7 @@ final class AddressesRelationManager extends RelationManager
                     ->searchable()
                     ->options(fn (callable $get): array => Region::query()->where('country_id', $get(AddressesTranslationKey::COUNTRY->value))->pluck('name', 'id')->toArray())
                     ->getSearchResultsUsing(fn (string $query, callable $get): array => Region::query()->where('country_id', $get(AddressesTranslationKey::COUNTRY->value))->where('name', 'LIKE', "%{$query}%")->pluck('name', 'id')->toArray())
-                    ->getOptionLabelUsing(fn (?string $value): ?string => ($value === null) ? null : Region::query()->find($value)?->name)
+                    ->getOptionLabelUsing(fn (?string $value): ?string => $value === null ? null : Region::query()->find($value)?->name)
                     ->afterStateUpdated(function (callable $set): void {
                         $set(AddressesTranslationKey::CITY->value, null);
                         $set(AddressesTranslationKey::STREET->value, null);

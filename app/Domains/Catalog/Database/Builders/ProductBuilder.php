@@ -33,7 +33,7 @@ final class ProductBuilder extends Builder
         if ($categories->isNotEmpty()) {
             $this->whereHas('categories', function (ProductCategoryBuilder $query) use ($categories): void {
                 foreach ($categories as $i => $category) {
-                    $operation = ($i === 0) ? 'where' : 'orWhere';
+                    $operation = $i === 0 ? 'where' : 'orWhere';
 
                     $query->$operation(function (ProductCategoryBuilder $query) use ($category): void {
                         $query

@@ -167,7 +167,7 @@ final class CartService
             return null;
         }
 
-        return sprintf('carts.%s', ($user === null) ? $key : sprintf('user_id:%s', $user->id));
+        return sprintf('carts.%s', $user === null ? $key : sprintf('user_id:%s', $user->id));
     }
 
     private function generateCartKey(): string

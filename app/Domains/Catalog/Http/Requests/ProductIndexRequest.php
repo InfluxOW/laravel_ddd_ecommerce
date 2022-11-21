@@ -90,7 +90,7 @@ final class ProductIndexRequest extends IndexRequest
     {
         if (array_key_exists(ProductAllowedFilter::PRICE_BETWEEN->name, $filters)) {
             [$from, $to] = explode(',', $filters[ProductAllowedFilter::PRICE_BETWEEN->name]);
-            $getPriceAmount = static fn (string $value): ?int => ($value === '') ? null : (int) money($value, $filters[ProductAllowedFilter::CURRENCY->name], true)->getAmount();
+            $getPriceAmount = static fn (string $value): ?int => $value === '' ? null : (int) money($value, $filters[ProductAllowedFilter::CURRENCY->name], true)->getAmount();
             $filters[ProductAllowedFilter::PRICE_BETWEEN->name] = array_map($getPriceAmount, [$from, $to]);
         }
     }

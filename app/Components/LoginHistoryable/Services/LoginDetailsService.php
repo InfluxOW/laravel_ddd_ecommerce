@@ -37,9 +37,9 @@ final class LoginDetailsService
         $loginDetailsUserAgent->userAgent = $agent->getUserAgent();
         $loginDetailsUserAgent->device = $getStringOrNull($agent->device());
         $loginDetailsUserAgent->platform = $getStringOrNull($agent->platform());
-        $loginDetailsUserAgent->platformVersion = ($loginDetailsUserAgent->platform === null) ? null : $getStringOrNull($agent->version($loginDetailsUserAgent->platform));
+        $loginDetailsUserAgent->platformVersion = $loginDetailsUserAgent->platform === null ? null : $getStringOrNull($agent->version($loginDetailsUserAgent->platform));
         $loginDetailsUserAgent->browser = $getStringOrNull($agent->browser());
-        $loginDetailsUserAgent->browserVersion = ($loginDetailsUserAgent->browser === null) ? null : $getStringOrNull($agent->version($loginDetailsUserAgent->browser));
+        $loginDetailsUserAgent->browserVersion = $loginDetailsUserAgent->browser === null ? null : $getStringOrNull($agent->version($loginDetailsUserAgent->browser));
 
         return $loginDetailsUserAgent;
     }
@@ -57,7 +57,7 @@ final class LoginDetailsService
         $loginDetailsLocation->countryCode = $location->iso_code;
         $loginDetailsLocation->countryName = $location->country;
         $loginDetailsLocation->city = $location->city;
-        $loginDetailsLocation->coordinates = ($location->lat === null || $location->lon === null) ? null : new Point($location->lat, $location->lon);
+        $loginDetailsLocation->coordinates = $location->lat === null || $location->lon === null ? null : new Point($location->lat, $location->lon);
         $loginDetailsLocation->zip = $location->postal_code;
 
         return $loginDetailsLocation;

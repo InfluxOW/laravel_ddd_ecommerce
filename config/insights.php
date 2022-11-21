@@ -33,7 +33,6 @@ use SlevomatCodingStandard\Sniffs\Functions\UnusedParameterSniff;
 use SlevomatCodingStandard\Sniffs\Namespaces\AlphabeticallySortedUsesSniff;
 use SlevomatCodingStandard\Sniffs\Namespaces\UnusedUsesSniff;
 use SlevomatCodingStandard\Sniffs\Namespaces\UseSpacingSniff;
-use SlevomatCodingStandard\Sniffs\PHP\UselessParenthesesSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\DeclareStrictTypesSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\DisallowArrayTypeHintSyntaxSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\DisallowMixedTypeHintSniff;
@@ -102,7 +101,6 @@ return [
         UselessFunctionDocCommentSniff::class,
         TodoSniff::class,
         DisallowArrayTypeHintSyntaxSniff::class,
-        UselessParenthesesSniff::class,
         DisallowEmptySniff::class,
         EmptyStatementSniff::class,
         ForbiddenPublicPropertySniff::class,

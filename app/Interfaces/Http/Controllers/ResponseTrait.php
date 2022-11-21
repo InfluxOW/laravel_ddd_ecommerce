@@ -53,6 +53,6 @@ trait ResponseTrait
     {
         $item = $query->first();
 
-        return ($item === null) ? $this->respondNotFound() : $resource::make($item)->additional($additional);
+        return $item === null ? $this->respondNotFound() : $resource::make($item)->additional($additional);
     }
 }

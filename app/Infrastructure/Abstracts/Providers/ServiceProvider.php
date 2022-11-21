@@ -156,7 +156,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
         $path = $reflection->getFileName();
         $realPath = dirname($path, 2) . '/';
 
-        return ($append === null) ? $realPath : "{$realPath}{$append}";
+        return $append === null ? $realPath : "{$realPath}{$append}";
     }
 
     protected static function blockNotSupportedClasses(string $class, array $supportedClasses): void
