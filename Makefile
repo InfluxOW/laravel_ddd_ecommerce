@@ -1,8 +1,5 @@
 include Makefile.compose.mk
 
-phpinsights_dir := $(project)/tools/phpinsights
-phpinsights := $(phpinsights_dir)/vendor/bin/phpinsights
-
 infection := composer exec infection -- --threads=max --verbose --only-covering-test-cases --only-covered
 
 APPLICATION_COMPOSER_CACHE ?= false
@@ -24,7 +21,7 @@ test-coverage:
 	XDEBUG_MODE=coverage php artisan test --parallel --coverage-clover storage/logs/clover.xml --coverage-xml=storage/logs/coverage-xml --log-junit=storage/logs/junit.xml
 
 insights:
-	$(phpinsights) --summary
+	php artisan insights --summary
 lint:
 	composer exec phpcs --verbose && composer exec pint -- --test 2>/dev/null
 lint-fix:

@@ -6,7 +6,6 @@
 #                       #
 #########################
 
-PHPINSIGHTS_BIN=./tools/phpinsights/vendor/bin/phpinsights
 SAIL_BIN=./tools/sail/vendor/bin/sail
 
 function sail() {
@@ -73,7 +72,7 @@ if [ "$FILES" != "" ]; then
     fi
 
 	echo "[PRE-COMMIT] Checking PHPInsights..."
-	$PHPINSIGHTS_BIN --summary --quiet
+	sail php artisan insights --summary --quiet
 
 	if [ $? != 0 ]; then
 		echo "[PRE-COMMIT] PHPInsights found problems."
