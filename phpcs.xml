@@ -15,9 +15,6 @@
 
     <rule ref="PSR12"/>
 
-    <!-- Temporarily disable enums check while PHPCS is not compatible with PHP 8.1 -->
-    <exclude-pattern>*/Enums</exclude-pattern>
-
     <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
         <exclude-pattern>*/Database/Migrations/*</exclude-pattern>
         <exclude-pattern>*/Database/Settings/*</exclude-pattern>
