@@ -23,8 +23,9 @@ use Squire\Models\Region;
  * @property string                          $street
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ *
  * @property-read Model|\Eloquent $addressable
- * @property-read string $string_representation
+ * @property-read string          $string_representation
  *
  * @method static \App\Components\Addressable\Database\Factories\AddressFactory factory(...$parameters)
  * @method static AddressBuilder|Address                                        newModelQuery()

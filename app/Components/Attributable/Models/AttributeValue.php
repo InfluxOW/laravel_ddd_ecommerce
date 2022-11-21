@@ -25,9 +25,11 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property float|null                      $value_float
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read Model|\Eloquent $attributable
+ *
+ * @property-read Model|\Eloquent                               $attributable
  * @property-read \App\Components\Attributable\Models\Attribute $attribute
- * @property-read string $readable_value
+ * @property-read string                                        $readable_value
+ *
  * @property string|int|float|bool $value
  *
  * @method static \App\Components\Attributable\Database\Factories\AttributeValueFactory factory(...$parameters)

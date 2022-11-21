@@ -30,6 +30,7 @@ use MStaack\LaravelPostgis\Geometries\Point;
  * @property \MStaack\LaravelPostgis\Geometries\Point|null $location
  * @property string|null                                   $zip
  * @property \Illuminate\Support\Carbon|null               $created_at
+ *
  * @property-read Model|\Eloquent $loginHistoryable
  *
  * @method static LoginHistoryBuilder|LoginHistory newModelQuery()

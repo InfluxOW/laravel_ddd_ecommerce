@@ -4,8 +4,48 @@
         "concat_space": {
             "spacing": "one"
         },
-        "phpdoc_separation": true,
-        "phpdoc_align": true,
+        "phpdoc_separation": {
+            "groups": [
+                [
+                    "deprecated",
+                    "link",
+                    "see",
+                    "since"
+                ],
+                [
+                    "author",
+                    "copyright",
+                    "license"
+                ],
+                [
+                    "category",
+                    "package",
+                    "subpackage"
+                ],
+                [
+                    "property"
+                ],
+                [
+                    "property-read"
+                ],
+                [
+                    "property-write"
+                ]
+            ]
+        },
+        "phpdoc_align": {
+            "tags": [
+                "method",
+                "param",
+                "property",
+                "property-read",
+                "property-write",
+                "return",
+                "throws",
+                "type",
+                "var"
+            ]
+        },
         "class_definition": {
             "space_before_parenthesis": true
         },

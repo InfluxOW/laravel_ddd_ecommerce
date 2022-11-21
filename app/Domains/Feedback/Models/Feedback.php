@@ -26,6 +26,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property bool                            $is_reviewed
  * @property string|null                     $ip
  * @property \Illuminate\Support\Carbon|null $created_at
+ *
  * @property-read User|null $user
  *
  * @method static \App\Domains\Feedback\Database\Factories\FeedbackFactory factory(...$parameters)

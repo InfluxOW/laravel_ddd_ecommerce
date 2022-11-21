@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\DB;
  * @property string                          $currency
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ *
  * @property-read Model|\Eloquent $purchasable
  *
  * @method static \App\Components\Purchasable\Database\Factories\PriceFactory factory(...$parameters)
