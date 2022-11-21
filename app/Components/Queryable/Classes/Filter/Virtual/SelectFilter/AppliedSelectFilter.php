@@ -17,9 +17,7 @@ final class AppliedSelectFilter extends SelectFilter
      *    @OA\Schema(type="float"),
      * })
      *
-     * @var string|int|bool|float
-     *
      * @example USD
      */
-    public $selected;
+    public string|int|bool|float $selected;
 }

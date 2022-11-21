@@ -11,8 +11,6 @@ final class AppliedNestedMultiselectFilter extends NestedMultiselectFilter
 {
     /**
      * @OA\Property(collectionFormat="multi", @OA\Items(type="object", ref="#/components/schemas/NestedMultiselectFilterValues"))
-     *
-     * @var array
      */
-    public $selected;
+    public array $selected;
 }

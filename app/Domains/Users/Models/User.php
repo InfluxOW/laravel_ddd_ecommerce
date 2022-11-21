@@ -34,22 +34,22 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string|null                     $remember_token
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|Address[] $addresses
- * @property-read int|null $addresses_count
- * @property-read \Illuminate\Database\Eloquent\Collection|Cart[] $carts
- * @property-read int|null $carts_count
- * @property-read \Illuminate\Database\Eloquent\Collection|ConfirmationToken[] $confirmationTokens
- * @property-read int|null $confirmation_tokens_count
- * @property-read \Illuminate\Database\Eloquent\Collection|Feedback[] $feedback
- * @property-read int|null $feedback_count
- * @property-read bool $has_verified_email
- * @property-read \Carbon\Carbon|null $last_logged_in_at
- * @property-read \Illuminate\Database\Eloquent\Collection|LoginHistory[] $loginHistory
- * @property-read int|null $login_history_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|Address[]                                                        $addresses
+ * @property-read int|null                                                                                                  $addresses_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|Cart[]                                                           $carts
+ * @property-read int|null                                                                                                  $carts_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|ConfirmationToken[]                                              $confirmationTokens
+ * @property-read int|null                                                                                                  $confirmation_tokens_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|Feedback[]                                                       $feedback
+ * @property-read int|null                                                                                                  $feedback_count
+ * @property-read bool                                                                                                      $has_verified_email
+ * @property-read \Carbon\Carbon|null                                                                                       $last_logged_in_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|LoginHistory[]                                                   $loginHistory
+ * @property-read int|null                                                                                                  $login_history_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
- * @property-read int|null $notifications_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Sanctum\PersonalAccessToken[] $tokens
- * @property-read int|null $tokens_count
+ * @property-read int|null                                                                                                  $notifications_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Sanctum\PersonalAccessToken[]                           $tokens
+ * @property-read int|null                                                                                                  $tokens_count
  *
  * @method static \App\Domains\Users\Database\Factories\UserFactory factory(...$parameters)
  * @method static UserBuilder|User                                  newModelQuery()
@@ -80,6 +80,8 @@ final class User extends Authenticatable implements MustVerifyEmail, Exportable
      * The attributes that are mass assignable.
      *
      * @var string[]
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint
      */
     protected $fillable = [
         'name',
@@ -92,6 +94,8 @@ final class User extends Authenticatable implements MustVerifyEmail, Exportable
      * The attributes that should be hidden for serialization.
      *
      * @var array<int, string>
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint
      */
     protected $hidden = [
         'password',
@@ -102,6 +106,8 @@ final class User extends Authenticatable implements MustVerifyEmail, Exportable
      * The attributes that should be cast.
      *
      * @var array<string, string>
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint
      */
     protected $casts = [
         'email_verified_at' => 'datetime',

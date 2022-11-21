@@ -9,8 +9,6 @@ abstract class PlainMultiselectFilter extends Filter
 {
     /**
      * @OA\Property(enum={"PLAIN_MULTISELECT"})
-     *
-     * @var string
      */
-    public $type;
+    public string $type;
 }

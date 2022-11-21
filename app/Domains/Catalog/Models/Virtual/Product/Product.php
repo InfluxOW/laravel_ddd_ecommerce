@@ -11,57 +11,43 @@ abstract class Product
     /**
      * @OA\Property()
      *
-     * @var string
-     *
      * @example playstation-4-pro
      */
-    public $slug;
+    public string $slug;
 
     /**
      * @OA\Property()
-     *
-     * @var string
      *
      * @example Playstation 4 Pro
      */
-    public $title;
+    public string $title;
 
     /**
      * @OA\Property()
      *
-     * @var string
-     *
      * @example http://localhost:8085/api/products/libero-laboriosam-dolorum
      */
-    public $url;
+    public string $url;
 
     /**
      * @OA\Property(format="date-time")
      *
-     * @var string
-     *
      * @example 2022-02-05T04:21:52+00:00
      */
-    public $created_at;
+    public string $created_at;
 
     /**
      * @OA\Property(ref="#/components/schemas/Money")
-     *
-     * @var Money
      */
-    public $price;
+    public Money $price;
 
     /**
      * @OA\Property(ref="#/components/schemas/Money")
-     *
-     * @var Money|null
      */
-    public $price_discounted;
+    public ?Money $price_discounted = null;
 
     /**
      * @OA\Property(ref="#/components/schemas/Currency")
-     *
-     * @var Currency
      */
-    public $currency;
+    public Currency $currency;
 }

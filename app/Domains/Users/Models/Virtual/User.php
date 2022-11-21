@@ -12,36 +12,28 @@ final class User
     /**
      * @OA\Property()
      *
-     * @var string
-     *
      * @example John Doe
      */
-    public $name;
+    public string $name;
 
     /**
      * @OA\Property(format="email")
      *
-     * @var string
-     *
      * @example john_doe@gmail.com
      */
-    public $email;
+    public string $email;
 
     /**
      * @OA\Property(format="phone")
      *
-     * @var string
-     *
      * @example +12225657785
      */
-    public $phone;
+    public string $phone;
 
     /**
      * @OA\Property(format="date-time")
      *
-     * @var string
-     *
      * @example 2022-02-05T04:21:52+00:00
      */
-    public $created_at;
+    public string $created_at;
 }

@@ -16,6 +16,8 @@ final class EventServiceProvider extends BaseEventServiceProvider
      * The event listener mappings for the application.
      *
      * @var array
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint
      */
     protected $listen = [];
 

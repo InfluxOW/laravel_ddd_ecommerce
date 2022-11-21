@@ -9,8 +9,6 @@ abstract class NestedMultiselectFilter extends Filter
 {
     /**
      * @OA\Property(enum={"NESTED_MULTISELECT"})
-     *
-     * @var string
      */
-    public $type;
+    public string $type;
 }

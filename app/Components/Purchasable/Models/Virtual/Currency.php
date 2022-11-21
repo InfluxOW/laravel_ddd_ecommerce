@@ -12,27 +12,21 @@ final class Currency
     /**
      * @OA\Property()
      *
-     * @var string
-     *
      * @example US Dollar
      */
-    public $name;
+    public string $name;
 
     /**
      * @OA\Property()
-     *
-     * @var string
      *
      * @example USD
      */
-    public $abbreviation;
+    public string $abbreviation;
 
     /**
      * @OA\Property()
      *
-     * @var string
-     *
      * @example $
      */
-    public $symbol;
+    public string $symbol;
 }
