@@ -4,8 +4,9 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d0d78c2c1a1c5f45f970ec59587d486f",
-    "packages": [
+    "content-hash": "2e378b22a0d8c6bfea7f051a20d16a72",
+    "packages": [],
+    "packages-dev": [
         {
             "name": "doctrine/inflector",
             "version": "2.0.6",
@@ -2222,7 +2223,6 @@
             "time": "2022-03-08T17:03:00+00:00"
         }
     ],
-    "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": [],
