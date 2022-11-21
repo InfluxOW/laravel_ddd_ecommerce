@@ -37,7 +37,6 @@ use SlevomatCodingStandard\Sniffs\PHP\UselessParenthesesSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\DeclareStrictTypesSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\DisallowArrayTypeHintSyntaxSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\DisallowMixedTypeHintSniff;
-use SlevomatCodingStandard\Sniffs\TypeHints\ParameterTypeHintSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\PropertyTypeHintSniff;
 
 return [
@@ -101,7 +100,6 @@ return [
         DisallowMixedTypeHintSniff::class,
         ForbiddenNormalClasses::class,
         ForbiddenTraits::class,
-        ParameterTypeHintSniff::class,
         PropertyTypeHintSniff::class,
         UselessFunctionDocCommentSniff::class,
         TodoSniff::class,

@@ -18,6 +18,7 @@ final class MoneyCast implements CastsAttributes
      * @param array  $attributes
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint
      *
      * @return Money
      */
@@ -37,6 +38,7 @@ final class MoneyCast implements CastsAttributes
      * @param array  $attributes
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint
      *
      * @return int
      */
