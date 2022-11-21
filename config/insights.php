@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenDefineFunctions;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenNormalClasses;
-use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenPrivateMethods;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenTraits;
 use NunoMaduro\PhpInsights\Domain\Sniffs\ForbiddenSetterSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\EmptyStatementSniff;
@@ -12,27 +11,20 @@ use PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\UselessOverridingMetho
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Commenting\TodoSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Strings\UnnecessaryStringConcatSniff;
-use PHP_CodeSniffer\Standards\PEAR\Sniffs\WhiteSpace\ObjectOperatorIndentSniff;
 use PhpCsFixer\Fixer\Basic\BracesFixer;
 use PhpCsFixer\Fixer\ClassNotation\ClassDefinitionFixer;
 use PhpCsFixer\Fixer\ClassNotation\OrderedClassElementsFixer;
 use PhpCsFixer\Fixer\Comment\NoEmptyCommentFixer;
 use PhpCsFixer\Fixer\ReturnNotation\ReturnAssignmentFixer;
-use PhpCsFixer\Fixer\Whitespace\MethodChainingIndentationFixer;
 use SlevomatCodingStandard\Sniffs\Classes\DisallowLateStaticBindingForConstantsSniff;
 use SlevomatCodingStandard\Sniffs\Classes\ForbiddenPublicPropertySniff;
 use SlevomatCodingStandard\Sniffs\Classes\SuperfluousExceptionNamingSniff;
 use SlevomatCodingStandard\Sniffs\Classes\SuperfluousTraitNamingSniff;
 use SlevomatCodingStandard\Sniffs\Classes\UselessLateStaticBindingSniff;
-use SlevomatCodingStandard\Sniffs\Commenting\DocCommentSpacingSniff;
 use SlevomatCodingStandard\Sniffs\Commenting\InlineDocCommentDeclarationSniff;
-use SlevomatCodingStandard\Sniffs\Commenting\UselessFunctionDocCommentSniff;
 use SlevomatCodingStandard\Sniffs\ControlStructures\DisallowEmptySniff;
 use SlevomatCodingStandard\Sniffs\Functions\FunctionLengthSniff;
 use SlevomatCodingStandard\Sniffs\Functions\UnusedParameterSniff;
-use SlevomatCodingStandard\Sniffs\Namespaces\AlphabeticallySortedUsesSniff;
-use SlevomatCodingStandard\Sniffs\Namespaces\UnusedUsesSniff;
-use SlevomatCodingStandard\Sniffs\Namespaces\UseSpacingSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\DeclareStrictTypesSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\DisallowArrayTypeHintSyntaxSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\DisallowMixedTypeHintSniff;
@@ -93,50 +85,48 @@ return [
         /* * * * * * * * * * * *
          *         Sniffs
          * * * * * * * * * * * */
-        AlphabeticallySortedUsesSniff::class,
+
         DeclareStrictTypesSniff::class,
-        DisallowMixedTypeHintSniff::class,
-        ForbiddenNormalClasses::class,
-        ForbiddenTraits::class,
-        UselessFunctionDocCommentSniff::class,
-        TodoSniff::class,
         DisallowArrayTypeHintSyntaxSniff::class,
         DisallowEmptySniff::class,
+        DisallowLateStaticBindingForConstantsSniff::class,
+        DisallowMixedTypeHintSniff::class,
         EmptyStatementSniff::class,
-        ForbiddenPublicPropertySniff::class,
         ForbiddenDefineFunctions::class,
-        UnusedParameterSniff::class,
+        ForbiddenNormalClasses::class,
+        ForbiddenPublicPropertySniff::class,
+        ForbiddenSetterSniff::class,
+        ForbiddenTraits::class,
+        FunctionLengthSniff::class,
+        InlineDocCommentDeclarationSniff::class,
+        LineLengthSniff::class,
         SuperfluousExceptionNamingSniff::class,
         SuperfluousTraitNamingSniff::class,
-        ObjectOperatorIndentSniff::class,
-        LineLengthSniff::class,
-        UnusedUsesSniff::class,
-        UseSpacingSniff::class,
-        FunctionLengthSniff::class,
-        ForbiddenSetterSniff::class,
-        ForbiddenSetterSniff::class,
+        TodoSniff::class,
         UnnecessaryStringConcatSniff::class,
-        DisallowLateStaticBindingForConstantsSniff::class,
-        UselessLateStaticBindingSniff::class,
-        UselessLateStaticBindingSniff::class,
-        InlineDocCommentDeclarationSniff::class,
-        DocCommentSpacingSniff::class,
-        UselessOverridingMethodSniff::class,
+        UnusedParameterSniff::class,
 
         /* * * * * * * * * * * *
          *        Fixers
          * * * * * * * * * * * */
 
-        ReturnAssignmentFixer::class,
-        NoEmptyCommentFixer::class,
         BracesFixer::class,
-        MethodChainingIndentationFixer::class,
-        OrderedClassElementsFixer::class,
         ClassDefinitionFixer::class,
+        NoEmptyCommentFixer::class,
+        OrderedClassElementsFixer::class,
+        ReturnAssignmentFixer::class,
     ],
     'config' => [
-        ForbiddenPrivateMethods::class => [
-            'title' => 'The usage of private methods is not idiomatic in Laravel.',
+        UselessOverridingMethodSniff::class => [
+            'exclude' => [
+                'app/Domains/Generic/Exceptions/HttpException.php',
+            ],
+        ],
+        UselessLateStaticBindingSniff::class => [
+            'exclude' => [
+                'app/Domains/Admin/Providers/DomainServiceProvider.php',
+                'app/Domains/Generic/Providers/DomainServiceProvider.php',
+            ],
         ],
     ],
 
