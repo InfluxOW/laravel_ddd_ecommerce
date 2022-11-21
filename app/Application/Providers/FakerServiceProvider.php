@@ -9,7 +9,7 @@ use Illuminate\Support\ServiceProvider;
 
 final class FakerServiceProvider extends ServiceProvider
 {
-    public function register()
+    public function register(): void
     {
         $this->app->extend(Generator::class, function (Generator $faker): Generator {
             $faker->addProvider(new Commerce($faker));

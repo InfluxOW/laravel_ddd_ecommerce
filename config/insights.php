@@ -39,7 +39,6 @@ use SlevomatCodingStandard\Sniffs\TypeHints\DisallowArrayTypeHintSyntaxSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\DisallowMixedTypeHintSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\ParameterTypeHintSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\PropertyTypeHintSniff;
-use SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSniff;
 
 return [
 
@@ -94,6 +93,9 @@ return [
     'add' => [],
 
     'remove' => [
+        /* * * * * * * * * * * *
+         *         Sniffs
+         * * * * * * * * * * * */
         AlphabeticallySortedUsesSniff::class,
         DeclareStrictTypesSniff::class,
         DisallowMixedTypeHintSniff::class,
@@ -101,12 +103,9 @@ return [
         ForbiddenTraits::class,
         ParameterTypeHintSniff::class,
         PropertyTypeHintSniff::class,
-        ReturnTypeHintSniff::class,
         UselessFunctionDocCommentSniff::class,
-        ReturnAssignmentFixer::class,
         TodoSniff::class,
         DisallowArrayTypeHintSyntaxSniff::class,
-        NoEmptyCommentFixer::class,
         UselessParenthesesSniff::class,
         DisallowEmptySniff::class,
         EmptyStatementSniff::class,
@@ -130,6 +129,12 @@ return [
         DocCommentSpacingSniff::class,
         UselessOverridingMethodSniff::class,
 
+        /* * * * * * * * * * * *
+         *        Fixers
+         * * * * * * * * * * * */
+
+        ReturnAssignmentFixer::class,
+        NoEmptyCommentFixer::class,
         BracesFixer::class,
         MethodChainingIndentationFixer::class,
         OrderedClassElementsFixer::class,

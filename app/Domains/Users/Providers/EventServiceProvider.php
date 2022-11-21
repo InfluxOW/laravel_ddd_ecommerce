@@ -27,10 +27,8 @@ final class EventServiceProvider extends BaseEventServiceProvider
 
     /**
      * Register any events for your application.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         User::observe([UserObserver::class]);
     }

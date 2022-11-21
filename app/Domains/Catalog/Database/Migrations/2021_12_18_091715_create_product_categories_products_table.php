@@ -10,12 +10,10 @@ return new class () extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('product_categories_products', function (Blueprint $table) {
+        Schema::create('product_categories_products', function (Blueprint $table): void {
             $table->id();
             $table->foreignIdFor(ProductCategory::class, 'category_id')->constrained('product_categories')->cascadeOnDelete();
             $table->foreignIdFor(Product::class, 'product_id')->constrained('products')->cascadeOnDelete();
@@ -26,10 +24,8 @@ return new class () extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('categories_products');
     }

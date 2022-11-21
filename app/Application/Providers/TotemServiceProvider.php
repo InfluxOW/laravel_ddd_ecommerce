@@ -9,7 +9,7 @@ use Studio\Totem\TotemModel;
 
 final class TotemServiceProvider extends BaseTotemServiceProvider
 {
-    public function boot()
+    public function boot(): void
     {
         parent::boot();
 

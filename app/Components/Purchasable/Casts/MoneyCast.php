@@ -17,6 +17,8 @@ final class MoneyCast implements CastsAttributes
      * @param mixed  $value
      * @param array  $attributes
      *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint
+     *
      * @return Money
      */
     public function get($model, string $key, $value, array $attributes)
@@ -33,6 +35,8 @@ final class MoneyCast implements CastsAttributes
      * @param string $key
      * @param mixed  $value
      * @param array  $attributes
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint
      *
      * @return int
      */

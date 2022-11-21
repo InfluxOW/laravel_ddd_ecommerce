@@ -52,7 +52,7 @@ abstract class SortService
     protected function addSort(UnitEnum & IAllowedSortEnum $sort, ?Closure $callback = null): static
     {
         if ($callback === null) {
-            $callback = static function (Builder $query) use ($sort) {
+            $callback = static function (Builder $query) use ($sort): void {
                 $query->reorder();
 
                 $column = $sort->getDatabaseColumn();

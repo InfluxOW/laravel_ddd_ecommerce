@@ -11,7 +11,7 @@ final class RouteServiceProvider extends BaseRouteServiceProvider
 {
     public const HOME = '/';
 
-    public function boot()
+    public function boot(): void
     {
         $this->configureRateLimiting();
     }

@@ -10,10 +10,8 @@ final class ProductAttributeValueSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         $this->call(AttributeValueSeeder::class, false, ['attributableModels' => [Product::class]]);
     }

@@ -67,8 +67,6 @@ final class ProductCategoryChildrenRelationManager extends RelationManager
 
     /**
      * @param ProductCategory $record
-     *
-     * @return bool
      */
     public function canDelete(Model $record): bool
     {

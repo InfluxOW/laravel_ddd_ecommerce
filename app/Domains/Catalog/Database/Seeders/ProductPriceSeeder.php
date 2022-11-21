@@ -12,10 +12,8 @@ final class ProductPriceSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         $this->call(PriceSeeder::class, false, ['purchasableModels' => [Product::class], 'afterInsertHook' => fn () => Artisan::call(UpdateProductsDisplayability::class)]);
     }

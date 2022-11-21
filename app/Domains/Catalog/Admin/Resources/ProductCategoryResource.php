@@ -247,8 +247,6 @@ final class ProductCategoryResource extends Resource
 
     /**
      * @param ProductCategory $record
-     *
-     * @return bool
      */
     public static function canDelete(Model $record): bool
     {

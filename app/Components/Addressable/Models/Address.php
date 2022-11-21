@@ -108,7 +108,7 @@ final class Address extends Model
      * Helpers
      * */
 
-    public function __toString()
+    public function __toString(): string
     {
         return ($this->region === null) ? sprintf('%s, %s, %s, %s', $this->zip, $this->getCountry()?->name, $this->city, $this->street) : sprintf('%s, %s, %s, %s, %s', $this->zip, $this->getCountry()?->name, $this->getRegion()?->name, $this->city, $this->street);
     }
