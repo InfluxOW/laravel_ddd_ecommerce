@@ -9,10 +9,8 @@ final class AdminSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         $email = config('app.admin.email');
         if (Admin::query()->where('email', $email)->doesntExist()) {

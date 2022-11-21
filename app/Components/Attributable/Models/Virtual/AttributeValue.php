@@ -17,16 +17,12 @@ final class AttributeValue
      *    @OA\Schema(type="float"),
      * })
      *
-     * @var string|int|bool|float
-     *
      * @example 35.4
      */
-    public $value;
+    public string|int|bool|float $value;
 
     /**
      * @OA\Property(ref="#/components/schemas/Attribute")
-     *
-     * @var Attribute
      */
-    public $attribute;
+    public Attribute $attribute;
 }

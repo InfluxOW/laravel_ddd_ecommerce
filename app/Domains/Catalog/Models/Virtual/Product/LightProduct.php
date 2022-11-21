@@ -13,10 +13,8 @@ class LightProduct extends Product
 {
     /**
      * @OA\Property(ref="#/components/schemas/Media")
-     *
-     * @var Media
      */
-    public $image;
+    public Media $image;
 
     /**
      * @OA\Property(
@@ -26,5 +24,5 @@ class LightProduct extends Product
      *
      * @var LightProductCategory[]
      */
-    public $categories;
+    public array $categories;
 }

@@ -13,25 +13,19 @@ final class NestedMultiselectFilterValuesAttribute
     /**
      * @OA\Property()
      *
-     * @var string
-     *
      * @example Simple Attribute
      */
-    public $title;
+    public string $title;
 
     /**
      * @OA\Property()
      *
-     * @var string
-     *
      * @example simple-attribute
      */
-    public $query;
+    public string $query;
 
     /**
      * @OA\Property(ref="#/components/schemas/ResponseValueType")
-     *
-     * @var ResponseValueType
      */
-    public $values_type;
+    public ResponseValueType $values_type;
 }

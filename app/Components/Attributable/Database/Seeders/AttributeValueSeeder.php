@@ -5,6 +5,7 @@ namespace App\Components\Attributable\Database\Seeders;
 use App\Components\Attributable\Models\Attribute;
 use App\Components\Attributable\Models\AttributeValue;
 use App\Infrastructure\Abstracts\Database\Seeder;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\LazyCollection;
@@ -16,11 +17,9 @@ final class AttributeValueSeeder extends Seeder
      *
      * @param class-string<Model>[] $attributableModels
      *
-     * @return void
-     *
-     * @throws \Exception
+     * @throws Exception
      */
-    public function run(array $attributableModels = [])
+    public function run(array $attributableModels = []): void
     {
         $attributes = Attribute::query()->inRandomOrder()->get(['id', 'values_type', 'title']);
         $attributesCount = $attributes->count();

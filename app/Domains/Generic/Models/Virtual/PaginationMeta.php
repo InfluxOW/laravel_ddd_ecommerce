@@ -12,65 +12,51 @@ final class PaginationMeta
     /**
      * @OA\Property()
      *
-     * @var int
-     *
      * @example 1
      */
-    public $current_page;
+    public int $current_page;
 
     /**
      * @OA\Property()
-     *
-     * @var int
      *
      * @example 50
      */
-    public $last_page;
+    public int $last_page;
 
     /**
      * @OA\Property()
-     *
-     * @var int
      *
      * @example 20
      */
-    public $per_page;
+    public int $per_page;
 
     /**
      * @OA\Property()
-     *
-     * @var int
      *
      * @example 1000
      */
-    public $total;
+    public int $total;
 
     /**
      * @OA\Property()
-     *
-     * @var int|null
      *
      * @example 1
      */
-    public $from;
+    public ?int $from = null;
 
     /**
      * @OA\Property()
-     *
-     * @var int|null
      *
      * @example 20
      */
-    public $to;
+    public ?int $to = null;
 
     /**
      * @OA\Property()
      *
-     * @var string
-     *
      * @example http://localhost:8085/api/products
      */
-    public $path;
+    public string $path;
 
     /**
      * @OA\Property(
@@ -83,8 +69,6 @@ final class PaginationMeta
      *    @OA\Property(property="active",  type="boolean", example="false"),
      * ),
      * )
-     *
-     * @var object
      */
-    public $links;
+    public object $links;
 }

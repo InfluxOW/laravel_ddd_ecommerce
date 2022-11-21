@@ -8,14 +8,12 @@ return new class () extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::enablePostgisIfNotExists();
 
-        Schema::create('login_history', function (Blueprint $table) {
+        Schema::create('login_history', function (Blueprint $table): void {
             $table->id();
             $table->morphs('login_historyable');
             $table->ipAddress('ip')->nullable();
@@ -38,10 +36,8 @@ return new class () extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::disablePostgisIfExists();
 

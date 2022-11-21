@@ -128,7 +128,7 @@ final class ProductCategoryResource extends Resource
                             ->reactive()
                             ->afterStateUpdated(function (callable $set, callable $get): void {
                                 $parentId = $get(ProductCategoryTranslationKey::PARENT_ID->value);
-                                $parent = ($parentId === null) ? null : ProductCategory::query()->hasLimitedDepth()->find($parentId);
+                                $parent = $parentId === null ? null : ProductCategory::query()->hasLimitedDepth()->find($parentId);
 
                                 if (isset($parent->depth)) {
                                     $set(ProductCategoryTranslationKey::DEPTH->value, $parent->depth + 1);
@@ -151,12 +151,12 @@ final class ProductCategoryResource extends Resource
                             ->schema([
                                 TextInput::makeTranslated(ProductCategoryTranslationKey::DEPTH)
                                     ->disabled()
-                                    ->default(fn (Page|RelationManager $livewire): int => ($livewire instanceof RelationManager && isset($livewire->ownerRecord->depth)) ? (int) ($livewire->ownerRecord->depth + 1) : 0)
+                                    ->default(fn (Page|RelationManager $livewire): int => $livewire instanceof RelationManager && isset($livewire->ownerRecord->depth) ? (int) ($livewire->ownerRecord->depth + 1) : 0)
                                     ->lte((string) ProductCategory::MAX_DEPTH, true)
                                     ->columnSpan(2),
                                 TextInput::makeTranslated(ProductCategoryTranslationKey::PATH)
                                     ->disabled()
-                                    ->default(fn (Page|RelationManager $livewire): ?string => ($livewire instanceof RelationManager && isset($livewire->ownerRecord->path)) ? $livewire->ownerRecord->path : null)
+                                    ->default(fn (Page|RelationManager $livewire): ?string => $livewire instanceof RelationManager && isset($livewire->ownerRecord->path) ? $livewire->ownerRecord->path : null)
                                     ->columnSpan(8),
                             ])
                             ->columns(10)
@@ -194,9 +194,9 @@ final class ProductCategoryResource extends Resource
                                 Grid::make()
                                     ->schema([
                                         Placeholder::makeTranslated(ProductCategoryTranslationKey::OVERALL_PRODUCTS_COUNT)
-                                            ->content(fn (?ProductCategory $record): int => ($record === null) ? 0 : $record->overall_products_count),
+                                            ->content(fn (?ProductCategory $record): int => $record === null ? 0 : $record->overall_products_count),
                                         Placeholder::makeTranslated(ProductCategoryTranslationKey::PRODUCTS_COUNT)
-                                            ->content(fn (?ProductCategory $record): ?int => ($record === null) ? 0 : ProductCategory::findInHierarchy($record->id, ProductCategory::getHierarchy())?->products_count),
+                                            ->content(fn (?ProductCategory $record): ?int => $record === null ? 0 : ProductCategory::findInHierarchy($record->id, ProductCategory::getHierarchy())?->products_count),
                                     ])
                                     ->columns(4),
                             ]),
@@ -247,8 +247,6 @@ final class ProductCategoryResource extends Resource
 
     /**
      * @param ProductCategory $record
-     *
-     * @return bool
      */
     public static function canDelete(Model $record): bool
     {

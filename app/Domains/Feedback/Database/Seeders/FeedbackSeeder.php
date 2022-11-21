@@ -9,10 +9,8 @@ final class FeedbackSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         $this->seedModelByChunks(Feedback::class, app()->runningUnitTests() ? 20 : 200, 25, 5);
     }

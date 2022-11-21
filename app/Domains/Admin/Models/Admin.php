@@ -22,10 +22,11 @@ use Illuminate\Notifications\Notifiable;
  * @property string|null                     $remember_token
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|LoginHistory[] $loginHistory
- * @property-read int|null $login_history_count
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection|LoginHistory[]                                                   $loginHistory
+ * @property-read int|null                                                                                                  $login_history_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
- * @property-read int|null $notifications_count
+ * @property-read int|null                                                                                                  $notifications_count
  *
  * @method static \App\Domains\Admin\Database\Factories\AdminFactory factory(...$parameters)
  * @method static AdminBuilder|Admin                                 newModelQuery()
@@ -51,6 +52,8 @@ final class Admin extends Authenticatable implements FilamentUser
      * The attributes that are mass assignable.
      *
      * @var string[]
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint
      */
     protected $fillable = [
         'name',
@@ -62,6 +65,8 @@ final class Admin extends Authenticatable implements FilamentUser
      * The attributes that should be hidden for serialization.
      *
      * @var array<int, string>
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint
      */
     protected $hidden = [
         'password',

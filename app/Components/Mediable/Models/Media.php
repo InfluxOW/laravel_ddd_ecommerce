@@ -29,7 +29,8 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
  * @property int|null                        $order_column
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read string $type
+ *
+ * @property-read string                                        $type
  * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $model
  *
  * @method static \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|static[] all($columns = ['*'])

@@ -12,7 +12,7 @@ final class LangUtils
 {
     public static function translateValue(ServiceProviderNamespace $namespace, TranslationFilename $filename, string|int $value, ?string $key = null, bool $allowClosures = false): string|Closure
     {
-        $value = ($key === null) ? $value : sprintf('%s.%s', $key, $value);
+        $value = $key === null ? $value : sprintf('%s.%s', $key, $value);
 
         /*
          * Workaround for a wierd bug that breaks running tests in coverage mode

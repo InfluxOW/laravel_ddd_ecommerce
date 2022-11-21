@@ -6,8 +6,6 @@ final class PathUtils
 {
     /**
      * @param string[] $parts
-     *
-     * @return string
      */
     public static function join(array $parts): string
     {

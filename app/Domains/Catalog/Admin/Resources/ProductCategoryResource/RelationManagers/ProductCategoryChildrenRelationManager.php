@@ -33,9 +33,9 @@ final class ProductCategoryChildrenRelationManager extends RelationManager
                 /* @phpstan-ignore-next-line */
                 Action::make(' | ')->visible(fn (Page|RelationManager $livewire, ProductCategory $record) => $livewire->canEdit($record)),
                 /* @phpstan-ignore-next-line */
-                Action::make('↑')->button()->action(fn (ProductCategory $record): ProductCategory|Node => ($record->left === $record->parent?->children->min('left')) ? $record : $record->moveLeft())->visible(fn (Page|RelationManager $livewire, ProductCategory $record) => $livewire->canEdit($record)),
+                Action::make('↑')->button()->action(fn (ProductCategory $record): ProductCategory|Node => $record->left === $record->parent?->children->min('left') ? $record : $record->moveLeft())->visible(fn (Page|RelationManager $livewire, ProductCategory $record) => $livewire->canEdit($record)),
                 /* @phpstan-ignore-next-line */
-                Action::make('↓')->button()->action(fn (ProductCategory $record): ProductCategory|Node => ($record->left === $record->parent?->children->max('left')) ? $record : $record->moveRight())->visible(fn (Page|RelationManager $livewire, ProductCategory $record) => $livewire->canEdit($record)),
+                Action::make('↓')->button()->action(fn (ProductCategory $record): ProductCategory|Node => $record->left === $record->parent?->children->max('left') ? $record : $record->moveRight())->visible(fn (Page|RelationManager $livewire, ProductCategory $record) => $livewire->canEdit($record)),
             ])
             ->columns([
                 TextColumn::makeTranslated(ProductCategoryTranslationKey::LEFT),
@@ -67,8 +67,6 @@ final class ProductCategoryChildrenRelationManager extends RelationManager
 
     /**
      * @param ProductCategory $record
-     *
-     * @return bool
      */
     public function canDelete(Model $record): bool
     {

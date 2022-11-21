@@ -74,9 +74,8 @@ abstract class Seeder extends BaseSeeder
     }
 
     /**
-     * @param BelongsToMany $relation
-     * @param int[]         $foreignIds
-     * @param int[]         $relatedIds
+     * @param int[] $foreignIds
+     * @param int[] $relatedIds
      */
     protected function seedBelongsToManyRelationByChunks(BelongsToMany $relation, array $foreignIds, array $relatedIds, Closure $takeRelatedIds): void
     {
@@ -89,9 +88,7 @@ abstract class Seeder extends BaseSeeder
     }
 
     /**
-     * @param BelongsToMany $relation
-     * @param int           $foreignId
-     * @param int[]         $relatedIds
+     * @param int[] $relatedIds
      *
      * @return array
      */

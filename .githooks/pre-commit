@@ -60,6 +60,17 @@ if [ "$FILES" != "" ]; then
         git add $FILES
 	fi
 
+	# Code Style - PHPInsights
+
+	echo "[PRE-COMMIT] Checking PHPInsights..."
+	sail php artisan insights --quiet
+
+	if [ $? != 0 ]; then
+		echo "[PRE-COMMIT] PHPInsights found problems."
+		echo "[PRE-COMMIT] Run PHPInsights manually and fix existing errors."
+		exit 1
+	fi
+
     # Code Quality
 
     echo "[PRE-COMMIT] Checking PHPStan..."
@@ -70,15 +81,6 @@ if [ "$FILES" != "" ]; then
         echo "[PRE-COMMIT] Run PHPStan manually and fix existing errors."
         exit 1
     fi
-
-	echo "[PRE-COMMIT] Checking PHPInsights..."
-	sail php artisan insights --summary --quiet
-
-	if [ $? != 0 ]; then
-		echo "[PRE-COMMIT] PHPInsights found problems."
-		echo "[PRE-COMMIT] Run PHPInsights manually and fix existing errors."
-		exit 1
-	fi
 
     echo "[PRE-COMMIT] No errors found."
 fi

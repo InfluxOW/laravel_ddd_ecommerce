@@ -9,8 +9,6 @@ abstract class SelectFilter extends Filter
 {
     /**
      * @OA\Property(enum={"SELECT"})
-     *
-     * @var string
      */
-    public $type;
+    public string $type;
 }

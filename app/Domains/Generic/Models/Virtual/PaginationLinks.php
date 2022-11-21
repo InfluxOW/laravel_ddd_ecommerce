@@ -12,36 +12,28 @@ final class PaginationLinks
     /**
      * @OA\Property()
      *
-     * @var string
-     *
      * @example http://localhost:8085/api/products?page=1
      */
-    public $first;
+    public string $first;
 
     /**
      * @OA\Property()
-     *
-     * @var string
      *
      * @example http://localhost:8085/api/products?page=4
      */
-    public $last;
+    public string $last;
 
     /**
      * @OA\Property()
-     *
-     * @var string|null
      *
      * @example http://localhost:8085/api/products?page=1
      */
-    public $prev;
+    public ?string $prev = null;
 
     /**
      * @OA\Property()
      *
-     * @var string|null
-     *
      * @example http://localhost:8085/api/products?page=3
      */
-    public $next;
+    public ?string $next = null;
 }

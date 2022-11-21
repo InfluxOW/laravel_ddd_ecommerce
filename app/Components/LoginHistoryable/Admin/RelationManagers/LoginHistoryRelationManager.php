@@ -39,7 +39,7 @@ class LoginHistoryRelationManager extends RelationManager
                     ->draggable()
                     ->zoom(10)
                     ->showZoomControl()
-                    ->afterStateHydrated(function (array|Point|null $state, callable $set) {
+                    ->afterStateHydrated(function (array|Point|null $state, callable $set): void {
                         if ($state instanceof Point) {
                             /** @var Point $state */
                             $set(LoginHistoryTranslationKey::LOCATION->value, ['lat' => $state->getLat(), 'lng' => $state->getLng()]);

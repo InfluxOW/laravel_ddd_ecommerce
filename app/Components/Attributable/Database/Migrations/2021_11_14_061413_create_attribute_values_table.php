@@ -9,12 +9,10 @@ return new class () extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('attribute_values', function (Blueprint $table) {
+        Schema::create('attribute_values', function (Blueprint $table): void {
             $table->id();
             $table->morphs('attributable');
             $table->foreignIdFor(Attribute::class, 'attribute_id')->constrained('attributes')->cascadeOnDelete();
@@ -30,10 +28,8 @@ return new class () extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('attribute_values');
     }

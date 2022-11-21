@@ -15,6 +15,8 @@ final class EventServiceProvider extends BaseEventServiceProvider
      * The event listener mappings for the application.
      *
      * @var array
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint
      */
     protected $listen = [
         EmailVerificationFailed::class => [
@@ -27,10 +29,8 @@ final class EventServiceProvider extends BaseEventServiceProvider
 
     /**
      * Register any events for your application.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         User::observe([UserObserver::class]);
     }

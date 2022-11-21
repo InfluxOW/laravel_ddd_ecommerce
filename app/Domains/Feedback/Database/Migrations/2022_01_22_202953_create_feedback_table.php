@@ -9,12 +9,10 @@ return new class () extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('feedback', function (Blueprint $table) {
+        Schema::create('feedback', function (Blueprint $table): void {
             $table->id();
             $table->foreignIdFor(User::class, 'user_id')->nullable()->constrained('users')->nullOnDelete();
             $table->string('username');
@@ -29,10 +27,8 @@ return new class () extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('users');
     }

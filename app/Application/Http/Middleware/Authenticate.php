@@ -12,12 +12,10 @@ final class Authenticate extends Middleware
      *
      * @param Request $request
      *
-     * @return string|null
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint
      */
-    protected function redirectTo($request)
+    protected function redirectTo($request): ?string
     {
-        if (! $request->expectsJson()) {
-            return route('login');
-        }
+        return $request->expectsJson() ? null : route('login');
     }
 }

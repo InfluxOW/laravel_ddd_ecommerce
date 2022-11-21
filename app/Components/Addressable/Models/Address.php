@@ -23,8 +23,9 @@ use Squire\Models\Region;
  * @property string                          $street
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ *
  * @property-read Model|\Eloquent $addressable
- * @property-read string $string_representation
+ * @property-read string          $string_representation
  *
  * @method static \App\Components\Addressable\Database\Factories\AddressFactory factory(...$parameters)
  * @method static AddressBuilder|Address                                        newModelQuery()
@@ -101,15 +102,15 @@ final class Address extends Model
 
     public function getRegion(): ?Region
     {
-        return ($this->region === null) ? null : Region::query()->find($this->region);
+        return $this->region === null ? null : Region::query()->find($this->region);
     }
 
     /*
      * Helpers
      * */
 
-    public function __toString()
+    public function __toString(): string
     {
-        return ($this->region === null) ? sprintf('%s, %s, %s, %s', $this->zip, $this->getCountry()?->name, $this->city, $this->street) : sprintf('%s, %s, %s, %s, %s', $this->zip, $this->getCountry()?->name, $this->getRegion()?->name, $this->city, $this->street);
+        return $this->region === null ? sprintf('%s, %s, %s, %s', $this->zip, $this->getCountry()?->name, $this->city, $this->street) : sprintf('%s, %s, %s, %s, %s', $this->zip, $this->getCountry()?->name, $this->getRegion()?->name, $this->city, $this->street);
     }
 }

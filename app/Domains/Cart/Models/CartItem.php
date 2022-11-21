@@ -23,9 +23,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property array                           $purchasable_data
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ *
  * @property-read \App\Domains\Cart\Models\Cart $cart
- * @property-read string $currency
- * @property-read Model|\Eloquent $purchasable
+ * @property-read string                        $currency
+ * @property-read Model|\Eloquent               $purchasable
  *
  * @method static CartItemBuilder|CartItem newModelQuery()
  * @method static CartItemBuilder|CartItem newQuery()

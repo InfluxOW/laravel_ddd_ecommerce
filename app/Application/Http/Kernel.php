@@ -24,6 +24,8 @@ final class Kernel extends HttpKernel
      * These middleware are run during every request to your application.
      *
      * @var array
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint
      */
     protected $middleware = [
         // \App\Application\Http\Middleware\TrustHosts::class,
@@ -39,6 +41,8 @@ final class Kernel extends HttpKernel
      * The application's route middleware groups.
      *
      * @var array
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint
      */
     protected $middlewareGroups = [
         'web' => [
@@ -68,6 +72,8 @@ final class Kernel extends HttpKernel
      * These middleware may be assigned to groups or used individually.
      *
      * @var array
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint
      */
     protected $routeMiddleware = [
         'auth' => \App\Application\Http\Middleware\Authenticate::class,

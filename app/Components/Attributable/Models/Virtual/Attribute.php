@@ -13,25 +13,19 @@ final class Attribute
     /**
      * @OA\Property()
      *
-     * @var string
-     *
      * @example Width
      */
-    public $title;
+    public string $title;
 
     /**
      * @OA\Property()
      *
-     * @var string
-     *
      * @example width
      */
-    public $slug;
+    public string $slug;
 
     /**
      * @OA\Property(ref="#/components/schemas/ResponseValueType")
-     *
-     * @var ResponseValueType
      */
-    public $type;
+    public ResponseValueType $type;
 }

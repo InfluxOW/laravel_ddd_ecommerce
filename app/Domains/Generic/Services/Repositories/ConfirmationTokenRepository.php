@@ -34,7 +34,7 @@ final class ConfirmationTokenRepository
     {
         $latestToken = ConfirmationToken::query()->whereBelongsTo($user)->where('type', $type->name)->latest()->first();
 
-        return (isset($latestToken) && strtolower($latestToken->token) === strtolower($token)) ? $latestToken : null;
+        return isset($latestToken) && strtolower($latestToken->token) === strtolower($token) ? $latestToken : null;
     }
 
     private function createToken(ConfirmationTokenType $type): string

@@ -9,8 +9,6 @@ abstract class InputFilter extends Filter
 {
     /**
      * @OA\Property(enum={"INPUT"})
-     *
-     * @var string
      */
-    public $type;
+    public string $type;
 }

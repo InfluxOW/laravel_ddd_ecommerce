@@ -73,7 +73,7 @@ final class ArticleIndexRequest extends IndexRequest
     {
         if (array_key_exists(ArticleAllowedFilter::PUBLISHED_BETWEEN->name, $filters)) {
             [$from, $to] = explode(',', $filters[ArticleAllowedFilter::PUBLISHED_BETWEEN->name]);
-            $getValue = static fn (string $value): ?string => ($value === '') ? null : $value;
+            $getValue = static fn (string $value): ?string => $value === '' ? null : $value;
             $filters[ArticleAllowedFilter::PUBLISHED_BETWEEN->name] = array_map($getValue, [$from, $to]);
         }
     }

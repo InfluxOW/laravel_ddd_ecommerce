@@ -26,6 +26,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property bool                            $is_reviewed
  * @property string|null                     $ip
  * @property \Illuminate\Support\Carbon|null $created_at
+ *
  * @property-read User|null $user
  *
  * @method static \App\Domains\Feedback\Database\Factories\FeedbackFactory factory(...$parameters)
@@ -114,7 +115,7 @@ final class Feedback extends Model implements Exportable
         /** @var ?self $feedback */
         $feedback = self::query()->forUser($ip, $user)->inLastHour()->select(['created_at'])->latest('created_at')->first();
 
-        return ($feedback === null) ? null : $feedback->created_at?->addHour()->longAbsoluteDiffForHumans(Carbon::now());
+        return $feedback === null ? null : $feedback->created_at?->addHour()->longAbsoluteDiffForHumans(Carbon::now());
     }
 
     /*

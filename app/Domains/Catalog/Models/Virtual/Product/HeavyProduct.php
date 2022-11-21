@@ -20,7 +20,7 @@ final class HeavyProduct extends LightProduct
      *
      * @var Media[]
      */
-    public $images;
+    public array $images;
 
     /**
      * @OA\Property(
@@ -30,7 +30,7 @@ final class HeavyProduct extends LightProduct
      *
      * @var MediumProductCategory[]
      */
-    public $categories;
+    public array $categories;
 
     /**
      * @OA\Property(
@@ -40,14 +40,12 @@ final class HeavyProduct extends LightProduct
      *
      * @var AttributeValue[]
      */
-    public $attributes;
+    public array $attributes;
 
     /**
      * @OA\Property()
      *
-     * @var string
-     *
      * @example Home video game console developed by Sony Computer Entertainment.
      */
-    public $description;
+    public string $description;
 }

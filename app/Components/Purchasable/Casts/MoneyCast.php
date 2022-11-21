@@ -17,13 +17,16 @@ final class MoneyCast implements CastsAttributes
      * @param mixed  $value
      * @param array  $attributes
      *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint
+     *
      * @return Money
      */
     public function get($model, string $key, $value, array $attributes)
     {
         $currency = $attributes['currency'] ?? $model->currency ?? app(CatalogSettings::class)->default_currency;
 
-        return ($value === null) ? null : money($value, $currency);
+        return $value === null ? null : money($value, $currency);
     }
 
     /**
@@ -33,6 +36,9 @@ final class MoneyCast implements CastsAttributes
      * @param string $key
      * @param mixed  $value
      * @param array  $attributes
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint
      *
      * @return int
      */

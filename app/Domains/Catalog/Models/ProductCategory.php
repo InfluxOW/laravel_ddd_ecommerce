@@ -39,23 +39,24 @@ use Spatie\Sluggable\SlugOptions;
  * @property int|null                        $depth
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ *
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|\App\Components\Mediable\Models\Media[] $baseMedia
- * @property-read int|null $base_media_count
- * @property-read \Illuminate\Database\Eloquent\Collection|ProductCategory[] $children
- * @property-read int|null $children_count
- * @property-read int $overall_products_count
- * @property-read string $path
- * @property-read int|null $products_count
- * @property-read string $products_string
- * @property-read \App\Components\Mediable\Models\Media|null $image
+ * @property-read int|null                                                                                                         $base_media_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|ProductCategory[]                                                       $children
+ * @property-read int|null                                                                                                         $children_count
+ * @property-read int                                                                                                              $overall_products_count
+ * @property-read string                                                                                                           $path
+ * @property-read int|null                                                                                                         $products_count
+ * @property-read string                                                                                                           $products_string
+ * @property-read \App\Components\Mediable\Models\Media|null                                                                       $image
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|\App\Components\Mediable\Models\Media[] $images
- * @property-read int|null $images_count
- * @property-read \Illuminate\Database\Eloquent\Collection|ProductCategory[] $immediateDescendants
- * @property-read int|null $immediate_descendants_count
+ * @property-read int|null                                                                                                         $images_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|ProductCategory[]                                                       $immediateDescendants
+ * @property-read int|null                                                                                                         $immediate_descendants_count
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|\App\Components\Mediable\Models\Media[] $media
- * @property-read int|null $media_count
- * @property-read ProductCategory|null $parent
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Domains\Catalog\Models\Product[] $products
+ * @property-read int|null                                                                                                         $media_count
+ * @property-read ProductCategory|null                                                                                             $parent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Domains\Catalog\Models\Product[]                                   $products
  *
  * @method static ProductCategoryBuilder|ProductCategory                         displayable()
  * @method static \App\Domains\Catalog\Database\Factories\ProductCategoryFactory factory(...$parameters)
@@ -177,7 +178,7 @@ final class ProductCategory extends Model implements HasMedia, Exportable
     {
         $category = self::findInHierarchy($this->id, self::getHierarchy());
 
-        return ($category === null) ? 0 : $category->products->count();
+        return $category === null ? 0 : $category->products->count();
     }
 
     public function getPathAttribute(): string
@@ -186,7 +187,7 @@ final class ProductCategory extends Model implements HasMedia, Exportable
         $category = self::findInHierarchy($this->id, self::getHierarchy())?->parent;
         while (isset($category)) {
             $path[] = $category->title;
-            $category = ($category->parent_id === null) ? null : self::findInHierarchy($category->parent_id, self::getHierarchy());
+            $category = $category->parent_id === null ? null : self::findInHierarchy($category->parent_id, self::getHierarchy());
         }
 
         $path = array_reverse($path);

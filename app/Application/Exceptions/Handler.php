@@ -17,6 +17,8 @@ final class Handler extends ExceptionHandler
      * A list of the exception types that are not reported.
      *
      * @var array<int, class-string<Throwable>>
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint
      */
     protected $dontReport = [
         //
@@ -26,6 +28,8 @@ final class Handler extends ExceptionHandler
      * A list of the inputs that are never flashed for validation exceptions.
      *
      * @var array<int, string>
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint
      */
     protected $dontFlash = [
         'current_password',
@@ -35,10 +39,8 @@ final class Handler extends ExceptionHandler
 
     /**
      * Register the exception handling callbacks for the application.
-     *
-     * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->renderable(fn (NotFoundHttpException $e): mixed => $this->respondNotFound());
         $this->renderable(fn (HttpException $e): mixed => $this->respondWithMessage($e->getMessage(), $e->getCode()));

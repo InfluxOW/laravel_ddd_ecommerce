@@ -25,7 +25,7 @@ final class Application extends BaseApplication
     {
         $resourcePath = PathUtils::join([__DIR__, '..', '..', 'Domains', 'Generic', 'Resources']);
 
-        return ($path === '') ? $resourcePath : PathUtils::join([$resourcePath, $path]);
+        return $path === '' ? $resourcePath : PathUtils::join([$resourcePath, $path]);
     }
 
     public function isRunningSeeders(): bool

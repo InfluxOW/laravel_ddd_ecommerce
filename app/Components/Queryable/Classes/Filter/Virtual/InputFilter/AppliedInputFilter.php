@@ -11,8 +11,6 @@ final class AppliedInputFilter extends InputFilter
 {
     /**
      * @OA\Property()
-     *
-     * @var string
      */
-    public $input;
+    public string $input;
 }

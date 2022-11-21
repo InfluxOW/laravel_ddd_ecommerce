@@ -22,6 +22,8 @@ test-coverage:
 
 insights:
 	php artisan insights --summary
+insights-fix:
+	php artisan insights --fix
 lint:
 	composer exec phpcs --verbose && composer exec pint -- --test 2>/dev/null
 lint-fix:

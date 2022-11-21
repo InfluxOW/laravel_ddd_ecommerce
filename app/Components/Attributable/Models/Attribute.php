@@ -21,8 +21,9 @@ use Spatie\Sluggable\SlugOptions;
  * @property AttributeValuesType             $values_type
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ *
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Components\Attributable\Models\AttributeValue[] $values
- * @property-read int|null $values_count
+ * @property-read int|null                                                                                      $values_count
  *
  * @method static \App\Components\Attributable\Database\Factories\AttributeFactory factory(...$parameters)
  * @method static AttributeBuilder|Attribute                                       newModelQuery()

@@ -42,7 +42,7 @@ final class FeedbackResource extends Resource
     /** @param  ?Feedback  $record */
     public static function getRecordTitle(?Model $record): ?string
     {
-        return ($record === null) ? null : Str::limit($record->text);
+        return $record === null ? null : Str::limit($record->text);
     }
 
     /** @param  Feedback  $record */

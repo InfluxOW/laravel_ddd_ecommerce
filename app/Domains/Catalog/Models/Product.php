@@ -35,22 +35,23 @@ use Spatie\Sluggable\SlugOptions;
  * @property bool                            $is_displayable
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|AttributeValue[] $attributeValues
- * @property-read int|null $attribute_values_count
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection|AttributeValue[]                                                        $attributeValues
+ * @property-read int|null                                                                                                         $attribute_values_count
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|\App\Components\Mediable\Models\Media[] $baseMedia
- * @property-read int|null $base_media_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Domains\Catalog\Models\ProductCategory[] $categories
- * @property-read int|null $categories_count
- * @property-read string $attribute_values_string
- * @property-read string $categories_string
- * @property-read string $prices_string
- * @property-read \App\Components\Mediable\Models\Media|null $image
+ * @property-read int|null                                                                                                         $base_media_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Domains\Catalog\Models\ProductCategory[]                           $categories
+ * @property-read int|null                                                                                                         $categories_count
+ * @property-read string                                                                                                           $attribute_values_string
+ * @property-read string                                                                                                           $categories_string
+ * @property-read string                                                                                                           $prices_string
+ * @property-read \App\Components\Mediable\Models\Media|null                                                                       $image
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|\App\Components\Mediable\Models\Media[] $images
- * @property-read int|null $images_count
+ * @property-read int|null                                                                                                         $images_count
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|\App\Components\Mediable\Models\Media[] $media
- * @property-read int|null $media_count
- * @property-read \Illuminate\Database\Eloquent\Collection|Price[] $prices
- * @property-read int|null $prices_count
+ * @property-read int|null                                                                                                         $media_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|Price[]                                                                 $prices
+ * @property-read int|null                                                                                                         $prices_count
  *
  * @method static ProductBuilder|Product                                 displayable()
  * @method static \App\Domains\Catalog\Database\Factories\ProductFactory factory(...$parameters)

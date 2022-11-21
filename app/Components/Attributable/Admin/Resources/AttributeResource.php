@@ -117,8 +117,6 @@ final class AttributeResource extends Resource
 
     /**
      * @param Attribute $record
-     *
-     * @return bool
      */
     public static function canDelete(Model $record): bool
     {

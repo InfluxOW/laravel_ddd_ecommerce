@@ -10,6 +10,8 @@ final class EncryptCookies extends Middleware
      * The names of the cookies that should not be encrypted.
      *
      * @var array
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint
      */
     protected $except = [
         //

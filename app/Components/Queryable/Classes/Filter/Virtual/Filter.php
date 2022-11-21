@@ -8,15 +8,11 @@ abstract class Filter
 {
     /**
      * @OA\Property()
-     *
-     * @var string
      */
-    public $query;
+    public string $query;
 
     /**
      * @OA\Property()
-     *
-     * @var string
      */
-    public $title;
+    public string $title;
 }

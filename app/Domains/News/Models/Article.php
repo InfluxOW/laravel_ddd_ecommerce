@@ -29,13 +29,14 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $published_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ *
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|\App\Components\Mediable\Models\Media[] $baseMedia
- * @property-read int|null $base_media_count
- * @property-read \App\Components\Mediable\Models\Media|null $image
+ * @property-read int|null                                                                                                         $base_media_count
+ * @property-read \App\Components\Mediable\Models\Media|null                                                                       $image
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|\App\Components\Mediable\Models\Media[] $images
- * @property-read int|null $images_count
+ * @property-read int|null                                                                                                         $images_count
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|\App\Components\Mediable\Models\Media[] $media
- * @property-read int|null $media_count
+ * @property-read int|null                                                                                                         $media_count
  *
  * @method static \App\Domains\News\Database\Factories\ArticleFactory factory(...$parameters)
  * @method static ArticleBuilder|Article                              newModelQuery()

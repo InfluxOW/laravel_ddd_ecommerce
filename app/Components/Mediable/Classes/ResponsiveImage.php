@@ -26,7 +26,7 @@ final class ResponsiveImage extends BaseResponsiveImage
 
     private function getUrlGenerator(): UrlGenerator
     {
-        $conversionName = ($this->generatedFor() === 'media_library_original') ? '' : $this->generatedFor();
+        $conversionName = $this->generatedFor() === 'media_library_original' ? '' : $this->generatedFor();
         /** @var UrlGenerator $urlGenerator */
         $urlGenerator = UrlGeneratorFactory::createForMedia($this->media, $conversionName);
 

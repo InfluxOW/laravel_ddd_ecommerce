@@ -7,7 +7,7 @@ use Illuminate\Routing\Router;
 
 abstract class RouteServiceProvider extends BaseRouteServiceProvider
 {
-    public function boot()
+    public function boot(): void
     {
         $this->configureRateLimiting();
     }

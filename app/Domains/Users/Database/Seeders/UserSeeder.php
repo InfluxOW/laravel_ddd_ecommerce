@@ -9,10 +9,8 @@ final class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         $this->seedModelByChunks(User::class, app()->runningUnitTests() ? 10 : 100);
     }

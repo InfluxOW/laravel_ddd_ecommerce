@@ -49,9 +49,9 @@ final class PricesRelationManager extends RelationManager
                     ->disabled(fn (callable $get): bool => $get(PriceTranslationKey::CURRENCY->value) === null)
                     ->integer()
                     ->afterStateHydrated(function (TextInput $component, ?array $state): void {
-                        $component->state(($state === null) ? null : $state['amount']);
+                        $component->state($state === null ? null : $state['amount']);
                     })
-                    ->dehydrateStateUsing(fn (?string $state): ?int => ($state === null) ? null : (int) $state),
+                    ->dehydrateStateUsing(fn (?string $state): ?int => $state === null ? null : (int) $state),
             ]);
     }
 
