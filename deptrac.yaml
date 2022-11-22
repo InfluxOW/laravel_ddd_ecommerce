@@ -1,0 +1,101 @@
+parameters:
+    paths:
+        - ./app
+    exclude_files:
+        - '#.*Test\.php$#'
+        - '#.*Factory\.php$#'
+        - '#.*Seeder\.php$#'
+    layers:
+        -   name: Admin
+            collectors:
+                -   type: directory
+                    regex: (Domains|Components)/[\w]+/Admin/.*
+        -   name: Controller
+            collectors:
+                -   type: directory
+                    regex: (Domains|Components)/[\w]+/Http/Controllers/.*
+        -   name: Request
+            collectors:
+                -   type: directory
+                    regex: (Domains|Components)/[\w]+/Http/Requests/.*
+        -   name: Resource
+            collectors:
+                -   type: directory
+                    regex: (Domains|Components)/[\w]+/Http/Resources/.*
+        -   name: Action
+            collectors:
+                -   type: directory
+                    regex: (Domains|Components)/[\w]+/Actions/.*
+        -   name: Service
+            collectors:
+                -   type: directory
+                    regex: (Domains|Components)/[\w]+/Services/.*
+        -   name: Job
+            collectors:
+                -   type: directory
+                    regex: (Domains|Components)/[\w]+/Jobs/.*
+        -   name: Event
+            collectors:
+                -   type: directory
+                    regex: (Domains|Components)/[\w]+/Events/.*
+        -   name: Observer
+            collectors:
+                -   type: directory
+                    regex: (Domains|Components)/[\w]+/Observers/.*
+        -   name: Notification
+            collectors:
+                -   type: directory
+                    regex: (Domains|Components)/[\w]+/Notifications/.*
+        -   name: Model
+            collectors:
+                -   type: directory
+                    regex: (Domains|Components)/[\w]+/Models/.*
+        -   name: Builder
+            collectors:
+                -   type: directory
+                    regex: (Domains|Components)/[\w]+/Database/Builders/.*
+    ruleset:
+        Controller:
+            - Action
+            - Model
+            - Resource
+            - Request
+            - Builder
+            - Service
+        Action:
+            - Event
+            - Model
+            - Builder
+            - Request
+            - Service
+        Service:
+            - Service
+            - Model
+            - Builder
+            - Resource
+        Request:
+            - Model
+        Resource:
+            - Model
+        Job:
+            - Action
+            - Model
+        Event:
+            - Model
+        Observer:
+            - Model
+        Notification:
+            - Model
+        Builder:
+            - Model
+        Model:
+            - Builder
+            - Model
+            - Job
+        Admin:
+            - Admin
+            - Model
+            - Builder
+            - Job
+            - Action
+            - Service

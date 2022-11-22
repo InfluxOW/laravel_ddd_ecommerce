@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "77d87a65af7a7bb4d85a3b389c3e6f95",
+    "content-hash": "28dd37b46726bcf9dc27829380207c3b",
     "packages": [
         {
             "name": "akaunting/laravel-money",
@@ -17518,6 +17518,61 @@
                 }
             ],
             "time": "2022-11-10T09:56:11+00:00"
+        },
+        {
+            "name": "qossmic/deptrac-shim",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/qossmic/deptrac-shim.git",
+                "reference": "fe43d3e0c89b028dcf7dc9561c8617e0c14f32e6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/qossmic/deptrac-shim/zipball/fe43d3e0c89b028dcf7dc9561c8617e0c14f32e6",
+                "reference": "fe43d3e0c89b028dcf7dc9561c8617e0c14f32e6",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "ext-tokenizer": "*",
+                "ext-zlib": "*",
+                "php": "^8.1"
+            },
+            "replace": {
+                "qossmic/deptrac": "self.version"
+            },
+            "suggest": {
+                "ext-dom": "For using the JUnit output formatter"
+            },
+            "bin": [
+                "deptrac"
+            ],
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tim Glabisch"
+                },
+                {
+                    "name": "Simon Mönch",
+                    "email": "simon.moench@qossmic.com"
+                },
+                {
+                    "name": "Denis Brumann",
+                    "email": "denis.brumann@qossmic.com",
+                    "role": "maintainer"
+                }
+            ],
+            "description": "deptrac phar distribution",
+            "support": {
+                "issues": "https://github.com/qossmic/deptrac-shim/issues",
+                "source": "https://github.com/qossmic/deptrac-shim/tree/1.0.0"
+            },
+            "time": "2022-11-01T12:16:56+00:00"
         },
         {
             "name": "roave/security-advisories",

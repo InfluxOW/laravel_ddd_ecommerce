@@ -20,3 +20,4 @@ _ide_helper_models.php
 /tools/**/vendor/
 infection.html
 infection.log
+.deptrac.cache

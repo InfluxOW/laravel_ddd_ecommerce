@@ -20,6 +20,8 @@ test:
 test-coverage:
 	XDEBUG_MODE=coverage php artisan test --parallel --coverage-clover storage/logs/clover.xml --coverage-xml=storage/logs/coverage-xml --log-junit=storage/logs/junit.xml
 
+deptrac:
+	composer exec deptrac
 insights:
 	php artisan insights --summary
 insights-fix:

@@ -102,6 +102,13 @@ jobs:
                     key: pint-${{ github.sha }}
                     restore-keys: pint-
 
+            -   name: Cache Deptrac Analysis
+                uses: actions/cache@main
+                with:
+                    path: .deptrac.cache
+                    key: deptrac-${{ github.sha }}
+                    restore-keys: deptrac-
+
                 #########################
                 ###         CI        ###
                 #########################

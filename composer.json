@@ -93,6 +93,7 @@
         "nunomaduro/larastan": "^2.0",
         "nunomaduro/phpinsights": "dev-master",
         "phpstan/phpstan": "^1.4",
+        "qossmic/deptrac-shim": "^1.0",
         "roave/security-advisories": "dev-latest",
         "slevomat/coding-standard": "^8.0",
         "spatie/laravel-ignition": "^1.0",

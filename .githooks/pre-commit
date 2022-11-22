@@ -102,6 +102,22 @@ if [ "$FILES" != "" ]; then
     fi
 fi
 
+DEPTRACK=$(git diff --name-only --diff-filter=ACMR HEAD | grep deptrac)
+
+if [ "$DEPTRACK" != "" ] || [ "$FILES" != "" ]; then
+    # Architecture Validation
+
+    echo "[PRE-COMMIT] Checking Deptrac..."
+
+    sail composer exec deptrac -- --quiet
+
+    if [ $? != 0 ]; then
+        echo "[PRE-COMMIT] Deptrac found problems."
+        echo "[PRE-COMMIT] Run Deptrac manually and fix existing errors."
+        exit 1
+    fi
+fi
+
 echo "[PRE-COMMIT] No errors found."
 
 exit $?
