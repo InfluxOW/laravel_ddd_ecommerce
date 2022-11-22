@@ -18,7 +18,26 @@ function sail() {
 #                       #
 #########################
 
-# All files in staging area (no deletions)
+COMPOSER=$(git diff --name-only --diff-filter=ACMR HEAD | grep composer)
+
+if [ "$COMPOSER" != "" ]; then
+    # Composer Validation
+
+    echo "[PRE-COMMIT] Checking Composer..."
+
+    sail composer validate --strict --quiet
+
+    if [ $? != 0 ]; then
+        echo "[PRE-COMMIT] Invalid composer.json have been detected."
+		echo "[PRE-COMMIT] Run Composer Validate manually and fix existing errors."
+		exit 1
+    fi
+
+    sail composer normalize
+    git add $COMPOSER
+fi
+
+# All PHP files in staging area (no deletions)
 FILES=$(git diff --name-only --diff-filter=ACMR HEAD | grep \\.php)
 
 if [ "$FILES" != "" ]; then
@@ -81,8 +100,8 @@ if [ "$FILES" != "" ]; then
         echo "[PRE-COMMIT] Run PHPStan manually and fix existing errors."
         exit 1
     fi
-
-    echo "[PRE-COMMIT] No errors found."
 fi
+
+echo "[PRE-COMMIT] No errors found."
 
 exit $?

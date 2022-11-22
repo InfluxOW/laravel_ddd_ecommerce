@@ -25,9 +25,9 @@ insights:
 insights-fix:
 	php artisan insights --fix
 lint:
-	composer exec phpcs --verbose && composer exec pint -- --test 2>/dev/null
+	composer exec phpcs --verbose && composer exec pint -- --test 2>/dev/null && composer validate --strict && composer normalize --dry-run
 lint-fix:
-	composer exec phpcbf --verbose; composer exec pint 2>/dev/null
+	composer exec phpcbf --verbose; composer exec pint 2>/dev/null; composer normalize
 analyse:
 	composer exec phpstan analyse --verbose -- --memory-limit=-1 2>/dev/null
 
