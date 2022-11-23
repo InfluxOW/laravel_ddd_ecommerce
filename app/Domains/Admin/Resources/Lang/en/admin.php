@@ -63,12 +63,14 @@ return [
         AdminModalTranslationKey::HEADING->name => [
             static fn (Page|RelationManager $livewire, Model $record): string => $getRecordLabel($livewire, $record),
         ],
+        AdminModalTranslationKey::SUBHEADING->name => '',
         AdminModalTranslationKey::BUTTON->name => 'Confirm',
     ],
     ViewAction::class => [
         AdminModalTranslationKey::HEADING->name => [
             static fn (Page|RelationManager $livewire, Model $record): string => $getRecordLabel($livewire, $record),
         ],
+        AdminModalTranslationKey::SUBHEADING->name => '',
     ],
     ExportAction::class => [
         AdminModalTranslationKey::HEADING->name => 'Export Current Record',
@@ -77,14 +79,14 @@ return [
     ],
     DeleteAction::class => [
         AdminModalTranslationKey::HEADING->name => [
-            static fn (Page $livewire, ?Model $record): string => "Delete {$livewire::getResource()::getRecordTitle($record)}",
+            static fn (Page|RelationManager $livewire, Model $record): string => "Delete {$getRecordLabel($livewire, $record)}",
         ],
         AdminModalTranslationKey::SUBHEADING->name => 'Are you sure you would like to do this?',
         AdminModalTranslationKey::BUTTON->name => 'Confirm',
     ],
     PageDeleteAction::class => [
         AdminModalTranslationKey::HEADING->name => [
-            static fn (Page|RelationManager $livewire, ?Model $record): string => "Delete {$getRecordLabel($livewire, $record)}",
+            static fn (Page|RelationManager $livewire, Model $record): string => "Delete {$getRecordLabel($livewire, $record)}",
         ],
         AdminModalTranslationKey::SUBHEADING->name => 'Are you sure you would like to do this?',
         AdminModalTranslationKey::BUTTON->name => 'Confirm',
