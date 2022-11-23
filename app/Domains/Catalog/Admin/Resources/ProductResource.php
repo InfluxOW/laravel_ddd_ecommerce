@@ -13,7 +13,7 @@ use App\Domains\Catalog\Models\Product;
 use App\Domains\Catalog\Models\ProductCategory;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\MultiSelect;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Form;
@@ -83,7 +83,8 @@ final class ProductResource extends Resource
                         RichEditor::makeTranslated(ProductTranslationKey::DESCRIPTION)
                             ->required()
                             ->columnSpan(2),
-                        MultiSelect::makeTranslated(ProductTranslationKey::CATEGORIES)
+                        Select::makeTranslated(ProductTranslationKey::CATEGORIES)
+                            ->multiple()
                             ->relationship('categories', 'title')
                             ->options(fn (?Product $record, callable $get): array => ProductCategory::query()
                                 ->hasLimitedDepth()

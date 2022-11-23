@@ -6,7 +6,6 @@ use Akaunting\Money\Currency;
 use App\Domains\Admin\Admin\Abstracts\SettingsPage;
 use App\Domains\Catalog\Enums\Translation\CatalogSettingsTranslationKey;
 use App\Domains\Catalog\Models\Settings\CatalogSettings;
-use Filament\Forms\Components\MultiSelect;
 use Filament\Forms\Components\Select;
 use Illuminate\Support\Collection;
 
@@ -21,7 +20,8 @@ final class ManageCatalogSettings extends SettingsPage
     protected function getFormSchema(): array
     {
         return [
-            MultiSelect::makeTranslated(CatalogSettingsTranslationKey::AVAILABLE_CURRENCIES)
+            Select::makeTranslated(CatalogSettingsTranslationKey::AVAILABLE_CURRENCIES)
+                ->multiple()
                 ->required()
                 ->options(function (callable $get): array {
                     $currencies = collect(Currency::getCurrencies());
@@ -35,7 +35,8 @@ final class ManageCatalogSettings extends SettingsPage
                         ->toArray();
                 })
                 ->getOptionLabelsUsing(fn (array $values): array => collect($values)->reduce(fn (Collection $acc, string $currency): Collection => tap($acc, static fn () => $acc->offsetSet($currency, currency($currency)->getName())), collect([]))->toArray()),
-            MultiSelect::makeTranslated(CatalogSettingsTranslationKey::REQUIRED_CURRENCIES)
+            Select::makeTranslated(CatalogSettingsTranslationKey::REQUIRED_CURRENCIES)
+                ->multiple()
                 ->required()
                 ->options(function (callable $get): array {
                     $currencies = collect(Currency::getCurrencies());

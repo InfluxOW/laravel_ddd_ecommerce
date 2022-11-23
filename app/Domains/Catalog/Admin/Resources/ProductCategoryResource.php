@@ -84,13 +84,11 @@ final class ProductCategoryResource extends Resource
                                             $depth = $category->depth;
                                         }
 
-                                        if ($depth > 0) {
-                                            $path = isset($state) ? "{$path} — {$state}" : $path;
-                                        }
-
-                                        if ($depth === 0) {
-                                            $path = $state;
-                                        }
+                                        $path = match (true) {
+                                            $depth > 0 => isset($state) ? "{$path} — {$state}" : $path,
+                                            $depth === 0 => $state,
+                                            default => $path,
+                                        };
 
                                         $set(ProductCategoryTranslationKey::SLUG->value, Str::slug($state));
                                         $set(ProductCategoryTranslationKey::PATH->value, $path);
@@ -112,13 +110,11 @@ final class ProductCategoryResource extends Resource
                         Select::makeTranslated(ProductCategoryTranslationKey::PARENT_ID)
                             ->relationship('parent', 'title')
                             ->options(function (?Model $record, Page|RelationManager $livewire): array {
-                                if ($livewire instanceof CreateRecord) {
-                                    $categories = ProductCategory::query()->hasLimitedDepth()->orderBy('left')->get();
-                                } elseif ($livewire instanceof RelationManager) {
-                                    $categories = collect([$livewire->ownerRecord]);
-                                } else {
-                                    $categories = ProductCategory::query()->hasLimitedDepth()->orderBy('left')->withoutNode($record)->get()->filter(fn (ProductCategory $parent) => ! $parent->insideSubtree($record));
-                                }
+                                $categories = match (true) {
+                                    $livewire instanceof CreateRecord => ProductCategory::query()->hasLimitedDepth()->orderBy('left')->get(),
+                                    $livewire instanceof RelationManager => collect([$livewire->ownerRecord]),
+                                    default => ProductCategory::query()->hasLimitedDepth()->orderBy('left')->withoutNode($record)->get()->reject(fn (ProductCategory $parent): bool => $parent->insideSubtree($record)),
+                                };
 
                                 return $categories->pluck('title', 'id')->toArray();
                             })
@@ -128,10 +124,17 @@ final class ProductCategoryResource extends Resource
                             ->reactive()
                             ->afterStateUpdated(function (callable $set, callable $get): void {
                                 $parentId = $get(ProductCategoryTranslationKey::PARENT_ID->value);
+                                /** @var ?ProductCategory $parent */
                                 $parent = $parentId === null ? null : ProductCategory::query()->hasLimitedDepth()->find($parentId);
 
                                 if (isset($parent->depth)) {
                                     $set(ProductCategoryTranslationKey::DEPTH->value, $parent->depth + 1);
+                                    $set(ProductCategoryTranslationKey::PATH->value, "{$parent->path} — {$get(ProductCategoryTranslationKey::TITLE->value)}");
+                                }
+
+                                if ($parent === null) {
+                                    $set(ProductCategoryTranslationKey::DEPTH->value, 0);
+                                    $set(ProductCategoryTranslationKey::PATH->value, $get(ProductCategoryTranslationKey::TITLE->value));
                                 }
                             })
                             ->columnSpan(2),
@@ -151,7 +154,7 @@ final class ProductCategoryResource extends Resource
                             ->schema([
                                 TextInput::makeTranslated(ProductCategoryTranslationKey::DEPTH)
                                     ->disabled()
-                                    ->default(fn (Page|RelationManager $livewire): int => $livewire instanceof RelationManager && isset($livewire->ownerRecord->depth) ? (int) ($livewire->ownerRecord->depth + 1) : 0)
+                                    ->default(fn (Page|RelationManager $livewire): int => $livewire instanceof RelationManager && isset($livewire->ownerRecord->depth) ? $livewire->ownerRecord->depth + 1 : 0)
                                     ->lte((string) ProductCategory::MAX_DEPTH, true)
                                     ->columnSpan(2),
                                 TextInput::makeTranslated(ProductCategoryTranslationKey::PATH)
@@ -214,7 +217,7 @@ final class ProductCategoryResource extends Resource
                 TextColumn::makeTranslated(ProductCategoryTranslationKey::PARENT_TITLE)->sortable(),
             ])
             ->filters([
-                SelectFilter::makeTranslated(ProductCategoryTranslationKey::DEPTH)->options(ProductCategory::query()->hasLimitedDepth()->orderBy('depth')->distinct('depth')->pluck('depth', 'depth')),
+                SelectFilter::makeTranslated(ProductCategoryTranslationKey::DEPTH)->options(ProductCategory::query()->hasLimitedDepth()->orderBy('depth')->distinct('depth')->pluck('depth', 'depth'))->attribute('depth'),
             ])
             ->defaultSort(ProductCategoryTranslationKey::LEFT->value, 'ASC');
     }
