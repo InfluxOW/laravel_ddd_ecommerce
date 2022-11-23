@@ -2,7 +2,7 @@
 
 namespace App\Components\Attributable\Models\Virtual;
 
-use App\Domains\Generic\Enums\Response\ResponseValueType;
+use App\Domains\Common\Enums\Response\ResponseValueType;
 use OpenApi\Annotations as OA;
 
 /**

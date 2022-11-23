@@ -8,7 +8,7 @@ use App\Domains\Catalog\Admin\Pages\ManageCatalogSettings;
 use App\Domains\Catalog\Admin\Resources\ProductCategoryResource;
 use App\Domains\Catalog\Admin\Resources\ProductCategoryResource\RelationManagers\ProductCategoryChildrenRelationManager;
 use App\Domains\Catalog\Admin\Resources\ProductResource;
-use App\Domains\Generic\Utils\LangUtils;
+use App\Domains\Common\Utils\LangUtils;
 
 return [
     ProductCategoryResource::class => [

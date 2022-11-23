@@ -2,12 +2,12 @@
 
 namespace App\Domains\Feedback\Models;
 
+use App\Domains\Common\Interfaces\Exportable;
+use App\Domains\Common\Traits\Models\HasExtendedFunctionality;
+use App\Domains\Common\Traits\Models\Searchable;
 use App\Domains\Feedback\Database\Builders\FeedbackBuilder;
 use App\Domains\Feedback\Database\Factories\FeedbackFactory;
 use App\Domains\Feedback\Jobs\Export\FeedbackExportJob;
-use App\Domains\Generic\Interfaces\Exportable;
-use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
-use App\Domains\Generic\Traits\Models\Searchable;
 use App\Domains\Users\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

@@ -2,7 +2,7 @@
 
 namespace App\Application\Exceptions;
 
-use App\Domains\Generic\Exceptions\HttpException;
+use App\Domains\Common\Exceptions\HttpException;
 use App\Interfaces\Http\Controllers\ResponseTrait;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpFoundation\Response;

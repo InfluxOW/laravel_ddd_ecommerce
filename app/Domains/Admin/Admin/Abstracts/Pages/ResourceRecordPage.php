@@ -6,7 +6,7 @@ use App\Domains\Admin\Admin\Components\Actions\Delete\Pages\DeleteAction;
 use App\Domains\Admin\Admin\Components\Actions\Edit\Pages\EditAction;
 use App\Domains\Admin\Admin\Components\Actions\Export\Pages\ExportAction;
 use App\Domains\Admin\Admin\Components\Actions\View\Pages\ViewAction;
-use App\Domains\Generic\Interfaces\Exportable;
+use App\Domains\Common\Interfaces\Exportable;
 use Illuminate\Database\Eloquent\Model;
 
 /**

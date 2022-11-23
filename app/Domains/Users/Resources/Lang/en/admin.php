@@ -3,7 +3,7 @@
 use App\Domains\Admin\Enums\Translation\AdminNavigationGroupTranslationKey;
 use App\Domains\Admin\Enums\Translation\AdminResourcePropertyTranslationKey;
 use App\Domains\Admin\Enums\Translation\AdminWidgetPropertyTranslationKey;
-use App\Domains\Generic\Utils\LangUtils;
+use App\Domains\Common\Utils\LangUtils;
 use App\Domains\Users\Admin\Components\Widgets\CustomersChartWidget;
 use App\Domains\Users\Admin\Resources\UserResource;
 
@@ -15,6 +15,6 @@ return [
         AdminResourcePropertyTranslationKey::LABEL->name => 'Customer',
         AdminResourcePropertyTranslationKey::PLURAL_LABEL->name => 'Customers',
         AdminResourcePropertyTranslationKey::NAVIGATION_LABEL->name => 'Customers',
-        AdminResourcePropertyTranslationKey::NAVIGATION_GROUP->name => LangUtils::translateEnum(AdminNavigationGroupTranslationKey::GENERIC),
+        AdminResourcePropertyTranslationKey::NAVIGATION_GROUP->name => LangUtils::translateEnum(AdminNavigationGroupTranslationKey::COMMON),
     ],
 ];

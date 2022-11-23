@@ -10,7 +10,7 @@ use App\Domains\Admin\Enums\Translation\Resources\AdminTranslationKey;
 
 return [
     AdminNavigationGroupTranslationKey::class => [
-        AdminNavigationGroupTranslationKey::GENERIC->name => 'Generic',
+        AdminNavigationGroupTranslationKey::COMMON->name => 'Common',
         AdminNavigationGroupTranslationKey::CATALOG->name => 'Catalog',
         AdminNavigationGroupTranslationKey::SETTINGS->name => 'Settings',
         AdminNavigationGroupTranslationKey::FEEDBACK->name => 'Feedback',

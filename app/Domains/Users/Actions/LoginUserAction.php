@@ -3,7 +3,7 @@
 namespace App\Domains\Users\Actions;
 
 use App\Components\LoginHistoryable\Services\LoginDetailsService;
-use App\Domains\Generic\Exceptions\HttpException;
+use App\Domains\Common\Exceptions\HttpException;
 use App\Domains\Users\Events\EmailVerificationFailed;
 use App\Domains\Users\Events\Login;
 use App\Domains\Users\Http\Requests\LoginRequest;

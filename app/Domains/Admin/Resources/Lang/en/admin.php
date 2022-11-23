@@ -23,7 +23,7 @@ use App\Domains\Admin\Admin\Resources\Development\TotemLinkResource;
 use App\Domains\Admin\Enums\Translation\AdminModalTranslationKey;
 use App\Domains\Admin\Enums\Translation\AdminNavigationGroupTranslationKey;
 use App\Domains\Admin\Enums\Translation\AdminResourcePropertyTranslationKey;
-use App\Domains\Generic\Utils\LangUtils;
+use App\Domains\Common\Utils\LangUtils;
 use Filament\Resources\Pages\Page;
 use Illuminate\Database\Eloquent\Model;
 
@@ -35,7 +35,7 @@ return [
         AdminResourcePropertyTranslationKey::LABEL->name => 'Admin',
         AdminResourcePropertyTranslationKey::PLURAL_LABEL->name => 'Admins',
         AdminResourcePropertyTranslationKey::NAVIGATION_LABEL->name => 'Admins',
-        AdminResourcePropertyTranslationKey::NAVIGATION_GROUP->name => LangUtils::translateEnum(AdminNavigationGroupTranslationKey::GENERIC),
+        AdminResourcePropertyTranslationKey::NAVIGATION_GROUP->name => LangUtils::translateEnum(AdminNavigationGroupTranslationKey::COMMON),
     ],
     UpdateBulkAction::class => [
         AdminModalTranslationKey::HEADING->name => 'Update Records',

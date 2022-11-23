@@ -183,7 +183,7 @@ return [
         App\Domains\Admin\Providers\DomainServiceProvider::class,
         App\Domains\Cart\Providers\DomainServiceProvider::class,
         App\Domains\Feedback\Providers\DomainServiceProvider::class,
-        App\Domains\Generic\Providers\DomainServiceProvider::class,
+        App\Domains\Common\Providers\DomainServiceProvider::class,
         App\Domains\News\Providers\DomainServiceProvider::class,
 
         /*

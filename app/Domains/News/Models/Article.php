@@ -3,9 +3,9 @@
 namespace App\Domains\News\Models;
 
 use App\Domains\Catalog\Enums\Media\ProductMediaCollectionKey;
-use App\Domains\Generic\Interfaces\Exportable;
-use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
-use App\Domains\Generic\Traits\Models\Searchable;
+use App\Domains\Common\Interfaces\Exportable;
+use App\Domains\Common\Traits\Models\HasExtendedFunctionality;
+use App\Domains\Common\Traits\Models\Searchable;
 use App\Domains\News\Database\Builders\ArticleBuilder;
 use App\Domains\News\Database\Factories\ArticleFactory;
 use App\Domains\News\Jobs\Export\NewsExportJob;

@@ -2,7 +2,7 @@
 
 namespace App\Domains\Users\Notifications;
 
-use App\Domains\Generic\Models\ConfirmationToken;
+use App\Domains\Common\Models\ConfirmationToken;
 use App\Domains\Users\Models\User;
 use App\Infrastructure\Abstracts\Notifications\EmailNotification;
 use Illuminate\Notifications\Messages\MailMessage;

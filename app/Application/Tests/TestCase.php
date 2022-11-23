@@ -3,8 +3,8 @@
 namespace App\Application\Tests;
 
 use App\Components\Queryable\Enums\QueryKey;
-use App\Domains\Generic\Enums\Response\ResponseKey;
-use App\Domains\Generic\Http\Middleware\Recaptcha;
+use App\Domains\Common\Enums\Response\ResponseKey;
+use App\Domains\Common\Http\Middleware\Recaptcha;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;

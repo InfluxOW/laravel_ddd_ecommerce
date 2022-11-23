@@ -3,7 +3,7 @@
 namespace App\Components\LoginHistoryable\Models;
 
 use App\Components\LoginHistoryable\Database\Builders\LoginHistoryBuilder;
-use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
+use App\Domains\Common\Traits\Models\HasExtendedFunctionality;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use MStaack\LaravelPostgis\Eloquent\PostgisTrait;

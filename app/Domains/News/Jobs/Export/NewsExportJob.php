@@ -2,8 +2,8 @@
 
 namespace App\Domains\News\Jobs\Export;
 
-use App\Domains\Generic\Classes\Excel\ExportColumn;
-use App\Domains\Generic\Jobs\ExportJob;
+use App\Domains\Common\Classes\Excel\ExportColumn;
+use App\Domains\Common\Jobs\ExportJob;
 use App\Domains\News\Enums\Translation\ArticleTranslationKey;
 use App\Domains\News\Models\Article;
 use Illuminate\Database\Eloquent\Builder;

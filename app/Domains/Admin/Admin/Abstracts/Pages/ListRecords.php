@@ -10,7 +10,7 @@ use App\Domains\Admin\Admin\Components\Actions\Export\Pages\ExportAction;
 use App\Domains\Admin\Admin\Components\Actions\Export\Tables\ExportBulkAction;
 use App\Domains\Admin\Admin\Components\Actions\View\Tables\ViewAction;
 use App\Domains\Admin\Admin\Traits\AppliesSearchToTableQuery;
-use App\Domains\Generic\Interfaces\Exportable;
+use App\Domains\Common\Interfaces\Exportable;
 use Filament\Resources\Pages\ListRecords as BaseListRecords;
 use Filament\Tables\Actions\DeleteBulkAction as BaseDeleteBulkAction;
 use Illuminate\Database\Eloquent\Model;

@@ -2,9 +2,9 @@
 
 namespace App\Domains\Users\Actions;
 
-use App\Domains\Generic\Enums\ConfirmationTokenType;
-use App\Domains\Generic\Exceptions\InvalidConfirmationTokenException;
-use App\Domains\Generic\Services\Repositories\ConfirmationTokenRepository;
+use App\Domains\Common\Enums\ConfirmationTokenType;
+use App\Domains\Common\Exceptions\InvalidConfirmationTokenException;
+use App\Domains\Common\Services\Repositories\ConfirmationTokenRepository;
 use App\Domains\Users\Events\EmailVerificationSucceeded;
 use App\Domains\Users\Http\Requests\EmailVerificationRequest;
 use App\Domains\Users\Models\User;

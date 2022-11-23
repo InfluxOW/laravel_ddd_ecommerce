@@ -2,14 +2,14 @@
 
 namespace App\Application\Classes;
 
-use App\Domains\Generic\Utils\PathUtils;
+use App\Domains\Common\Utils\PathUtils;
 use Illuminate\Foundation\Application as BaseApplication;
 
 final class Application extends BaseApplication
 {
     protected function bindPathsInContainer(): void
     {
-        $this->databasePath = PathUtils::join([__DIR__, '..', '..', 'Domains', 'Generic', 'Database']);
+        $this->databasePath = PathUtils::join([__DIR__, '..', '..', 'Domains', 'Common', 'Database']);
 
         parent::bindPathsInContainer();
 
@@ -23,7 +23,7 @@ final class Application extends BaseApplication
 
     public function resourcePath($path = ''): string
     {
-        $resourcePath = PathUtils::join([__DIR__, '..', '..', 'Domains', 'Generic', 'Resources']);
+        $resourcePath = PathUtils::join([__DIR__, '..', '..', 'Domains', 'Common', 'Resources']);
 
         return $path === '' ? $resourcePath : PathUtils::join([$resourcePath, $path]);
     }

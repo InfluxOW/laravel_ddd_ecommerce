@@ -4,7 +4,7 @@ namespace App\Components\Queryable\Classes\Filter;
 
 use Akaunting\Money\Money;
 use App\Components\Queryable\Enums\QueryFilterType;
-use App\Domains\Generic\Utils\MathUtils;
+use App\Domains\Common\Utils\MathUtils;
 use Carbon\Carbon;
 use JetBrains\PhpStorm\ArrayShape;
 use UnitEnum;

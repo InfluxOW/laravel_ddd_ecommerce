@@ -3,7 +3,7 @@
 use App\Components\Mediable\Models\Media;
 use App\Components\Mediable\Services\Media\PathGenerator;
 use App\Components\Mediable\Services\Media\UrlGenerator;
-use App\Domains\Generic\Enums\QueueName;
+use App\Domains\Common\Enums\QueueName;
 
 return [
 

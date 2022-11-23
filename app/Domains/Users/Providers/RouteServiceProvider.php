@@ -2,7 +2,7 @@
 
 namespace App\Domains\Users\Providers;
 
-use App\Domains\Generic\Utils\PathUtils;
+use App\Domains\Common\Utils\PathUtils;
 use App\Domains\Users\Http\Controllers\Api\Auth\EmailVerificationController;
 use App\Domains\Users\Http\Controllers\Api\Auth\LoginController;
 use App\Domains\Users\Http\Controllers\Api\Auth\LogoutController;

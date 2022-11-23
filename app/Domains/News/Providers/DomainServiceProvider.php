@@ -2,7 +2,7 @@
 
 namespace App\Domains\News\Providers;
 
-use App\Domains\Generic\Enums\ServiceProviderNamespace;
+use App\Domains\Common\Enums\ServiceProviderNamespace;
 use App\Infrastructure\Abstracts\Providers\ServiceProvider;
 
 final class DomainServiceProvider extends ServiceProvider

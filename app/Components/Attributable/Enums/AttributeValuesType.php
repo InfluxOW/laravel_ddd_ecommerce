@@ -2,7 +2,7 @@
 
 namespace App\Components\Attributable\Enums;
 
-use App\Domains\Generic\Enums\Response\ResponseValueType;
+use App\Domains\Common\Enums\Response\ResponseValueType;
 
 enum AttributeValuesType: int
 {

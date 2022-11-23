@@ -2,8 +2,8 @@
 
 namespace App\Domains\Users\Listeners;
 
-use App\Domains\Generic\Enums\ConfirmationTokenType;
-use App\Domains\Generic\Services\Repositories\ConfirmationTokenRepository;
+use App\Domains\Common\Enums\ConfirmationTokenType;
+use App\Domains\Common\Services\Repositories\ConfirmationTokenRepository;
 use App\Domains\Users\Events\EmailVerificationFailed;
 use App\Domains\Users\Events\Registered;
 use App\Domains\Users\Models\User;

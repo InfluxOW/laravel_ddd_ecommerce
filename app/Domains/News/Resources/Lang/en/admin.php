@@ -2,7 +2,7 @@
 
 use App\Domains\Admin\Enums\Translation\AdminNavigationGroupTranslationKey;
 use App\Domains\Admin\Enums\Translation\AdminResourcePropertyTranslationKey;
-use App\Domains\Generic\Utils\LangUtils;
+use App\Domains\Common\Utils\LangUtils;
 use App\Domains\News\Admin\Resources\ArticleResource;
 
 return [

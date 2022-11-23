@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\Abstracts\Notifications;
 
-use App\Domains\Generic\Enums\QueueName;
+use App\Domains\Common\Enums\QueueName;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification as BaseNotification;

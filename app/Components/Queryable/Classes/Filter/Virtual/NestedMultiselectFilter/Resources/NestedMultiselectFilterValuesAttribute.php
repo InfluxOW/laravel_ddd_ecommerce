@@ -2,7 +2,7 @@
 
 namespace App\Components\Queryable\Classes\Filter\Virtual\NestedMultiselectFilter\Resources;
 
-use App\Domains\Generic\Enums\Response\ResponseValueType;
+use App\Domains\Common\Enums\Response\ResponseValueType;
 use OpenApi\Annotations as OA;
 
 /**

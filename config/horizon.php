@@ -1,6 +1,6 @@
 <?php
 
-use App\Domains\Generic\Enums\QueueName;
+use App\Domains\Common\Enums\QueueName;
 use Illuminate\Support\Str;
 
 $queues = [];

@@ -5,7 +5,7 @@ namespace App\Components\Mediable\Models;
 use App\Components\Mediable\Classes\RegisteredResponsiveImages;
 use App\Components\Mediable\Database\Builders\MediaBuilder;
 use App\Components\Mediable\Enums\MediaType;
-use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
+use App\Domains\Common\Traits\Models\HasExtendedFunctionality;
 use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
 
 /**

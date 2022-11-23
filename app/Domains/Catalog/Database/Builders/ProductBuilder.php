@@ -11,7 +11,7 @@ use App\Components\Purchasable\Database\Builders\PriceBuilder;
 use App\Components\Purchasable\Exceptions\IncompatibleCurrenciesException;
 use App\Components\Purchasable\Models\Price;
 use App\Domains\Catalog\Models\Product;
-use App\Domains\Generic\Enums\BooleanString;
+use App\Domains\Common\Enums\BooleanString;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;

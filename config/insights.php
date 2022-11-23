@@ -119,13 +119,13 @@ return [
     'config' => [
         UselessOverridingMethodSniff::class => [
             'exclude' => [
-                'app/Domains/Generic/Exceptions/HttpException.php',
+                'app/Domains/Common/Exceptions/HttpException.php',
             ],
         ],
         UselessLateStaticBindingSniff::class => [
             'exclude' => [
                 'app/Domains/Admin/Providers/DomainServiceProvider.php',
-                'app/Domains/Generic/Providers/DomainServiceProvider.php',
+                'app/Domains/Common/Providers/DomainServiceProvider.php',
             ],
         ],
     ],

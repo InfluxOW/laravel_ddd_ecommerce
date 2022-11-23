@@ -3,7 +3,7 @@
 namespace App\Components\Mediable\Classes;
 
 use App\Components\Mediable\Services\Media\UrlGenerator;
-use App\Domains\Generic\Utils\PathUtils;
+use App\Domains\Common\Utils\PathUtils;
 use DateTimeInterface;
 use Spatie\MediaLibrary\ResponsiveImages\ResponsiveImage as BaseResponsiveImage;
 use Spatie\MediaLibrary\Support\UrlGenerator\UrlGeneratorFactory;

@@ -3,9 +3,9 @@
 use App\Domains\Admin\Enums\Translation\AdminNavigationGroupTranslationKey;
 use App\Domains\Admin\Enums\Translation\AdminPagePropertyTranslationKey;
 use App\Domains\Admin\Enums\Translation\AdminResourcePropertyTranslationKey;
+use App\Domains\Common\Utils\LangUtils;
 use App\Domains\Feedback\Admin\Pages\ManageFeedbackSettings;
 use App\Domains\Feedback\Admin\Resources\FeedbackResource;
-use App\Domains\Generic\Utils\LangUtils;
 
 return [
     FeedbackResource::class => [

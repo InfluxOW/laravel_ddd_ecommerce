@@ -3,7 +3,7 @@
 namespace App\Components\Queryable\Classes\Sort;
 
 use App\Components\Queryable\Abstracts\Query;
-use App\Domains\Generic\Utils\LangUtils;
+use App\Domains\Common\Utils\LangUtils;
 use UnitEnum;
 
 final class Sort extends Query

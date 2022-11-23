@@ -5,7 +5,7 @@ namespace App\Domains\Admin\Models;
 use App\Components\LoginHistoryable\Models\LoginHistory;
 use App\Domains\Admin\Database\Builders\AdminBuilder;
 use App\Domains\Admin\Database\Factories\AdminFactory;
-use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
+use App\Domains\Common\Traits\Models\HasExtendedFunctionality;
 use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\MorphMany;

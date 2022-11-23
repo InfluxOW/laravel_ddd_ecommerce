@@ -2,7 +2,7 @@
 
 namespace App\Domains\Admin\Admin\Abstracts\Pages;
 
-use App\Domains\Generic\Interfaces\Exportable;
+use App\Domains\Common\Interfaces\Exportable;
 
 /**
  * @internal

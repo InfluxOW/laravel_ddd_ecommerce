@@ -6,7 +6,7 @@ use Akaunting\Money\Money;
 use App\Components\Queryable\Enums\QueryKey;
 use App\Domains\Catalog\Enums\Query\Filter\ProductAllowedFilter;
 use App\Domains\Catalog\Models\Settings\CatalogSettings;
-use App\Domains\Generic\Http\Requests\IndexRequest;
+use App\Domains\Common\Http\Requests\IndexRequest;
 use Illuminate\Validation\Rule;
 
 final class ProductIndexRequest extends IndexRequest

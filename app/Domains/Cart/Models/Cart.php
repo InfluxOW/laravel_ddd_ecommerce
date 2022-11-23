@@ -4,7 +4,7 @@ namespace App\Domains\Cart\Models;
 
 use App\Components\Purchasable\Casts\MoneyCast;
 use App\Domains\Cart\Database\Builders\CartBuilder;
-use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
+use App\Domains\Common\Traits\Models\HasExtendedFunctionality;
 use App\Domains\Users\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

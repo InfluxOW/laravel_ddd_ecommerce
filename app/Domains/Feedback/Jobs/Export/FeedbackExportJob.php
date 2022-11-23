@@ -2,10 +2,10 @@
 
 namespace App\Domains\Feedback\Jobs\Export;
 
+use App\Domains\Common\Classes\Excel\ExportColumn;
+use App\Domains\Common\Jobs\ExportJob;
 use App\Domains\Feedback\Enums\Translation\FeedbackTranslationKey;
 use App\Domains\Feedback\Models\Feedback;
-use App\Domains\Generic\Classes\Excel\ExportColumn;
-use App\Domains\Generic\Jobs\ExportJob;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;

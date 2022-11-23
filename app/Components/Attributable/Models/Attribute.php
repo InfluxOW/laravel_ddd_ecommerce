@@ -5,7 +5,7 @@ namespace App\Components\Attributable\Models;
 use App\Components\Attributable\Database\Builders\AttributeBuilder;
 use App\Components\Attributable\Database\Factories\AttributeFactory;
 use App\Components\Attributable\Enums\AttributeValuesType;
-use App\Domains\Generic\Traits\Models\HasExtendedFunctionality;
+use App\Domains\Common\Traits\Models\HasExtendedFunctionality;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;

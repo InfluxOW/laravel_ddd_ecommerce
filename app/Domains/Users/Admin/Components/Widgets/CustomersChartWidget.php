@@ -4,7 +4,7 @@ namespace App\Domains\Users\Admin\Components\Widgets;
 
 use App\Domains\Admin\Enums\Translation\Components\AdminDatasetTranslationKey;
 use App\Domains\Admin\Traits\Translation\TranslatableAdminWidget;
-use App\Domains\Generic\Utils\LangUtils;
+use App\Domains\Common\Utils\LangUtils;
 use App\Domains\Users\Models\User;
 use Filament\Widgets\LineChartWidget;
 use Flowframe\Trend\Trend;

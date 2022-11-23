@@ -3,7 +3,7 @@
 namespace App\Domains\News\Http\Requests;
 
 use App\Components\Queryable\Enums\QueryKey;
-use App\Domains\Generic\Http\Requests\IndexRequest;
+use App\Domains\Common\Http\Requests\IndexRequest;
 use App\Domains\News\Enums\Query\Filter\ArticleAllowedFilter;
 use Carbon\Carbon;
 

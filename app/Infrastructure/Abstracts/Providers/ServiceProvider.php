@@ -2,8 +2,8 @@
 
 namespace App\Infrastructure\Abstracts\Providers;
 
-use App\Domains\Generic\Enums\ServiceProviderNamespace;
-use App\Domains\Generic\Utils\PathUtils;
+use App\Domains\Common\Enums\ServiceProviderNamespace;
+use App\Domains\Common\Utils\PathUtils;
 use App\Infrastructure\Abstracts\Exceptions\NotSupportedMacrosClassException;
 use Closure;
 use Elastic\Migrations\Filesystem\MigrationStorage;

@@ -2,7 +2,7 @@
 
 namespace App\Domains\Admin\Admin\Traits;
 
-use App\Domains\Generic\Traits\Models\Searchable;
+use App\Domains\Common\Traits\Models\Searchable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 

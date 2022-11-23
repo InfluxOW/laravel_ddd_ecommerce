@@ -4,10 +4,10 @@ namespace App\Application\Http;
 
 use App\Application\Http\Middleware\TrimStrings;
 use App\Application\Http\Middleware\TrustProxies;
-use App\Domains\Generic\Http\Middleware\AddTimestamp;
-use App\Domains\Generic\Http\Middleware\AddUserToSentryScope;
-use App\Domains\Generic\Http\Middleware\ForceJsonResponse;
-use App\Domains\Generic\Http\Middleware\Recaptcha;
+use App\Domains\Common\Http\Middleware\AddTimestamp;
+use App\Domains\Common\Http\Middleware\AddUserToSentryScope;
+use App\Domains\Common\Http\Middleware\ForceJsonResponse;
+use App\Domains\Common\Http\Middleware\Recaptcha;
 use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Auth\Middleware\Authorize;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;

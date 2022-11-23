@@ -2,8 +2,8 @@
 
 namespace App\Domains\Users\Providers;
 
-use App\Domains\Generic\Enums\ServiceProviderNamespace;
-use App\Domains\Generic\Exceptions\InvalidConfirmationTokenException;
+use App\Domains\Common\Enums\ServiceProviderNamespace;
+use App\Domains\Common\Exceptions\InvalidConfirmationTokenException;
 use App\Domains\Users\Admin\Components\Widgets\CustomersChartWidget;
 use App\Infrastructure\Abstracts\Providers\ServiceProvider;
 use App\Interfaces\Http\Controllers\ResponseTrait;

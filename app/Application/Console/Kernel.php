@@ -2,7 +2,7 @@
 
 namespace App\Application\Console;
 
-use App\Domains\Generic\Console\Commands\RefreshApplicationCommand;
+use App\Domains\Common\Console\Commands\RefreshApplicationCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 

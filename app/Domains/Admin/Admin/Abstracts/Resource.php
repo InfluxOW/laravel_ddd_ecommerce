@@ -3,7 +3,7 @@
 namespace App\Domains\Admin\Admin\Abstracts;
 
 use App\Domains\Admin\Admin\Components\Cards\TimestampsCard;
-use App\Domains\Generic\Traits\Models\Searchable;
+use App\Domains\Common\Traits\Models\Searchable;
 use Filament\Forms\Components\Grid;
 use Filament\GlobalSearch\GlobalSearchResult;
 use Filament\Resources\Form;

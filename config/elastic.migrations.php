@@ -1,10 +1,10 @@
 <?php
 
-use App\Domains\Generic\Utils\PathUtils;
+use App\Domains\Common\Utils\PathUtils;
 
 return [
     'storage' => [
-        'default_path' => env('ELASTIC_MIGRATIONS_DEFAULT_PATH', app_path(PathUtils::join(['Domains', 'Generic', 'Database', 'Elastic']))),
+        'default_path' => env('ELASTIC_MIGRATIONS_DEFAULT_PATH', app_path(PathUtils::join(['Domains', 'Common', 'Database', 'Elastic']))),
     ],
     'database' => [
         'table' => env('ELASTIC_MIGRATIONS_TABLE', 'elastic_migrations'),

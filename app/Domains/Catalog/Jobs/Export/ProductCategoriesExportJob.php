@@ -4,8 +4,8 @@ namespace App\Domains\Catalog\Jobs\Export;
 
 use App\Domains\Catalog\Enums\Translation\ProductCategoryTranslationKey;
 use App\Domains\Catalog\Models\ProductCategory;
-use App\Domains\Generic\Classes\Excel\ExportColumn;
-use App\Domains\Generic\Jobs\ExportJob;
+use App\Domains\Common\Classes\Excel\ExportColumn;
+use App\Domains\Common\Jobs\ExportJob;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;

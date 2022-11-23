@@ -2,7 +2,7 @@
 
 namespace App\Application\Tests;
 
-use App\Domains\Generic\Utils\PathUtils;
+use App\Domains\Common\Utils\PathUtils;
 use Illuminate\Contracts\Console\Kernel;
 
 trait CreatesApplication

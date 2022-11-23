@@ -4,7 +4,7 @@ namespace App\Domains\Catalog\Providers;
 
 use App\Domains\Catalog\Console\Commands\UpdateProductCategoriesDisplayability;
 use App\Domains\Catalog\Console\Commands\UpdateProductsDisplayability;
-use App\Domains\Generic\Enums\ServiceProviderNamespace;
+use App\Domains\Common\Enums\ServiceProviderNamespace;
 use App\Infrastructure\Abstracts\Providers\ServiceProvider;
 use Illuminate\Console\Scheduling\Schedule;
 

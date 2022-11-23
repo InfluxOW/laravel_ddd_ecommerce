@@ -9,7 +9,7 @@ use App\Domains\Catalog\Admin\Resources\ProductCategoryResource\RelationManagers
 use App\Domains\Catalog\Enums\Media\ProductCategoryMediaCollectionKey;
 use App\Domains\Catalog\Enums\Translation\ProductCategoryTranslationKey;
 use App\Domains\Catalog\Models\ProductCategory;
-use App\Domains\Generic\Utils\LangUtils;
+use App\Domains\Common\Utils\LangUtils;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Placeholder;

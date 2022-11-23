@@ -2,8 +2,8 @@
 
 namespace App\Domains\Users\Jobs\Export;
 
-use App\Domains\Generic\Classes\Excel\ExportColumn;
-use App\Domains\Generic\Jobs\ExportJob;
+use App\Domains\Common\Classes\Excel\ExportColumn;
+use App\Domains\Common\Jobs\ExportJob;
 use App\Domains\Users\Enums\Translation\UserTranslationKey;
 use App\Domains\Users\Models\User;
 use Illuminate\Database\Eloquent\Builder;

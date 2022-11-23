@@ -6,7 +6,7 @@ use App\Components\Attributable\Enums\AttributeValuesType;
 use App\Components\Attributable\Enums\Translation\AttributeTranslationKey;
 use App\Components\Attributable\Models\Attribute;
 use App\Domains\Admin\Admin\Abstracts\Resource;
-use App\Domains\Generic\Utils\LangUtils;
+use App\Domains\Common\Utils\LangUtils;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Select;
