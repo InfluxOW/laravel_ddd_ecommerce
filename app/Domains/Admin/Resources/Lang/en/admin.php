@@ -2,6 +2,7 @@
 
 use App\Domains\Admin\Admin\Abstracts\RelationManager;
 use App\Domains\Admin\Admin\Components\Actions\Create\Tables\CreateAction;
+use App\Domains\Admin\Admin\Components\Actions\Delete\Pages\DeleteAction as PageDeleteAction;
 use App\Domains\Admin\Admin\Components\Actions\Delete\Tables\DeleteAction;
 use App\Domains\Admin\Admin\Components\Actions\DeleteBulkAction;
 use App\Domains\Admin\Admin\Components\Actions\Edit\Tables\EditAction;
@@ -77,6 +78,13 @@ return [
     DeleteAction::class => [
         AdminModalTranslationKey::HEADING->name => [
             static fn (Page $livewire, ?Model $record): string => "Delete {$livewire::getResource()::getRecordTitle($record)}",
+        ],
+        AdminModalTranslationKey::SUBHEADING->name => 'Are you sure you would like to do this?',
+        AdminModalTranslationKey::BUTTON->name => 'Confirm',
+    ],
+    PageDeleteAction::class => [
+        AdminModalTranslationKey::HEADING->name => [
+            static fn (Page|RelationManager $livewire, ?Model $record): string => "Delete {$getRecordLabel($livewire, $record)}",
         ],
         AdminModalTranslationKey::SUBHEADING->name => 'Are you sure you would like to do this?',
         AdminModalTranslationKey::BUTTON->name => 'Confirm',
