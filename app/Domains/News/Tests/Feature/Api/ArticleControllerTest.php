@@ -194,7 +194,12 @@ final class ArticleControllerTest extends TestCase
     private function getSortParametersByType(ArticleAllowedSort $sort): array
     {
         $titleSort = static fn (array $article): string => $article['title'];
-        $publishedAtSort = static fn (array $article): int => (int) Carbon::createFromDefaultFormat($article['published_at'])->timestamp;
+        $publishedAtSort = static function (array $article): int {
+            /** @var Carbon $date */
+            $date = Carbon::createFromDefaultFormat($article['published_at']);
+
+            return (int) $date->timestamp;
+        };
 
         return match ($sort) {
             ArticleAllowedSort::TITLE => [$titleSort, SORT_STRING, false],

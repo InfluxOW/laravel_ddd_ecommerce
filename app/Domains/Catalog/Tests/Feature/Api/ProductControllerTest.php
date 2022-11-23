@@ -436,7 +436,12 @@ final class ProductControllerTest extends TestCase
     private function getSortParametersByType(ProductAllowedSort $sort): array
     {
         $titleSort = static fn (array $product): string => $product['title'];
-        $createdAtSort = static fn (array $product): int => (int) Carbon::createFromDefaultFormat($product['created_at'])->timestamp;
+        $createdAtSort = static function (array $product): int {
+            /** @var Carbon $date */
+            $date = Carbon::createFromDefaultFormat($product['created_at']);
+
+            return (int) $date->timestamp;
+        };
         $priceSort = static fn (array $product): int => $product['price_discounted']['amount'] ?? $product['price']['amount'];
 
         return match ($sort) {
