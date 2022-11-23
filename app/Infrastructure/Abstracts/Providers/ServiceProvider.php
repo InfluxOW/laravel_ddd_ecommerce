@@ -4,7 +4,6 @@ namespace App\Infrastructure\Abstracts\Providers;
 
 use App\Domains\Common\Enums\ServiceProviderNamespace;
 use App\Domains\Common\Utils\PathUtils;
-use App\Infrastructure\Abstracts\Exceptions\NotSupportedMacrosClassException;
 use Closure;
 use Elastic\Migrations\Filesystem\MigrationStorage;
 use Illuminate\Console\Scheduling\Schedule;
@@ -157,18 +156,5 @@ abstract class ServiceProvider extends LaravelServiceProvider
         $realPath = dirname($path, 2) . '/';
 
         return $append === null ? $realPath : "{$realPath}{$append}";
-    }
-
-    protected static function blockNotSupportedClasses(string $class, array $supportedClasses): void
-    {
-        /** @var array<string, class-string> $parents */
-        $parents = class_parents($class);
-        foreach ([$class, ...$parents] as $_class) {
-            if (in_array($_class, $supportedClasses, true)) {
-                return;
-            }
-        }
-
-        throw new NotSupportedMacrosClassException($class);
     }
 }

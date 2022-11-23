@@ -73,6 +73,7 @@ parameters:
             - Model
             - Builder
             - Resource
+            - Admin
         Request:
             - Model
         Resource:
