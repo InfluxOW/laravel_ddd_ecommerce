@@ -18,7 +18,7 @@ infection-coverage:
 test:
 	php artisan test --parallel -vvv
 test-coverage:
-	XDEBUG_MODE=coverage php artisan test --parallel --coverage-clover storage/logs/clover.xml --coverage-xml=storage/logs/coverage-xml --log-junit=storage/logs/junit.xml
+	php -d pcov.enabled=1 artisan test --parallel --coverage-clover=storage/logs/clover.xml --coverage-xml=storage/logs/coverage-xml --log-junit=storage/logs/junit.xml
 
 deptrac:
 	composer exec deptrac
