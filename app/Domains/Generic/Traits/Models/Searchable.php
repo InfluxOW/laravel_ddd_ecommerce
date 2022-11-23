@@ -105,16 +105,10 @@ trait Searchable
     {
         $strlen = strlen($searchable);
 
-        $fuzziness = 0;
-
-        if ($strlen > 4) {
-            $fuzziness = 1;
-        }
-
-        if ($strlen > 7) {
-            $fuzziness = 2;
-        }
-
-        return $fuzziness;
+        return match (true) {
+            $strlen > 7 => 2,
+            $strlen > 4 => 1,
+            default => 0,
+        };
     }
 }

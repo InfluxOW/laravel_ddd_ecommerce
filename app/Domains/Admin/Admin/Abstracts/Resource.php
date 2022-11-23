@@ -12,6 +12,19 @@ use Illuminate\Support\Collection;
 
 abstract class Resource extends SimpleResource
 {
+    public static function getGlobalSearchResultUrl(Model $record): ?string
+    {
+        if (static::canView($record)) {
+            return static::getUrl('view', ['record' => $record]);
+        }
+
+        if (static::canEdit($record)) {
+            return static::getUrl('edit', ['record' => $record]);
+        }
+
+        return null;
+    }
+
     public static function getGlobalSearchResults(string $searchQuery): Collection
     {
         /** @var Model $model */
