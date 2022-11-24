@@ -24,7 +24,7 @@ test-coverage:
 deptrac:
 	composer exec deptrac
 insights:
-	php artisan insights --summary
+	php artisan insights app --summary
 insights-fix:
 	php artisan insights --fix
 lint:
