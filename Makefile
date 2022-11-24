@@ -4,11 +4,12 @@ infection := composer exec infection -- --threads=max --verbose --only-covering-
 
 APPLICATION_COMPOSER_CACHE ?= false
 
-install:
+prepare:
 	${APPLICATION_COMPOSER_CACHE} || composer install
 	npm install
 	make prepare-env
 	php artisan key:generate
+install: prepare
 	php artisan migrate:fresh
 
 infection:
