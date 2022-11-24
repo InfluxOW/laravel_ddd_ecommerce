@@ -10,7 +10,25 @@ jobs:
         runs-on: ubuntu-latest
         environment: CI
         steps:
+            #########################
+            ###        Git        ###
+            #########################
+
             -   uses: actions/checkout@main
+                with:
+                    fetch-depth: 0 # Fetch full git history
+
+            -   name: Get Current Branch
+                id: current-branch
+                run: echo "CURRENT_BRANCH=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_OUTPUT
+
+            -   name: Get Batch Commits Count
+                id: commits-count
+                run: echo "COMMITS_COUNT=$(echo '${{ toJson(github.event.commits) }}' | jq length)" >> $GITHUB_OUTPUT
+
+            -   name: Check Application Image Updates
+                id: application-image-check
+                run: echo "APPLICATION_IMAGE_UPDATED=$(git diff HEAD~${{ steps.commits-count.outputs.COMMITS_COUNT }} --name-only | grep docker/php -q && echo 'true' || echo 'false')" >> $GITHUB_OUTPUT
 
                 #########################
                 ###       Docker      ###
@@ -26,19 +44,15 @@ jobs:
                     username: ${{ secrets.DOCKER_HUB_USERNAME }}
                     password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
-            -   name: Get Current Branch
-                id: current-branch
-                run: echo "CURRENT_BRANCH=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_OUTPUT
-
             -   name: Set APPLICATION_IMAGE Env Variable
-                run: echo "APPLICATION_IMAGE=$(echo "${{ secrets.APPLICATION_IMAGE_REPOSITORY }}:${{ steps.current-branch.outputs.CURRENT_BRANCH == 'master' && 'latest' || steps.current-branch.outputs.CURRENT_BRANCH }}")" >> $GITHUB_ENV
+                run: echo "APPLICATION_IMAGE=$(echo "${{ secrets.APPLICATION_IMAGE_REPOSITORY }}:${{ steps.current-branch.outputs.CURRENT_BRANCH != 'master' && steps.application-image-check.outputs.APPLICATION_IMAGE_UPDATED == 'true' && steps.current-branch.outputs.CURRENT_BRANCH || 'latest' }}")" >> $GITHUB_ENV
 
             -   name: Docker Build && Cache && Push Application Image
                 uses: docker/build-push-action@master
                 with:
                     context: ./docker/php/
                     builder: ${{ steps.buildx.outputs.name }}
-                    push: true
+                    push: ${{ steps.application-image-check.outputs.APPLICATION_IMAGE_UPDATED == 'true' }}
                     tags: ${{ env.APPLICATION_IMAGE }}
                     cache-from: type=gha
                     cache-to: type=gha,mode=max
