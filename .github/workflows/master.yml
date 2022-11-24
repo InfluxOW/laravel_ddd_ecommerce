@@ -102,6 +102,13 @@ jobs:
                     key: pint-${{ github.sha }}
                     restore-keys: pint-
 
+            -   name: Cache PHPCS Analysis
+                uses: actions/cache@main
+                with:
+                    path: storage/phpcs
+                    key: phpcs-${{ github.sha }}
+                    restore-keys: phpcs-
+
             -   name: Cache Deptrac Analysis
                 uses: actions/cache@main
                 with:
