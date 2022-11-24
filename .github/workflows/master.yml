@@ -1,10 +1,9 @@
 # Name of workflow
 name: PHP CI
 
-# Trigger the workflow on push or pull request
+# Trigger the workflow on push
 on:
     - push
-    - pull_request
 
 jobs:
     build:
