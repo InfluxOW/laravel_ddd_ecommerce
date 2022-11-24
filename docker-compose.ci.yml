@@ -17,8 +17,13 @@ services:
                 condition: service_started
             elasticsearch_ci:
                 condition: service_started
-        command: >
-            make prepare lint deptrac insights analyse test-coverage
+        command:
+            - bash
+            - -c
+            - |
+                make prepare lint deptrac insights analyse
+                dockerize -wait tcp://database_ci:5432 -wait tcp://redis_ci:6379 -wait tcp://elasticsearch_ci:9200 -timeout 15s
+                make test-coverage
         networks:
             - sail_ci
 
