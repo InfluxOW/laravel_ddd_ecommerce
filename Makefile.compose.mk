@@ -45,6 +45,10 @@ restart: stop start
 
 # CI
 
+ci-local: prepare-env sail-install
+	$(sail_ci) up --abort-on-container-exit --attach application_ci --build --pull missing
+	$(sail_ci) down --volumes
+
 ci: prepare-env sail-install
 	$(sail_ci) pull --ignore-pull-failures
 	$(sail_ci) up --abort-on-container-exit --attach application_ci
