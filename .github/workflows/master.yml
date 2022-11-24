@@ -131,6 +131,7 @@ jobs:
 
             -   name: Upload Coverage to CodeCov.io
                 uses: codecov/codecov-action@main
+                if: ${{ steps.current-branch.outputs.CURRENT_BRANCH == 'master' }}
                 with:
                     token: ${{ secrets.CODECOV_TOKEN }}
                     file: storage/logs/clover.xml
