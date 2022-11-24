@@ -36,7 +36,7 @@ destroy:
 	$(sail) down --rmi all --volumes --remove-orphans
 
 start:
-	$(sail) up --detach
+	$(sail) up --detach --build
 
 stop:
 	$(sail) stop
