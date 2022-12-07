@@ -28,6 +28,13 @@ final class Application extends BaseApplication
         return $path === '' ? $resourcePath : PathUtils::join([$resourcePath, $path]);
     }
 
+    public function viewPath($path = '')
+    {
+        $viewPath = PathUtils::join([__DIR__, '..', '..', 'Domains', 'Common', 'Resources', 'Views']);
+
+        return $path === '' ? $viewPath : PathUtils::join([$viewPath, $path]);
+    }
+
     public function isRunningSeeders(): bool
     {
         return ApplicationState::$isRunningSeeders;

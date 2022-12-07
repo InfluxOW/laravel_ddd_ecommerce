@@ -61,6 +61,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
         $this->registerMigrations();
         $this->registerTranslations();
         $this->registerLivewireComponents();
+        $this->registerViews();
         $this->registerExceptionHandlingCallbacks();
         $this->app->resolving(Schedule::class, fn (Schedule $schedule) => $this->registerSchedule($schedule));
 
@@ -97,6 +98,11 @@ abstract class ServiceProvider extends LaravelServiceProvider
 
             Livewire::component($alias, $component);
         }
+    }
+
+    private function registerViews(): void
+    {
+        $this->loadViewsFrom($this->domainPath(PathUtils::join(['Resources', 'Views'])), static::NAMESPACE->value);
     }
 
     private function registerExceptionHandlingCallbacks(): void
