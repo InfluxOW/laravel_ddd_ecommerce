@@ -57,6 +57,7 @@ return [
         AdminModalTranslationKey::HEADING->name => [
             static fn (Page|RelationManager $livewire): string => "Create {$getModelLabel($livewire)}",
         ],
+        AdminModalTranslationKey::SUBHEADING->name => '',
         AdminModalTranslationKey::BUTTON->name => 'Confirm',
     ],
     EditAction::class => [
