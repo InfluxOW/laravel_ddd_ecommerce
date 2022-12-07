@@ -2,6 +2,7 @@
 
 use App\Domains\Catalog\Enums\Query\Filter\ProductAllowedFilter;
 use App\Domains\Catalog\Enums\Query\Sort\ProductAllowedSort;
+use App\Domains\Catalog\Enums\Translation\AdminActionTranslationKey;
 use App\Domains\Catalog\Enums\Translation\CatalogSettingsTranslationKey;
 use App\Domains\Catalog\Enums\Translation\ProductCategoryTranslationKey;
 use App\Domains\Catalog\Enums\Translation\ProductTranslationKey;
@@ -67,5 +68,8 @@ return [
         ProductTranslationKey::IS_DISPLAYABLE->name => 'Is Displayable',
         ProductTranslationKey::CREATED_AT->name => 'Created At',
         ProductTranslationKey::UPDATED_AT->name => 'Updated At',
+    ],
+    AdminActionTranslationKey::class => [
+        AdminActionTranslationKey::HIERARCHY->name => 'Hierarchy',
     ],
 ];

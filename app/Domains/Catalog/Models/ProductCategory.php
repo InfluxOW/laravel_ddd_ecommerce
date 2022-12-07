@@ -9,6 +9,7 @@ use App\Domains\Catalog\Jobs\Export\ProductCategoriesExportJob;
 use App\Domains\Common\Interfaces\Exportable;
 use App\Domains\Common\Traits\Models\HasExtendedFunctionality;
 use App\Domains\Common\Traits\Models\Searchable;
+use Baum\NestedSet\MoveNotPossibleException;
 use Baum\NestedSet\Node;
 use Closure;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -99,7 +100,7 @@ final class ProductCategory extends Model implements HasMedia, Exportable
 
     protected const HIERARCHY_CACHE_KEY = 'hierarchy';
 
-    protected string $orderColumnName = 'title';
+    protected string $orderColumnName = 'left';
 
     protected $fillable = [
         'slug',
@@ -111,6 +112,8 @@ final class ProductCategory extends Model implements HasMedia, Exportable
     protected $appends = ['path'];
 
     public static Collection $hierarchy;
+
+    public static bool $reloadHierarchyOnSavedEvent = true;
 
     /*
      * Internal
@@ -272,6 +275,40 @@ final class ProductCategory extends Model implements HasMedia, Exportable
             ->filter()
             ->map(fn (self $item): Collection => collect($map($item))->merge(self::mapHierarchy($map, $item->children)))
             ->flatten();
+    }
+
+    public static function reorderHierarchy(array $updates, int $depth = 0, ?self $parent = null): void
+    {
+        $hierarchy = self::getHierarchy();
+
+        $categoriesById = [];
+        foreach ($updates as $i => $update) {
+            /** @var self $category */
+            $category = self::findInHierarchy($update['id'], $hierarchy);
+            $categoriesById[$category->id] = $category;
+
+            /** @var Collection $siblings */
+            $siblings = $depth === 0 ? $hierarchy->values() : $category->parent?->children->values();
+            $orderChanged = count($siblings) < $i + 1 || $siblings->get($i)->id !== $update['id'];
+
+            if ($orderChanged) {
+                try {
+                    match (true) {
+                        $i === 0 && $depth === 0 => $category->moveToLeftOf($hierarchy->first()),
+                        $i === 0 && $depth > 0 => $category->makeFirstChildOf($parent),
+                        $i > 0 => $category->moveToRightOf($categoriesById[$updates[$i - 1]['id']]),
+                        default => true,
+                    };
+                } catch (MoveNotPossibleException) {
+                }
+            }
+
+            $children = $update['children'] ?? [];
+
+            if (count($children) > 0) {
+                self::reorderHierarchy($children, $depth + 1, $category);
+            }
+        }
     }
 
     public static function getVisibleHierarchy(): Collection

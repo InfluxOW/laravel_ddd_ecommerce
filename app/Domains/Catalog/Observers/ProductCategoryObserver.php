@@ -19,7 +19,9 @@ final class ProductCategoryObserver
             return;
         }
 
-        ProductCategory::loadHierarchy();
+        if (ProductCategory::$reloadHierarchyOnSavedEvent) {
+            ProductCategory::loadHierarchy();
+        }
     }
 
     public function deleted(ProductCategory $category): void

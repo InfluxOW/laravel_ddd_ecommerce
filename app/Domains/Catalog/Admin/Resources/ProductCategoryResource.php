@@ -20,7 +20,6 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Pages\Page;
 use Filament\Resources\Form;
-use Filament\Resources\Pages\CreateRecord;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Table;
 use Filament\Tables\Columns\TextColumn;
@@ -109,34 +108,8 @@ final class ProductCategoryResource extends Resource
                         RichEditor::makeTranslated(ProductCategoryTranslationKey::DESCRIPTION)->columnSpan(2),
                         Select::makeTranslated(ProductCategoryTranslationKey::PARENT_ID)
                             ->relationship('parent', 'title')
-                            ->options(function (?Model $record, Page|RelationManager $livewire): array {
-                                $categories = match (true) {
-                                    $livewire instanceof CreateRecord => ProductCategory::query()->hasLimitedDepth()->orderBy('left')->get(),
-                                    $livewire instanceof RelationManager => collect([$livewire->ownerRecord]),
-                                    default => ProductCategory::query()->hasLimitedDepth()->orderBy('left')->withoutNode($record)->get()->reject(fn (ProductCategory $parent): bool => $parent->insideSubtree($record)),
-                                };
-
-                                return $categories->pluck('title', 'id')->toArray();
-                            })
-                            ->disabled(fn (Page|RelationManager $livewire): bool => $livewire instanceof RelationManager)
+                            ->disabled()
                             ->default(fn (Page|RelationManager $livewire): ?int => $livewire instanceof RelationManager ? $livewire->ownerRecord->getKey() : null)
-                            ->searchable(fn (Page|RelationManager $livewire) => $livewire instanceof Page)
-                            ->reactive()
-                            ->afterStateUpdated(function (callable $set, callable $get): void {
-                                $parentId = $get(ProductCategoryTranslationKey::PARENT_ID->value);
-                                /** @var ?ProductCategory $parent */
-                                $parent = $parentId === null ? null : ProductCategory::query()->hasLimitedDepth()->find($parentId);
-
-                                if (isset($parent->depth)) {
-                                    $set(ProductCategoryTranslationKey::DEPTH->value, $parent->depth + 1);
-                                    $set(ProductCategoryTranslationKey::PATH->value, "{$parent->path} — {$get(ProductCategoryTranslationKey::TITLE->value)}");
-                                }
-
-                                if ($parent === null) {
-                                    $set(ProductCategoryTranslationKey::DEPTH->value, 0);
-                                    $set(ProductCategoryTranslationKey::PATH->value, $get(ProductCategoryTranslationKey::TITLE->value));
-                                }
-                            })
                             ->columnSpan(2),
                         MediaLibraryFileUpload::makeTranslated(ProductCategoryTranslationKey::IMAGES)
                             ->collection(ProductCategoryMediaCollectionKey::IMAGES->value)
@@ -211,7 +184,6 @@ final class ProductCategoryResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::makeTranslated(ProductCategoryTranslationKey::LEFT)->sortable(),
                 TextColumn::makeTranslated(ProductCategoryTranslationKey::TITLE)->sortable()->searchable(),
                 TextColumn::makeTranslated(ProductCategoryTranslationKey::SLUG)->searchable(),
                 TextColumn::makeTranslated(ProductCategoryTranslationKey::PARENT_TITLE)->sortable(),
@@ -233,6 +205,7 @@ final class ProductCategoryResource extends Resource
     {
         return [
             'index' => \App\Domains\Catalog\Admin\Resources\ProductCategoryResource\Pages\ListProductCategories::route('/'),
+            'hierarchy' => \App\Domains\Catalog\Admin\Resources\ProductCategoryResource\Pages\HierarchyProductCategory::route('/hierarchy'),
             'create' => \App\Domains\Catalog\Admin\Resources\ProductCategoryResource\Pages\CreateProductCategory::route('/create'),
             'edit' => \App\Domains\Catalog\Admin\Resources\ProductCategoryResource\Pages\EditProductCategory::route('/{record}/edit'),
             'view' => \App\Domains\Catalog\Admin\Resources\ProductCategoryResource\Pages\ViewProductCategory::route('/{record}'),
