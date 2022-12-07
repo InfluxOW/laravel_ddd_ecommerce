@@ -29,14 +29,16 @@ final class UpdateProductCategoriesDisplayability extends Command
             ->orderBy("{$table}.id");
 
         DB::transaction(function () use ($table, $query, $now): void {
-            $ids = DB::updateByChunks($table, $query, ['is_displayable' => true, 'updated_at' => $now->toDateTime()]);
+            $ids = DB::updateByChunks($table, $query, ['is_displayable' => true]);
 
-            DB::updateByChunks($table, DB::table($table)->whereIntegerNotInRaw("{$table}.id", $ids), ['is_displayable' => false, 'updated_at' => $now->toDateTime()]);
+            DB::updateByChunks($table, DB::table($table)->whereIntegerNotInRaw("{$table}.id", $ids), ['is_displayable' => false]);
 
             $this->settings->refresh();
             $this->settings->product_categories_displayability_last_updated_at = $now;
             $this->settings->save();
         });
+
+        ProductCategory::loadHierarchy();
 
         return self::SUCCESS;
     }
