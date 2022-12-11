@@ -8,6 +8,7 @@ use Closure;
 use Elastic\Migrations\Filesystem\MigrationStorage;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Contracts\Debug\ExceptionHandler;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Foundation\Exceptions\Handler;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
@@ -42,6 +43,8 @@ abstract class ServiceProvider extends LaravelServiceProvider
      */
     protected array $livewireComponents = [];
 
+    protected array $morphMap = [];
+
     /**
      * Register Domain ServiceProviders.
      */
@@ -64,6 +67,8 @@ abstract class ServiceProvider extends LaravelServiceProvider
         $this->registerViews();
         $this->registerExceptionHandlingCallbacks();
         $this->app->resolving(Schedule::class, fn (Schedule $schedule) => $this->registerSchedule($schedule));
+
+        $this->loadMorphMap();
 
         $this->afterBooting();
     }
@@ -139,6 +144,11 @@ abstract class ServiceProvider extends LaravelServiceProvider
     protected function registerSchedule(Schedule $schedule): void
     {
         //
+    }
+
+    private function loadMorphMap(): void
+    {
+        Relation::morphMap($this->morphMap);
     }
 
     protected function afterRegistration(): void

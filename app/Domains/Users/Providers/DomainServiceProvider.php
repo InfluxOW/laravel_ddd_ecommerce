@@ -5,6 +5,7 @@ namespace App\Domains\Users\Providers;
 use App\Domains\Common\Enums\ServiceProviderNamespace;
 use App\Domains\Common\Exceptions\InvalidConfirmationTokenException;
 use App\Domains\Users\Admin\Components\Widgets\CustomersChartWidget;
+use App\Domains\Users\Models\User;
 use App\Infrastructure\Abstracts\Providers\ServiceProvider;
 use App\Interfaces\Http\Controllers\ResponseTrait;
 
@@ -21,6 +22,10 @@ final class DomainServiceProvider extends ServiceProvider
     protected array $providers = [
         RouteServiceProvider::class,
         EventServiceProvider::class,
+    ];
+
+    protected array $morphMap = [
+        'user' => User::class,
     ];
 
     protected function getCustomExceptionRenderers(): array

@@ -3,6 +3,7 @@
 namespace App\Application\Providers;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\ParallelTesting;
 use Illuminate\Support\ServiceProvider;
@@ -23,6 +24,8 @@ final class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->preventLazyLoading();
+
+        Relation::requireMorphMap();
 
         ParallelTesting::setUpTestDatabase(static fn () => Artisan::call('migrate:fresh'));
     }

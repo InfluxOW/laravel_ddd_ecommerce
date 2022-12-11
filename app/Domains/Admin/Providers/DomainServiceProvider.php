@@ -7,6 +7,7 @@ use App\Domains\Admin\Enums\Translation\AdminPagePropertyTranslationKey;
 use App\Domains\Admin\Enums\Translation\AdminRelationPropertyTranslationKey;
 use App\Domains\Admin\Enums\Translation\AdminResourcePropertyTranslationKey;
 use App\Domains\Admin\Enums\Translation\AdminWidgetPropertyTranslationKey;
+use App\Domains\Admin\Models\Admin;
 use App\Domains\Admin\Services\Translator;
 use App\Domains\Common\Enums\ServiceProviderNamespace;
 use App\Infrastructure\Abstracts\Providers\ServiceProvider;
@@ -18,6 +19,10 @@ use Livewire\Component as LivewireComponent;
 final class DomainServiceProvider extends ServiceProvider
 {
     public const NAMESPACE = ServiceProviderNamespace::ADMIN;
+
+    protected array $morphMap = [
+        'admin' => Admin::class,
+    ];
 
     protected function afterBooting(): void
     {
