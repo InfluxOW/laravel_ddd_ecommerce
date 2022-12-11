@@ -8,6 +8,7 @@ use App\Domains\Cart\Models\CartItem;
 use App\Domains\Common\Utils\MathUtils;
 use App\Domains\Users\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Redis;
 
 final class CartService
@@ -39,7 +40,7 @@ final class CartService
 
     public function add(Cart $cart, Model & Purchasable $purchasable, int $quantity): Cart
     {
-        $item = $cart->items->where('purchasable_id', $purchasable->getKey())->where('purchasable_type', $purchasable::class)->first();
+        $item = $this->findItem($cart, $purchasable);
         if (isset($item)) {
             return $this->update($cart, $purchasable, $quantity);
         }
@@ -65,7 +66,7 @@ final class CartService
 
     public function update(Cart $cart, Model & Purchasable $purchasable, int $quantity): Cart
     {
-        $item = $cart->items->where('purchasable_id', $purchasable->getKey())->where('purchasable_type', $purchasable::class)->first();
+        $item = $this->findItem($cart, $purchasable);
         if ($item === null) {
             return $this->add($cart, $purchasable, $quantity);
         }
@@ -108,7 +109,12 @@ final class CartService
         $cart->items()->saveMany($cart->items);
     }
 
-    protected function cache(Cart $cart): void
+    private function findItem(Cart $cart, Model & Purchasable $purchasable): ?CartItem
+    {
+        return $cart->items->where('purchasable_id', $purchasable->getKey())->where('purchasable_type', Relation::getAlias($purchasable::class))->first();
+    }
+
+    private function cache(Cart $cart): void
     {
         $cacheKey = $this->getCartCacheKey($cart->user, $cart->key);
         if (isset($cacheKey)) {
@@ -116,7 +122,7 @@ final class CartService
         }
     }
 
-    protected function getFromCache(?User $user, ?string $key): ?Cart
+    private function getFromCache(?User $user, ?string $key): ?Cart
     {
         $cacheKey = $this->getCartCacheKey($user, $key);
         if ($cacheKey === null) {
@@ -129,7 +135,7 @@ final class CartService
         return $cart;
     }
 
-    protected function recalculate(Cart $cart): Cart
+    private function recalculate(Cart $cart): Cart
     {
         $priceItems = 0;
         $priceItemsDiscounted = 0;

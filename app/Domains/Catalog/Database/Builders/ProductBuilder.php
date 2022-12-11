@@ -14,6 +14,7 @@ use App\Domains\Catalog\Models\Product;
 use App\Domains\Common\Enums\BooleanString;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
@@ -107,7 +108,7 @@ final class ProductBuilder extends Builder
     {
         $this
             ->join('prices', 'prices.purchasable_id', '=', 'products.id')
-            ->where('prices.purchasable_type', self::class)
+            ->where('prices.purchasable_type', Relation::getAlias(Product::class))
             ->where('prices.currency', $currency)
             ->orderBy(Price::getDatabasePriceExpression(), $descending ? 'DESC' : 'ASC');
 

@@ -11,6 +11,7 @@ use App\Domains\Catalog\Database\Builders\ProductBuilder;
 use App\Domains\Catalog\Models\Product;
 use App\Domains\Catalog\Models\ProductCategory;
 use App\Domains\Catalog\Models\Settings\CatalogSettings;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Spatie\QueryBuilder\QueryBuilder as SpatieQueryBuilder;
@@ -79,7 +80,7 @@ final class ProductFilterBuilderRepository
     public function getMinPrice(SpatieQueryBuilder $productsQuery, string $currency): ?int
     {
         return DB::table('prices')
-            ->where('purchasable_type', Product::class)
+            ->where('purchasable_type', Relation::getAlias(Product::class))
             ->whereIn('purchasable_id', $productsQuery->getQuery()->select(['products.id']))
             ->where('currency', $currency)
             ->min(Price::getDatabasePriceExpression());
@@ -88,7 +89,7 @@ final class ProductFilterBuilderRepository
     public function getMaxPrice(SpatieQueryBuilder $productsQuery, string $currency): ?int
     {
         return DB::table('prices')
-            ->where('purchasable_type', Product::class)
+            ->where('purchasable_type', Relation::getAlias(Product::class))
             ->whereIn('purchasable_id', $productsQuery->getQuery()->select(['products.id']))
             ->where('currency', $currency)
             ->max(Price::getDatabasePriceExpression());
@@ -98,7 +99,7 @@ final class ProductFilterBuilderRepository
     {
         return DB::table('prices')
             ->select(['currency'])
-            ->where('purchasable_type', Product::class)
+            ->where('purchasable_type', Relation::getAlias(Product::class))
             ->whereIn('purchasable_id', $productsQuery->getQuery()->select(['products.id']))
             ->whereIn('currency', $this->settings->available_currencies)
             ->distinct('currency')

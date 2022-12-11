@@ -7,6 +7,7 @@ use App\Domains\Common\Enums\ServiceProviderNamespace;
 use App\Domains\Common\Mixins\CacheMixin;
 use App\Domains\Common\Mixins\CarbonMixin;
 use App\Domains\Common\Mixins\DatabaseMixin;
+use App\Domains\Common\Mixins\RelationMixin;
 use App\Domains\Common\Mixins\RequestMixin;
 use App\Domains\Common\Mixins\SessionGuardMixin;
 use App\Domains\Common\Services\Elastic\AnonymousMigrationFactory;
@@ -16,6 +17,7 @@ use Elastic\Migrations\Factories\MigrationFactory;
 use Illuminate\Auth\SessionGuard;
 use Illuminate\Cache\Repository as Cache;
 use Illuminate\Database\DatabaseManager as DB;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
 
 final class DomainServiceProvider extends ServiceProvider
@@ -47,5 +49,6 @@ final class DomainServiceProvider extends ServiceProvider
         Carbon::mixin(new CarbonMixin());
         Request::mixin(new RequestMixin());
         SessionGuard::mixin(new SessionGuardMixin());
+        Relation::mixin(new RelationMixin());
     }
 }
