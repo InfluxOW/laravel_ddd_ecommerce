@@ -15,7 +15,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
-use Filament\Tables\Columns\BooleanColumn;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TernaryFilter;
 use Illuminate\Database\Eloquent\Collection;
@@ -41,13 +41,13 @@ final class FeedbackResource extends Resource
         return ['text', 'username', 'email', 'phone'];
     }
 
-    /** @param  ?Feedback  $record */
+    /** @param  ?Feedback $record */
     public static function getRecordTitle(?Model $record): ?string
     {
         return $record === null ? null : Str::limit($record->text);
     }
 
-    /** @param  Feedback  $record */
+    /** @param Feedback $record */
     public static function getGlobalSearchResultDetails(Model $record): array
     {
         $result = [
@@ -98,7 +98,7 @@ final class FeedbackResource extends Resource
     {
         return $table
             ->columns([
-                BooleanColumn::makeTranslated(FeedbackTranslationKey::IS_REVIEWED)->sortable(),
+                IconColumn::makeTranslated(FeedbackTranslationKey::IS_REVIEWED)->boolean()->sortable(),
                 TextColumn::makeTranslated(FeedbackTranslationKey::TEXT)->sortable()->searchable()->limit(70),
                 TextColumn::makeTranslated(FeedbackTranslationKey::CREATED_AT)->sortable()->dateTime(),
             ])
