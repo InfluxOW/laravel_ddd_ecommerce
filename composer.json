@@ -77,7 +77,8 @@
         "symfony/http-client": "^6.0",
         "symfony/mailgun-mailer": "^6.0",
         "torann/geoip": "^3.0",
-        "vladimir-yuldashev/laravel-queue-rabbitmq": "^13.0"
+        "vladimir-yuldashev/laravel-queue-rabbitmq": "^13.0",
+        "ysfkaya/filament-phone-input": "^1.2"
     },
     "require-dev": {
         "bamarni/composer-bin-plugin": "^1.8",

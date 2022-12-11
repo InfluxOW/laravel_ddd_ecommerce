@@ -19,6 +19,8 @@ use Filament\Resources\Pages\Page;
 use Filament\Resources\Table;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
+use Ysfkaya\FilamentPhoneInput\PhoneInput;
+use Ysfkaya\FilamentPhoneInput\PhoneInputNumberType;
 
 final class UserResource extends Resource
 {
@@ -77,11 +79,9 @@ final class UserResource extends Resource
                                     ->maxLength(255)
                                     ->placeholder('john_doe@gmail.com')
                                     ->columnSpan(1),
-                                TextInput::makeTranslated(UserTranslationKey::PHONE)
-                                    ->nullable()
-                                    ->maxLength(18)
-                                    ->mask(fn (TextInput\Mask $mask): TextInput\Mask => $mask->pattern('+0 (000) 000-00-00'))
-                                    ->tel()
+                                PhoneInput::makeTranslated(UserTranslationKey::PHONE)
+                                    ->focusNumberFormat(PhoneInputNumberType::E164)
+                                    ->displayNumberFormat(PhoneInputNumberType::INTERNATIONAL)
                                     ->columnSpan(1),
                             ])
                             ->columnSpan(3)

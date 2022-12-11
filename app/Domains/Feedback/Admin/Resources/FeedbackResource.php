@@ -21,6 +21,8 @@ use Filament\Tables\Filters\TernaryFilter;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Ysfkaya\FilamentPhoneInput\PhoneInput;
+use Ysfkaya\FilamentPhoneInput\PhoneInputNumberType;
 
 final class FeedbackResource extends Resource
 {
@@ -77,9 +79,8 @@ final class FeedbackResource extends Resource
                                 TextInput::makeTranslated(FeedbackTranslationKey::EMAIL)
                                     ->email()
                                     ->disabled(),
-                                TextInput::makeTranslated(FeedbackTranslationKey::PHONE)
-                                    ->mask(fn (TextInput\Mask $mask): TextInput\Mask => $mask->pattern('+0 (000) 000-00-00'))
-                                    ->tel()
+                                PhoneInput::makeTranslated(FeedbackTranslationKey::PHONE)
+                                    ->displayNumberFormat(PhoneInputNumberType::INTERNATIONAL)
                                     ->disabled(),
                             ])
                             ->columns(3),
