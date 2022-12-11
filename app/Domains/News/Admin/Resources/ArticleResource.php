@@ -6,6 +6,10 @@ use App\Components\Mediable\Admin\Components\Fields\MediaLibraryFileUpload;
 use App\Domains\Admin\Admin\Abstracts\Resource;
 use App\Domains\Admin\Admin\Components\Forms\RichEditor;
 use App\Domains\Catalog\Enums\Media\ProductCategoryMediaCollectionKey;
+use App\Domains\News\Admin\Resources\ArticleResource\Pages\CreateArticle;
+use App\Domains\News\Admin\Resources\ArticleResource\Pages\EditArticle;
+use App\Domains\News\Admin\Resources\ArticleResource\Pages\ListNews;
+use App\Domains\News\Admin\Resources\ArticleResource\Pages\ViewArticle;
 use App\Domains\News\Database\Builders\ArticleBuilder;
 use App\Domains\News\Enums\Translation\ArticleTranslationKey;
 use App\Domains\News\Models\Article;
@@ -118,10 +122,10 @@ final class ArticleResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => \App\Domains\News\Admin\Resources\ArticleResource\Pages\ListNews::route('/'),
-            'create' => \App\Domains\News\Admin\Resources\ArticleResource\Pages\CreateArticle::route('/create'),
-            'edit' => \App\Domains\News\Admin\Resources\ArticleResource\Pages\EditArticle::route('/{record}/edit'),
-            'view' => \App\Domains\News\Admin\Resources\ArticleResource\Pages\ViewArticle::route('/{record}'),
+            'index' => ListNews::route('/'),
+            'create' => CreateArticle::route('/create'),
+            'edit' => EditArticle::route('/{record}/edit'),
+            'view' => ViewArticle::route('/{record}'),
         ];
     }
 }

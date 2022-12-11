@@ -7,6 +7,10 @@ use App\Components\Mediable\Admin\Components\Fields\MediaLibraryFileUpload;
 use App\Components\Purchasable\Admin\RelationManagers\PricesRelationManager;
 use App\Domains\Admin\Admin\Abstracts\Resource;
 use App\Domains\Admin\Admin\Components\Forms\RichEditor;
+use App\Domains\Catalog\Admin\Resources\ProductResource\Pages\CreateProduct;
+use App\Domains\Catalog\Admin\Resources\ProductResource\Pages\EditProduct;
+use App\Domains\Catalog\Admin\Resources\ProductResource\Pages\ListProducts;
+use App\Domains\Catalog\Admin\Resources\ProductResource\Pages\ViewProduct;
 use App\Domains\Catalog\Enums\Media\ProductMediaCollectionKey;
 use App\Domains\Catalog\Enums\Translation\ProductTranslationKey;
 use App\Domains\Catalog\Models\Product;
@@ -131,10 +135,10 @@ final class ProductResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => \App\Domains\Catalog\Admin\Resources\ProductResource\Pages\ListProducts::route('/'),
-            'create' => \App\Domains\Catalog\Admin\Resources\ProductResource\Pages\CreateProduct::route('/create'),
-            'edit' => \App\Domains\Catalog\Admin\Resources\ProductResource\Pages\EditProduct::route('/{record}/edit'),
-            'view' => \App\Domains\Catalog\Admin\Resources\ProductResource\Pages\ViewProduct::route('/{record}'),
+            'index' => ListProducts::route('/'),
+            'create' => CreateProduct::route('/create'),
+            'edit' => EditProduct::route('/{record}/edit'),
+            'view' => ViewProduct::route('/{record}'),
         ];
     }
 

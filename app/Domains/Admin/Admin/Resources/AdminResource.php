@@ -5,6 +5,10 @@ namespace App\Domains\Admin\Admin\Resources;
 use App\Components\LoginHistoryable\Admin\RelationManagers\LoginHistoryRelationManager;
 use App\Domains\Admin\Admin\Abstracts\Pages\ViewRecord;
 use App\Domains\Admin\Admin\Abstracts\Resource;
+use App\Domains\Admin\Admin\Resources\AdminResource\Pages\CreateAdmin;
+use App\Domains\Admin\Admin\Resources\AdminResource\Pages\EditAdmin;
+use App\Domains\Admin\Admin\Resources\AdminResource\Pages\ListAdmins;
+use App\Domains\Admin\Admin\Resources\AdminResource\Pages\ViewAdmin;
 use App\Domains\Admin\Enums\Translation\Resources\AdminTranslationKey;
 use App\Domains\Admin\Models\Admin;
 use Filament\Forms\Components\Card;
@@ -107,10 +111,10 @@ final class AdminResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => \App\Domains\Admin\Admin\Resources\AdminResource\Pages\ListAdmins::route('/'),
-            'create' => \App\Domains\Admin\Admin\Resources\AdminResource\Pages\CreateAdmin::route('/create'),
-            'edit' => \App\Domains\Admin\Admin\Resources\AdminResource\Pages\EditAdmin::route('/{record}/edit'),
-            'view' => \App\Domains\Admin\Admin\Resources\AdminResource\Pages\ViewAdmin::route('/{record}'),
+            'index' => ListAdmins::route('/'),
+            'create' => CreateAdmin::route('/create'),
+            'edit' => EditAdmin::route('/{record}/edit'),
+            'view' => ViewAdmin::route('/{record}'),
         ];
     }
 

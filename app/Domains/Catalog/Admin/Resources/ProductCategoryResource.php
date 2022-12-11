@@ -5,6 +5,11 @@ namespace App\Domains\Catalog\Admin\Resources;
 use App\Components\Mediable\Admin\Components\Fields\MediaLibraryFileUpload;
 use App\Domains\Admin\Admin\Abstracts\Resource;
 use App\Domains\Admin\Admin\Components\Forms\RichEditor;
+use App\Domains\Catalog\Admin\Resources\ProductCategoryResource\Pages\CreateProductCategory;
+use App\Domains\Catalog\Admin\Resources\ProductCategoryResource\Pages\EditProductCategory;
+use App\Domains\Catalog\Admin\Resources\ProductCategoryResource\Pages\HierarchyProductCategory;
+use App\Domains\Catalog\Admin\Resources\ProductCategoryResource\Pages\ListProductCategories;
+use App\Domains\Catalog\Admin\Resources\ProductCategoryResource\Pages\ViewProductCategory;
 use App\Domains\Catalog\Admin\Resources\ProductCategoryResource\RelationManagers\ProductCategoryChildrenRelationManager;
 use App\Domains\Catalog\Enums\Media\ProductCategoryMediaCollectionKey;
 use App\Domains\Catalog\Enums\Translation\ProductCategoryTranslationKey;
@@ -204,11 +209,11 @@ final class ProductCategoryResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => \App\Domains\Catalog\Admin\Resources\ProductCategoryResource\Pages\ListProductCategories::route('/'),
-            'hierarchy' => \App\Domains\Catalog\Admin\Resources\ProductCategoryResource\Pages\HierarchyProductCategory::route('/hierarchy'),
-            'create' => \App\Domains\Catalog\Admin\Resources\ProductCategoryResource\Pages\CreateProductCategory::route('/create'),
-            'edit' => \App\Domains\Catalog\Admin\Resources\ProductCategoryResource\Pages\EditProductCategory::route('/{record}/edit'),
-            'view' => \App\Domains\Catalog\Admin\Resources\ProductCategoryResource\Pages\ViewProductCategory::route('/{record}'),
+            'index' => ListProductCategories::route('/'),
+            'hierarchy' => HierarchyProductCategory::route('/hierarchy'),
+            'create' => CreateProductCategory::route('/create'),
+            'edit' => EditProductCategory::route('/{record}/edit'),
+            'view' => ViewProductCategory::route('/{record}'),
         ];
     }
 

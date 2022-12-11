@@ -4,6 +4,9 @@ namespace App\Domains\Feedback\Admin\Resources;
 
 use App\Domains\Admin\Admin\Abstracts\Resource;
 use App\Domains\Admin\Admin\Components\Actions\UpdateBulkAction;
+use App\Domains\Feedback\Admin\Resources\FeedbackResource\Pages\EditFeedback;
+use App\Domains\Feedback\Admin\Resources\FeedbackResource\Pages\ListFeedback;
+use App\Domains\Feedback\Admin\Resources\FeedbackResource\Pages\ViewFeedback;
 use App\Domains\Feedback\Database\Builders\FeedbackBuilder;
 use App\Domains\Feedback\Enums\Translation\FeedbackTranslationKey;
 use App\Domains\Feedback\Models\Feedback;
@@ -41,13 +44,13 @@ final class FeedbackResource extends Resource
         return ['text', 'username', 'email', 'phone'];
     }
 
-    /** @param  ?Feedback $record */
+    /** @param  ?Feedback  $record */
     public static function getRecordTitle(?Model $record): ?string
     {
         return $record === null ? null : Str::limit($record->text);
     }
 
-    /** @param Feedback $record */
+    /** @param  Feedback  $record */
     public static function getGlobalSearchResultDetails(Model $record): array
     {
         $result = [
@@ -133,9 +136,9 @@ final class FeedbackResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => \App\Domains\Feedback\Admin\Resources\FeedbackResource\Pages\ListFeedback::route('/'),
-            'edit' => \App\Domains\Feedback\Admin\Resources\FeedbackResource\Pages\EditFeedback::route('/{record}/edit'),
-            'view' => \App\Domains\Feedback\Admin\Resources\FeedbackResource\Pages\ViewFeedback::route('/{record}'),
+            'index' => ListFeedback::route('/'),
+            'edit' => EditFeedback::route('/{record}/edit'),
+            'view' => ViewFeedback::route('/{record}'),
         ];
     }
 

@@ -6,6 +6,9 @@ use App\Components\Addressable\Admin\RelationManagers\AddressesRelationManager;
 use App\Components\LoginHistoryable\Admin\RelationManagers\LoginHistoryRelationManager;
 use App\Domains\Admin\Admin\Abstracts\Pages\ViewRecord;
 use App\Domains\Admin\Admin\Abstracts\Resource;
+use App\Domains\Users\Admin\Resources\UserResource\Pages\EditUser;
+use App\Domains\Users\Admin\Resources\UserResource\Pages\ListUsers;
+use App\Domains\Users\Admin\Resources\UserResource\Pages\ViewUser;
 use App\Domains\Users\Enums\Translation\UserTranslationKey;
 use App\Domains\Users\Models\User;
 use Carbon\Carbon;
@@ -129,9 +132,9 @@ final class UserResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => \App\Domains\Users\Admin\Resources\UserResource\Pages\ListUsers::route('/'),
-            'edit' => \App\Domains\Users\Admin\Resources\UserResource\Pages\EditUser::route('/{record}/edit'),
-            'view' => \App\Domains\Users\Admin\Resources\UserResource\Pages\ViewUser::route('/{record}'),
+            'index' => ListUsers::route('/'),
+            'edit' => EditUser::route('/{record}/edit'),
+            'view' => ViewUser::route('/{record}'),
         ];
     }
 
