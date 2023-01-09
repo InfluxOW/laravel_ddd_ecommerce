@@ -27,9 +27,9 @@ abstract class SortService
      */
     private Collection $callbacks;
 
-    private UnitEnum & IAllowedSortEnum $defaultSort;
+    private UnitEnum&IAllowedSortEnum $defaultSort;
 
-    private UnitEnum & IAllowedSortEnum $defaultSortForSearch;
+    private UnitEnum&IAllowedSortEnum $defaultSortForSearch;
 
     /**
      * @return Collection<Sort>
@@ -49,7 +49,7 @@ abstract class SortService
 
     abstract public function build(): static;
 
-    protected function addSort(UnitEnum & IAllowedSortEnum $sort, ?Closure $callback = null): static
+    protected function addSort(UnitEnum&IAllowedSortEnum $sort, ?Closure $callback = null): static
     {
         if ($callback === null) {
             $callback = static function (Builder $query) use ($sort): void {
@@ -67,7 +67,7 @@ abstract class SortService
         return $this;
     }
 
-    protected function addDefaultSort(UnitEnum & IAllowedSortEnum $sort, ?Closure $callback = null): static
+    protected function addDefaultSort(UnitEnum&IAllowedSortEnum $sort, ?Closure $callback = null): static
     {
         $this->addSort($sort, $callback);
 
@@ -76,7 +76,7 @@ abstract class SortService
         return $this;
     }
 
-    protected function addDefaultSearchSort(UnitEnum & IAllowedSortEnum $sort, ?Closure $callback = null): static
+    protected function addDefaultSearchSort(UnitEnum&IAllowedSortEnum $sort, ?Closure $callback = null): static
     {
         $this->addSort($sort, $callback);
 

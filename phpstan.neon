@@ -24,10 +24,6 @@ parameters:
 
         - '#Access to an undefined property Faker\\Generator#'
 
-        - '#Cache::rememberInArray#'
-        - '#Cache::simple#'
-        - '#Cache::getEventDispatcher#'
-
         # Laravel 9 issues
         - '#Unable to resolve the template type TValue in call to function collect#'
         - '#Unable to resolve the template type TKey in call to function collect#'

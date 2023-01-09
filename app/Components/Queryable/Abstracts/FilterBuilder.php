@@ -8,5 +8,5 @@ use UnitEnum;
 
 interface FilterBuilder
 {
-    public function build(UnitEnum & IAllowedFilterEnum $filter): Filter;
+    public function build(UnitEnum&IAllowedFilterEnum $filter): Filter;
 }

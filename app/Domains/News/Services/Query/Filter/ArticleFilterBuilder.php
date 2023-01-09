@@ -20,7 +20,7 @@ final class ArticleFilterBuilder implements FilterBuilder
     /**
      * @param ArticleAllowedFilter $filter
      */
-    public function build(UnitEnum & IAllowedFilterEnum $filter): Filter
+    public function build(UnitEnum&IAllowedFilterEnum $filter): Filter
     {
         return match ($filter) {
             ArticleAllowedFilter::SEARCH => $this->buildSearchFilter($filter),
@@ -28,12 +28,12 @@ final class ArticleFilterBuilder implements FilterBuilder
         };
     }
 
-    private function buildSearchFilter(UnitEnum & IAllowedFilterEnum $filter): Filter
+    private function buildSearchFilter(UnitEnum&IAllowedFilterEnum $filter): Filter
     {
         return new InputFilter($filter);
     }
 
-    private function buildPublishedAtFilter(UnitEnum & IAllowedFilterEnum $filter): Filter
+    private function buildPublishedAtFilter(UnitEnum&IAllowedFilterEnum $filter): Filter
     {
         return new RangeFilter(
             $filter,

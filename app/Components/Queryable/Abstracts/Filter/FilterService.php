@@ -21,7 +21,7 @@ abstract class FilterService
      */
     private Collection $callbacks;
 
-    private UnitEnum & IAllowedFilterEnum $searchFilter;
+    private UnitEnum&IAllowedFilterEnum $searchFilter;
 
     public function __construct(protected readonly array $filters, protected readonly FilterBuilder $builder)
     {
@@ -47,7 +47,7 @@ abstract class FilterService
 
     abstract public function build(): static;
 
-    protected function addFilter(UnitEnum & IAllowedFilterEnum $filter, Closure $callback): static
+    protected function addFilter(UnitEnum&IAllowedFilterEnum $filter, Closure $callback): static
     {
         $this->allowed->offsetSet($filter->name, $this->builder->build($filter));
         $this->callbacks->offsetSet($filter->name, AllowedFilter::callback($filter->name, $callback));
@@ -55,7 +55,7 @@ abstract class FilterService
         return $this;
     }
 
-    protected function addSearchFilter(UnitEnum & IAllowedFilterEnum $filter, Closure $callback): static
+    protected function addSearchFilter(UnitEnum&IAllowedFilterEnum $filter, Closure $callback): static
     {
         $this->addFilter($filter, $callback);
 
@@ -69,7 +69,7 @@ abstract class FilterService
         return isset($this->searchFilter) ? $this->allowed->offsetGet($this->searchFilter->name) : null;
     }
 
-    protected function getFilterValue(UnitEnum & IAllowedFilterEnum $filter, ?array $filters = null): mixed
+    protected function getFilterValue(UnitEnum&IAllowedFilterEnum $filter, ?array $filters = null): mixed
     {
         return ($filters ?? $this->filters)[$filter->name] ?? null;
     }

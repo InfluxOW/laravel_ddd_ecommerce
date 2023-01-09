@@ -38,7 +38,7 @@ final class CartService
         return $this->getFromCache($user, $key);
     }
 
-    public function add(Cart $cart, Model & Purchasable $purchasable, int $quantity): Cart
+    public function add(Cart $cart, Model&Purchasable $purchasable, int $quantity): Cart
     {
         $item = $this->findItem($cart, $purchasable);
         if (isset($item)) {
@@ -64,7 +64,7 @@ final class CartService
         return $cart;
     }
 
-    public function update(Cart $cart, Model & Purchasable $purchasable, int $quantity): Cart
+    public function update(Cart $cart, Model&Purchasable $purchasable, int $quantity): Cart
     {
         $item = $this->findItem($cart, $purchasable);
         if ($item === null) {
@@ -109,7 +109,7 @@ final class CartService
         $cart->items()->saveMany($cart->items);
     }
 
-    private function findItem(Cart $cart, Model & Purchasable $purchasable): ?CartItem
+    private function findItem(Cart $cart, Model&Purchasable $purchasable): ?CartItem
     {
         return $cart->items->where('purchasable_id', $purchasable->getKey())->where('purchasable_type', Relation::getAlias($purchasable::class))->first();
     }

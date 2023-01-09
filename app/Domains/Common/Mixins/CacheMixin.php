@@ -15,6 +15,7 @@ final class CacheMixin
 
     public function rememberInArray(): Closure
     {
+        /** @phpstan-ignore-next-line */
         return fn (string $key, Closure $callback): mixed => Cache::simple()->remember($key, app()->runningInConsole() ? null : config('octane.max_execution_time'), $callback);
     }
 }
