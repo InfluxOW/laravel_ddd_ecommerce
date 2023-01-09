@@ -2,6 +2,12 @@
 
 use App\Domains\Catalog\Models\Settings\CatalogSettings;
 use App\Domains\Catalog\Models\Settings\FeedbackSettings;
+use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelSettings\SettingsCasts\DateTimeInterfaceCast;
+use Spatie\LaravelSettings\SettingsCasts\DateTimeZoneCast;
+use Spatie\LaravelSettings\SettingsCasts\DtoCast;
+use Spatie\LaravelSettings\SettingsRepositories\DatabaseSettingsRepository;
+use Spatie\LaravelSettings\SettingsRepositories\RedisSettingsRepository;
 
 return [
 
@@ -35,13 +41,13 @@ return [
      */
     'repositories' => [
         'database' => [
-            'type' => Spatie\LaravelSettings\SettingsRepositories\DatabaseSettingsRepository::class,
+            'type' => DatabaseSettingsRepository::class,
             'model' => null,
             'table' => null,
             'connection' => null,
         ],
         'redis' => [
-            'type' => Spatie\LaravelSettings\SettingsRepositories\RedisSettingsRepository::class,
+            'type' => RedisSettingsRepository::class,
             'connection' => null,
             'prefix' => null,
         ],
@@ -63,9 +69,9 @@ return [
      * your settings class isn't a default PHP type.
      */
     'global_casts' => [
-        DateTimeInterface::class => Spatie\LaravelSettings\SettingsCasts\DateTimeInterfaceCast::class,
-        DateTimeZone::class => Spatie\LaravelSettings\SettingsCasts\DateTimeZoneCast::class,
-        Spatie\DataTransferObject\DataTransferObject::class => Spatie\LaravelSettings\SettingsCasts\DtoCast::class,
+        DateTimeInterface::class => DateTimeInterfaceCast::class,
+        DateTimeZone::class => DateTimeZoneCast::class,
+        DataTransferObject::class => DtoCast::class,
     ],
 
     /*

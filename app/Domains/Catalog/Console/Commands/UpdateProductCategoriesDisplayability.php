@@ -14,7 +14,7 @@ final class UpdateProductCategoriesDisplayability extends Command
 
     protected $description = 'Recalculate product categories displayability';
 
-    public function __construct(private CatalogSettings $settings)
+    public function __construct(private readonly CatalogSettings $settings)
     {
         parent::__construct();
     }

@@ -28,7 +28,7 @@ final class ProductCategoryFactory extends Factory
     {
         return $this
             ->afterCreating(function (ProductCategory $category): void {
-                $category->is_visible = $this->faker->boolean(100 - $category->depth * 10);
+                $category->is_visible = $this->faker->boolean(100 - $category->getDepth() * 10);
 
                 $category->save();
             });

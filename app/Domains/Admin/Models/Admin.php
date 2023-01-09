@@ -7,38 +7,42 @@ use App\Domains\Admin\Database\Builders\AdminBuilder;
 use App\Domains\Admin\Database\Factories\AdminFactory;
 use App\Domains\Common\Traits\Models\HasExtendedFunctionality;
 use Filament\Models\Contracts\FilamentUser;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\DatabaseNotification;
+use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Domains\Admin\Models\Admin
  *
- * @property int                             $id
- * @property string                          $name
- * @property string                          $email
- * @property string                          $password
- * @property string|null                     $remember_token
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int         $id
+ * @property string      $name
+ * @property string      $email
+ * @property string      $password
+ * @property string|null $remember_token
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  *
- * @property-read \Illuminate\Database\Eloquent\Collection|LoginHistory[]                                                   $loginHistory
- * @property-read int|null                                                                                                  $login_history_count
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
- * @property-read int|null                                                                                                  $notifications_count
+ * @property-read Collection|LoginHistory[]                             $loginHistory
+ * @property-read int|null                                              $login_history_count
+ * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
+ * @property-read int|null                                              $notifications_count
  *
- * @method static \App\Domains\Admin\Database\Factories\AdminFactory factory(...$parameters)
- * @method static AdminBuilder|Admin                                 newModelQuery()
- * @method static AdminBuilder|Admin                                 newQuery()
- * @method static AdminBuilder|Admin                                 query()
- * @method static AdminBuilder|Admin                                 whereCreatedAt($value)
- * @method static AdminBuilder|Admin                                 whereEmail($value)
- * @method static AdminBuilder|Admin                                 whereId($value)
- * @method static AdminBuilder|Admin                                 whereName($value)
- * @method static AdminBuilder|Admin                                 wherePassword($value)
- * @method static AdminBuilder|Admin                                 whereRememberToken($value)
- * @method static AdminBuilder|Admin                                 whereUpdatedAt($value)
+ * @method static AdminFactory       factory(...$parameters)
+ * @method static AdminBuilder|Admin newModelQuery()
+ * @method static AdminBuilder|Admin newQuery()
+ * @method static AdminBuilder|Admin query()
+ * @method static AdminBuilder|Admin whereCreatedAt($value)
+ * @method static AdminBuilder|Admin whereEmail($value)
+ * @method static AdminBuilder|Admin whereId($value)
+ * @method static AdminBuilder|Admin whereName($value)
+ * @method static AdminBuilder|Admin wherePassword($value)
+ * @method static AdminBuilder|Admin whereRememberToken($value)
+ * @method static AdminBuilder|Admin whereUpdatedAt($value)
  *
  * @mixin \Eloquent
  */

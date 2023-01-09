@@ -23,7 +23,7 @@ final class ProductCategoryTest extends TestCase
 
         $category->depth = $depth;
         $category->save();
-        $this->assertNotEquals($category->refresh()->depth, $depth);
+        $this->assertNotEquals($category->refresh()->getDepth(), $depth);
 
         $newCategory = ProductCategory::forceCreate(['title' => 'test', 'is_visible' => true, 'is_displayable' => true]);
         $newCategory->parent()->associate($category);

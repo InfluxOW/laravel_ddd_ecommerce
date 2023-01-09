@@ -9,7 +9,7 @@ use Illuminate\Filesystem\Filesystem;
 
 final class AnonymousMigrationFactory extends MigrationFactory
 {
-    public function __construct(private Filesystem $files)
+    public function __construct(private readonly Filesystem $files)
     {
     }
 

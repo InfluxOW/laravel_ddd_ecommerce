@@ -32,9 +32,6 @@ abstract class AdminTestCase extends TestCase
 
     /**
      * @param class-string<Page>|null $page
-     * @param array                   $parameters
-     *
-     * @return TestableLivewire
      */
     protected function getResourceActionUrl(?string $page, array $parameters = []): TestableLivewire
     {

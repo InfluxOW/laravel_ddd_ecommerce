@@ -21,6 +21,7 @@ use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Tabs;
+use Filament\Forms\Components\Tabs\Tab;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Pages\Page;
@@ -83,9 +84,9 @@ final class ProductCategoryResource extends Resource
 
                                         if ($livewire instanceof RelationManager && $record === null) {
                                             /** @var ProductCategory $category */
-                                            $category = $livewire->ownerRecord;
+                                            $category = $livewire->getOwnerRecord();
                                             $path = $category->path;
-                                            $depth = $category->depth;
+                                            $depth = $category->getDepth();
                                         }
 
                                         $path = match (true) {
@@ -114,7 +115,7 @@ final class ProductCategoryResource extends Resource
                         Select::makeTranslated(ProductCategoryTranslationKey::PARENT_ID)
                             ->relationship('parent', 'title')
                             ->disabled()
-                            ->default(fn (Page|RelationManager $livewire): ?int => $livewire instanceof RelationManager ? $livewire->ownerRecord->getKey() : null)
+                            ->default(fn (Page|RelationManager $livewire): ?int => $livewire instanceof RelationManager ? $livewire->getOwnerRecord()->getKey() : null)
                             ->columnSpan(2),
                         MediaLibraryFileUpload::makeTranslated(ProductCategoryTranslationKey::IMAGES)
                             ->collection(ProductCategoryMediaCollectionKey::IMAGES->value)
@@ -132,12 +133,12 @@ final class ProductCategoryResource extends Resource
                             ->schema([
                                 TextInput::makeTranslated(ProductCategoryTranslationKey::DEPTH)
                                     ->disabled()
-                                    ->default(fn (Page|RelationManager $livewire): int => $livewire instanceof RelationManager && isset($livewire->ownerRecord->depth) ? $livewire->ownerRecord->depth + 1 : 0)
+                                    ->default(fn (Page|RelationManager $livewire): int => $livewire instanceof RelationManager && isset($livewire->getOwnerRecord()->depth) ? $livewire->getOwnerRecord()->depth + 1 : 0)
                                     ->lte((string) ProductCategory::MAX_DEPTH, true)
                                     ->columnSpan(2),
                                 TextInput::makeTranslated(ProductCategoryTranslationKey::PATH)
                                     ->disabled()
-                                    ->default(fn (Page|RelationManager $livewire): ?string => $livewire instanceof RelationManager && isset($livewire->ownerRecord->path) ? $livewire->ownerRecord->path : null)
+                                    ->default(fn (Page|RelationManager $livewire): ?string => $livewire instanceof RelationManager && isset($livewire->getOwnerRecord()->path) ? $livewire->getOwnerRecord()->path : null)
                                     ->columnSpan(8),
                             ])
                             ->columns(10)
@@ -163,14 +164,14 @@ final class ProductCategoryResource extends Resource
                     ->columns(3)
                     ->columnSpan(2)
                     ->tabs([
-                        Tabs\Tab::make($mainTabTitle)
+                        Tab::make($mainTabTitle)
                             ->columns(3)
                             ->schema([
                                 Grid::make()
                                     ->schema($form->getSchema())
                                     ->columnSpan(3),
                             ]),
-                        Tabs\Tab::make($statisticsTabTitle)
+                        Tab::make($statisticsTabTitle)
                             ->schema([
                                 Grid::make()
                                     ->schema([

@@ -10,7 +10,7 @@ final class ProductCategoryObserver
     {
         $result = ($category->parent_id === null) ? true : $category->parent?->depth + 1 <= ProductCategory::MAX_DEPTH;
 
-        return $result && $category->depth <= ProductCategory::MAX_DEPTH;
+        return $result && $category->getDepth() <= ProductCategory::MAX_DEPTH;
     }
 
     public function saved(ProductCategory $category): void

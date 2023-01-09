@@ -440,7 +440,7 @@ final class ProductControllerTest extends TestCase
             /** @var Carbon $date */
             $date = Carbon::createFromDefaultFormat($product['created_at']);
 
-            return (int) $date->timestamp;
+            return $date->getTimestamp();
         };
         $priceSort = static fn (array $product): int => $product['price_discounted']['amount'] ?? $product['price']['amount'];
 

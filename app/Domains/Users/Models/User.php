@@ -15,12 +15,16 @@ use App\Domains\Users\Database\Factories\UserFactory;
 use App\Domains\Users\Jobs\Export\UsersExportJob;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\DatabaseNotification;
+use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Laravel\Sanctum\PersonalAccessToken;
 
 /**
  * App\Domains\Users\Models\User
@@ -35,37 +39,37 @@ use Laravel\Sanctum\HasApiTokens;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  *
- * @property-read \Illuminate\Database\Eloquent\Collection|Address[]                                                        $addresses
- * @property-read int|null                                                                                                  $addresses_count
- * @property-read \Illuminate\Database\Eloquent\Collection|Cart[]                                                           $carts
- * @property-read int|null                                                                                                  $carts_count
- * @property-read \Illuminate\Database\Eloquent\Collection|ConfirmationToken[]                                              $confirmationTokens
- * @property-read int|null                                                                                                  $confirmation_tokens_count
- * @property-read \Illuminate\Database\Eloquent\Collection|Feedback[]                                                       $feedback
- * @property-read int|null                                                                                                  $feedback_count
- * @property-read bool                                                                                                      $has_verified_email
- * @property-read \Carbon\Carbon|null                                                                                       $last_logged_in_at
- * @property-read \Illuminate\Database\Eloquent\Collection|LoginHistory[]                                                   $loginHistory
- * @property-read int|null                                                                                                  $login_history_count
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
- * @property-read int|null                                                                                                  $notifications_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Sanctum\PersonalAccessToken[]                           $tokens
- * @property-read int|null                                                                                                  $tokens_count
+ * @property-read Collection|Address[]                                  $addresses
+ * @property-read int|null                                              $addresses_count
+ * @property-read Collection|Cart[]                                     $carts
+ * @property-read int|null                                              $carts_count
+ * @property-read Collection|ConfirmationToken[]                        $confirmationTokens
+ * @property-read int|null                                              $confirmation_tokens_count
+ * @property-read Collection|Feedback[]                                 $feedback
+ * @property-read int|null                                              $feedback_count
+ * @property-read bool                                                  $has_verified_email
+ * @property-read Carbon|null                                           $last_logged_in_at
+ * @property-read Collection|LoginHistory[]                             $loginHistory
+ * @property-read int|null                                              $login_history_count
+ * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
+ * @property-read int|null                                              $notifications_count
+ * @property-read Collection|PersonalAccessToken[]                      $tokens
+ * @property-read int|null                                              $tokens_count
  *
- * @method static \App\Domains\Users\Database\Factories\UserFactory factory(...$parameters)
- * @method static UserBuilder|User                                  newModelQuery()
- * @method static UserBuilder|User                                  newQuery()
- * @method static UserBuilder|User                                  query()
- * @method static UserBuilder|User                                  search(string $searchable, bool $orderByScore)
- * @method static UserBuilder|User                                  whereCreatedAt($value)
- * @method static UserBuilder|User                                  whereEmail($value)
- * @method static UserBuilder|User                                  whereEmailVerifiedAt($value)
- * @method static UserBuilder|User                                  whereId($value)
- * @method static UserBuilder|User                                  whereName($value)
- * @method static UserBuilder|User                                  wherePassword($value)
- * @method static UserBuilder|User                                  wherePhone($value)
- * @method static UserBuilder|User                                  whereRememberToken($value)
- * @method static UserBuilder|User                                  whereUpdatedAt($value)
+ * @method static UserFactory      factory(...$parameters)
+ * @method static UserBuilder|User newModelQuery()
+ * @method static UserBuilder|User newQuery()
+ * @method static UserBuilder|User query()
+ * @method static UserBuilder|User search(string $searchable, bool $orderByScore)
+ * @method static UserBuilder|User whereCreatedAt($value)
+ * @method static UserBuilder|User whereEmail($value)
+ * @method static UserBuilder|User whereEmailVerifiedAt($value)
+ * @method static UserBuilder|User whereId($value)
+ * @method static UserBuilder|User whereName($value)
+ * @method static UserBuilder|User wherePassword($value)
+ * @method static UserBuilder|User wherePhone($value)
+ * @method static UserBuilder|User whereRememberToken($value)
+ * @method static UserBuilder|User whereUpdatedAt($value)
  *
  * @mixin \Eloquent
  */

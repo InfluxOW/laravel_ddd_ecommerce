@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "eaa1e4681251a469cf86fb96be0099e7",
+    "content-hash": "1ee0d7d27426096e389ae1a2d51d6dfa",
     "packages": [
         {
             "name": "akaunting/laravel-money",
@@ -15652,6 +15652,55 @@
             "time": "2022-02-04T12:51:07+00:00"
         },
         {
+            "name": "driftingly/rector-laravel",
+            "version": "0.14.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/driftingly/rector-laravel.git",
+                "reference": "60c69b4adb4404260707dbe8e9dddb0546f6564c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/driftingly/rector-laravel/zipball/60c69b4adb4404260707dbe8e9dddb0546f6564c",
+                "reference": "60c69b4adb4404260707dbe8e9dddb0546f6564c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1"
+            },
+            "require-dev": {
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan": "^1.8.2",
+                "phpstan/phpstan-strict-rules": "^1.2",
+                "phpstan/phpstan-webmozart-assert": "^1.1",
+                "phpunit/phpunit": "^9.5",
+                "rector/phpstan-rules": "^0.6",
+                "rector/rector": "^0.14.7",
+                "rector/rector-debugging": "dev-main",
+                "symplify/easy-coding-standard": "^11.0",
+                "symplify/phpstan-extensions": "^11.0",
+                "symplify/phpstan-rules": "^11.0",
+                "symplify/rule-doc-generator": "^11.0",
+                "symplify/vendor-patches": "^11.0"
+            },
+            "type": "rector-extension",
+            "autoload": {
+                "psr-4": {
+                    "RectorLaravel\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Rector upgrades rules for Laravel Framework",
+            "support": {
+                "issues": "https://github.com/driftingly/rector-laravel/issues",
+                "source": "https://github.com/driftingly/rector-laravel/tree/0.14.2"
+            },
+            "time": "2023-01-06T19:34:12+00:00"
+        },
+        {
             "name": "ergebnis/composer-normalize",
             "version": "2.29.0",
             "source": {
@@ -17680,6 +17729,62 @@
                 "source": "https://github.com/qossmic/deptrac-shim/tree/1.0.2"
             },
             "time": "2022-12-02T11:47:53+00:00"
+        },
+        {
+            "name": "rector/rector",
+            "version": "0.15.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rectorphp/rector.git",
+                "reference": "3f15e3a2412d3dd4803905bdad35fbee84a2953c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rectorphp/rector/zipball/3f15e3a2412d3dd4803905bdad35fbee84a2953c",
+                "reference": "3f15e3a2412d3dd4803905bdad35fbee84a2953c",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2|^8.0",
+                "phpstan/phpstan": "^1.9.7"
+            },
+            "conflict": {
+                "rector/rector-doctrine": "*",
+                "rector/rector-downgrade-php": "*",
+                "rector/rector-php-parser": "*",
+                "rector/rector-phpunit": "*",
+                "rector/rector-symfony": "*"
+            },
+            "bin": [
+                "bin/rector"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "0.14-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Instant Upgrade and Automated Refactoring of any PHP code",
+            "support": {
+                "issues": "https://github.com/rectorphp/rector/issues",
+                "source": "https://github.com/rectorphp/rector/tree/0.15.3"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/tomasvotruba",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-01-08T16:14:58+00:00"
         },
         {
             "name": "roave/security-advisories",

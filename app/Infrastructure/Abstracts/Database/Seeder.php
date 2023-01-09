@@ -89,8 +89,6 @@ abstract class Seeder extends BaseSeeder
 
     /**
      * @param int[] $relatedIds
-     *
-     * @return array
      */
     private function getBelongsToManyRows(BelongsToMany $relation, int $foreignId, array $relatedIds): array
     {

@@ -10,7 +10,7 @@ use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
 final class ExportColumn
 {
-    private function __construct(private BackedEnum $key, private string $format)
+    private function __construct(private readonly BackedEnum $key, private readonly string $format)
     {
     }
 

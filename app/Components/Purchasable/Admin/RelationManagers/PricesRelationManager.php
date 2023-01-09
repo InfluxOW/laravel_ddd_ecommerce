@@ -25,7 +25,7 @@ final class PricesRelationManager extends RelationManager
                     ->required()
                     ->reactive()
                     ->options(function (RelationManager $livewire) use ($availableCurrencies): array {
-                        $currencies = $availableCurrencies->filter(fn (string $currency): bool => isset($livewire->ownerRecord->prices) && $livewire->ownerRecord->prices->pluck('currency')->doesntContain($currency));
+                        $currencies = $availableCurrencies->filter(fn (string $currency): bool => isset($livewire->getOwnerRecord()->prices) && $livewire->getOwnerRecord()->prices->pluck('currency')->doesntContain($currency));
 
                         return $currencies->combine($currencies)->toArray();
                     })

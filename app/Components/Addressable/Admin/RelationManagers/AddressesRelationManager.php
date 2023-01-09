@@ -37,7 +37,7 @@ final class AddressesRelationManager extends RelationManager
                     ->reactive()
                     ->columnSpan(1),
                 Select::makeTranslated(AddressesTranslationKey::REGION)
-                    ->id(fn (callable $get, self $livewire) => sprintf('%s|%s|%s', $livewire->ownerRecord->getKey(), $get(AddressesTranslationKey::COUNTRY->value), $get(AddressesTranslationKey::REGION->value)))
+                    ->id(fn (callable $get, self $livewire) => sprintf('%s|%s|%s', $livewire->getOwnerRecord()->getKey(), $get(AddressesTranslationKey::COUNTRY->value), $get(AddressesTranslationKey::REGION->value)))
                     ->disabled(fn (callable $get): bool => $get(AddressesTranslationKey::COUNTRY->value) === null)
                     ->searchable()
                     ->options(fn (callable $get): array => Region::query()->where('country_id', $get(AddressesTranslationKey::COUNTRY->value))->pluck('name', 'id')->toArray())

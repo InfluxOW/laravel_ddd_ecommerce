@@ -6,30 +6,31 @@ use App\Components\LoginHistoryable\Database\Builders\LoginHistoryBuilder;
 use App\Domains\Common\Traits\Models\HasExtendedFunctionality;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Carbon;
 use MStaack\LaravelPostgis\Eloquent\PostgisTrait;
 use MStaack\LaravelPostgis\Geometries\Point;
 
 /**
  * App\Components\LoginHistoryable\Models\LoginHistory
  *
- * @property int                                           $id
- * @property string                                        $login_historyable_type
- * @property int                                           $login_historyable_id
- * @property string|null                                   $ip
- * @property string|null                                   $user_agent
- * @property string|null                                   $device
- * @property string|null                                   $platform
- * @property string|null                                   $platform_version
- * @property string|null                                   $browser
- * @property string|null                                   $browser_version
- * @property string|null                                   $region_code
- * @property string|null                                   $region_name
- * @property string|null                                   $country_code
- * @property string|null                                   $country_name
- * @property string|null                                   $city
- * @property \MStaack\LaravelPostgis\Geometries\Point|null $location
- * @property string|null                                   $zip
- * @property \Illuminate\Support\Carbon|null               $created_at
+ * @property int         $id
+ * @property string      $login_historyable_type
+ * @property int         $login_historyable_id
+ * @property string|null $ip
+ * @property string|null $user_agent
+ * @property string|null $device
+ * @property string|null $platform
+ * @property string|null $platform_version
+ * @property string|null $browser
+ * @property string|null $browser_version
+ * @property string|null $region_code
+ * @property string|null $region_name
+ * @property string|null $country_code
+ * @property string|null $country_name
+ * @property string|null $city
+ * @property Point|null  $location
+ * @property string|null $zip
+ * @property Carbon|null $created_at
  *
  * @property-read Model|\Eloquent $loginHistoryable
  *

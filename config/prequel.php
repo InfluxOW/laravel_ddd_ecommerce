@@ -1,5 +1,7 @@
 <?php
 
+use Protoqol\Prequel\Http\Middleware\Authorised;
+
 $dbConnection = config('database.default');
 $dbHost = config("database.connections.{$dbConnection}.host");
 $dbPort = config("database.connections.{$dbConnection}.port");
@@ -124,6 +126,6 @@ return [
     'middleware' => [
         'web',
         'auth:admin',
-        Protoqol\Prequel\Http\Middleware\Authorised::class,
+        Authorised::class,
     ],
 ];

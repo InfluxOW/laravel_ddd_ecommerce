@@ -2,31 +2,33 @@
 
 namespace App\Domains\Cart\Models;
 
+use Akaunting\Money\Money;
 use App\Components\Purchasable\Casts\MoneyCast;
 use App\Domains\Cart\Database\Builders\CartItemBuilder;
 use App\Domains\Common\Traits\Models\HasExtendedFunctionality;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Domains\Cart\Models\CartItem
  *
- * @property int                             $id
- * @property int                             $cart_id
- * @property int                             $quantity
- * @property \Akaunting\Money\Money          $price_item
- * @property \Akaunting\Money\Money          $price_item_discounted
- * @property \Akaunting\Money\Money          $price_total
- * @property \Akaunting\Money\Money          $price_total_discounted
- * @property string                          $purchasable_type
- * @property int                             $purchasable_id
- * @property array                           $purchasable_data
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int         $id
+ * @property int         $cart_id
+ * @property int         $quantity
+ * @property Money       $price_item
+ * @property Money       $price_item_discounted
+ * @property Money       $price_total
+ * @property Money       $price_total_discounted
+ * @property string      $purchasable_type
+ * @property int         $purchasable_id
+ * @property array       $purchasable_data
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  *
- * @property-read \App\Domains\Cart\Models\Cart $cart
- * @property-read string                        $currency
- * @property-read Model|\Eloquent               $purchasable
+ * @property-read Cart            $cart
+ * @property-read string          $currency
+ * @property-read Model|\Eloquent $purchasable
  *
  * @method static CartItemBuilder|CartItem newModelQuery()
  * @method static CartItemBuilder|CartItem newQuery()

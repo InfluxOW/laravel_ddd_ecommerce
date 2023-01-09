@@ -21,8 +21,6 @@ test:
 test-coverage:
 	php -d pcov.enabled=1 artisan test --parallel --coverage-clover=storage/logs/clover.xml --coverage-xml=storage/logs/coverage-xml --log-junit=storage/logs/junit.xml
 
-deptrac:
-	composer exec deptrac
 insights:
 	php artisan insights app --summary
 insights-fix:
@@ -31,8 +29,14 @@ lint:
 	composer exec phpcs --verbose && composer exec pint -- --test 2>/dev/null && composer validate --strict && composer normalize --dry-run
 lint-fix:
 	composer exec phpcbf --verbose; composer exec pint 2>/dev/null; composer normalize
+rector:
+	composer exec rector process -- --dry-run
+rector-fix:
+	composer exec rector process
 analyse:
 	composer exec phpstan analyse --verbose -- --memory-limit=-1 2>/dev/null
+deptrac:
+	composer exec deptrac
 
 seed:
 	php artisan db:seed --class=App\\Domains\\Common\\Database\\Seeders\\DatabaseSeeder

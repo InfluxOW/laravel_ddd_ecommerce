@@ -124,8 +124,6 @@ abstract class TestCase extends BaseTestCase
 
     /**
      * @param class-string<Model> $class
-     *
-     * @return void
      */
     protected function refreshModelIndex(string $class): void
     {

@@ -45,8 +45,8 @@ final class RangeFilter extends Filter
             [$max, $min] = [$min, $max];
         }
 
-        $min = $min ?? $this->min;
-        $max = $max ?? $this->max;
+        $min ??= $this->min;
+        $max ??= $this->max;
 
         $filter = clone $this;
 

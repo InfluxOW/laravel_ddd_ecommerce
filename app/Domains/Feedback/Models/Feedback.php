@@ -29,22 +29,22 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  *
  * @property-read User|null $user
  *
- * @method static \App\Domains\Feedback\Database\Factories\FeedbackFactory factory(...$parameters)
- * @method static FeedbackBuilder|Feedback                                 forUser(?string $ip, ?\App\Domains\Users\Models\User $user)
- * @method static FeedbackBuilder|Feedback                                 inLastHour()
- * @method static FeedbackBuilder|Feedback                                 newModelQuery()
- * @method static FeedbackBuilder|Feedback                                 newQuery()
- * @method static FeedbackBuilder|Feedback                                 query()
- * @method static FeedbackBuilder|Feedback                                 search(string $searchable, bool $orderByScore)
- * @method static FeedbackBuilder|Feedback                                 whereCreatedAt($value)
- * @method static FeedbackBuilder|Feedback                                 whereEmail($value)
- * @method static FeedbackBuilder|Feedback                                 whereId($value)
- * @method static FeedbackBuilder|Feedback                                 whereIp($value)
- * @method static FeedbackBuilder|Feedback                                 whereIsReviewed($value)
- * @method static FeedbackBuilder|Feedback                                 wherePhone($value)
- * @method static FeedbackBuilder|Feedback                                 whereText($value)
- * @method static FeedbackBuilder|Feedback                                 whereUserId($value)
- * @method static FeedbackBuilder|Feedback                                 whereUsername($value)
+ * @method static FeedbackFactory          factory(...$parameters)
+ * @method static FeedbackBuilder|Feedback forUser(?string $ip, ?User $user)
+ * @method static FeedbackBuilder|Feedback inLastHour()
+ * @method static FeedbackBuilder|Feedback newModelQuery()
+ * @method static FeedbackBuilder|Feedback newQuery()
+ * @method static FeedbackBuilder|Feedback query()
+ * @method static FeedbackBuilder|Feedback search(string $searchable, bool $orderByScore)
+ * @method static FeedbackBuilder|Feedback whereCreatedAt($value)
+ * @method static FeedbackBuilder|Feedback whereEmail($value)
+ * @method static FeedbackBuilder|Feedback whereId($value)
+ * @method static FeedbackBuilder|Feedback whereIp($value)
+ * @method static FeedbackBuilder|Feedback whereIsReviewed($value)
+ * @method static FeedbackBuilder|Feedback wherePhone($value)
+ * @method static FeedbackBuilder|Feedback whereText($value)
+ * @method static FeedbackBuilder|Feedback whereUserId($value)
+ * @method static FeedbackBuilder|Feedback whereUsername($value)
  *
  * @mixin \Eloquent
  */

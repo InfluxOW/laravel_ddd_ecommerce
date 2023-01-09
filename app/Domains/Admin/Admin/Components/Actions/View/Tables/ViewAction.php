@@ -16,6 +16,6 @@ final class ViewAction extends BaseViewAction
 
     public static function create(): self
     {
-        return self::baseCreate()->visible(fn (Model $record, Page|RelationManager $livewire): bool => $livewire instanceof Page ? $livewire::getResource()::canView($record) : $livewire::canViewForRecord($livewire->ownerRecord));
+        return self::baseCreate()->visible(fn (Model $record, Page|RelationManager $livewire): bool => $livewire instanceof Page ? $livewire::getResource()::canView($record) : $livewire::canViewForRecord($livewire->getOwnerRecord()));
     }
 }

@@ -40,7 +40,7 @@ final class ProductCategoryChildrenRelationManager extends RelationManager
         /** @var ProductCategory $category */
         $category = $this->ownerRecord;
 
-        return parent::canCreate() && $category->depth < ProductCategory::MAX_DEPTH;
+        return parent::canCreate() && $category->getDepth() < ProductCategory::MAX_DEPTH;
     }
 
     /**

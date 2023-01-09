@@ -9,7 +9,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 
 final class EmailVerificationNotification extends EmailNotification
 {
-    public function __construct(private ConfirmationToken $token)
+    public function __construct(private readonly ConfirmationToken $token)
     {
         parent::__construct();
     }

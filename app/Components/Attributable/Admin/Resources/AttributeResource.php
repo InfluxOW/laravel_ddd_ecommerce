@@ -2,6 +2,10 @@
 
 namespace App\Components\Attributable\Admin\Resources;
 
+use App\Components\Attributable\Admin\Resources\AttributeResource\Pages\CreateAttribute;
+use App\Components\Attributable\Admin\Resources\AttributeResource\Pages\EditAttribute;
+use App\Components\Attributable\Admin\Resources\AttributeResource\Pages\ListAttributes;
+use App\Components\Attributable\Admin\Resources\AttributeResource\Pages\ViewAttribute;
 use App\Components\Attributable\Enums\AttributeValuesType;
 use App\Components\Attributable\Enums\Translation\AttributeTranslationKey;
 use App\Components\Attributable\Models\Attribute;
@@ -99,10 +103,10 @@ final class AttributeResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => \App\Components\Attributable\Admin\Resources\AttributeResource\Pages\ListAttributes::route('/'),
-            'create' => \App\Components\Attributable\Admin\Resources\AttributeResource\Pages\CreateAttribute::route('/create'),
-            'edit' => \App\Components\Attributable\Admin\Resources\AttributeResource\Pages\EditAttribute::route('/{record}/edit'),
-            'view' => \App\Components\Attributable\Admin\Resources\AttributeResource\Pages\ViewAttribute::route('/{record}'),
+            'index' => ListAttributes::route('/'),
+            'create' => CreateAttribute::route('/create'),
+            'edit' => EditAttribute::route('/{record}/edit'),
+            'view' => ViewAttribute::route('/{record}'),
         ];
     }
 

@@ -4,6 +4,7 @@ namespace App\Domains\Catalog\Models;
 
 use Akaunting\Money\Money;
 use App\Components\Attributable\Models\AttributeValue;
+use App\Components\Mediable\Models\Media;
 use App\Components\Purchasable\Abstracts\Purchasable;
 use App\Components\Purchasable\Models\Price;
 use App\Domains\Catalog\Database\Builders\ProductBuilder;
@@ -14,66 +15,69 @@ use App\Domains\Catalog\Models\Pivot\ProductProductCategory;
 use App\Domains\Common\Interfaces\Exportable;
 use App\Domains\Common\Traits\Models\HasExtendedFunctionality;
 use App\Domains\Common\Traits\Models\Searchable;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Support\Carbon;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 /**
  * App\Domains\Catalog\Models\Product
  *
- * @property int                             $id
- * @property string                          $title
- * @property string                          $slug
- * @property string                          $description
- * @property bool                            $is_visible
- * @property bool                            $is_displayable
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int         $id
+ * @property string      $title
+ * @property string      $slug
+ * @property string      $description
+ * @property bool        $is_visible
+ * @property bool        $is_displayable
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  *
- * @property-read \Illuminate\Database\Eloquent\Collection|AttributeValue[]                                                        $attributeValues
- * @property-read int|null                                                                                                         $attribute_values_count
- * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|\App\Components\Mediable\Models\Media[] $baseMedia
- * @property-read int|null                                                                                                         $base_media_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Domains\Catalog\Models\ProductCategory[]                           $categories
- * @property-read int|null                                                                                                         $categories_count
- * @property-read string                                                                                                           $attribute_values_string
- * @property-read string                                                                                                           $categories_string
- * @property-read string                                                                                                           $prices_string
- * @property-read \App\Components\Mediable\Models\Media|null                                                                       $image
- * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|\App\Components\Mediable\Models\Media[] $images
- * @property-read int|null                                                                                                         $images_count
- * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|\App\Components\Mediable\Models\Media[] $media
- * @property-read int|null                                                                                                         $media_count
- * @property-read \Illuminate\Database\Eloquent\Collection|Price[]                                                                 $prices
- * @property-read int|null                                                                                                         $prices_count
+ * @property-read Collection|AttributeValue[]  $attributeValues
+ * @property-read int|null                     $attribute_values_count
+ * @property-read MediaCollection|Media[]      $baseMedia
+ * @property-read int|null                     $base_media_count
+ * @property-read Collection|ProductCategory[] $categories
+ * @property-read int|null                     $categories_count
+ * @property-read string                       $attribute_values_string
+ * @property-read string                       $categories_string
+ * @property-read string                       $prices_string
+ * @property-read Media|null                   $image
+ * @property-read MediaCollection|Media[]      $images
+ * @property-read int|null                     $images_count
+ * @property-read MediaCollection|Media[]      $media
+ * @property-read int|null                     $media_count
+ * @property-read Collection|Price[]           $prices
+ * @property-read int|null                     $prices_count
  *
- * @method static ProductBuilder|Product                                 displayable()
- * @method static \App\Domains\Catalog\Database\Factories\ProductFactory factory(...$parameters)
- * @method static ProductBuilder|Product                                 newModelQuery()
- * @method static ProductBuilder|Product                                 newQuery()
- * @method static ProductBuilder|Product                                 orderByCurrentPrice(string $currency, bool $descending)
- * @method static ProductBuilder|Product                                 query()
- * @method static ProductBuilder|Product                                 search(string $searchable, bool $orderByScore)
- * @method static ProductBuilder|Product                                 whereCreatedAt($value)
- * @method static ProductBuilder|Product                                 whereDescription($value)
- * @method static ProductBuilder|Product                                 whereHasAttributeValue(array $attributesValuesByAttributeSlug)
- * @method static ProductBuilder|Product                                 whereHasPriceCurrency(string $currency)
- * @method static ProductBuilder|Product                                 whereId($value)
- * @method static ProductBuilder|Product                                 whereInCategory(\Illuminate\Support\Collection $categories)
- * @method static ProductBuilder|Product                                 whereIsDisplayable($value)
- * @method static ProductBuilder|Product                                 whereIsVisible($value)
- * @method static ProductBuilder|Product                                 wherePriceAbove(\Akaunting\Money\Money $price)
- * @method static ProductBuilder|Product                                 wherePriceBelow(\Akaunting\Money\Money $price)
- * @method static ProductBuilder|Product                                 wherePriceBetween(?\Akaunting\Money\Money $min, ?\Akaunting\Money\Money $max)
- * @method static ProductBuilder|Product                                 whereSlug($value)
- * @method static ProductBuilder|Product                                 whereTitle($value)
- * @method static ProductBuilder|Product                                 whereUpdatedAt($value)
+ * @method static ProductBuilder|Product displayable()
+ * @method static ProductFactory         factory(...$parameters)
+ * @method static ProductBuilder|Product newModelQuery()
+ * @method static ProductBuilder|Product newQuery()
+ * @method static ProductBuilder|Product orderByCurrentPrice(string $currency, bool $descending)
+ * @method static ProductBuilder|Product query()
+ * @method static ProductBuilder|Product search(string $searchable, bool $orderByScore)
+ * @method static ProductBuilder|Product whereCreatedAt($value)
+ * @method static ProductBuilder|Product whereDescription($value)
+ * @method static ProductBuilder|Product whereHasAttributeValue(array $attributesValuesByAttributeSlug)
+ * @method static ProductBuilder|Product whereHasPriceCurrency(string $currency)
+ * @method static ProductBuilder|Product whereId($value)
+ * @method static ProductBuilder|Product whereInCategory(\Illuminate\Support\Collection $categories)
+ * @method static ProductBuilder|Product whereIsDisplayable($value)
+ * @method static ProductBuilder|Product whereIsVisible($value)
+ * @method static ProductBuilder|Product wherePriceAbove(Money $price)
+ * @method static ProductBuilder|Product wherePriceBelow(Money $price)
+ * @method static ProductBuilder|Product wherePriceBetween(?Money $min, ?Money $max)
+ * @method static ProductBuilder|Product whereSlug($value)
+ * @method static ProductBuilder|Product whereTitle($value)
+ * @method static ProductBuilder|Product whereUpdatedAt($value)
  *
  * @mixin \Eloquent
  */

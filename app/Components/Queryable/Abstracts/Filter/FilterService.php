@@ -14,12 +14,12 @@ abstract class FilterService
     /**
      * @var Collection<Filter>
      */
-    private Collection $allowed;
+    private readonly Collection $allowed;
 
     /**
      * @var Collection<AllowedFilter>
      */
-    private Collection $callbacks;
+    private readonly Collection $callbacks;
 
     private UnitEnum&IAllowedFilterEnum $searchFilter;
 

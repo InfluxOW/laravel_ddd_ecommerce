@@ -11,41 +11,42 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Components\Attributable\Models\AttributeValue
  *
- * @property int                             $id
- * @property string                          $attributable_type
- * @property int                             $attributable_id
- * @property int                             $attribute_id
- * @property string|null                     $value_string
- * @property int|null                        $value_integer
- * @property bool|null                       $value_boolean
- * @property float|null                      $value_float
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int         $id
+ * @property string      $attributable_type
+ * @property int         $attributable_id
+ * @property int         $attribute_id
+ * @property string|null $value_string
+ * @property int|null    $value_integer
+ * @property bool|null   $value_boolean
+ * @property float|null  $value_float
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  *
- * @property-read Model|\Eloquent                               $attributable
- * @property-read \App\Components\Attributable\Models\Attribute $attribute
- * @property-read string                                        $readable_value
+ * @property-read Model|\Eloquent $attributable
+ * @property-read Attribute       $attribute
+ * @property-read string          $readable_value
  *
  * @property string|int|float|bool $value
  *
- * @method static \App\Components\Attributable\Database\Factories\AttributeValueFactory factory(...$parameters)
- * @method static AttributeValueBuilder|AttributeValue                                  newModelQuery()
- * @method static AttributeValueBuilder|AttributeValue                                  newQuery()
- * @method static AttributeValueBuilder|AttributeValue                                  query()
- * @method static AttributeValueBuilder|AttributeValue                                  whereAttributableId($value)
- * @method static AttributeValueBuilder|AttributeValue                                  whereAttributableType($value)
- * @method static AttributeValueBuilder|AttributeValue                                  whereAttributeId($value)
- * @method static AttributeValueBuilder|AttributeValue                                  whereCreatedAt($value)
- * @method static AttributeValueBuilder|AttributeValue                                  whereId($value)
- * @method static AttributeValueBuilder|AttributeValue                                  whereUpdatedAt($value)
- * @method static AttributeValueBuilder|AttributeValue                                  whereValueBoolean($value)
- * @method static AttributeValueBuilder|AttributeValue                                  whereValueFloat($value)
- * @method static AttributeValueBuilder|AttributeValue                                  whereValueInteger($value)
- * @method static AttributeValueBuilder|AttributeValue                                  whereValueString($value)
+ * @method static AttributeValueFactory                factory(...$parameters)
+ * @method static AttributeValueBuilder|AttributeValue newModelQuery()
+ * @method static AttributeValueBuilder|AttributeValue newQuery()
+ * @method static AttributeValueBuilder|AttributeValue query()
+ * @method static AttributeValueBuilder|AttributeValue whereAttributableId($value)
+ * @method static AttributeValueBuilder|AttributeValue whereAttributableType($value)
+ * @method static AttributeValueBuilder|AttributeValue whereAttributeId($value)
+ * @method static AttributeValueBuilder|AttributeValue whereCreatedAt($value)
+ * @method static AttributeValueBuilder|AttributeValue whereId($value)
+ * @method static AttributeValueBuilder|AttributeValue whereUpdatedAt($value)
+ * @method static AttributeValueBuilder|AttributeValue whereValueBoolean($value)
+ * @method static AttributeValueBuilder|AttributeValue whereValueFloat($value)
+ * @method static AttributeValueBuilder|AttributeValue whereValueInteger($value)
+ * @method static AttributeValueBuilder|AttributeValue whereValueString($value)
  *
  * @mixin \Eloquent
  */

@@ -24,12 +24,12 @@ final class AttributeValuesRelationManager extends RelationManager
             ->schema([
                 Select::makeTranslated(AttributeValueTranslationKey::ATTRIBUTE)
                     ->required()
-                    ->id(fn (RelationManager $livewire): ?string => isset($livewire->ownerRecord->attributeValues) ? $livewire->ownerRecord->attributeValues->pluck('attribute_id')->implode('|') : null)
+                    ->id(fn (RelationManager $livewire): ?string => isset($livewire->getOwnerRecord()->attributeValues) ? $livewire->getOwnerRecord()->attributeValues->pluck('attribute_id')->implode('|') : null)
                     ->relationship('attribute', 'title')
                     ->options(function (?AttributeValue $record, RelationManager $livewire): array {
-                        if (isset($livewire->ownerRecord->attributeValues) && $livewire->canCreate()) {
+                        if (isset($livewire->getOwnerRecord()->attributeValues) && $livewire->canCreate()) {
                             return Attribute::query()
-                                ->whereIntegerNotInRaw('id', $livewire->ownerRecord->attributeValues->pluck('attribute_id'))
+                                ->whereIntegerNotInRaw('id', $livewire->getOwnerRecord()->attributeValues->pluck('attribute_id'))
                                 ->orderBy('title')
                                 ->pluck('title', 'id')
                                 ->toArray();

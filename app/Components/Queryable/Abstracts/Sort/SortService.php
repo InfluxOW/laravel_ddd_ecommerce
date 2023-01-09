@@ -20,12 +20,12 @@ abstract class SortService
     /**
      * @var Collection<Sort>
      */
-    private Collection $allowed;
+    private readonly Collection $allowed;
 
     /**
      * @var Collection<AllowedSort>
      */
-    private Collection $callbacks;
+    private readonly Collection $callbacks;
 
     private UnitEnum&IAllowedSortEnum $defaultSort;
 

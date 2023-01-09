@@ -129,6 +129,13 @@ jobs:
                     key: deptrac-${{ github.sha }}
                     restore-keys: deptrac-
 
+            -   name: Cache Rector Analysis
+                uses: actions/cache@main
+                with:
+                    path: storage/rector/cache
+                    key: rector-${{ github.sha }}
+                    restore-keys: rector-
+
                 #########################
                 ###         CI        ###
                 #########################

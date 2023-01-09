@@ -198,7 +198,7 @@ final class ArticleControllerTest extends TestCase
             /** @var Carbon $date */
             $date = Carbon::createFromDefaultFormat($article['published_at']);
 
-            return (int) $date->timestamp;
+            return $date->getTimestamp();
         };
 
         return match ($sort) {

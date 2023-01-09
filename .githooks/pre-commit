@@ -41,6 +41,22 @@ fi
 FILES=$(git diff --name-only --diff-filter=ACMR HEAD | grep \\.php)
 
 if [ "$FILES" != "" ]; then
+	# Code Quality - Rector
+
+	echo "[PRE-COMMIT] Checking Rector..."
+
+	sail composer exec rector process -- --dry-run $FILES
+
+	if [ $? != 0 ]; then
+		echo "[PRE-COMMIT] Rector errors have been detected."
+		echo "[PRE-COMMIT] Running Rector fixer..."
+
+		sail composer exec rector process -- $FILES
+
+		echo "[PRE-COMMIT] All errors are fixed automatically."
+		git add $FILES
+	fi
+
     # Code Style - PHPCS
 
     echo "[PRE-COMMIT] Checking PHPCS..."

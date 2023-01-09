@@ -21,11 +21,13 @@ use App\Domains\Feedback\Admin\Resources\FeedbackResource;
 use App\Domains\News\Admin\Resources\ArticleResource;
 use App\Domains\Users\Admin\Components\Widgets\CustomersChartWidget;
 use App\Domains\Users\Admin\Resources\UserResource;
+use Filament\AvatarProviders\UiAvatarsProvider;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Http\Middleware\MirrorConfigToSubpackages;
-use Filament\Pages;
-use Filament\Widgets;
+use Filament\Pages\Dashboard;
+use Filament\Widgets\AccountWidget;
+use Filament\Widgets\FilamentInfoWidget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -124,7 +126,7 @@ return [
 
     'pages' => [
         'register' => [
-            Pages\Dashboard::class,
+            Dashboard::class,
             ManageCatalogSettings::class,
             ManageFeedbackSettings::class,
         ],
@@ -174,8 +176,8 @@ return [
 
     'widgets' => [
         'register' => [
-            Widgets\AccountWidget::class,
-            Widgets\FilamentInfoWidget::class,
+            AccountWidget::class,
+            FilamentInfoWidget::class,
             CustomersChartWidget::class,
         ],
     ],
@@ -249,7 +251,7 @@ return [
     |
     */
 
-    'default_avatar_provider' => \Filament\AvatarProviders\UiAvatarsProvider::class,
+    'default_avatar_provider' => UiAvatarsProvider::class,
 
     /*
     |--------------------------------------------------------------------------

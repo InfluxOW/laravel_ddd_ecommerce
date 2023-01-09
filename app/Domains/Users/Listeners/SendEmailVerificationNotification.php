@@ -17,7 +17,7 @@ final class SendEmailVerificationNotification implements ShouldQueue
 {
     use InteractsWithQueue;
 
-    public function __construct(private ConfirmationTokenRepository $repository)
+    public function __construct(private readonly ConfirmationTokenRepository $repository)
     {
         //
     }

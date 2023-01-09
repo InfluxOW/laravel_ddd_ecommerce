@@ -2,6 +2,7 @@
 
 namespace App\Domains\Catalog\Models;
 
+use App\Components\Mediable\Models\Media;
 use App\Domains\Catalog\Database\Builders\ProductCategoryBuilder;
 use App\Domains\Catalog\Database\Factories\ProductCategoryFactory;
 use App\Domains\Catalog\Enums\Media\ProductCategoryMediaCollectionKey;
@@ -18,70 +19,72 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Redis;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 /**
  * App\Domains\Catalog\Models\ProductCategory
  *
- * @property int                             $id
- * @property string                          $title
- * @property string                          $slug
- * @property string|null                     $description
- * @property bool                            $is_visible
- * @property bool                            $is_displayable
- * @property int|null                        $parent_id
- * @property int                             $left
- * @property int                             $right
- * @property int|null                        $depth
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int         $id
+ * @property string      $title
+ * @property string      $slug
+ * @property string|null $description
+ * @property bool        $is_visible
+ * @property bool        $is_displayable
+ * @property int|null    $parent_id
+ * @property int         $left
+ * @property int         $right
+ * @property int|null    $depth
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  *
- * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|\App\Components\Mediable\Models\Media[] $baseMedia
- * @property-read int|null                                                                                                         $base_media_count
- * @property-read \Illuminate\Database\Eloquent\Collection|ProductCategory[]                                                       $children
- * @property-read int|null                                                                                                         $children_count
- * @property-read int                                                                                                              $overall_products_count
- * @property-read string                                                                                                           $path
- * @property-read int|null                                                                                                         $products_count
- * @property-read string                                                                                                           $products_string
- * @property-read \App\Components\Mediable\Models\Media|null                                                                       $image
- * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|\App\Components\Mediable\Models\Media[] $images
- * @property-read int|null                                                                                                         $images_count
- * @property-read \Illuminate\Database\Eloquent\Collection|ProductCategory[]                                                       $immediateDescendants
- * @property-read int|null                                                                                                         $immediate_descendants_count
- * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|\App\Components\Mediable\Models\Media[] $media
- * @property-read int|null                                                                                                         $media_count
- * @property-read ProductCategory|null                                                                                             $parent
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Domains\Catalog\Models\Product[]                                   $products
+ * @property-read MediaCollection|Media[]                                    $baseMedia
+ * @property-read int|null                                                   $base_media_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|ProductCategory[] $children
+ * @property-read int|null                                                   $children_count
+ * @property-read int                                                        $overall_products_count
+ * @property-read string                                                     $path
+ * @property-read int|null                                                   $products_count
+ * @property-read string                                                     $products_string
+ * @property-read Media|null                                                 $image
+ * @property-read MediaCollection|Media[]                                    $images
+ * @property-read int|null                                                   $images_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|ProductCategory[] $immediateDescendants
+ * @property-read int|null                                                   $immediate_descendants_count
+ * @property-read MediaCollection|Media[]                                    $media
+ * @property-read int|null                                                   $media_count
+ * @property-read ProductCategory|null                                       $parent
+ * @property-read \Illuminate\Database\Eloquent\Collection|Product[]         $products
  *
- * @method static ProductCategoryBuilder|ProductCategory                         displayable()
- * @method static \App\Domains\Catalog\Database\Factories\ProductCategoryFactory factory(...$parameters)
- * @method static ProductCategoryBuilder|ProductCategory                         hasLimitedDepth()
- * @method static ProductCategoryBuilder|ProductCategory                         limitDepth($limit)
- * @method static ProductCategoryBuilder|ProductCategory                         newModelQuery()
- * @method static ProductCategoryBuilder|ProductCategory                         newQuery()
- * @method static ProductCategoryBuilder|ProductCategory                         query()
- * @method static ProductCategoryBuilder|ProductCategory                         search(string $searchable, bool $orderByScore)
- * @method static ProductCategoryBuilder|ProductCategory                         whereCreatedAt($value)
- * @method static ProductCategoryBuilder|ProductCategory                         whereDepth($value)
- * @method static ProductCategoryBuilder|ProductCategory                         whereDescription($value)
- * @method static ProductCategoryBuilder|ProductCategory                         whereId($value)
- * @method static ProductCategoryBuilder|ProductCategory                         whereIsDisplayable($value)
- * @method static ProductCategoryBuilder|ProductCategory                         whereIsVisible($value)
- * @method static ProductCategoryBuilder|ProductCategory                         whereLeft($value)
- * @method static ProductCategoryBuilder|ProductCategory                         whereParentId($value)
- * @method static ProductCategoryBuilder|ProductCategory                         whereRight($value)
- * @method static ProductCategoryBuilder|ProductCategory                         whereSlug($value)
- * @method static ProductCategoryBuilder|ProductCategory                         whereTitle($value)
- * @method static ProductCategoryBuilder|ProductCategory                         whereUpdatedAt($value)
- * @method static ProductCategoryBuilder|ProductCategory                         withoutNode($node)
- * @method static ProductCategoryBuilder|ProductCategory                         withoutRoot()
- * @method static ProductCategoryBuilder|ProductCategory                         withoutSelf()
+ * @method static ProductCategoryBuilder|ProductCategory displayable()
+ * @method static ProductCategoryFactory                 factory(...$parameters)
+ * @method static ProductCategoryBuilder|ProductCategory hasLimitedDepth()
+ * @method static ProductCategoryBuilder|ProductCategory limitDepth($limit)
+ * @method static ProductCategoryBuilder|ProductCategory newModelQuery()
+ * @method static ProductCategoryBuilder|ProductCategory newQuery()
+ * @method static ProductCategoryBuilder|ProductCategory query()
+ * @method static ProductCategoryBuilder|ProductCategory search(string $searchable, bool $orderByScore)
+ * @method static ProductCategoryBuilder|ProductCategory whereCreatedAt($value)
+ * @method static ProductCategoryBuilder|ProductCategory whereDepth($value)
+ * @method static ProductCategoryBuilder|ProductCategory whereDescription($value)
+ * @method static ProductCategoryBuilder|ProductCategory whereId($value)
+ * @method static ProductCategoryBuilder|ProductCategory whereIsDisplayable($value)
+ * @method static ProductCategoryBuilder|ProductCategory whereIsVisible($value)
+ * @method static ProductCategoryBuilder|ProductCategory whereLeft($value)
+ * @method static ProductCategoryBuilder|ProductCategory whereParentId($value)
+ * @method static ProductCategoryBuilder|ProductCategory whereRight($value)
+ * @method static ProductCategoryBuilder|ProductCategory whereSlug($value)
+ * @method static ProductCategoryBuilder|ProductCategory whereTitle($value)
+ * @method static ProductCategoryBuilder|ProductCategory whereUpdatedAt($value)
+ * @method static ProductCategoryBuilder|ProductCategory withoutNode($node)
+ * @method static ProductCategoryBuilder|ProductCategory withoutRoot()
+ * @method static ProductCategoryBuilder|ProductCategory withoutSelf()
  *
  * @mixin \Eloquent
  */

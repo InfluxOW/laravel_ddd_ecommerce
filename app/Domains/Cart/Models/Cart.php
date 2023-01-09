@@ -2,29 +2,32 @@
 
 namespace App\Domains\Cart\Models;
 
+use Akaunting\Money\Money;
 use App\Components\Purchasable\Casts\MoneyCast;
 use App\Domains\Cart\Database\Builders\CartBuilder;
 use App\Domains\Common\Traits\Models\HasExtendedFunctionality;
 use App\Domains\Users\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Domains\Cart\Models\Cart
  *
- * @property int                             $id
- * @property int|null                        $user_id
- * @property string|null                     $key
- * @property string                          $currency
- * @property \Akaunting\Money\Money          $price_items
- * @property \Akaunting\Money\Money          $price_items_discounted
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int         $id
+ * @property int|null    $user_id
+ * @property string|null $key
+ * @property string      $currency
+ * @property Money       $price_items
+ * @property Money       $price_items_discounted
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  *
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Domains\Cart\Models\CartItem[] $items
- * @property-read int|null                                                                     $items_count
- * @property-read User|null                                                                    $user
+ * @property-read Collection|CartItem[] $items
+ * @property-read int|null              $items_count
+ * @property-read User|null             $user
  *
  * @method static CartBuilder|Cart newModelQuery()
  * @method static CartBuilder|Cart newQuery()
