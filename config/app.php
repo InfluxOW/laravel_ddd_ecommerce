@@ -1,8 +1,18 @@
 <?php
 
 use App\Application\Providers\AppServiceProvider;
-use App\Components\Addressable\Providers\ComponentServiceProvider;
-use App\Domains\Users\Providers\DomainServiceProvider;
+use App\Components\Addressable\Providers\ComponentServiceProvider as AddressesComponentServiceProvider;
+use App\Components\Attributable\Providers\ComponentServiceProvider as AttributesComponentServiceProvider;
+use App\Components\LoginHistoryable\Providers\ComponentServiceProvider as LoginHistoryComponentServiceProvider;
+use App\Components\Mediable\Providers\ComponentServiceProvider as MediaComponentServiceProvider;
+use App\Components\Purchasable\Providers\ComponentServiceProvider as PurchasesComponentServiceProvider;
+use App\Domains\Admin\Providers\DomainServiceProvider as AdminServiceProvider;
+use App\Domains\Cart\Providers\DomainServiceProvider as CartServiceProvider;
+use App\Domains\Catalog\Providers\DomainServiceProvider as CatalogServiceProvider;
+use App\Domains\Common\Providers\DomainServiceProvider as CommonServiceProvider;
+use App\Domains\Feedback\Providers\DomainServiceProvider as FeedbackServiceProvider;
+use App\Domains\News\Providers\DomainServiceProvider as NewsServiceProvider;
+use App\Domains\Users\Providers\DomainServiceProvider as UsersServiceProvider;
 use Illuminate\Auth\AuthServiceProvider;
 use Illuminate\Auth\Passwords\PasswordResetServiceProvider;
 use Illuminate\Broadcasting\BroadcastServiceProvider;
@@ -200,27 +210,30 @@ return [
         /*
          * Application Service Providers...
          */
+
         AppServiceProvider::class,
 
         /*
          * Domains Service Providers
          */
-        DomainServiceProvider::class,
-        App\Domains\Catalog\Providers\DomainServiceProvider::class,
-        App\Domains\Admin\Providers\DomainServiceProvider::class,
-        App\Domains\Cart\Providers\DomainServiceProvider::class,
-        App\Domains\Feedback\Providers\DomainServiceProvider::class,
-        App\Domains\Common\Providers\DomainServiceProvider::class,
-        App\Domains\News\Providers\DomainServiceProvider::class,
+
+        UsersServiceProvider::class,
+        CatalogServiceProvider::class,
+        AdminServiceProvider::class,
+        CartServiceProvider::class,
+        FeedbackServiceProvider::class,
+        CommonServiceProvider::class,
+        NewsServiceProvider::class,
 
         /*
          * Components Service Providers
          */
-        ComponentServiceProvider::class,
-        App\Components\Mediable\Providers\ComponentServiceProvider::class,
-        App\Components\Purchasable\Providers\ComponentServiceProvider::class,
-        App\Components\Attributable\Providers\ComponentServiceProvider::class,
-        App\Components\LoginHistoryable\Providers\ComponentServiceProvider::class,
+
+        AddressesComponentServiceProvider::class,
+        MediaComponentServiceProvider::class,
+        PurchasesComponentServiceProvider::class,
+        AttributesComponentServiceProvider::class,
+        LoginHistoryComponentServiceProvider::class,
     ],
 
     /*
