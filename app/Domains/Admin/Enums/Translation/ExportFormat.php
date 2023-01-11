@@ -2,11 +2,13 @@
 
 namespace App\Domains\Admin\Enums\Translation;
 
+use Maatwebsite\Excel\Excel;
+
 enum ExportFormat: string
 {
-    case HTML = 'Html'; // Excel::HTML
-    case CSV = 'Csv'; // Excel::CSV
-    case XLSX = 'Xlsx'; // Excel::XLSX
+    case HTML = Excel::HTML;
+    case CSV = Excel::CSV;
+    case XLSX = Excel::XLSX;
 
     public function extension(): string
     {

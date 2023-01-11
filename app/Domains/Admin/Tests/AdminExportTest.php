@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Domains\Admin\Tests\Feature\Admin;
+namespace App\Domains\Admin\Tests;
 
-use App\Application\Tests\TestCase;
 use App\Domains\Admin\Admin\Abstracts\Pages\ListRecords;
 use App\Domains\Admin\Admin\Components\Actions\Export\Pages\ExportAction;
 use App\Domains\Admin\Enums\Translation\Components\Actions\ExportActionTranslationKey;
 use App\Domains\Admin\Enums\Translation\ExportFormat;
+use App\Domains\Common\Tests\TestCase;
 use Livewire\Livewire;
 
-abstract class ExportTest extends TestCase
+abstract class AdminExportTest extends TestCase
 {
     /** @var class-string<ListRecords> */
     protected string $listRecords;

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Application\Tests\Feature\Admin;
+namespace App\Domains\Admin\Tests;
 
-use App\Application\Tests\TestCase;
 use App\Domains\Admin\Database\Seeders\AdminSeeder;
 use App\Domains\Admin\Models\Admin;
+use App\Domains\Common\Tests\TestCase;
 use Filament\Resources\Pages\Page;
 use Livewire\Livewire;
 use Livewire\Testing\TestableLivewire;

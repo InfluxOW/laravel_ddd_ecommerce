@@ -2,7 +2,7 @@
 
 namespace App\Domains\News\Tests\Feature\Admin\Resources;
 
-use App\Application\Tests\Feature\Admin\AdminCrudTestCase;
+use App\Domains\Admin\Tests\AdminCrudTestCase;
 use App\Domains\News\Admin\Resources\ArticleResource;
 use App\Domains\News\Database\Seeders\ArticleSeeder;
 

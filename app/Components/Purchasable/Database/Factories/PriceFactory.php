@@ -3,7 +3,7 @@
 namespace App\Components\Purchasable\Database\Factories;
 
 use App\Components\Purchasable\Models\Price;
-use App\Infrastructure\Abstracts\Database\Factory;
+use App\Domains\Common\Database\Factory;
 
 final class PriceFactory extends Factory
 {

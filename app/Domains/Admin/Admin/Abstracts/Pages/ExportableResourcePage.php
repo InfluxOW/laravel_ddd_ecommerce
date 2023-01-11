@@ -4,9 +4,6 @@ namespace App\Domains\Admin\Admin\Abstracts\Pages;
 
 use App\Domains\Common\Interfaces\Exportable;
 
-/**
- * @internal
- * */
 trait ExportableResourcePage
 {
     protected function modelIsExportable(string $model): bool

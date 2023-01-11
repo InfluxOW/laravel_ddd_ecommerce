@@ -1,9 +1,11 @@
 <?php
 
-use App\Domains\Admin\Enums\Translation\AdminNavigationGroupTranslationKey;
+namespace App\Domains\News;
+
 use App\Domains\Admin\Enums\Translation\AdminResourcePropertyTranslationKey;
 use App\Domains\Common\Utils\LangUtils;
 use App\Domains\News\Admin\Resources\ArticleResource;
+use App\Domains\News\Enums\Translation\AdminNavigationGroupTranslationKey;
 
 return [
     ArticleResource::class => [

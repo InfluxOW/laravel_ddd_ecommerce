@@ -4,7 +4,7 @@ namespace App\Components\Attributable\Database\Seeders;
 
 use App\Components\Attributable\Models\Attribute;
 use App\Components\Attributable\Models\AttributeValue;
-use App\Infrastructure\Abstracts\Database\Seeder;
+use App\Domains\Common\Database\Seeder;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;

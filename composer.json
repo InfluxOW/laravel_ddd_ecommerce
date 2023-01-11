@@ -100,7 +100,8 @@
         "roave/security-advisories": "dev-latest",
         "slevomat/coding-standard": "^8.0",
         "spatie/laravel-ignition": "^1.0",
-        "squizlabs/php_codesniffer": "^3.6"
+        "squizlabs/php_codesniffer": "^3.6",
+        "vkcom/modulite-phpstan": "^1.0"
     },
     "repositories": [
         {

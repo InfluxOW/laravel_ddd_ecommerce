@@ -4,7 +4,7 @@ namespace App\Domains\Catalog\Database\Factories;
 
 use App\Domains\Catalog\Models\Product;
 use App\Domains\Catalog\Models\ProductCategory;
-use App\Infrastructure\Abstracts\Database\Factory;
+use App\Domains\Common\Database\Factory;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;

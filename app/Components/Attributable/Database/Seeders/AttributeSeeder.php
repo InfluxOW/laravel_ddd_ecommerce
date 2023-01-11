@@ -5,7 +5,7 @@ namespace App\Components\Attributable\Database\Seeders;
 use App\Components\Attributable\Database\Factories\AttributeValueFactory;
 use App\Components\Attributable\Enums\AttributeValuesType;
 use App\Components\Attributable\Models\Attribute;
-use App\Infrastructure\Abstracts\Database\Seeder;
+use App\Domains\Common\Database\Seeder;
 use Faker\Generator;
 
 final class AttributeSeeder extends Seeder

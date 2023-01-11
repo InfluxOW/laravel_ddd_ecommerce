@@ -5,7 +5,7 @@ namespace App\Domains\Catalog\Database\Seeders;
 use App\Components\Purchasable\Database\Seeders\PriceSeeder;
 use App\Domains\Catalog\Console\Commands\UpdateProductsDisplayability;
 use App\Domains\Catalog\Models\Product;
-use App\Infrastructure\Abstracts\Database\Seeder;
+use App\Domains\Common\Database\Seeder;
 use Illuminate\Support\Facades\Artisan;
 
 final class ProductPriceSeeder extends Seeder

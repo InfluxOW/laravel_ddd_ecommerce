@@ -1,0 +1,23 @@
+name: "@domains/cart"
+description: "Cart Domain"
+namespace: "App\\Domains\\Cart\\"
+
+# "Public API" of the modulite: classes, functions, constants, etc.
+# Symbols not listed here will be internal.
+export:
+    - "Models\\Cart"
+    - "Services\\CartService"
+
+# Dependencies: other modulites, global classes, defines, etc.
+require:
+    - "@application"
+    - "@components/purchasable"
+    - "@domains/common"
+    - "@domains/catalog"
+    - "@domains/users"
+    - "@infrastructure"
+    - "@interfaces"
+    - "#illuminate/database"
+    - "#illuminate/routing"
+    - "#illuminate/support"
+    - "#laravel/framework"

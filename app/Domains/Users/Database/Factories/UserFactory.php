@@ -3,8 +3,8 @@
 namespace App\Domains\Users\Database\Factories;
 
 use App\Components\Addressable\Models\Address;
+use App\Domains\Common\Database\Factory;
 use App\Domains\Users\Models\User;
-use App\Infrastructure\Abstracts\Database\Factory;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 

@@ -2,8 +2,8 @@
 
 namespace App\Domains\Catalog\Tests\Feature\Admin\Resources;
 
-use App\Application\Tests\Feature\Admin\AdminCrudTestCase;
 use App\Components\Attributable\Database\Seeders\AttributeSeeder;
+use App\Domains\Admin\Tests\AdminCrudTestCase;
 use App\Domains\Catalog\Admin\Resources\ProductCategoryResource;
 use App\Domains\Catalog\Database\Seeders\ProductAttributeValueSeeder;
 use App\Domains\Catalog\Database\Seeders\ProductCategorySeeder;

@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Components\Attributable;
+
 use App\Components\Attributable\Enums\AttributeValuesType;
 use App\Components\Attributable\Enums\Translation\AttributeTranslationKey;
 use App\Components\Attributable\Enums\Translation\AttributeValueTranslationKey;

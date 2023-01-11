@@ -2,8 +2,8 @@
 
 namespace App\Domains\News\Database\Factories;
 
+use App\Domains\Common\Database\Factory;
 use App\Domains\News\Models\Article;
-use App\Infrastructure\Abstracts\Database\Factory;
 use Illuminate\Support\Str;
 
 final class ArticleFactory extends Factory

@@ -3,12 +3,12 @@
 namespace App\Domains\News\Models;
 
 use App\Components\Mediable\Models\Media;
-use App\Domains\Catalog\Enums\Media\ProductMediaCollectionKey;
 use App\Domains\Common\Interfaces\Exportable;
 use App\Domains\Common\Traits\Models\HasExtendedFunctionality;
 use App\Domains\Common\Traits\Models\Searchable;
 use App\Domains\News\Database\Builders\ArticleBuilder;
 use App\Domains\News\Database\Factories\ArticleFactory;
+use App\Domains\News\Enums\Media\ArticleMediaCollectionKey;
 use App\Domains\News\Jobs\Export\NewsExportJob;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -96,12 +96,12 @@ class Article extends Model implements HasMedia, Exportable
 
     public function images(): MorphMany
     {
-        return $this->media()->where('collection_name', ProductMediaCollectionKey::IMAGES->value);
+        return $this->media()->where('collection_name', ArticleMediaCollectionKey::IMAGES->value);
     }
 
     public function image(): MorphOne
     {
-        return $this->morphOne(config('media-library.media_model'), 'model')->where('collection_name', ProductMediaCollectionKey::IMAGES->value);
+        return $this->morphOne(config('media-library.media_model'), 'model')->where('collection_name', ArticleMediaCollectionKey::IMAGES->value);
     }
 
     /*

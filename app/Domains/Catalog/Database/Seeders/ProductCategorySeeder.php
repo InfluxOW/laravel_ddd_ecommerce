@@ -4,7 +4,7 @@ namespace App\Domains\Catalog\Database\Seeders;
 
 use App\Domains\Catalog\Console\Commands\UpdateProductCategoriesDisplayability;
 use App\Domains\Catalog\Models\ProductCategory;
-use App\Infrastructure\Abstracts\Database\Seeder;
+use App\Domains\Common\Database\Seeder;
 use Illuminate\Support\Facades\Artisan;
 
 final class ProductCategorySeeder extends Seeder

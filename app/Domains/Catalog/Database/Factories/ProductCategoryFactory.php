@@ -3,7 +3,7 @@
 namespace App\Domains\Catalog\Database\Factories;
 
 use App\Domains\Catalog\Models\ProductCategory;
-use App\Infrastructure\Abstracts\Database\Factory;
+use App\Domains\Common\Database\Factory;
 use Illuminate\Support\Str;
 
 final class ProductCategoryFactory extends Factory

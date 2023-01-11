@@ -19,9 +19,6 @@ use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-/**
- * @internal
- * */
 trait HasExportAction
 {
     /**

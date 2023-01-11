@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Components\LoginHistoryable;
+
 use App\Components\LoginHistoryable\Admin\RelationManagers\LoginHistoryRelationManager;
 use App\Domains\Admin\Enums\Translation\AdminRelationPropertyTranslationKey;
 

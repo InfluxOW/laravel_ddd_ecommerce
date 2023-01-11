@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Domains\Feedback;
+
 use Elastic\Adapter\Indices\Mapping;
 use Elastic\Migrations\Facades\Index;
 use Elastic\Migrations\MigrationInterface;

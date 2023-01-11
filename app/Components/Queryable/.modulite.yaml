@@ -1,0 +1,36 @@
+name: "@components/queryable"
+description: "Query-related Stuff"
+namespace: "App\\Components\\Queryable\\"
+
+# "Public API" of the modulite: classes, functions, constants, etc.
+# Symbols not listed here will be internal.
+export:
+    - "Abstracts\\FilterBuilder"
+    - "Abstracts\\Filter\\FilterService"
+    - "Abstracts\\Filter\\IAllowedFilterEnum"
+    - "Abstracts\\Sort\\IAllowedSortEnum"
+    - "Abstracts\\Sort\\SortService"
+    - "Classes\\Filter\\Filter"
+    - "Classes\\Filter\\InputFilter"
+    - "Classes\\Filter\\Multiselect\\NestedMultiselectFilter"
+    - "Classes\\Filter\\Multiselect\\PlainMultiselectFilter"
+    - "Classes\\Filter\\Multiselect\\Resources\\NestedMultiselectFilterValues"
+    - "Classes\\Filter\\Multiselect\\Resources\\NestedMultiselectFilterValuesAttribute"
+    - "Classes\\Filter\\RangeFilter"
+    - "Classes\\Filter\\SelectFilter"
+    - "Classes\\Sort\\Sort"
+    - "Enums\\QueryKey"
+    - "Services\\Filter\\FilterQueryResourceBuilder"
+    - "Services\\Sort\\SortQueryResourceBuilder"
+    - "Traits\\Sort\\AllowedSortEnum"
+
+# Dependencies: other modulites, global classes, defines, etc.
+require:
+    - "@domains/common"
+    - "@infrastructure"
+    - "#akaunting/laravel-money"
+    - "#illuminate/collections"
+    - "#illuminate/http"
+    - "#illuminate/support"
+    - "#nesbot/carbon"
+    - "#spatie/laravel-query-builder"

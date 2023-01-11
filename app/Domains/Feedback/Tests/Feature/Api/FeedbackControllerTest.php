@@ -2,7 +2,7 @@
 
 namespace App\Domains\Feedback\Tests\Feature\Api;
 
-use App\Application\Tests\TestCase;
+use App\Domains\Common\Tests\TestCase;
 use App\Domains\Feedback\Models\Feedback;
 use App\Domains\Feedback\Models\Settings\FeedbackSettings;
 use App\Domains\Users\Database\Seeders\UserSeeder;

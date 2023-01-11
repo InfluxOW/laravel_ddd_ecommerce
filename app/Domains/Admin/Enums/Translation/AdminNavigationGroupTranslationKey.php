@@ -4,10 +4,7 @@ namespace App\Domains\Admin\Enums\Translation;
 
 enum AdminNavigationGroupTranslationKey
 {
-    case COMMON;
-    case CATALOG;
+    case USERS;
     case SETTINGS;
-    case FEEDBACK;
     case DEVELOPMENT;
-    case NEWS;
 }

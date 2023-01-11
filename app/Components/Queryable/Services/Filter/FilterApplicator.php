@@ -6,9 +6,6 @@ use App\Components\Queryable\Abstracts\Filter\FilterService;
 use App\Components\Queryable\Classes\Filter\Filter;
 use Illuminate\Support\Collection;
 
-/**
- * @internal
- * */
 final class FilterApplicator
 {
     public function __construct(private readonly FilterService $service)

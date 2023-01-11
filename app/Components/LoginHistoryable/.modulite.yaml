@@ -1,0 +1,27 @@
+name: "@components/login-historyable"
+description: "Login-history-related Stuff"
+namespace: "App\\Components\\LoginHistoryable\\"
+
+# "Public API" of the modulite: classes, functions, constants, etc.
+# Symbols not listed here will be internal.
+export:
+    - "Admin\\RelationManagers\\LoginHistoryRelationManager"
+    - "Models\\LoginHistory"
+    - "Services\\LoginDetailsService"
+
+# Dependencies: other modulites, global classes, defines, etc.
+require:
+    - "@domains/admin"
+    - "@domains/common"
+    - "@infrastructure"
+    - "#filament/filament"
+    - "#filament/forms"
+    - "#filament/tables"
+    - "#humaidem/filament-map-picker"
+    - "#illuminate/contracts"
+    - "#illuminate/database"
+    - "#illuminate/http"
+    - "#illuminate/support"
+    - "#jenssegers/agent"
+    - "#mstaack/laravel-postgis"
+    - "#torann/geoip"

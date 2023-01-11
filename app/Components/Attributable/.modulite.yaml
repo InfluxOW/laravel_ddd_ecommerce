@@ -1,0 +1,33 @@
+name: "@components/attributable"
+description: "Attributes-related Stuff"
+namespace: "App\\Components\\Attributable\\"
+
+# "Public API" of the modulite: classes, functions, constants, etc.
+# Symbols not listed here will be internal.
+export:
+    - "Admin\\RelationManagers\\AttributeValuesRelationManager"
+    - "Admin\\Resources\\AttributeResource"
+    - "Database\\Seeders\\AttributeSeeder"
+    - "Database\\Seeders\\AttributeValueSeeder"
+    - "Enums\\AttributeValuesType"
+    - "Http\\Resources\\AttributeResource"
+    - "Http\\Resources\\AttributeValueResource"
+    - "Models\\Attribute"
+    - "Models\\AttributeValue"
+    - "Models\\Virtual\\AttributeValue"
+
+# Dependencies: other modulites, global classes, defines, etc.
+require:
+    - "@domains/admin"
+    - "@domains/catalog"
+    - "@domains/common"
+    - "@infrastructure"
+    - "#filament/filament"
+    - "#filament/forms"
+    - "#filament/tables"
+    - "#illuminate/collections"
+    - "#illuminate/database"
+    - "#illuminate/http"
+    - "#illuminate/support"
+    - "#laravel/framework"
+    - "#spatie/laravel-sluggable"

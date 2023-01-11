@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Domains\Feedback;
+
 use App\Domains\Feedback\Models\Settings\FeedbackSettings;
 use Spatie\LaravelSettings\Migrations\SettingsMigration;
 

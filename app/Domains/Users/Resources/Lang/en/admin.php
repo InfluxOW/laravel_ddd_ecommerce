@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Domains\Users;
+
 use App\Domains\Admin\Enums\Translation\AdminNavigationGroupTranslationKey;
 use App\Domains\Admin\Enums\Translation\AdminResourcePropertyTranslationKey;
 use App\Domains\Admin\Enums\Translation\AdminWidgetPropertyTranslationKey;
@@ -15,6 +17,6 @@ return [
         AdminResourcePropertyTranslationKey::LABEL->name => 'Customer',
         AdminResourcePropertyTranslationKey::PLURAL_LABEL->name => 'Customers',
         AdminResourcePropertyTranslationKey::NAVIGATION_LABEL->name => 'Customers',
-        AdminResourcePropertyTranslationKey::NAVIGATION_GROUP->name => LangUtils::translateEnum(AdminNavigationGroupTranslationKey::COMMON),
+        AdminResourcePropertyTranslationKey::NAVIGATION_GROUP->name => LangUtils::translateEnum(AdminNavigationGroupTranslationKey::USERS),
     ],
 ];

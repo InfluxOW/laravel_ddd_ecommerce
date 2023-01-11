@@ -2,12 +2,12 @@
 
 namespace App\Domains\Catalog\Tests\Feature\Admin\Export;
 
-use App\Domains\Admin\Tests\Feature\Admin\ExportTest;
+use App\Domains\Admin\Tests\AdminExportTest;
 use App\Domains\Catalog\Admin\Resources\ProductCategoryResource\Pages\ListProductCategories;
 use App\Domains\Catalog\Database\Seeders\ProductCategorySeeder;
 use App\Domains\Catalog\Database\Seeders\ProductSeeder;
 
-final class ProductCategoriesExportTest extends ExportTest
+final class ProductCategoriesAdminExportTest extends AdminExportTest
 {
     protected string $listRecords = ListProductCategories::class;
 

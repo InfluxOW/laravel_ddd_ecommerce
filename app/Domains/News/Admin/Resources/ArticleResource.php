@@ -5,12 +5,12 @@ namespace App\Domains\News\Admin\Resources;
 use App\Components\Mediable\Admin\Components\Fields\MediaLibraryFileUpload;
 use App\Domains\Admin\Admin\Abstracts\Resource;
 use App\Domains\Admin\Admin\Components\Forms\RichEditor;
-use App\Domains\Catalog\Enums\Media\ProductCategoryMediaCollectionKey;
 use App\Domains\News\Admin\Resources\ArticleResource\Pages\CreateArticle;
 use App\Domains\News\Admin\Resources\ArticleResource\Pages\EditArticle;
 use App\Domains\News\Admin\Resources\ArticleResource\Pages\ListNews;
 use App\Domains\News\Admin\Resources\ArticleResource\Pages\ViewArticle;
 use App\Domains\News\Database\Builders\ArticleBuilder;
+use App\Domains\News\Enums\Media\ArticleMediaCollectionKey;
 use App\Domains\News\Enums\Translation\ArticleTranslationKey;
 use App\Domains\News\Models\Article;
 use Filament\Forms\Components\Card;
@@ -82,7 +82,7 @@ final class ArticleResource extends Resource
                             ->required()
                             ->columnSpan(3),
                         MediaLibraryFileUpload::makeTranslated(ArticleTranslationKey::IMAGES)
-                            ->collection(ProductCategoryMediaCollectionKey::IMAGES->value)
+                            ->collection(ArticleMediaCollectionKey::IMAGES->value)
                             ->multiple()
                             ->minFiles(0)
                             ->maxFiles(10)

@@ -1,0 +1,33 @@
+name: "@components/purchasable"
+description: "Purchase-related Stuff"
+namespace: "App\\Components\\Purchasable\\"
+
+# "Public API" of the modulite: classes, functions, constants, etc.
+# Symbols not listed here will be internal.
+export:
+    - "Abstracts\\Purchasable"
+    - "Admin\\RelationManagers\\PricesRelationManager"
+    - "Casts\\MoneyCast"
+    - "Database\\Seeders\\PriceSeeder"
+    - "Exceptions\\IncompatibleCurrenciesException"
+    - "Http\\Resources\\CurrencyResource"
+    - "Http\\Resources\\MoneyResource"
+    - "Models\\Price"
+    - "Models\\Virtual\\Currency"
+    - "Models\\Virtual\\Money"
+
+# Dependencies: other modulites, global classes, defines, etc.
+require:
+    - "@domains/admin"
+    - "@domains/catalog"
+    - "@domains/common"
+    - "@infrastructure"
+    - "#akaunting/laravel-money"
+    - "#filament/filament"
+    - "#filament/forms"
+    - "#filament/tables"
+    - "#illuminate/collections"
+    - "#illuminate/database"
+    - "#illuminate/http"
+    - "#illuminate/support"
+    - "#laravel/framework"

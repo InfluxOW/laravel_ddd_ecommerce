@@ -1,0 +1,23 @@
+name: "@components/mediable"
+description: "Media-related Stuff"
+namespace: "App\\Components\\Mediable\\"
+
+# "Public API" of the modulite: classes, functions, constants, etc.
+# Symbols not listed here will be internal.
+export:
+    - "Admin\\Components\\Fields\\MediaLibraryFileUpload"
+    - "Http\\Resources\\MediaResource"
+    - "Models\\Media"
+    - "Models\\Virtual\\Media"
+
+# Dependencies: other modulites, global classes, defines, etc.
+require:
+    - "@domains/common"
+    - "@infrastructure"
+    - "#filament/spatie-laravel-media-library-plugin"
+    - "#illuminate/database"
+    - "#illuminate/http"
+    - "#illuminate/support"
+    - "#laravel/framework"
+    - "#nesbot/carbon"
+    - "#spatie/laravel-medialibrary"

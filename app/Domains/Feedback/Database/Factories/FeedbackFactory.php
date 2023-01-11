@@ -2,9 +2,9 @@
 
 namespace App\Domains\Feedback\Database\Factories;
 
+use App\Domains\Common\Database\Factory;
 use App\Domains\Feedback\Models\Feedback;
 use App\Domains\Users\Models\User;
-use App\Infrastructure\Abstracts\Database\Factory;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 

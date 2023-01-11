@@ -1,0 +1,15 @@
+name: "@components"
+description: "Components"
+namespace: "App\\Components\\"
+
+# "Public API" of the modulite: classes, functions, constants, etc.
+# Symbols not listed here will be internal.
+export:
+    - "@components/addressable"
+    - "@components/attributable"
+    - "@components/login-historyable"
+    - "@components/mediable"
+    - "@components/purchasable"
+    - "@components/queryable"
+
+require:

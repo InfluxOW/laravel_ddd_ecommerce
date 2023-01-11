@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Domains\Catalog;
+
 use App\Domains\Catalog\Models\Product;
 use App\Domains\Catalog\Models\ProductCategory;
 use Illuminate\Database\Migrations\Migration;

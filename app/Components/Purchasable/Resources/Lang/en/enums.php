@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Components\Purchasable;
+
 use App\Components\Purchasable\Enums\Translation\PriceTranslationKey;
 
 return [

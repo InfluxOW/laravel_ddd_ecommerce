@@ -9,9 +9,6 @@ use App\Domains\Admin\Admin\Components\Actions\View\Pages\ViewAction;
 use App\Domains\Common\Interfaces\Exportable;
 use Illuminate\Database\Eloquent\Model;
 
-/**
- * @internal
- * */
 trait ResourceRecordPage
 {
     use ExportableResourcePage;

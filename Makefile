@@ -3,6 +3,7 @@ include Makefile.compose.mk
 infection := composer exec infection -- --threads=max --verbose --only-covering-test-cases --only-covered
 
 APPLICATION_COMPOSER_CACHE ?= false
+CLEAN_APPLICATION_PHPSTAN_CACHE ?= false
 
 prepare:
 	${APPLICATION_COMPOSER_CACHE} || composer install
@@ -34,6 +35,7 @@ rector:
 rector-fix:
 	composer exec rector process
 analyse:
+	if [ "${CLEAN_APPLICATION_PHPSTAN_CACHE}" = "true" ] || git diff --name-only | grep modulite -q; then composer exec phpstan clear-result-cache; fi
 	composer exec phpstan analyse --verbose -- --memory-limit=-1 2>/dev/null
 deptrac:
 	composer exec deptrac

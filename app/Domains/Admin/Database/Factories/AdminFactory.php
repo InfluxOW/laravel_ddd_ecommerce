@@ -3,7 +3,7 @@
 namespace App\Domains\Admin\Database\Factories;
 
 use App\Domains\Admin\Models\Admin;
-use App\Infrastructure\Abstracts\Database\Factory;
+use App\Domains\Common\Database\Factory;
 use Illuminate\Support\Str;
 
 final class AdminFactory extends Factory

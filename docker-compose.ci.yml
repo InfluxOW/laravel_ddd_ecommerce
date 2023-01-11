@@ -10,6 +10,7 @@ services:
             ELASTICSEARCH_URL: http://elasticsearch_ci:9200
             XDEBUG_MODE: ${SAIL_XDEBUG_MODE}
             APPLICATION_COMPOSER_CACHE: ${APPLICATION_COMPOSER_CACHE:-false}
+            CLEAN_APPLICATION_PHPSTAN_CACHE: ${CLEAN_APPLICATION_PHPSTAN_CACHE:-false}
         depends_on:
             database_ci:
                 condition: service_started
@@ -21,7 +22,7 @@ services:
             - bash
             - -c
             - |
-                make prepare lint deptrac insights analyse rector
+                make prepare lint deptrac insights analyse rector || exit 1
                 dockerize -wait tcp://database_ci:5432 -wait tcp://redis_ci:6379 -wait tcp://elasticsearch_ci:9200 -timeout 15s
                 make test-coverage
         networks:

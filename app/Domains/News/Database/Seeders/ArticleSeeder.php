@@ -2,8 +2,8 @@
 
 namespace App\Domains\News\Database\Seeders;
 
+use App\Domains\Common\Database\Seeder;
 use App\Domains\News\Models\Article;
-use App\Infrastructure\Abstracts\Database\Seeder;
 
 class ArticleSeeder extends Seeder
 {

@@ -5,7 +5,7 @@ namespace App\Components\Purchasable\Database\Seeders;
 use Akaunting\Money\Currency;
 use App\Components\Purchasable\Models\Price;
 use App\Domains\Catalog\Models\Settings\CatalogSettings;
-use App\Infrastructure\Abstracts\Database\Seeder;
+use App\Domains\Common\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\LazyCollection;

@@ -2,8 +2,8 @@
 
 namespace App\Domains\Users\Database\Seeders;
 
+use App\Domains\Common\Database\Seeder;
 use App\Domains\Users\Models\User;
-use App\Infrastructure\Abstracts\Database\Seeder;
 
 final class UserSeeder extends Seeder
 {

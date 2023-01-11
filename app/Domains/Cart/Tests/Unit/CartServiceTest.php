@@ -2,7 +2,6 @@
 
 namespace App\Domains\Cart\Tests\Unit;
 
-use App\Application\Tests\TestCase;
 use App\Domains\Cart\Models\Cart;
 use App\Domains\Cart\Services\CartService;
 use App\Domains\Catalog\Database\Seeders\ProductCategorySeeder;
@@ -10,6 +9,7 @@ use App\Domains\Catalog\Database\Seeders\ProductPriceSeeder;
 use App\Domains\Catalog\Database\Seeders\ProductSeeder;
 use App\Domains\Catalog\Models\Product;
 use App\Domains\Catalog\Models\Settings\CatalogSettings;
+use App\Domains\Common\Tests\TestCase;
 
 final class CartServiceTest extends TestCase
 {

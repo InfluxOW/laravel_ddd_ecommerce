@@ -30,6 +30,10 @@ jobs:
                 id: application-image-check
                 run: echo "APPLICATION_IMAGE_UPDATED=$(git diff HEAD~${{ steps.commits-count.outputs.COMMITS_COUNT }} --name-only | grep docker/php -q && echo 'true' || echo 'false')" >> $GITHUB_OUTPUT
 
+            -   name: Check Modulite Updates
+                id: application-modulites-check
+                run: echo "MODULITE_UPDATED=$(git diff HEAD~${{ steps.commits-count.outputs.COMMITS_COUNT }} --name-only | grep modulite -q && echo 'true' || echo 'false')" >> $GITHUB_OUTPUT
+
                 #########################
                 ###       Docker      ###
                 #########################
@@ -93,6 +97,9 @@ jobs:
                 #########################
                 ###    Tools Cache    ###
                 #########################
+
+            -   name: Set CLEAN_APPLICATION_PHPSTAN_CACHE Env Variable
+                run: echo "CLEAN_APPLICATION_PHPSTAN_CACHE=$(echo "${{ steps.application-modulites-check.outputs.MODULITE_UPDATED == 'true' }}")" >> $GITHUB_ENV
 
             -   name: Cache PHPStan Analysis
                 uses: actions/cache@main

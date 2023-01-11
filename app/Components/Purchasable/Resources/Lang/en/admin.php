@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Components\Purchasable;
+
 use App\Components\Purchasable\Admin\RelationManagers\PricesRelationManager;
 use App\Domains\Admin\Enums\Translation\AdminRelationPropertyTranslationKey;
 

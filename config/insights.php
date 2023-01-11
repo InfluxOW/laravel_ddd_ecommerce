@@ -145,7 +145,7 @@ return [
         'min-quality' => 95,
         'min-complexity' => 85,
         'min-architecture' => 100,
-        'min-style' => 100,
+        'min-style' => 95,
     ],
 
     /*

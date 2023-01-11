@@ -1,0 +1,39 @@
+name: "@domains/feedback"
+description: "Feedback Domain"
+namespace: "App\\Domains\\Feedback\\"
+
+# "Public API" of the modulite: classes, functions, constants, etc.
+# Symbols not listed here will be internal.
+export:
+    - "Admin\\Pages\\ManageFeedbackSettings"
+    - "Admin\\Resources\\FeedbackResource"
+    - "Database\\Seeders\\FeedbackSeeder"
+    - "Enums\\Translation\\AdminNavigationGroupTranslationKey"
+    - "Models\\Feedback"
+    - "Models\\Settings\\FeedbackSettings"
+
+# Dependencies: other modulites, global classes, defines, etc.
+require:
+    - "@domains/admin"
+    - "@domains/common"
+    - "@domains/users"
+    - "@infrastructure"
+    - "@interfaces"
+    - "#babenkoivan/elastic-migrations"
+    - "#babenkoivan/elastic-scout-driver-plus"
+    - "#colinodell/json5" # Bug - JSON_THROW_ON_ERROR
+    - "#filament/filament"
+    - "#filament/forms"
+    - "#filament/tables"
+    - "#illuminate/auth"
+    - "#illuminate/collections"
+    - "#illuminate/database"
+    - "#illuminate/http"
+    - "#illuminate/routing"
+    - "#illuminate/support"
+    - "#illuminate/validation"
+    - "#laravel/framework"
+    - "#nesbot/carbon"
+    - "#phpoffice/phpspreadsheet"
+    - "#spatie/laravel-settings"
+    - "#ysfkaya/filament-phone-input"

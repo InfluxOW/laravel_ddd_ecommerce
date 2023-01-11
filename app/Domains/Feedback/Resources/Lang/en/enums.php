@@ -1,9 +1,15 @@
 <?php
 
+namespace App\Domains\Feedback;
+
+use App\Domains\Feedback\Enums\Translation\AdminNavigationGroupTranslationKey;
 use App\Domains\Feedback\Enums\Translation\FeedbackSettingsTranslationKey;
 use App\Domains\Feedback\Enums\Translation\FeedbackTranslationKey;
 
 return [
+    AdminNavigationGroupTranslationKey::class => [
+        AdminNavigationGroupTranslationKey::FEEDBACK->name => 'Feedback',
+    ],
     FeedbackTranslationKey::class => [
         FeedbackTranslationKey::ID->name => 'ID',
         FeedbackTranslationKey::USERNAME->name => 'Username',

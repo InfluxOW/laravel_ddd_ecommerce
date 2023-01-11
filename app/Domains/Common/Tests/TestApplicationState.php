@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\Tests;
+namespace App\Domains\Common\Tests;
 
 final class TestApplicationState
 {

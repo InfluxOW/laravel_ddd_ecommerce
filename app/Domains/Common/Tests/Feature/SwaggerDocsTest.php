@@ -2,7 +2,7 @@
 
 namespace App\Domains\Common\Tests\Feature;
 
-use App\Application\Tests\TestCase;
+use App\Domains\Common\Tests\TestCase;
 use App\Domains\Common\Utils\PathUtils;
 
 final class SwaggerDocsTest extends TestCase

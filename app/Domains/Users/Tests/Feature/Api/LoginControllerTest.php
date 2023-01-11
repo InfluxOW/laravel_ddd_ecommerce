@@ -2,8 +2,8 @@
 
 namespace App\Domains\Users\Tests\Feature\Api;
 
-use App\Application\Tests\TestCase;
 use App\Domains\Common\Tests\MocksGeoIPRequests;
+use App\Domains\Common\Tests\TestCase;
 use App\Domains\Users\Events\EmailVerificationSucceeded;
 use App\Domains\Users\Models\User;
 use App\Domains\Users\Notifications\EmailVerificationNotification;

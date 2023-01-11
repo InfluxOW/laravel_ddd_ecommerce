@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Domains\Catalog;
+
 use App\Domains\Catalog\Models\ProductCategory;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;

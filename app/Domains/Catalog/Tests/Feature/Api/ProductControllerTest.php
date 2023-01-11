@@ -2,7 +2,6 @@
 
 namespace App\Domains\Catalog\Tests\Feature\Api;
 
-use App\Application\Tests\TestCase;
 use App\Components\Attributable\Database\Builders\AttributeValueBuilder;
 use App\Components\Attributable\Database\Seeders\AttributeSeeder;
 use App\Components\Attributable\Enums\AttributeValuesType;
@@ -20,6 +19,7 @@ use App\Domains\Catalog\Enums\Query\Sort\ProductAllowedSort;
 use App\Domains\Catalog\Models\Product;
 use App\Domains\Catalog\Models\ProductCategory;
 use App\Domains\Catalog\Models\Settings\CatalogSettings;
+use App\Domains\Common\Tests\TestCase;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;

@@ -1,0 +1,16 @@
+name: "@domains"
+description: "Domains"
+namespace: "App\\Domains\\"
+
+# "Public API" of the modulite: classes, functions, constants, etc.
+# Symbols not listed here will be internal.
+export:
+    - "@domains/admin"
+    - "@domains/cart"
+    - "@domains/catalog"
+    - "@domains/common"
+    - "@domains/feedback"
+    - "@domains/news"
+    - "@domains/users"
+
+require:

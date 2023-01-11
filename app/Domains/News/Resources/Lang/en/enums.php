@@ -1,10 +1,16 @@
 <?php
 
+namespace App\Domains\News;
+
 use App\Domains\News\Enums\Query\Filter\ArticleAllowedFilter;
 use App\Domains\News\Enums\Query\Sort\ArticleAllowedSort;
+use App\Domains\News\Enums\Translation\AdminNavigationGroupTranslationKey;
 use App\Domains\News\Enums\Translation\ArticleTranslationKey;
 
 return [
+    AdminNavigationGroupTranslationKey::class => [
+        AdminNavigationGroupTranslationKey::NEWS->name => 'News',
+    ],
     ArticleAllowedFilter::class => [
         ArticleAllowedFilter::SEARCH->name => 'Search',
         ArticleAllowedFilter::PUBLISHED_BETWEEN->name => 'Published',

@@ -2,8 +2,8 @@
 
 namespace App\Domains\News\Tests\Feature\Api;
 
-use App\Application\Tests\TestCase;
 use App\Components\Queryable\Enums\QueryKey;
+use App\Domains\Common\Tests\TestCase;
 use App\Domains\News\Database\Seeders\ArticleSeeder;
 use App\Domains\News\Enums\Query\Filter\ArticleAllowedFilter;
 use App\Domains\News\Enums\Query\Sort\ArticleAllowedSort;

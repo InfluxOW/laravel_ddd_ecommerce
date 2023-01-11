@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\Abstracts\Database;
+namespace App\Domains\Common\Database;
 
 use App\Application\Classes\ApplicationState;
 use Closure;

@@ -3,7 +3,7 @@
 namespace App\Domains\Admin\Database\Seeders;
 
 use App\Domains\Admin\Models\Admin;
-use App\Infrastructure\Abstracts\Database\Seeder;
+use App\Domains\Common\Database\Seeder;
 
 final class AdminSeeder extends Seeder
 {

@@ -1,5 +1,8 @@
 <?php
 
+namespace App\Domains\Users;
+
+use App\Domains\Users\Enums\Translation\UserDatasetTranslationKey;
 use App\Domains\Users\Enums\Translation\UserTranslationKey;
 
 return [
@@ -14,5 +17,8 @@ return [
         UserTranslationKey::LAST_LOGGED_IN_AT->name => 'Last Logged In At',
         UserTranslationKey::CREATED_AT->name => 'Created At',
         UserTranslationKey::UPDATED_AT->name => 'Updated At',
+    ],
+    UserDatasetTranslationKey::class => [
+        UserDatasetTranslationKey::CUSTOMERS->name => 'Customers',
     ],
 ];

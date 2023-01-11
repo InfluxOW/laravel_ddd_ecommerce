@@ -2,7 +2,7 @@
 
 namespace App\Domains\Users\Tests\Feature\Api;
 
-use App\Application\Tests\TestCase;
+use App\Domains\Common\Tests\TestCase;
 use App\Domains\Users\Models\User;
 use Illuminate\Support\Facades\Event;
 

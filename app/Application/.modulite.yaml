@@ -1,0 +1,38 @@
+name: "@application"
+description: "Application is responsible for connecting the Interfaces to the lower layers"
+namespace: "App\\Application\\"
+
+# "Public API" of the modulite: classes, functions, constants, etc.
+# Symbols not listed here will be internal.
+export:
+    - "Classes\\ApplicationState"
+    - "Tests\\CreatesApplication"
+
+# Dependencies: other modulites, global classes, defines, etc.
+require:
+    - "@domains/common"
+    - "@infrastructure"
+    - "#fakerphp/faker"
+    - "#filament/filament"
+    - "#fruitcake/laravel-cors"
+    - "#illuminate/auth"
+    - "#illuminate/cache"
+    - "#illuminate/cookie"
+    - "#illuminate/contracts"
+    - "#illuminate/console"
+    - "#illuminate/collections"
+    - "#illuminate/database"
+    - "#illuminate/routing"
+    - "#illuminate/http"
+    - "#illuminate/session"
+    - "#illuminate/support"
+    - "#illuminate/testing"
+    - "#illuminate/view"
+    - "#laravel/framework"
+    - "#laravel/horizon"
+    - "#laravel/telescope"
+    - "#livewire/livewire"
+    - "#mbezhanov/faker-provider-collection"
+    - "#paulhennell/faker-news"
+    - "#studio/laravel-totem"
+    - "#symfony/http-foundation"

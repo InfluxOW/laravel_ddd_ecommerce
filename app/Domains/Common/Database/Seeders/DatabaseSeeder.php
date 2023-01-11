@@ -9,10 +9,10 @@ use App\Domains\Catalog\Database\Seeders\ProductCategorySeeder;
 use App\Domains\Catalog\Database\Seeders\ProductPriceSeeder;
 use App\Domains\Catalog\Database\Seeders\ProductSeeder;
 use App\Domains\Catalog\Models\ProductCategory;
+use App\Domains\Common\Database\Seeder;
 use App\Domains\Feedback\Database\Seeders\FeedbackSeeder;
 use App\Domains\News\Database\Seeders\ArticleSeeder;
 use App\Domains\Users\Database\Seeders\UserSeeder;
-use App\Infrastructure\Abstracts\Database\Seeder;
 
 final class DatabaseSeeder extends Seeder
 {

@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Domains\Admin;
+
 use App\Domains\Admin\Admin\Abstracts\RelationManager;
 use App\Domains\Admin\Admin\Components\Actions\Create\Tables\CreateAction;
 use App\Domains\Admin\Admin\Components\Actions\Delete\Pages\DeleteAction as PageDeleteAction;
@@ -36,7 +38,7 @@ return [
         AdminResourcePropertyTranslationKey::LABEL->name => 'Admin',
         AdminResourcePropertyTranslationKey::PLURAL_LABEL->name => 'Admins',
         AdminResourcePropertyTranslationKey::NAVIGATION_LABEL->name => 'Admins',
-        AdminResourcePropertyTranslationKey::NAVIGATION_GROUP->name => LangUtils::translateEnum(AdminNavigationGroupTranslationKey::COMMON),
+        AdminResourcePropertyTranslationKey::NAVIGATION_GROUP->name => LangUtils::translateEnum(AdminNavigationGroupTranslationKey::USERS),
     ],
     UpdateBulkAction::class => [
         AdminModalTranslationKey::HEADING->name => 'Update Records',

@@ -2,7 +2,7 @@
 
 namespace App\Domains\Admin\Tests\Feature\Admin;
 
-use App\Application\Tests\Feature\Admin\AdminTestCase;
+use App\Domains\Admin\Tests\AdminTestCase;
 
 final class AdminPagesTest extends AdminTestCase
 {

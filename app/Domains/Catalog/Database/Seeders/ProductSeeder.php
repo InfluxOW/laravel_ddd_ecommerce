@@ -4,7 +4,7 @@ namespace App\Domains\Catalog\Database\Seeders;
 
 use App\Domains\Catalog\Database\Factories\ProductFactory;
 use App\Domains\Catalog\Models\Product;
-use App\Infrastructure\Abstracts\Database\Seeder;
+use App\Domains\Common\Database\Seeder;
 
 final class ProductSeeder extends Seeder
 {

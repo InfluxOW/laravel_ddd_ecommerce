@@ -1,10 +1,12 @@
 <?php
 
+namespace App\Components\Attributable;
+
 use App\Components\Attributable\Admin\RelationManagers\AttributeValuesRelationManager;
 use App\Components\Attributable\Admin\Resources\AttributeResource;
-use App\Domains\Admin\Enums\Translation\AdminNavigationGroupTranslationKey;
 use App\Domains\Admin\Enums\Translation\AdminRelationPropertyTranslationKey;
 use App\Domains\Admin\Enums\Translation\AdminResourcePropertyTranslationKey;
+use App\Domains\Catalog\Enums\Translation\AdminNavigationGroupTranslationKey;
 use App\Domains\Common\Utils\LangUtils;
 
 return [

@@ -4,9 +4,6 @@ namespace App\Domains\Admin\Admin\Components\Actions\Delete;
 
 use App\Domains\Admin\Enums\Translation\Components\AdminActionTranslationKey;
 
-/**
- * @internal
- * */
 trait HasDeleteAction
 {
     public static function create(): static

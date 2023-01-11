@@ -1,5 +1,6 @@
 includes:
     - ./vendor/nunomaduro/larastan/extension.neon
+    - ./vendor/vkcom/modulite-phpstan/extension.neon
 
 parameters:
     paths:
@@ -34,3 +35,7 @@ parameters:
     checkGenericClassInNonGenericObjectType: false
 
     tmpDir: storage/phpstan
+
+    modulite:
+        projectRoot: .
+        srcRoot: app/

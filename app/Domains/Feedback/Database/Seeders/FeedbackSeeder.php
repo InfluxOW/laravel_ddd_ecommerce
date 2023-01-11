@@ -2,8 +2,8 @@
 
 namespace App\Domains\Feedback\Database\Seeders;
 
+use App\Domains\Common\Database\Seeder;
 use App\Domains\Feedback\Models\Feedback;
-use App\Infrastructure\Abstracts\Database\Seeder;
 
 final class FeedbackSeeder extends Seeder
 {

@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Components\Addressable;
+
 use App\Components\Addressable\Enums\Translation\AddressesTranslationKey;
 
 return [

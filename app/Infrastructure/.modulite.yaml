@@ -1,0 +1,33 @@
+name: "@infrastructure"
+description: "Infrastructure is responsible of persistence of data, connections to databases, sending messages over networks"
+namespace: "App\\Infrastructure\\"
+
+# "Public API" of the modulite: classes, functions, constants, etc.
+# Symbols not listed here will be internal.
+export:
+    - "Abstracts\\Events\\Event"
+    - "Abstracts\\Http\\FormRequest"
+    - "Abstracts\\Notifications\\EmailNotification"
+    - "Abstracts\\Notifications\\Notification"
+    - "Abstracts\\Providers\\RouteServiceProvider"
+    - "Abstracts\\Providers\\ServiceProvider"
+    - "Database\\Connections\\PostgresConnection"
+
+# Dependencies: other modulites, global classes, defines, etc.
+require:
+    - "@application"
+    - "@domains/common"
+    - "#babenkoivan/elastic-migrations"
+    - "#colinodell/json5" # Bug - JSON_THROW_ON_ERROR
+    - "#illuminate/collections"
+    - "#illuminate/console"
+    - "#illuminate/contracts"
+    - "#illuminate/database"
+    - "#illuminate/events"
+    - "#illuminate/notifications"
+    - "#illuminate/routing"
+    - "#illuminate/support"
+    - "#laravel/framework"
+    - "#livewire/livewire"
+    - "#mstaack/laravel-postgis"
+    - "#nesbot/carbon"

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Application\Tests;
+namespace App\Domains\Common\Tests;
 
+use App\Application\Tests\CreatesApplication;
 use App\Components\Queryable\Enums\QueryKey;
 use App\Domains\Common\Enums\Response\ResponseKey;
 use App\Domains\Common\Http\Middleware\Recaptcha;

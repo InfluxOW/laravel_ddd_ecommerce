@@ -3,7 +3,7 @@
 namespace App\Components\Addressable\Database\Factories;
 
 use App\Components\Addressable\Models\Address;
-use App\Infrastructure\Abstracts\Database\Factory;
+use App\Domains\Common\Database\Factory;
 use Squire\Models\Country;
 
 final class AddressFactory extends Factory

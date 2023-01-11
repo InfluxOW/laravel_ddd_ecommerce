@@ -2,9 +2,9 @@
 
 namespace App\Domains\Catalog\Tests\Unit;
 
-use App\Application\Tests\TestCase;
 use App\Domains\Catalog\Database\Seeders\ProductCategorySeeder;
 use App\Domains\Catalog\Models\ProductCategory;
+use App\Domains\Common\Tests\TestCase;
 
 final class ProductCategoryTest extends TestCase
 {

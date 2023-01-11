@@ -1,21 +1,19 @@
 <?php
 
+namespace App\Domains\Admin;
+
 use App\Domains\Admin\Enums\Translation\AdminNavigationGroupTranslationKey;
 use App\Domains\Admin\Enums\Translation\Components\Actions\ExportActionTranslationKey;
 use App\Domains\Admin\Enums\Translation\Components\AdminActionTranslationKey;
-use App\Domains\Admin\Enums\Translation\Components\AdminDatasetTranslationKey;
 use App\Domains\Admin\Enums\Translation\Components\Cards\AdminTimestampsCardTranslationKey;
 use App\Domains\Admin\Enums\Translation\ExportFormat;
 use App\Domains\Admin\Enums\Translation\Resources\AdminTranslationKey;
 
 return [
     AdminNavigationGroupTranslationKey::class => [
-        AdminNavigationGroupTranslationKey::COMMON->name => 'Common',
-        AdminNavigationGroupTranslationKey::CATALOG->name => 'Catalog',
+        AdminNavigationGroupTranslationKey::USERS->name => 'Users',
         AdminNavigationGroupTranslationKey::SETTINGS->name => 'Settings',
-        AdminNavigationGroupTranslationKey::FEEDBACK->name => 'Feedback',
         AdminNavigationGroupTranslationKey::DEVELOPMENT->name => 'Development',
-        AdminNavigationGroupTranslationKey::NEWS->name => 'News',
     ],
     AdminTimestampsCardTranslationKey::class => [
         AdminTimestampsCardTranslationKey::UPDATED_AT->name => 'Last Modified At',
@@ -30,9 +28,6 @@ return [
         AdminActionTranslationKey::EXPORT->name => 'Export',
         AdminActionTranslationKey::BULK_DELETE->name => 'Delete Selected',
         AdminActionTranslationKey::BULK_EXPORT->name => 'Export Selected',
-    ],
-    AdminDatasetTranslationKey::class => [
-        AdminDatasetTranslationKey::CUSTOMERS->name => 'Customers',
     ],
     ExportFormat::class => [
         ExportFormat::CSV->name => 'CSV',

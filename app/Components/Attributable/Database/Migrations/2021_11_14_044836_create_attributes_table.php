@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Components\Attributable;
+
 use App\Components\Attributable\Enums\AttributeValuesType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;

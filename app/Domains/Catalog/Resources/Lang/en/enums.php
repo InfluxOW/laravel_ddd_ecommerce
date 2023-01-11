@@ -1,13 +1,19 @@
 <?php
 
+namespace App\Domains\Catalog;
+
 use App\Domains\Catalog\Enums\Query\Filter\ProductAllowedFilter;
 use App\Domains\Catalog\Enums\Query\Sort\ProductAllowedSort;
 use App\Domains\Catalog\Enums\Translation\AdminActionTranslationKey;
+use App\Domains\Catalog\Enums\Translation\AdminNavigationGroupTranslationKey;
 use App\Domains\Catalog\Enums\Translation\CatalogSettingsTranslationKey;
 use App\Domains\Catalog\Enums\Translation\ProductCategoryTranslationKey;
 use App\Domains\Catalog\Enums\Translation\ProductTranslationKey;
 
 return [
+    AdminNavigationGroupTranslationKey::class => [
+        AdminNavigationGroupTranslationKey::CATALOG->name => 'Catalog',
+    ],
     ProductAllowedFilter::class => [
         ProductAllowedFilter::SEARCH->name => 'Search',
         ProductAllowedFilter::PRICE_BETWEEN->name => 'Price',

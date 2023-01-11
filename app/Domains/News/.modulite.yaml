@@ -1,0 +1,39 @@
+name: "@domains/news"
+description: "News Domain"
+namespace: "App\\Domains\\News\\"
+
+# "Public API" of the modulite: classes, functions, constants, etc.
+# Symbols not listed here will be internal.
+export:
+    - "Admin\\Resources\\ArticleResource"
+    - "Database\\Seeders\\ArticleSeeder"
+    - "Enums\\Translation\\AdminNavigationGroupTranslationKey"
+    - "Http\\Resources\\Article\\HeavyArticleResource"
+    - "Http\\Resources\\Article\\LightArticleResource"
+    - "Models\\Article"
+
+# Dependencies: other modulites, global classes, defines, etc.
+require:
+    - "@components/mediable"
+    - "@components/queryable"
+    - "@domains/admin"
+    - "@domains/common"
+    - "@infrastructure"
+    - "@interfaces"
+    - "#babenkoivan/elastic-migrations"
+    - "#babenkoivan/elastic-scout-driver-plus"
+    - "#filament/filament"
+    - "#filament/forms"
+    - "#filament/tables"
+    - "#illuminate/collections"
+    - "#illuminate/database"
+    - "#illuminate/http"
+    - "#illuminate/routing"
+    - "#illuminate/support"
+    - "#laravel/framework"
+    - "#nesbot/carbon"
+    - "#phpoffice/phpspreadsheet"
+    - "#spatie/laravel-medialibrary"
+    - "#spatie/laravel-query-builder"
+    - "#spatie/laravel-sluggable"
+    - "#stevebauman/purify"

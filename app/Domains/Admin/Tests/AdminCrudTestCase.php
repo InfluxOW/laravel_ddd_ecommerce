@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\Tests\Feature\Admin;
+namespace App\Domains\Admin\Tests;
 
 use Filament\Resources\Pages\CreateRecord;
 use Filament\Resources\Pages\EditRecord;

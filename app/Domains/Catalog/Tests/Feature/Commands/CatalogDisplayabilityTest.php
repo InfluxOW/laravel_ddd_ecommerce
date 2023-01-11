@@ -2,7 +2,6 @@
 
 namespace App\Domains\Catalog\Tests\Feature\Commands;
 
-use App\Application\Tests\TestCase;
 use App\Domains\Catalog\Console\Commands\UpdateProductCategoriesDisplayability;
 use App\Domains\Catalog\Console\Commands\UpdateProductsDisplayability;
 use App\Domains\Catalog\Database\Seeders\ProductCategorySeeder;
@@ -10,6 +9,7 @@ use App\Domains\Catalog\Database\Seeders\ProductPriceSeeder;
 use App\Domains\Catalog\Database\Seeders\ProductSeeder;
 use App\Domains\Catalog\Models\Product;
 use App\Domains\Catalog\Models\ProductCategory;
+use App\Domains\Common\Tests\TestCase;
 
 final class CatalogDisplayabilityTest extends TestCase
 {

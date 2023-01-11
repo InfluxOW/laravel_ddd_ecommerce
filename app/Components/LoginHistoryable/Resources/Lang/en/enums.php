@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Components\LoginHistoryable;
+
 use App\Components\LoginHistoryable\Enums\Translation\LoginHistoryTranslationKey;
 
 return [

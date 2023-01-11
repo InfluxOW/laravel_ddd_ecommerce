@@ -1,0 +1,23 @@
+name: "@interfaces"
+description: "Interfaces are responsible of displaying information to the user and accept new data"
+namespace: "App\\Interfaces\\Http\\Controllers\\"
+
+# "Public API" of the modulite: classes, functions, constants, etc.
+# Symbols not listed here will be internal.
+export:
+    - "Controller"
+    - "ResponseTrait"
+
+# Dependencies: other modulites, global classes, defines, etc.
+require:
+    - "@components/queryable"
+    - "@domains/common"
+    - "#illuminate/collections"
+    - "#illuminate/contracts"
+    - "#illuminate/database"
+    - "#illuminate/http"
+    - "#illuminate/routing"
+    - "#illuminate/support"
+    - "#laravel/framework"
+    - "#spatie/laravel-query-builder"
+    - "#symfony/http-foundation"

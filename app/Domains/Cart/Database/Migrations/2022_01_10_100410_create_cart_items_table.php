@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Domains\Cart;
+
 use App\Domains\Cart\Models\Cart;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
