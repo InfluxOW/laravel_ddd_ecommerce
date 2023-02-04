@@ -26,6 +26,7 @@ final class HeavyProductCategory extends LightProductCategory
     /**
      * @OA\Property(
      *     type="array",
+     *
      *     @OA\Items(ref="#/components/schemas/HeavyProductCategory")
      * )
      *

@@ -13,6 +13,7 @@ use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\StmtsAwareInterface\RemoveJustVariableAssignRector;
 use Rector\Php71\Rector\FuncCall\CountOnNullRector;
 use Rector\Php74\Rector\Property\RestoreDefaultNullToNullableTypePropertyRector;
+use Rector\Php81\Rector\ClassConst\FinalizePublicClassConstantRector;
 use Rector\Php81\Rector\FuncCall\NullToStrictStringFuncCallArgRector;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
@@ -44,6 +45,9 @@ return static function (RectorConfig $rectorConfig): void {
         NullToStrictStringFuncCallArgRector::class,
         RemoveJustVariableAssignRector::class,
         CallableThisArrayToAnonymousFunctionRector::class,
+        FinalizePublicClassConstantRector::class => [
+            __DIR__ . '/app/Infrastructure/Abstracts/Providers/ServiceProvider.php',
+        ],
     ]);
 
     $rectorConfig->cacheClass(FileCacheStorage::class);

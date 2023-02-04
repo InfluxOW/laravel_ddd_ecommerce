@@ -19,6 +19,7 @@ class LightProduct extends Product
     /**
      * @OA\Property(
      *     type="array",
+     *
      *     @OA\Items(ref="#/components/schemas/LightProductCategory")
      * )
      *

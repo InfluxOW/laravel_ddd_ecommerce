@@ -25,6 +25,7 @@ final class Media
     /**
      * @OA\Property(
      *     type="array",
+     *
      *     @OA\Items(ref="#/components/schemas/ResponsiveImage")
      * )
      *

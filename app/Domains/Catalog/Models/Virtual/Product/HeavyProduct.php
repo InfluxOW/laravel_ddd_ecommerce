@@ -15,6 +15,7 @@ final class HeavyProduct extends LightProduct
     /**
      * @OA\Property(
      *     type="array",
+     *
      *     @OA\Items(ref="#/components/schemas/Media")
      * )
      *
@@ -25,6 +26,7 @@ final class HeavyProduct extends LightProduct
     /**
      * @OA\Property(
      *     type="array",
+     *
      *     @OA\Items(ref="#/components/schemas/MediumProductCategory")
      * )
      *
@@ -35,6 +37,7 @@ final class HeavyProduct extends LightProduct
     /**
      * @OA\Property(
      *     type="array",
+     *
      *     @OA\Items(ref="#/components/schemas/AttributeValue")
      * )
      *

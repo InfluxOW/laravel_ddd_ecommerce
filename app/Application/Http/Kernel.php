@@ -5,6 +5,7 @@ namespace App\Application\Http;
 use App\Application\Http\Middleware\EncryptCookies;
 use App\Application\Http\Middleware\PreventRequestsDuringMaintenance;
 use App\Application\Http\Middleware\RedirectIfAuthenticated;
+use App\Application\Http\Middleware\RedirectUnauthenticated;
 use App\Application\Http\Middleware\TrimStrings;
 use App\Application\Http\Middleware\TrustProxies;
 use App\Application\Http\Middleware\VerifyCsrfToken;
@@ -36,7 +37,7 @@ final class Kernel extends HttpKernel
      *
      * These middleware are run during every request to your application.
      *
-     * @var array
+     * @var array<int, string>
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint
      */
@@ -53,7 +54,7 @@ final class Kernel extends HttpKernel
     /**
      * The application's route middleware groups.
      *
-     * @var array
+     * @var array<string, array<int, string>>
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint
      */
@@ -84,12 +85,12 @@ final class Kernel extends HttpKernel
      *
      * These middleware may be assigned to groups or used individually.
      *
-     * @var array
+     * @var array<string, string>
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint
      */
     protected $routeMiddleware = [
-        'auth' => \App\Application\Http\Middleware\Authenticate::class,
+        'auth' => RedirectUnauthenticated::class,
         'auth.basic' => AuthenticateWithBasicAuth::class,
         'cache.headers' => SetCacheHeaders::class,
         'can' => Authorize::class,

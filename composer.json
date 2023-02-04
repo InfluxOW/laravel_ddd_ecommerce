@@ -77,7 +77,7 @@
         "symfony/http-client": "^6.0",
         "symfony/mailgun-mailer": "^6.0",
         "torann/geoip": "^3.0",
-        "vladimir-yuldashev/laravel-queue-rabbitmq": "dev-main",
+        "vladimir-yuldashev/laravel-queue-rabbitmq": "^13.0",
         "ysfkaya/filament-phone-input": "^1.2"
     },
     "require-dev": {
@@ -107,10 +107,6 @@
         {
             "type": "vcs",
             "url": "git@github.com:InfluxOW/Prequel.git"
-        },
-        {
-            "type": "vcs",
-            "url": "git@github.com:InfluxOW/laravel-queue-rabbitmq.git"
         }
     ],
     "minimum-stability": "dev",

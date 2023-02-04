@@ -114,6 +114,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
     {
         $handler = $this->app->make(ExceptionHandler::class);
 
+        /** @phpstan-ignore-next-line */
         if ($handler instanceof Handler) {
             foreach ($this->getCustomExceptionRenderers() as $renderer) {
                 $handler->renderable($renderer);

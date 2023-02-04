@@ -13,14 +13,18 @@ final class ProductCategoryController
      * description="View categories tree",
      * operationId="categoriesIndex",
      * tags={"Categories"},
+     *
      * @OA\Response(
      *    response=200,
      *    description="Categories were fetched",
+     *
      *    @OA\JsonContent(
+     *
      *       @OA\Property(
      *          property="data",
      *          type="array",
      *          collectionFormat="multi",
+     *
      *          @OA\Items(
      *             type="object",
      *             ref="#/components/schemas/HeavyProductCategory",

@@ -62,8 +62,10 @@ final class PaginationMeta
      * @OA\Property(
      * type="array",
      * collectionFormat="multi",
+     *
      * @OA\Items(
      *    type="object",
+     *
      *    @OA\Property(property="url", nullable="true", type="string", example="http://localhost:8085/api/products"),
      *    @OA\Property(property="label", type="string", example="1"),
      *    @OA\Property(property="active",  type="boolean", example="false"),

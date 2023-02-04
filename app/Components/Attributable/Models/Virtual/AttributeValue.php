@@ -11,6 +11,7 @@ final class AttributeValue
 {
     /**
      * @OA\Property(oneOf={
+     *
      *    @OA\Schema(type="string"),
      *    @OA\Schema(type="integer"),
      *    @OA\Schema(type="boolean"),

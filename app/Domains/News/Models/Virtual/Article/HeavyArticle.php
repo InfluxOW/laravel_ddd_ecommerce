@@ -13,6 +13,7 @@ final class HeavyArticle extends LightArticle
     /**
      * @OA\Property(
      *     type="array",
+     *
      *     @OA\Items(ref="#/components/schemas/Media")
      * )
      *

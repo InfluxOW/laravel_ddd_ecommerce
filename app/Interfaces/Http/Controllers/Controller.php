@@ -21,18 +21,22 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 /**
  * @OA\OpenApi(
+ *
  *    @OA\Info(
  *       title="E-Commerce App API",
  *       description="E-Commerce App",
  *       version="1.0.0",
+ *
  *       @OA\Contact(
  *          email="krochak_n@mail.ru",
  *          url="https://github.com/InfluxOW"
  *       ),
  *    ),
+ *
  *    @OA\Server(
  *       url=L5_SWAGGER_CONST_HOST,
  *       description="E-Commerce App API Server",
+ *
  *       @OA\ServerVariable(
  *          serverVariable="schema",
  *          enum={"https", "http"},
