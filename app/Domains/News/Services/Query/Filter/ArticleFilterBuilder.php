@@ -11,9 +11,9 @@ use App\Domains\News\Enums\Query\Filter\ArticleAllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder as SpatieQueryBuilder;
 use UnitEnum;
 
-final class ArticleFilterBuilder implements FilterBuilder
+final readonly class ArticleFilterBuilder implements FilterBuilder
 {
-    public function __construct(private readonly SpatieQueryBuilder $query, private readonly ArticleFilterBuilderRepository $repository)
+    public function __construct(private SpatieQueryBuilder $query, private ArticleFilterBuilderRepository $repository)
     {
     }
 

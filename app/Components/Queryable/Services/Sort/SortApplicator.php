@@ -5,9 +5,9 @@ namespace App\Components\Queryable\Services\Sort;
 use App\Components\Queryable\Abstracts\Sort\SortService;
 use App\Components\Queryable\Classes\Sort\Sort;
 
-final class SortApplicator
+final readonly class SortApplicator
 {
-    public function __construct(private readonly SortService $service)
+    public function __construct(private SortService $service)
     {
     }
 

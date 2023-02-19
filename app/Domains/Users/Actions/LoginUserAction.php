@@ -14,9 +14,9 @@ use Laravel\Sanctum\NewAccessToken;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
-final class LoginUserAction
+final readonly class LoginUserAction
 {
-    public function __construct(private readonly LoginDetailsService $loginDetailsService)
+    public function __construct(private LoginDetailsService $loginDetailsService)
     {
     }
 

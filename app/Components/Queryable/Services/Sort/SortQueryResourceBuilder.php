@@ -9,11 +9,11 @@ use App\Components\Queryable\Http\Resources\Sort\SortQueryResource;
 use App\Infrastructure\Abstracts\Http\FormRequest;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-final class SortQueryResourceBuilder
+final readonly class SortQueryResourceBuilder
 {
-    private readonly SortApplicator $applicator;
+    private SortApplicator $applicator;
 
-    public function __construct(private readonly SortService $service)
+    public function __construct(private SortService $service)
     {
         $this->applicator = new SortApplicator($this->service);
     }

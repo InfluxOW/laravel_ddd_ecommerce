@@ -10,9 +10,9 @@ use App\Domains\Users\Http\Requests\EmailVerificationRequest;
 use App\Domains\Users\Models\User;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-final class VerifyEmailUserAction
+final readonly class VerifyEmailUserAction
 {
-    public function __construct(private readonly ConfirmationTokenRepository $repository)
+    public function __construct(private ConfirmationTokenRepository $repository)
     {
     }
 

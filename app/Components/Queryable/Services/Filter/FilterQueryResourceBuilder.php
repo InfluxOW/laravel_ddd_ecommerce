@@ -10,11 +10,11 @@ use App\Components\Queryable\Http\Resources\Filter\FilterQueryResource;
 use App\Infrastructure\Abstracts\Http\FormRequest;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-final class FilterQueryResourceBuilder
+final readonly class FilterQueryResourceBuilder
 {
-    private readonly FilterApplicator $applicator;
+    private FilterApplicator $applicator;
 
-    public function __construct(private readonly FilterService $service)
+    public function __construct(private FilterService $service)
     {
         $this->applicator = new FilterApplicator($this->service);
     }

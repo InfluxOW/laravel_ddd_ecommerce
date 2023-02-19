@@ -14,9 +14,9 @@ use App\Domains\Catalog\Enums\Query\Filter\ProductAllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder as SpatieQueryBuilder;
 use UnitEnum;
 
-final class ProductFilterBuilder implements FilterBuilder
+final readonly class ProductFilterBuilder implements FilterBuilder
 {
-    public function __construct(private readonly string $currency, private readonly SpatieQueryBuilder $query, private readonly ProductFilterBuilderRepository $repository)
+    public function __construct(private string $currency, private SpatieQueryBuilder $query, private ProductFilterBuilderRepository $repository)
     {
     }
 

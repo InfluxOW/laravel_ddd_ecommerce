@@ -5,9 +5,9 @@ namespace App\Components\Queryable\Classes\Filter\Multiselect\Resources;
 use App\Domains\Common\Enums\Response\ResponseValueType;
 use JetBrains\PhpStorm\ArrayShape;
 
-final class NestedMultiselectFilterValuesAttribute
+final readonly class NestedMultiselectFilterValuesAttribute
 {
-    public function __construct(public readonly string $title, public readonly string $query, public readonly ResponseValueType $valuesType)
+    public function __construct(public string $title, public string $query, public ResponseValueType $valuesType)
     {
     }
 

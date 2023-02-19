@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
-final class ExportColumn
+final readonly class ExportColumn
 {
-    private function __construct(private readonly BackedEnum $key, private readonly string $format)
+    private function __construct(private BackedEnum $key, private string $format)
     {
     }
 

@@ -8,12 +8,12 @@ use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection;
 use JetBrains\PhpStorm\ArrayShape;
 
-final class NestedMultiselectFilterValues
+final readonly class NestedMultiselectFilterValues
 {
     /**
      * @param Collection<string>|EloquentCollection<string> $values
      */
-    public function __construct(public readonly NestedMultiselectFilterValuesAttribute $attribute, public readonly Collection|EloquentCollection $values)
+    public function __construct(public NestedMultiselectFilterValuesAttribute $attribute, public Collection|EloquentCollection $values)
     {
     }
 

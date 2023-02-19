@@ -5,12 +5,12 @@ namespace App\Components\Queryable\DTOs\Sort;
 use App\Components\Queryable\Classes\Sort\Sort;
 use Illuminate\Support\Collection;
 
-final class SortQuery
+final readonly class SortQuery
 {
     /**
      * @param Collection<Sort> $allowedSorts
      */
-    public function __construct(public readonly Collection $allowedSorts, public readonly Sort $appliedSort)
+    public function __construct(public Collection $allowedSorts, public Sort $appliedSort)
     {
     }
 }
