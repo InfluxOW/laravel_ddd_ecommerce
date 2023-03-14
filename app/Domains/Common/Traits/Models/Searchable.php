@@ -8,7 +8,6 @@ use Elastic\ScoutDriverPlus\Searchable as BaseSearchable;
 use Elastic\ScoutDriverPlus\Support\Query;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 
 trait Searchable
 {
@@ -40,13 +39,13 @@ trait Searchable
 
         if ($orderByScore && count($ids) > 1) {
             // TODO: No comments
-            $orderByRaw = 'CASE' . PHP_EOL;
+            $orderQuery = 'CASE' . PHP_EOL;
             foreach ($ids as $i => $id) {
-                $orderByRaw = "{$orderByRaw} WHEN {$table}.id={$id} THEN {$i}" . PHP_EOL;
+                $orderQuery = "{$orderQuery} WHEN {$table}.id={$id} THEN {$i}" . PHP_EOL;
             }
-            $orderByRaw = "{$orderByRaw} END";
+            $orderQuery = "{$orderQuery} END";
 
-            $query->orderByRaw(DB::raw($orderByRaw));
+            $query->orderByRaw($orderQuery);
         }
     }
 

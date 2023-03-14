@@ -18,7 +18,11 @@ infection:
 infection-coverage:
 	$(infection) --skip-initial-tests --coverage=storage/logs
 test:
+	php artisan test --parallel
+test-debug:
 	php artisan test --parallel -vvv
+test-profile:
+	php artisan test --profile
 test-coverage:
 	php -d pcov.enabled=1 artisan test --parallel --coverage-clover=storage/logs/clover.xml --coverage-xml=storage/logs/coverage-xml --log-junit=storage/logs/junit.xml
 

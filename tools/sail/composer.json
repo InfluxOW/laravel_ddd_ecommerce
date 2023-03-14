@@ -1,5 +1,5 @@
 {
     "require-dev": {
-        "laravel/sail": "^1.0.1"
+        "laravel/sail": "^1.18"
     }
 }

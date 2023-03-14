@@ -27,6 +27,7 @@ require:
     - "#filament/forms"
     - "#filament/tables"
     - "#illuminate/collections"
+    - "#illuminate/contracts"
     - "#illuminate/database"
     - "#illuminate/http"
     - "#illuminate/support"

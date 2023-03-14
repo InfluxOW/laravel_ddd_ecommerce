@@ -81,9 +81,7 @@ class Article extends Model implements HasMedia, Exportable
         'published_at',
     ];
 
-    protected $dates = [
-        'published_at',
-    ];
+    protected $casts = ['published_at' => 'datetime'];
 
     /*
      * Relations

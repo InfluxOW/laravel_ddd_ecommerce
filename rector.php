@@ -30,7 +30,7 @@ return static function (RectorConfig $rectorConfig): void {
         LevelSetList::UP_TO_PHP_82,
         SetList::DEAD_CODE,
         SetList::CODE_QUALITY,
-        LaravelSetList::LARAVEL_90,
+        LaravelSetList::LARAVEL_100,
     ]);
 
     $rectorConfig->skip([

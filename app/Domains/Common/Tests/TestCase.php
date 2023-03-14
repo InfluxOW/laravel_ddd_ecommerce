@@ -98,7 +98,7 @@ abstract class TestCase extends BaseTestCase
     private function skipTestIfUnstable(): void
     {
         $reflection = new ReflectionClass($this);
-        $method = $reflection->getMethod($this->getName());
+        $method = $reflection->getMethod($this->name());
         $docblock = $method->getDocComment();
         $testIsUnstable = is_string($docblock) && str_contains($docblock, '@unstable');
 

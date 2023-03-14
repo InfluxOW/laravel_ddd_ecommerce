@@ -7,10 +7,10 @@ use App\Components\Purchasable\Casts\MoneyCast;
 use App\Components\Purchasable\Database\Builders\PriceBuilder;
 use App\Components\Purchasable\Database\Factories\PriceFactory;
 use App\Domains\Common\Traits\Models\HasExtendedFunctionality;
+use Illuminate\Contracts\Database\Query\Expression;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Illuminate\Database\Query\Expression;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 

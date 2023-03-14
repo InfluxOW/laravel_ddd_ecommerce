@@ -15,6 +15,7 @@ use App\Domains\Common\Enums\BooleanString;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Database\Query\Expression;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
@@ -77,14 +78,14 @@ final class ProductBuilder extends Builder
 
     public function wherePriceAbove(Money $price): self
     {
-        $this->whereHas('prices', fn (PriceBuilder $query) => $query->where('currency', $price->getCurrency()->getCurrency())->where(Price::getDatabasePriceExpression(), '>=', $price->getAmount()));
+        $this->whereHas('prices', fn (PriceBuilder $query) => $query->where('currency', $price->getCurrency()->getCurrency())->where($this->getDatabasePriceExpression(), '>=', $price->getAmount()));
 
         return $this;
     }
 
     public function wherePriceBelow(Money $price): self
     {
-        $this->whereHas('prices', fn (PriceBuilder $query) => $query->where('currency', $price->getCurrency()->getCurrency())->where(Price::getDatabasePriceExpression(), '<=', $price->getAmount()));
+        $this->whereHas('prices', fn (PriceBuilder $query) => $query->where('currency', $price->getCurrency()->getCurrency())->where($this->getDatabasePriceExpression(), '<=', $price->getAmount()));
 
         return $this;
     }
@@ -94,7 +95,7 @@ final class ProductBuilder extends Builder
         if (isset($min) && isset($max)) {
             throw_unless($min->getCurrency()->getCurrency() === $max->getCurrency()->getCurrency(), IncompatibleCurrenciesException::class);
 
-            $this->whereHas('prices', fn (PriceBuilder $query) => $query->where('currency', $min->getCurrency()->getCurrency())->whereBetween(Price::getDatabasePriceExpression(), $min > $max ? [$max->getAmount(), $min->getAmount()] : [$min->getAmount(), $max->getAmount()]));
+            $this->whereHas('prices', fn (PriceBuilder $query) => $query->where('currency', $min->getCurrency()->getCurrency())->whereBetween($this->getDatabasePriceExpression(), $min > $max ? [$max->getAmount(), $min->getAmount()] : [$min->getAmount(), $max->getAmount()]));
         } elseif (isset($min)) {
             $this->wherePriceAbove($min);
         } elseif (isset($max)) {
@@ -110,7 +111,7 @@ final class ProductBuilder extends Builder
             ->join('prices', 'prices.purchasable_id', '=', 'products.id')
             ->where('prices.purchasable_type', Relation::getAlias(Product::class))
             ->where('prices.currency', $currency)
-            ->orderBy(Price::getDatabasePriceExpression(), $descending ? 'DESC' : 'ASC');
+            ->orderBy($this->getDatabasePriceExpression(), $descending ? 'DESC' : 'ASC');
 
         return $this;
     }
@@ -120,5 +121,16 @@ final class ProductBuilder extends Builder
         $this->where('products.is_displayable', true);
 
         return $this;
+    }
+
+    /**
+     * Workaround for PHPStan
+     */
+    private function getDatabasePriceExpression(): Expression
+    {
+        /** @var Expression $expression */
+        $expression = Price::getDatabasePriceExpression();
+
+        return $expression;
     }
 }

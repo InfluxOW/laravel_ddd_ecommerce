@@ -51,10 +51,7 @@ final class ConfirmationToken extends Model
         'used_at',
     ];
 
-    protected $dates = [
-        'expires_at',
-        'used_at',
-    ];
+    protected $casts = ['expires_at' => 'datetime', 'used_at' => 'datetime'];
 
     /*
      * Internal

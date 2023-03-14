@@ -15,7 +15,7 @@
             <directory>./app/Domains/*/Tests/Admin</directory>
         </testsuite>
     </testsuites>
-    <coverage processUncoveredFiles="true">
+    <coverage>
         <exclude>
             <directory suffix=".php">./app/Domains/*/Database/*</directory>
             <directory suffix=".php">./app/Domains/*/Resources/Lang/*</directory>

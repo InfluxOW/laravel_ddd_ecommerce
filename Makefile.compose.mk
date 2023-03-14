@@ -62,6 +62,10 @@ infections-coverage:
 	$(sail_test_bash) "make infection-coverage"
 tests:
 	$(sail_test_bash) "make test"
+tests-debug:
+	$(sail_test_bash) "make test-debug"
+tests-profile:
+	$(sail_test_bash) "make test-profile"
 tests-coverage:
 	$(sail_test_bash) "make test-coverage"
 
