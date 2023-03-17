@@ -8,10 +8,10 @@
         <a href="https://dashboard.stryker-mutator.io/reports/github.com/InfluxOW/laravel_ddd_ecommerce/master"><img src="https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2FInfluxOW%2Flaravel_ddd_ecommerce%2Fmaster" alt="Mutation Testing"></a>
     </p>
     <p>
-        <a href="https://laravel.com"><img src="https://img.shields.io/badge/Laravel-9.x-FF2D20?style=for-the-badge&logo=laravel" alt="Laravel v8.x"></a>
+        <a href="https://laravel.com"><img src="https://img.shields.io/badge/Laravel-10.x-FF2D20?style=for-the-badge&logo=laravel" alt="Laravel v10.x"></a>
         <a href="https://laravel-livewire.com"><img src="https://img.shields.io/badge/Livewire-2.x-FB70A9?style=for-the-badge" alt="Livewire v2.x"></a>
-        <a href="https://php.net"><img src="https://img.shields.io/badge/PHP-8.1-777BB4?style=for-the-badge&logo=php" alt="PHP 8.1"></a>
-        <a href="https://docker.com"><img src="https://img.shields.io/badge/Docker-20.10.x-0db7ed?style=for-the-badge&logo=docker" alt="Docker 19.03.0"></a>
+        <a href="https://php.net"><img src="https://img.shields.io/badge/PHP-8.2-777BB4?style=for-the-badge&logo=php" alt="PHP 8.2"></a>
+        <a href="https://docker.com"><img src="https://img.shields.io/badge/Docker-20.10.x-0db7ed?style=for-the-badge&logo=docker" alt="Docker 20.10.x"></a>
         <a href="https://postgresql.org"><img src="https://img.shields.io/badge/Postgresql-15.X-0064a5?style=for-the-badge&logo=postgresql" alt="PostgreSQL 15.X"></a>
         <a href="https://swagger.io"><img src="https://img.shields.io/badge/Swagger-3.0-a9f06b?style=for-the-badge&logo=swagger" alt="Swagger 3.0"></a>
         <a href="https://redis.io/"><img src="https://img.shields.io/badge/Redis-7.x-D82C20?style=for-the-badge&logo=redis" alt="Redis 7.x"></a>
@@ -35,17 +35,17 @@ idea or a team agreement than exact project structure. And that's why I've imple
 ## Development Setup
 
 1. Fill `.env` variables.
-2. To setup project in Docker environment ([Laravel Sail](https://laravel.com/docs/9.x/sail)) use `make setup` command.
+2. To setup project in Docker environment ([Laravel Sail](https://laravel.com/docs/10.x/sail)) use `make setup` command.
 
 ## Features
 
 ### Generic Features
 
-- [Laravel Octane](https://laravel.com/docs/9.x/octane) with Swoole as Server
-- [Laravel Horizon](https://laravel.com/docs/9.x/horizon) as Queue Dashboard
+- [Laravel Octane](https://laravel.com/docs/10.x/octane) with Swoole as Server
+- [Laravel Horizon](https://laravel.com/docs/10.x/horizon) as Queue Dashboard
 - [Totem](https://github.com/codestudiohq/laravel-totem) as Schedule Dashboard
 - [Prequel](https://github.com/Protoqol/Prequel) as Database Dashboard
-- [Clockwork](https://underground.works/clockwork/) and [Laravel Telescope](https://laravel.com/docs/9.x/telescope) as Dev Toolkit
+- [Clockwork](https://underground.works/clockwork/) and [Laravel Telescope](https://laravel.com/docs/10.x/telescope) as Dev Toolkit
 - [Swagger Documentation](http://laravel-ddd-ecommerce.herokuapp.com/api/documentation)
 - Amazing [Admin Panel](http://laravel-ddd-ecommerce.herokuapp.com/admin) - [Filament](https://filamentadmin.com/)
 - RESTful API
@@ -76,7 +76,7 @@ idea or a team agreement than exact project structure. And that's why I've imple
 
 ### Random Features
 
-- Full usage of PHP 8.1
+- Full usage of PHP 8.1 + PHP 8.2 features
 - Admin panel multilanguage support
 - AWS S3 disk for images, responsive images generation
 
