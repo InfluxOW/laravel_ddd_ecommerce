@@ -80,6 +80,9 @@ fix-rights:
 	$(sail) php artisan cache:clear
 	$(sail) composer dump-autoload
 
+fix-phpstan:
+	cat /dev/null > ./vendor/nesbot/carbon/extension.neon
+
 stack:
 	$(sail) config > docker-compose.dev.stack.yml
 	$(sail_test) config > docker-compose.test.stack.yml

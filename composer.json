@@ -153,13 +153,15 @@
     "scripts": {
         "post-install-cmd": [
             "@php -r \"copy('.githooks/pre-commit', '.git/hooks/pre-commit');\"",
-            "@php artisan livewire:discover"
+            "@php artisan livewire:discover",
+            "make fix-phpstan"
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi",
             "@php artisan filament:upgrade",
             "@php artisan horizon:publish --ansi",
-            "@php artisan telescope:publish --ansi"
+            "@php artisan telescope:publish --ansi",
+            "make fix-phpstan"
         ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
