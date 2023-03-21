@@ -27,6 +27,7 @@ parameters:
         - '#Parameter \#1 \$callback of method Illuminate\\Database\\Eloquent\\Factories\\Factory<Illuminate\\Database\\Eloquent\\Model>::afterMaking\(\)#'
         - '#Parameter \#1 \$callback of method Illuminate\\Database\\Eloquent\\Factories\\Factory<Illuminate\\Database\\Eloquent\\Model>::afterCreating\(\)#'
 
+    checkOctaneCompatibility: true
     checkMissingIterableValueType: false
     checkGenericClassInNonGenericObjectType: false
 
