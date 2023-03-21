@@ -73,7 +73,6 @@
         "squirephp/regions-en": "^3.3",
         "stevebauman/purify": "^5.0",
         "studio/laravel-totem": "^10.0",
-        "symfony/http-client": "^6.0",
         "symfony/mailgun-mailer": "^6.0",
         "torann/geoip": "^3.0",
         "vladimir-yuldashev/laravel-queue-rabbitmq": "^13.0",
@@ -92,7 +91,7 @@
         "mockery/mockery": "^1.5.0",
         "nunomaduro/collision": "^7.0",
         "nunomaduro/larastan": "^2.0",
-        "phpstan/phpstan": "^1.4",
+        "phpstan/extension-installer": "^1.2",
         "qossmic/deptrac-shim": "^1.0",
         "rector/rector": "^0.15",
         "roave/security-advisories": "dev-latest",
@@ -128,6 +127,7 @@
     },
     "config": {
         "allow-plugins": {
+            "phpstan/extension-installer": true,
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "composer/package-versions-deprecated": true,
             "bamarni/composer-bin-plugin": true,
