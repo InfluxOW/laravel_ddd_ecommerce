@@ -16,7 +16,7 @@ final class PathGenerator extends DefaultPathGenerator
     protected function getBasePath(Media $media): string
     {
         /** @var Model $model */
-        $model = $media->model;
+        $model = $media->getModel();
 
         $folder = StringUtils::pluralBasename($model::class);
         $subfolder = isset($model->slug) ? sprintf('%s-%s', $model->getKey(), $model->slug) : $model->getKey();

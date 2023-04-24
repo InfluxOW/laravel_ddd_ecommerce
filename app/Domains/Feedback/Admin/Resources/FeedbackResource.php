@@ -114,6 +114,7 @@ final class FeedbackResource extends Resource
             ])->appendBulkActions([
                 UpdateBulkAction::create()
                     ->action(function (Collection $records, array $data): void {
+                        /** @phpstan-ignore-next-line */
                         $records->each(function (Feedback $feedback) use ($data): void {
                             $feedback->is_reviewed = $data[FeedbackTranslationKey::IS_REVIEWED->value];
                             $feedback->save();

@@ -2,7 +2,6 @@
 
 namespace App\Domains\Common\Providers;
 
-use App\Domains\Common\Console\Commands\InsightsCommand;
 use App\Domains\Common\Console\Commands\RefreshApplicationCommand;
 use App\Domains\Common\Enums\ServiceProviderNamespace;
 use App\Domains\Common\Mixins\CacheMixin;
@@ -27,7 +26,6 @@ final class DomainServiceProvider extends ServiceProvider
 
     protected array $commands = [
         RefreshApplicationCommand::class,
-        InsightsCommand::class,
     ];
 
     protected array $providers = [

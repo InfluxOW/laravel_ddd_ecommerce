@@ -35,11 +35,11 @@ final class DomainServiceProvider extends ServiceProvider
 
         $makeTranslated = function (BackedEnum $value) use ($translator): static {
             /** @var static $component */
-            $component = $translator->makeTranslated(static::class, $value);
+            $component = $translator->makeTranslated(self::class, $value);
 
             return $component;
         };
-        $translateComponentProperty = fn (AdminResourcePropertyTranslationKey|AdminRelationPropertyTranslationKey|AdminPagePropertyTranslationKey|AdminWidgetPropertyTranslationKey $enum, bool $allowClosures = false): string|Closure => $translator->translateComponentProperty(static::class, $enum, $allowClosures);
+        $translateComponentProperty = fn (AdminResourcePropertyTranslationKey|AdminRelationPropertyTranslationKey|AdminPagePropertyTranslationKey|AdminWidgetPropertyTranslationKey $enum, bool $allowClosures = false): string|Closure => $translator->translateComponentProperty(self::class, $enum, $allowClosures);
 
         ViewComponent::macro('makeTranslated', $makeTranslated);
 

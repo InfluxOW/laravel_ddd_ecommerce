@@ -14,6 +14,9 @@ final class StringUtils
 
     public static function pluralBasename(string $class): string
     {
-        return (string) Str::of(Str::of($class)->explode('\\')->last())->snake()->plural()->lower();
+        /** @var string $basename */
+        $basename = Str::of($class)->explode('\\')->last();
+
+        return (string) Str::of($basename)->snake()->plural()->lower();
     }
 }

@@ -99,7 +99,9 @@ abstract class ServiceProvider extends LaravelServiceProvider
     protected function registerLivewireComponents(): void
     {
         foreach ($this->livewireComponents as $component) {
-            $alias = sprintf('%s.%s', static::NAMESPACE->value, Str::of(Str::of($component)->explode('\\')->last())->kebab());
+            /** @var string $basename */
+            $basename = Str::of($component)->explode('\\')->last();
+            $alias = sprintf('%s.%s', static::NAMESPACE->value, Str::of($basename)->kebab());
 
             Livewire::component($alias, $component);
         }

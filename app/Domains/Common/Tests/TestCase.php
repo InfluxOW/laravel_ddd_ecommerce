@@ -62,7 +62,6 @@ abstract class TestCase extends BaseTestCase
 
         $this->artisan('migrate:fresh', $this->migrateFreshUsing());
 
-        /* @phpstan-ignore-next-line */
         $this->app[Kernel::class]->setArtisan(null);
 
         RefreshDatabaseState::$migrated = true;

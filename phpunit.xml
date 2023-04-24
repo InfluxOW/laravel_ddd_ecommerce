@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
-         bootstrap="vendor/autoload.php"
-         colors="true"
->
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.1/phpunit.xsd" bootstrap="vendor/autoload.php"
+         colors="true">
     <testsuites>
         <testsuite name="Unit">
             <directory>./app/Domains/*/Tests/Unit</directory>
@@ -15,27 +13,7 @@
             <directory>./app/Domains/*/Tests/Admin</directory>
         </testsuite>
     </testsuites>
-    <coverage>
-        <exclude>
-            <directory suffix=".php">./app/Domains/*/Database/*</directory>
-            <directory suffix=".php">./app/Domains/*/Resources/Lang/*</directory>
-            <directory suffix=".php">./app/Domains/*/Tests/*</directory>
-
-            <directory suffix=".php">./app/Components/*/Database/*</directory>
-            <directory suffix=".php">./app/Components/*/Resources/Lang/*</directory>
-            <directory suffix=".php">./app/Components/*/Tests/*</directory>
-
-            <directory suffix=".php">./app/*/*/*/Virtual</directory>
-            <directory suffix=".php">./app/*/*/*/Virtual/*</directory>
-            <directory suffix=".php">./app/*/*/*/*/Virtual</directory>
-            <directory suffix=".php">./app/*/*/*/*/Virtual/*</directory>
-            <directory suffix=".php">./app/*/*/*/*/*/Virtual</directory>
-            <directory suffix=".php">./app/*/*/*/*/*/Virtual/*</directory>
-        </exclude>
-        <include>
-            <directory suffix=".php">./app</directory>
-        </include>
-    </coverage>
+    <coverage/>
     <php>
         <env name="APP_ENV" value="testing"/>
         <env name="BCRYPT_ROUNDS" value="4"/>
@@ -48,4 +26,23 @@
         <env name="SENTRY_LARAVEL_DSN" value="null"/>
         <env name="LOG_CHANNEL" value="daily"/>
     </php>
+    <source>
+        <include>
+            <directory suffix=".php">./app</directory>
+        </include>
+        <exclude>
+            <directory suffix=".php">./app/Domains/*/Database/*</directory>
+            <directory suffix=".php">./app/Domains/*/Resources/Lang/*</directory>
+            <directory suffix=".php">./app/Domains/*/Tests/*</directory>
+            <directory suffix=".php">./app/Components/*/Database/*</directory>
+            <directory suffix=".php">./app/Components/*/Resources/Lang/*</directory>
+            <directory suffix=".php">./app/Components/*/Tests/*</directory>
+            <directory suffix=".php">./app/*/*/*/Virtual</directory>
+            <directory suffix=".php">./app/*/*/*/Virtual/*</directory>
+            <directory suffix=".php">./app/*/*/*/*/Virtual</directory>
+            <directory suffix=".php">./app/*/*/*/*/Virtual/*</directory>
+            <directory suffix=".php">./app/*/*/*/*/*/Virtual</directory>
+            <directory suffix=".php">./app/*/*/*/*/*/Virtual/*</directory>
+        </exclude>
+    </source>
 </phpunit>

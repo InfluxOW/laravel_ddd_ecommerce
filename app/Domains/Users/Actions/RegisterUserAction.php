@@ -13,7 +13,9 @@ final class RegisterUserAction
     {
         /** @var ValidatedInput $input */
         $input = $request->safe();
-        $user = User::query()->create($input->merge(['password' => bcrypt($request->password)])->toArray());
+        /** @var string $password */
+        $password = $request->getPassword();
+        $user = User::query()->create($input->merge(['password' => bcrypt($password)])->toArray());
 
         Registered::dispatch($user);
 
