@@ -21,3 +21,4 @@ _ide_helper_models.php
 infection.html
 infection.log
 .deptrac.cache
+*.cache
