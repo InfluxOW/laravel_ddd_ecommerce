@@ -22,7 +22,7 @@ services:
             - bash
             - -c
             - |
-                make prepare lint deptrac insights analyse || exit 1
+                make prepare lint deptrac insights analyse rector || exit 1
                 dockerize -wait tcp://database_ci:5432 -wait tcp://redis_ci:6379 -wait tcp://elasticsearch_ci:9200 -timeout 15s
                 make test-coverage
         networks:
