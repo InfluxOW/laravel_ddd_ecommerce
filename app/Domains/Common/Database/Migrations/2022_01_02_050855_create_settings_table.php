@@ -11,12 +11,19 @@ return new class () extends Migration
         Schema::create('settings', function (Blueprint $table): void {
             $table->id();
 
-            $table->string('group')->index();
+            $table->string('group');
             $table->string('name');
-            $table->boolean('locked');
+            $table->boolean('locked')->default(false);
             $table->json('payload');
 
             $table->timestamps();
+
+            $table->unique(['group', 'name']);
         });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('settings');
     }
 };
